@@ -838,6 +838,7 @@
             <div class="menu-item" onclick="showPage('fornecedores')">🏭 Fornecedores</div>
             <div class="menu-item" onclick="showPage('clientes')">👥 Clientes</div>
             <div class="menu-item" onclick="showPage('bancos')">🏦 Bancos</div>
+            <div class="menu-item" onclick="showPage('empresas')">🏢 Empresas</div>
         </div>
 
         <div class="menu-section">
@@ -1235,6 +1236,41 @@
             </div>
         </div>
 
+        <!-- EMPRESAS -->
+        <div id="empresas" class="page">
+            <div class="page-header">
+                <h1>🏢 Empresas</h1>
+                <button class="btn btn-primary btn-small" onclick="openModalEmpresa()">+ Nova Empresa</button>
+            </div>
+
+            <div class="alert alert-success" id="alertEmpresas"></div>
+
+            <div class="filter-container">
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label>Pesquisar</label>
+                        <input type="text" id="filtroEmpresa" placeholder="Nome ou CNPJ" onchange="carregarEmpresas()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="tabelaEmpresas">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CNPJ</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- LANÇAR CONTAS A RECEBER -->
         <div id="lancar-receber" class="page">
             <div class="page-header">
@@ -1248,6 +1284,12 @@
 
             <div class="filter-container">
                 <div class="filter-row">
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <select id="filtroEmpresaReceber" onchange="atualizarTabelaPendentesReceber()">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>Cliente</label>
                         <select id="filtroClienteReceber" onchange="atualizarTabelaPendentesReceber()">
@@ -1295,6 +1337,7 @@
                 <table id="tabelaPendentesReceber">
                     <colgroup>
                         <col style="min-width:130px;">
+                        <col style="min-width:130px;">
                         <col style="min-width:160px;">
                         <col style="min-width:90px;">
                         <col style="min-width:100px;">
@@ -1305,6 +1348,7 @@
                     </colgroup>
                     <thead>
                         <tr>
+                            <th>Empresa</th>
                             <th>Cliente</th>
                             <th>Descrição</th>
                             <th>Competência</th>
@@ -1333,6 +1377,12 @@
 
             <div class="filter-container">
                 <div class="filter-row">
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <select id="filtroEmpresaPagar" onchange="atualizarTabelaPendentesPagar()">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>Fornecedor</label>
                         <select id="filtroFornecedorPagar" onchange="atualizarTabelaPendentesPagar()">
@@ -1386,6 +1436,7 @@
                 <table id="tabelaPendentesPagar">
                     <colgroup>
                         <col style="min-width:130px;">
+                        <col style="min-width:130px;">
                         <col style="min-width:120px;">
                         <col style="min-width:160px;">
                         <col style="min-width:70px;">
@@ -1398,6 +1449,7 @@
                     </colgroup>
                     <thead>
                         <tr>
+                            <th>Empresa</th>
                             <th>Fornecedor</th>
                             <th>Categoria</th>
                             <th>Descrição</th>
@@ -1967,15 +2019,44 @@
             <div id="dfcAviso" style="display:none;"></div>
 
             <div class="filter-container">
-                <div class="filter-row" style="align-items:flex-end;">
+                <div class="filter-row" style="align-items:flex-end;flex-wrap:wrap;">
                     <div class="form-group">
                         <label>Ano</label>
-                        <select id="filtroAnoDFC" onchange="carregarDFC()">
+                        <select id="filtroAnoDFC" onchange="document.getElementById('filtroDataIniDFC').value='';document.getElementById('filtroDataFimDFC').value='';carregarDFC()">
                             <option value="">Todos os anos</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Mês</label>
+                        <select id="filtroMesDFC" onchange="document.getElementById('filtroDataIniDFC').value='';document.getElementById('filtroDataFimDFC').value='';carregarDFC()">
+                            <option value="">Todos os meses</option>
+                            <option value="01">Janeiro</option><option value="02">Fevereiro</option>
+                            <option value="03">Março</option><option value="04">Abril</option>
+                            <option value="05">Maio</option><option value="06">Junho</option>
+                            <option value="07">Julho</option><option value="08">Agosto</option>
+                            <option value="09">Setembro</option><option value="10">Outubro</option>
+                            <option value="11">Novembro</option><option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <select id="filtroEmpresaDFC" onchange="carregarDFC()">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>De</label>
+                        <input type="date" id="filtroDataIniDFC" onchange="carregarDFC()">
+                    </div>
+                    <div class="form-group">
+                        <label>Até</label>
+                        <input type="date" id="filtroDataFimDFC" onchange="carregarDFC()">
+                    </div>
                     <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px;">
-                        <label style="font-size:12px;color:#666;font-style:italic;">Selecione um ano para ver o detalhamento mensal Jan–Dez</label>
+                        <button class="btn btn-secondary btn-small" onclick="document.getElementById('filtroDataIniDFC').value='';document.getElementById('filtroDataFimDFC').value='';carregarDFC()">Limpar período</button>
+                    </div>
+                    <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px;">
+                        <label style="font-size:12px;color:#666;font-style:italic;">Use "De/Até" para um período exato, ou Ano/Mês para um recorte rápido.<br>Selecionando Ano (e opcionalmente Mês), ou um período em "De/Até", o detalhamento diário/mensal aparece abaixo.</label>
                     </div>
                 </div>
             </div>
@@ -2013,14 +2094,14 @@
             <div class="card" id="cardDFCMensal" style="display:none;">
                 <div class="card-title" id="tituloDFCMensal">📅 DFC Mensal</div>
                 <div class="table-container">
-                    <table id="tabelaDFCMensal" style="width:auto;min-width:500px;max-width:800px;">
+                    <table id="tabelaDFCMensal" style="width:100%;">
                         <thead>
                             <tr>
-                                <th style="width:100px;">Mês</th>
-                                <th style="width:140px;color:#28a745;">Entradas</th>
-                                <th style="width:140px;color:#dc3545;">Saídas</th>
-                                <th style="width:140px;">Fluxo Líquido</th>
-                                <th style="width:140px;">Acumulado</th>
+                                <th id="dfcMensalColDesc" style="width:20%;">Mês</th>
+                                <th style="width:20%;color:#28a745;">Entradas</th>
+                                <th style="width:20%;color:#dc3545;">Saídas</th>
+                                <th style="width:20%;">Fluxo Líquido</th>
+                                <th style="width:20%;">Acumulado</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -2037,68 +2118,13 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-title">Análise de Fluxo de Caixa</div>
-                <div class="table-container">
-                    <table id="tabelaDFC">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Período Atual</th>
-                                <th>% Mudança</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="font-weight: 600; background-color: #f0f0f0;">
-                                <td colspan="3">ENTRADAS DE CAIXA</td>
-                            </tr>
-                            <tr>
-                                <td>Contas a Receber</td>
-                                <td id="dfcEntradaReceber">R$ 0,00</td>
-                                <td id="dfcPctReceber">0%</td>
-                            </tr>
-                            <tr style="font-weight: 600; background-color: #f0f0f0;">
-                                <td colspan="3">SAÍDAS DE CAIXA</td>
-                            </tr>
-                            <tr>
-                                <td>Contas a Pagar</td>
-                                <td id="dfcSaidaPagar">R$ 0,00</td>
-                                <td id="dfcPctPagar">0%</td>
-                            </tr>
-                            <tr style="font-weight: 600; background-color: var(--cor-primaria); color: white;">
-                                <td>FLUXO LÍQUIDO</td>
-                                <td id="dfcFluxoLiquido">R$ 0,00</td>
-                                <td id="dfcPctFluxo">0%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">Fluxo de Caixa Acumulado</div>
-                <div class="chart-container">
-                    <canvas id="chartDFC"></canvas>
-                </div>
-            </div>
-
-            <!-- DFC POR CATEGORIA -->
-            <div class="card" id="cardDFCCategoria" style="margin-top:16px;display:none;">
-                <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                    <span>&#128202; DFC Detalhado por Categoria</span>
-                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                        <select id="dfcCatVisao" onchange="renderizarDFCCategoria()" style="padding:5px 10px;font-size:12px;border:1px solid #ddd;border-radius:6px;">
-                            <option value="mensal">Mensal (Jan a Dez)</option>
-                            <option value="total">Total do periodo</option>
-                        </select>
-                        <button onclick="exportarDFCCatXLSX()" class="btn btn-secondary btn-small" style="font-size:11px;background:#27ae60;color:white;">&#128190; Excel</button>
-                    </div>
-                </div>
-                <div style="overflow-x:auto;margin-top:8px;">
-                    <table id="tabelaDFCCategoria" style="font-size:12px;border-collapse:collapse;width:100%;min-width:600px;">
-                        <thead id="dfcCatHead"></thead>
-                        <tbody id="dfcCatBody"></tbody>
-                        <tfoot id="dfcCatFoot"></tfoot>
+            <!-- DRE MENSAL (REGIME DE CAIXA) -->
+            <div class="card" id="cardDFCDRE" style="margin-top:16px;display:none;">
+                <div class="card-title" id="tituloDFCDRE">🏆 DRE Mensal (Regime de Caixa) — Jan a Dez</div>
+                <div style="overflow-x:auto;">
+                    <table id="tabelaDFCDRE" style="font-size:12px;min-width:900px;border-collapse:collapse;">
+                        <thead><tr id="dfcDREHeaderMeses"><th style="min-width:200px;text-align:left;padding:6px 8px;">Descrição</th></tr></thead>
+                        <tbody id="dfcDRECorpo"></tbody>
                     </table>
                 </div>
             </div>
@@ -2120,9 +2146,30 @@
                             <option value="">Selecione um ano</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <select id="filtroEmpresaFCP" onchange="carregarFCP()">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:8px;">
+                        <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;cursor:pointer;color:#444;">
+                            <input type="checkbox" id="fcpSomarSaldoReal" onchange="carregarFCP()" style="width:16px;height:16px;cursor:pointer;">
+                            💵 Somar saldo de caixa real ao saldo projetado
+                        </label>
+                    </div>
                     <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:2px;">
                         <button class="btn btn-secondary btn-small" onclick="gerarPDFFCP()" style="background:#e67e22;color:white;">📄 PDF</button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Card saldo de caixa real -->
+            <div class="dashboard-grid" style="margin-bottom:14px;" id="fcpSaldoRealGrid">
+                <div class="stat-card" id="fcpCardSaldoRealBox" style="border-left-color:#6f42c1;display:none;">
+                    <div class="stat-label">💵 Saldo de Caixa Real (atual)</div>
+                    <div class="stat-value" id="fcpCardSaldoReal" style="font-size:20px;">R$ 0,00</div>
+                    <div class="stat-change">Recebido − Pago (confirmados até hoje)</div>
                 </div>
             </div>
 
@@ -2155,21 +2202,15 @@
                 </div>
             </div>
 
-            <!-- Tabela mensal Jan-Dez (igual à DRE mensal) -->
-            <div class="card" id="cardFCPMensal" style="display:none;">
-                <div class="card-title" id="fcpTituloTabela">📅 Fluxo de Caixa Projetado — Jan a Dez</div>
+            <!-- DRE PROJETADO -->
+            <div class="card" id="cardFCPDRE" style="margin-top:16px;display:none;">
+                <div class="card-title" id="tituloFCPDRE">🏆 DRE Projetado — Jan a Dez</div>
                 <div style="overflow-x:auto;">
-                    <table id="tabelaFCPMensal" style="font-size:12px;min-width:900px;border-collapse:collapse;">
-                        <thead><tr id="fcpHeaderMeses"><th style="min-width:200px;text-align:left;padding:6px 8px;">Descrição</th></tr></thead>
-                        <tbody id="fcpCorpoMensal"></tbody>
+                    <table id="tabelaFCPDRE" style="font-size:12px;min-width:900px;border-collapse:collapse;">
+                        <thead><tr id="fcpDREHeaderMeses"><th style="min-width:200px;text-align:left;padding:6px 8px;">Descrição</th></tr></thead>
+                        <tbody id="fcpDRECorpo"></tbody>
                     </table>
                 </div>
-            </div>
-
-            <!-- Gráfico projetado -->
-            <div class="card" style="margin-top:16px;">
-                <div class="card-title">Evolução do Saldo Projetado — Mês a Mês</div>
-                <div class="chart-container"><canvas id="chartFCP"></canvas></div>
             </div>
         </div>
 
@@ -2373,6 +2414,12 @@
                 <div class="form-section-title">👤 Cliente e Descrição</div>
                 <div class="form-row">
                     <div class="form-group">
+                        <label>Empresa</label>
+                        <select id="empresaReceber">
+                            <option value="">Selecione...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Cliente*</label>
                         <select id="clienteReceber" required>
                             <option value="">Selecione...</option>
@@ -2473,6 +2520,12 @@
             <div class="form-section">
                 <div class="form-section-title">🏭 Fornecedor e Categoria</div>
                 <div class="form-row">
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <select id="empresaPagar">
+                            <option value="">Selecione...</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>Fornecedor*</label>
                         <select id="fornecedorPagar" required>
@@ -2938,6 +2991,47 @@
     </div>
 </div>
 
+<div class="modal" id="modalEmpresa">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="modalEmpresaTitulo">Nova Empresa</span>
+            <button class="modal-close" onclick="closeModal('modalEmpresa')">&times;</button>
+        </div>
+        <form onsubmit="salvarEmpresa(event)">
+            <div class="form-group">
+                <label>Nome*</label>
+                <input type="text" id="nomeEmpresa" required>
+            </div>
+            <div class="form-group">
+                <label>CNPJ</label>
+                <input type="text" id="cnpjEmpresa" placeholder="XX.XXX.XXX/XXXX-XX">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="emailEmpresa">
+            </div>
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="text" id="telefoneEmpresa">
+            </div>
+            <div class="form-group">
+                <label>Endereço</label>
+                <textarea id="enderecoEmpresa" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="ativoEmpresa" checked>
+                    Ativo
+                </label>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('modalEmpresa')">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     // CONFIG SUPABASE
     const SUPABASE_URL = 'https://boxzirkdffwltztqoajk.supabase.co';
@@ -2952,6 +3046,7 @@
         produtos: [],
         fornecedores: [],
         clientes: [],
+        empresas: [],
         bancos: [],
         contasReceber: [],
         contasPagar: [],
@@ -3164,6 +3259,7 @@
         await carregarProdutos();
         await carregarFornecedores();
         await carregarClientes();
+        await carregarEmpresas();
         await carregarBancos();
         await carregarContasReceber();
         await carregarContasPagar();
@@ -3751,6 +3847,130 @@
         }
     }
 
+    // EMPRESAS
+    async function carregarEmpresas() {
+        const filtro = document.getElementById('filtroEmpresa');
+        let filtros = '';
+
+        if (filtro && filtro.value) {
+            filtros = `or=(nome.ilike.%${filtro.value}%,cnpj.ilike.%${filtro.value}%)`;
+        }
+
+        const dados = await fetchSupabase('empresas', 'GET', null, filtros);
+        if (dados) {
+            dadosCache.empresas = dados;
+            atualizarTabelaEmpresas();
+            atualizarSelectEmpresas();
+        }
+    }
+
+    function atualizarTabelaEmpresas() {
+        const tbody = document.querySelector('#tabelaEmpresas tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        dadosCache.empresas.forEach(emp => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${emp.nome}</td>
+                    <td>${emp.cnpj || '-'}</td>
+                    <td>${emp.email || '-'}</td>
+                    <td>${emp.telefone || '-'}</td>
+                    <td><span class="status-badge ${emp.ativo ? 'status-recebido' : 'status-atrasado'}">${emp.ativo ? 'Ativo' : 'Inativo'}</span></td>
+                    <td>
+                        <button class="btn btn-secondary btn-small" onclick="editarEmpresa(${emp.id})">Editar</button>
+                        <button class="btn btn-danger btn-small" onclick="deletarEmpresa(${emp.id})">Deletar</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function atualizarSelectEmpresas() {
+        const ids = ['empresaReceber', 'empresaPagar', 'filtroEmpresaReceber', 'filtroEmpresaPagar', 'editLancEmpresa', 'filtroEmpresaDFC', 'filtroEmpresaFCP'];
+        ids.forEach(id => {
+            const select = document.getElementById(id);
+            if (!select) return;
+            const valorAtual = select.value;
+            const placeholder = id.startsWith('filtro') ? 'Todas' : 'Selecione...';
+            select.innerHTML = `<option value="">${placeholder}</option>`;
+            dadosCache.empresas.filter(e => e.ativo !== false).forEach(emp => {
+                const opt = document.createElement('option');
+                opt.value = emp.id;
+                opt.textContent = emp.nome;
+                select.appendChild(opt);
+            });
+            if (valorAtual) select.value = valorAtual;
+        });
+    }
+
+    function openModalEmpresa() {
+        editandoId = null;
+        editandoTipo = null;
+        document.getElementById('nomeEmpresa').value = '';
+        document.getElementById('cnpjEmpresa').value = '';
+        document.getElementById('emailEmpresa').value = '';
+        document.getElementById('telefoneEmpresa').value = '';
+        document.getElementById('enderecoEmpresa').value = '';
+        document.getElementById('ativoEmpresa').checked = true;
+        document.getElementById('modalEmpresaTitulo').textContent = 'Nova Empresa';
+        document.getElementById('modalEmpresa').classList.add('active');
+    }
+
+    function editarEmpresa(id) {
+        const empresa = dadosCache.empresas.find(e => e.id === id);
+        if (empresa) {
+            editandoId = id;
+            editandoTipo = 'empresa';
+            document.getElementById('nomeEmpresa').value = empresa.nome;
+            document.getElementById('cnpjEmpresa').value = empresa.cnpj || '';
+            document.getElementById('emailEmpresa').value = empresa.email || '';
+            document.getElementById('telefoneEmpresa').value = empresa.telefone || '';
+            document.getElementById('enderecoEmpresa').value = empresa.endereco || '';
+            document.getElementById('ativoEmpresa').checked = empresa.ativo;
+            document.getElementById('modalEmpresaTitulo').textContent = 'Editar Empresa';
+            document.getElementById('modalEmpresa').classList.add('active');
+        }
+    }
+
+    async function salvarEmpresa(event) {
+        event.preventDefault();
+
+        const dados = {
+            nome: document.getElementById('nomeEmpresa').value,
+            cnpj: document.getElementById('cnpjEmpresa').value || null,
+            email: document.getElementById('emailEmpresa').value || null,
+            telefone: document.getElementById('telefoneEmpresa').value || null,
+            endereco: document.getElementById('enderecoEmpresa').value || null,
+            ativo: document.getElementById('ativoEmpresa').checked
+        };
+
+        let resultado;
+        if (editandoId && editandoTipo === 'empresa') {
+            resultado = await fetchSupabase('empresas', 'PATCH', dados, `id=eq.${editandoId}`);
+        } else {
+            resultado = await fetchSupabase('empresas', 'POST', dados);
+        }
+
+        if (resultado !== null) {
+            showAlert('Empresa salva com sucesso!', 'alertEmpresas', 'success');
+            closeModal('modalEmpresa');
+            editandoId = null;
+            editandoTipo = null;
+            await carregarEmpresas();
+        }
+    }
+
+    async function deletarEmpresa(id) {
+        if (confirm('Tem certeza que deseja deletar esta empresa?')) {
+            const resultado = await fetchSupabase('empresas', 'DELETE', null, `id=eq.${id}`);
+            if (resultado !== null) {
+                showAlert('Empresa deletada com sucesso!', 'alertEmpresas', 'success');
+                carregarEmpresas();
+            }
+        }
+    }
+
     // CONTAS A RECEBER
     async function carregarContasReceber() {
         const filtro = `status=eq.pendente`;
@@ -3766,9 +3986,11 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         let filtrado = dadosCache.contasReceber;
+        const filtroEmpresa = document.getElementById('filtroEmpresaReceber');
         const filtroCliente = document.getElementById('filtroClienteReceber');
         const filtroAno = document.getElementById('filtroAnoReceber');
         const filtroMes = document.getElementById('filtroMesReceber');
+        if (filtroEmpresa && filtroEmpresa.value) filtrado = filtrado.filter(c => c.empresa_id == filtroEmpresa.value);
         if (filtroCliente && filtroCliente.value) filtrado = filtrado.filter(c => c.cliente_id == filtroCliente.value);
         if (filtroAno && filtroAno.value) filtrado = filtrado.filter(c => c.data_vencimento && c.data_vencimento.startsWith(filtroAno.value));
         if (filtroMes && filtroMes.value) filtrado = filtrado.filter(c => c.data_vencimento && c.data_vencimento.includes('-' + filtroMes.value + '-'));
@@ -3791,6 +4013,7 @@
 
         filtrado.forEach(conta => {
             const cliente = dadosCache.clientes.find(c => c.id === conta.cliente_id);
+            const empresa = dadosCache.empresas.find(e => e.id === conta.empresa_id);
             const venc = new Date(conta.data_vencimento + 'T12:00:00');
             const status = venc < hoje ? 'atrasado' : 'pendente';
             const parcLabel = conta.custo_fixo
@@ -3802,6 +4025,7 @@
                 ? new Date(conta.data_competencia + 'T12:00:00').toLocaleDateString('pt-BR', {month:'2-digit',year:'numeric'})
                 : '-';
             tbody.innerHTML += `<tr>
+                <td>${empresa ? empresa.nome : '-'}</td>
                 <td>${cliente ? cliente.nome : '-'}</td>
                 <td>${conta.descricao}</td>
                 <td>${compLabel}</td>
@@ -3827,6 +4051,7 @@
         const obs = document.getElementById('observacoesReceber').value;
         const notaFiscalRec = document.getElementById('notaFiscalReceber').value.trim() || null;
         const clienteId = parseInt(document.getElementById('clienteReceber').value);
+        const empresaId = document.getElementById('empresaReceber').value ? parseInt(document.getElementById('empresaReceber').value) : null;
         const descricao = document.getElementById('descricaoReceber').value;
         const valorTotal = parseFloat(document.getElementById('valorReceber').value);
 
@@ -3857,6 +4082,7 @@
             else if (numLancamentos > 1) descParc = descricao + ' (' + (i+1) + '/' + numLancamentos + ')';
             const dados = {
                 cliente_id: clienteId,
+                empresa_id: empresaId,
                 descricao: descParc,
                 valor: valorLancamento,
                 data_competencia: custoFixo ? addMonths(competencia, i) : competencia,
@@ -3901,10 +4127,12 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         let filtrado = dadosCache.contasPagar;
+        const filtroEmpresa = document.getElementById('filtroEmpresaPagar');
         const filtroFornecedor = document.getElementById('filtroFornecedorPagar');
         const filtroCategoria = document.getElementById('filtroCategoriaPagar');
         const filtroAno = document.getElementById('filtroAnoPagar');
         const filtroMes = document.getElementById('filtroMesPagar');
+        if (filtroEmpresa && filtroEmpresa.value) filtrado = filtrado.filter(c => c.empresa_id == filtroEmpresa.value);
         if (filtroFornecedor && filtroFornecedor.value) filtrado = filtrado.filter(c => c.fornecedor_id == filtroFornecedor.value);
         if (filtroCategoria && filtroCategoria.value) filtrado = filtrado.filter(c => c.categoria_id == filtroCategoria.value);
         if (filtroAno && filtroAno.value) filtrado = filtrado.filter(c => c.data_vencimento && c.data_vencimento.startsWith(filtroAno.value));
@@ -3929,6 +4157,7 @@
         filtrado.forEach(conta => {
             const fornecedor = dadosCache.fornecedores.find(f => f.id === conta.fornecedor_id);
             const categoria = dadosCache.categorias.find(cat => cat.id === conta.categoria_id);
+            const empresa = dadosCache.empresas.find(e => e.id === conta.empresa_id);
             const venc = new Date(conta.data_vencimento + 'T12:00:00');
             const status = venc < hoje ? 'atrasado' : 'pendente';
             const parcLabel = conta.custo_fixo
@@ -3940,6 +4169,7 @@
                 ? new Date(conta.data_competencia + 'T12:00:00').toLocaleDateString('pt-BR', {month:'2-digit',year:'numeric'})
                 : '-';
             tbody.innerHTML += `<tr>
+                <td>${empresa ? empresa.nome : '-'}</td>
                 <td>${fornecedor ? fornecedor.nome : '-'}</td>
                 <td>${categoria ? categoria.nome : '-'}</td>
                 <td>${conta.descricao}</td>
@@ -3967,6 +4197,7 @@
         const obs = document.getElementById('observacoesPagar').value;
         const notaFiscal = document.getElementById('notaFiscalPagar').value.trim() || null;
         const fornecedorId = parseInt(document.getElementById('fornecedorPagar').value);
+        const empresaId = document.getElementById('empresaPagar').value ? parseInt(document.getElementById('empresaPagar').value) : null;
         const categoriaId = document.getElementById('categoriaPagar').value ? parseInt(document.getElementById('categoriaPagar').value) : null;
         const subcategoriaId = document.getElementById('subcategoriaPagar').value ? parseInt(document.getElementById('subcategoriaPagar').value) : null;
         const descricao = document.getElementById('descricaoPagar').value;
@@ -3999,6 +4230,7 @@
             else if (numLancamentos > 1) descParc = descricao + ' (' + (i+1) + '/' + numLancamentos + ')';
             const dados = {
                 fornecedor_id: fornecedorId,
+                empresa_id: empresaId,
                 categoria_id: categoriaId,
                 subcategoria_id: subcategoriaId,
                 descricao: descParc,
@@ -4291,6 +4523,7 @@
         atualizarSelectClientes();
         atualizarSelectFornecedores();
         atualizarSelectCategorias();
+        atualizarSelectEmpresas();
         if (tipo === 'receber') {
             const conta = dadosCache.contasRecebidas.find(c => c.id === id)
                        || dadosCache.contasReceber.find(c => c.id === id);
@@ -4301,6 +4534,7 @@
             document.getElementById('editLancFornecedorWrap').style.display = 'none';
             document.getElementById('editLancCliente').parentElement.style.display = '';
             document.getElementById('editLancCategoriaWrap').style.display = '';
+            document.getElementById('editLancEmpresa').value    = conta.empresa_id || '';
             document.getElementById('editLancCliente').value    = conta.cliente_id || '';
             document.getElementById('editLancCategoria').value  = conta.categoria_id || '';
             document.getElementById('editLancDescricao').value  = conta.descricao || '';
@@ -4319,6 +4553,7 @@
             document.getElementById('editLancFornecedorWrap').style.display = '';
             document.getElementById('editLancCliente').parentElement.style.display = 'none';
             document.getElementById('editLancCategoriaWrap').style.display = '';
+            document.getElementById('editLancEmpresa').value     = conta.empresa_id || '';
             document.getElementById('editLancFornecedor').value = conta.fornecedor_id || '';
             document.getElementById('editLancCategoria').value  = conta.categoria_id || '';
             document.getElementById('editLancDescricao').value  = conta.descricao || '';
@@ -4343,7 +4578,8 @@
             data_vencimento:  document.getElementById('editLancVencimento').value,
             data_competencia: document.getElementById('editLancCompetencia').value || null,
             observacoes:      document.getElementById('editLancObs').value || null,
-            categoria_id:     catVal ? parseInt(catVal) : null
+            categoria_id:     catVal ? parseInt(catVal) : null,
+            empresa_id:       document.getElementById('editLancEmpresa').value ? parseInt(document.getElementById('editLancEmpresa').value) : null
         };
         if (tipo === 'contas_a_pagar') {
             dados.nota_fiscal = document.getElementById('editLancNota').value.trim() || null;
@@ -4818,6 +5054,7 @@
             else if (pageId === 'produtos') carregarProdutos();
             else if (pageId === 'fornecedores') carregarFornecedores();
             else if (pageId === 'clientes') carregarClientes();
+            else if (pageId === 'empresas') carregarEmpresas();
             else if (pageId === 'lancar-receber') carregarContasReceber();
             else if (pageId === 'lancar-pagar') carregarContasPagar();
             else if (pageId === 'contas-recebidas') carregarContasRecebidas();
@@ -6901,6 +7138,7 @@
     // ABRIR MODAIS DE LANÇAMENTO
     // ================================================================
     function openModalLancarReceber() {
+        document.getElementById('empresaReceber').value = '';
         document.getElementById('clienteReceber').value = '';
         document.getElementById('descricaoReceber').value = '';
         document.getElementById('valorReceber').value = '';
@@ -6917,10 +7155,12 @@
         document.getElementById('previewParcelasReceber').style.display = 'none';
         atualizarSelectCategorias();
         atualizarSelectClientes();
+        atualizarSelectEmpresas();
         document.getElementById('modalLancarReceber').classList.add('active');
     }
 
     function openModalLancarPagar() {
+        document.getElementById('empresaPagar').value = '';
         document.getElementById('fornecedorPagar').value = '';
         document.getElementById('categoriaPagar').value = '';
         document.getElementById('subcategoriaPagar').innerHTML = '<option value="">Selecione a categoria primeiro...</option>';
@@ -6939,6 +7179,7 @@
         document.getElementById('previewParcelasPagar').style.display = 'none';
         atualizarSelectCategorias();
         atualizarSelectFornecedores();
+        atualizarSelectEmpresas();
         document.getElementById('modalLancarPagar').classList.add('active');
     }
 
@@ -7145,6 +7386,7 @@
     // DFC
     function fmtBRL(v) { return 'R$ ' + Math.abs(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
     function fmtValSig(v) { return (v < 0 ? '-' : '') + fmtBRL(v); }
+    function fmtDataBR(iso) { return iso ? new Date(iso + 'T12:00:00').toLocaleDateString('pt-BR') : '-'; }
 
     async function carregarDFC() {
         const contasReceber = await fetchSupabase('contas_a_receber', 'GET');
@@ -7153,18 +7395,47 @@
 
         const filtroAno = document.getElementById('filtroAnoDFC');
         const anoSel    = filtroAno ? filtroAno.value : '';
+        const filtroMesEl = document.getElementById('filtroMesDFC');
+        const mesSel    = filtroMesEl ? filtroMesEl.value : '';
+        const filtroEmpresaEl = document.getElementById('filtroEmpresaDFC');
+        const empresaSel = filtroEmpresaEl ? filtroEmpresaEl.value : '';
+        const filtroDataIniEl = document.getElementById('filtroDataIniDFC');
+        const filtroDataFimEl = document.getElementById('filtroDataFimDFC');
+        const dataIniSel = filtroDataIniEl ? filtroDataIniEl.value : '';
+        const dataFimSel = filtroDataFimEl ? filtroDataFimEl.value : '';
 
         // DFC usa datas de recebimento/pagamento (fluxo de caixa real)
         let recebidos = contasReceber.filter(c => c.status === 'recebido');
         let pagos     = contasPagar.filter(c => c.status === 'pago');
 
-        if (anoSel) {
+        if (empresaSel) {
+            recebidos = recebidos.filter(c => c.empresa_id == empresaSel);
+            pagos     = pagos.filter(c => c.empresa_id == empresaSel);
+        }
+
+        // Modo do período: 'intervalo' (De/Até) tem prioridade sobre Ano/Mês
+        let modoPeriodo = 'todos';
+        if (dataIniSel && dataFimSel) {
+            modoPeriodo = 'intervalo';
+            recebidos = recebidos.filter(c => c.data_recebimento && c.data_recebimento >= dataIniSel && c.data_recebimento <= dataFimSel);
+            pagos     = pagos.filter(c => c.data_pagamento && c.data_pagamento >= dataIniSel && c.data_pagamento <= dataFimSel);
+        } else if (anoSel && mesSel) {
+            modoPeriodo = 'mes';
+            const prefixoMes = anoSel + '-' + mesSel;
+            recebidos = recebidos.filter(c => c.data_recebimento && c.data_recebimento.startsWith(prefixoMes));
+            pagos     = pagos.filter(c => c.data_pagamento && c.data_pagamento.startsWith(prefixoMes));
+        } else if (anoSel) {
+            modoPeriodo = 'ano';
             recebidos = recebidos.filter(c => c.data_recebimento && c.data_recebimento.startsWith(anoSel));
             pagos     = pagos.filter(c => c.data_pagamento && c.data_pagamento.startsWith(anoSel));
         }
 
-        const pendentes_receber = contasReceber.filter(c => c.status === 'pendente');
-        const pendentes_pagar   = contasPagar.filter(c => c.status === 'pendente');
+        let pendentes_receber = contasReceber.filter(c => c.status === 'pendente');
+        let pendentes_pagar   = contasPagar.filter(c => c.status === 'pendente');
+        if (empresaSel) {
+            pendentes_receber = pendentes_receber.filter(c => c.empresa_id == empresaSel);
+            pendentes_pagar   = pendentes_pagar.filter(c => c.empresa_id == empresaSel);
+        }
 
         const totalReceber = recebidos.reduce((s,c) => s + parseFloat(c.valor||0), 0);
         const totalPagar   = pagos.reduce((s,c) => s + parseFloat(c.valor||0), 0);
@@ -7190,9 +7461,6 @@
         }
 
         // Cards
-        document.getElementById('dfcEntradaReceber').textContent = fmtBRL(totalReceber);
-        document.getElementById('dfcSaidaPagar').textContent     = fmtBRL(totalPagar);
-        document.getElementById('dfcFluxoLiquido').textContent   = fmtValSig(fluxoLiquido);
         document.getElementById('dfcCardEntradas').textContent   = fmtBRL(totalReceber);
         document.getElementById('dfcCardSaidas').textContent     = fmtBRL(totalPagar);
         const cardLiquido = document.getElementById('dfcCardLiquido');
@@ -7206,24 +7474,45 @@
         document.getElementById('dfcCardPendentesPagar').textContent     = fmtBRL(totalPendPag);
         document.getElementById('dfcCardPendentesPagarCount').textContent = pendentes_pagar.length + ' contas';
 
-        // Tabela mensal Jan-Dez (só se ano selecionado)
+        // Tabela mensal (Ano) ou diária/compacta (Mês ou intervalo De/Até)
         const cardMensal = document.getElementById('cardDFCMensal');
-        if (anoSel && cardMensal) {
-            cardMensal.style.display = '';
-            document.getElementById('tituloDFCMensal').textContent = '📅 DFC Mensal — ' + anoSel;
-            gerarTabelaMensalDFC(recebidos, pagos, anoSel);
-        } else if (cardMensal) {
-            cardMensal.style.display = 'none';
+        const colDesc    = document.getElementById('dfcMensalColDesc');
+        if (cardMensal) {
+            if (modoPeriodo === 'mes' || modoPeriodo === 'intervalo') {
+                cardMensal.style.display = '';
+                if (colDesc) colDesc.textContent = 'Dia';
+                const mNomesLong = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+                let tituloPeriodo, diaIni, diaFim;
+                if (modoPeriodo === 'intervalo') {
+                    diaIni = dataIniSel; diaFim = dataFimSel;
+                    tituloPeriodo = fmtDataBR(dataIniSel) + ' a ' + fmtDataBR(dataFimSel);
+                } else {
+                    diaIni = anoSel + '-' + mesSel + '-01';
+                    const ultimoDiaMes = new Date(parseInt(anoSel,10), parseInt(mesSel,10), 0).getDate();
+                    diaFim = anoSel + '-' + mesSel + '-' + String(ultimoDiaMes).padStart(2,'0');
+                    tituloPeriodo = mNomesLong[parseInt(mesSel,10)-1] + '/' + anoSel;
+                }
+                document.getElementById('tituloDFCMensal').textContent = '📅 DFC Diário — ' + tituloPeriodo;
+                gerarTabelaDiariaDFC(recebidos, pagos, diaIni, diaFim);
+            } else if (modoPeriodo === 'ano') {
+                cardMensal.style.display = '';
+                if (colDesc) colDesc.textContent = 'Mês';
+                document.getElementById('tituloDFCMensal').textContent = '📅 DFC Mensal — ' + anoSel;
+                gerarTabelaMensalDFC(recebidos, pagos, anoSel);
+            } else {
+                cardMensal.style.display = 'none';
+            }
         }
 
-        // Grafico (ultimos 12 meses ou ano selecionado)
-        criarGraficoDFC(contasReceber, contasPagar, anoSel);
-
-        // DFC por Categoria
-        window._dfcRecebidos = recebidos;
-        window._dfcPagos     = pagos;
-        window._dfcAnoSel    = anoSel;
-        renderizarDFCCategoria();
+        // DRE Mensal (regime de caixa) — só se ano selecionado
+        const cardDFCDRE = document.getElementById('cardDFCDRE');
+        if (anoSel && cardDFCDRE) {
+            cardDFCDRE.style.display = '';
+            document.getElementById('tituloDFCDRE').textContent = '🏆 DRE Mensal (Regime de Caixa) — ' + anoSel;
+            gerarTabelaDREGenerica('dfcDREHeaderMeses', 'dfcDRECorpo', recebidos, pagos, anoSel, 'data_recebimento', 'data_pagamento');
+        } else if (cardDFCDRE) {
+            cardDFCDRE.style.display = 'none';
+        }
     }
 
     // ================================================================
@@ -7517,6 +7806,78 @@
         document.getElementById('dfcMensalTotalLiq').style.color = totLiq >= 0 ? '#28a745' : '#dc3545';
     }
 
+    // Visão compacta por dia — usada quando o filtro de Mês ou o período "De/Até" está ativo.
+    // Só lista os dias com movimentação real (compacto), mas o acumulado considera
+    // corretamente a passagem dos dias sem movimento (que não alteram o saldo).
+    function gerarTabelaDiariaDFC(recebidos, pagos, diaIniStr, diaFimStr) {
+        const tbody = document.querySelector('#tabelaDFCMensal tbody');
+        if (!tbody || !diaIniStr || !diaFimStr) return;
+        tbody.innerHTML = '';
+
+        // Agrupar movimentações reais por dia (chave = data ISO yyyy-mm-dd)
+        const porDia = {};
+        (recebidos || []).forEach(c => {
+            if (!c.data_recebimento) return;
+            if (!porDia[c.data_recebimento]) porDia[c.data_recebimento] = { ent: 0, sai: 0 };
+            porDia[c.data_recebimento].ent += parseFloat(c.valor || 0);
+        });
+        (pagos || []).forEach(c => {
+            if (!c.data_pagamento) return;
+            if (!porDia[c.data_pagamento]) porDia[c.data_pagamento] = { ent: 0, sai: 0 };
+            porDia[c.data_pagamento].sai += parseFloat(c.valor || 0);
+        });
+
+        // Monta a lista fixa e completa de dias do período (dia 01 até o último dia)
+        const nomesDiaSemana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+        const [aIni, mIni, diIni] = diaIniStr.split('-').map(Number);
+        const [aFim, mFim, diFim] = diaFimStr.split('-').map(Number);
+        const cursor = new Date(aIni, mIni - 1, diIni, 12, 0, 0);
+        const limite = new Date(aFim, mFim - 1, diFim, 12, 0, 0);
+
+        const dias = [];
+        while (cursor <= limite) {
+            const iso = cursor.getFullYear() + '-' + String(cursor.getMonth() + 1).padStart(2, '0') + '-' + String(cursor.getDate()).padStart(2, '0');
+            dias.push({ iso, diaMes: String(cursor.getDate()).padStart(2, '0') + '/' + String(cursor.getMonth() + 1).padStart(2, '0'), diaSemana: cursor.getDay() });
+            cursor.setDate(cursor.getDate() + 1);
+        }
+
+        if (dias.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:16px;">Período inválido</td></tr>';
+            return;
+        }
+
+        let totEnt = 0, totSai = 0, acumulado = 0;
+        dias.forEach(({ iso, diaMes, diaSemana }) => {
+            const mov = porDia[iso] || { ent: 0, sai: 0 };
+            const ent = mov.ent, sai = mov.sai;
+            const liq = ent - sai;
+            acumulado += liq;
+            totEnt += ent; totSai += sai;
+            const hasData  = ent > 0 || sai > 0;
+            const isFimSemana = diaSemana === 0 || diaSemana === 6;
+            const liqCor = liq >= 0 ? '#28a745' : '#dc3545';
+            const acuCor = acumulado >= 0 ? '#28a745' : '#dc3545';
+            const rowBg  = isFimSemana ? 'background:#fdecea;' : '';
+            const diaCor = isFimSemana ? '#c0392b' : (hasData ? '#333' : '#999');
+            const valCorEnt = hasData ? '#28a745' : (isFimSemana ? '#e2a099' : '#ccc');
+            const valCorSai = hasData ? '#dc3545' : (isFimSemana ? '#e2a099' : '#ccc');
+            const valCorLiq = hasData ? liqCor : (isFimSemana ? '#e2a099' : '#ccc');
+            tbody.innerHTML += `<tr style="${rowBg}">
+                <td style="font-weight:600;color:${diaCor};">${diaMes} <span style="font-weight:600;font-size:10px;letter-spacing:0.3px;${isFimSemana ? 'color:#c0392b;' : 'color:#999;'}">${nomesDiaSemana[diaSemana]}</span></td>
+                <td style="color:${valCorEnt};">${ent > 0 ? fmtBRL(ent) : '-'}</td>
+                <td style="color:${valCorSai};">${sai > 0 ? fmtBRL(sai) : '-'}</td>
+                <td style="color:${valCorLiq};font-weight:${hasData ? '600' : '400'};">${hasData ? fmtValSig(liq) : '-'}</td>
+                <td style="color:${acuCor};font-weight:600;">${fmtValSig(acumulado)}</td>
+            </tr>`;
+        });
+
+        const totLiq = totEnt - totSai;
+        document.getElementById('dfcMensalTotalEnt').textContent = fmtBRL(totEnt);
+        document.getElementById('dfcMensalTotalSai').textContent = fmtBRL(totSai);
+        document.getElementById('dfcMensalTotalLiq').textContent = fmtValSig(totLiq);
+        document.getElementById('dfcMensalTotalLiq').style.color = totLiq >= 0 ? '#28a745' : '#dc3545';
+    }
+
     function criarGraficoDFC(contasReceber, contasPagar, anoSel) {
         const ctx = document.getElementById('chartDFC');
         if (!ctx) return;
@@ -7632,6 +7993,24 @@
 
         const filtroAno = document.getElementById('filtroAnoFCP');
         const anoSel    = filtroAno ? filtroAno.value : '';
+        const filtroEmpresaEl = document.getElementById('filtroEmpresaFCP');
+        const empresaSel = filtroEmpresaEl ? filtroEmpresaEl.value : '';
+        const chkSaldoReal = document.getElementById('fcpSomarSaldoReal');
+        const incluirSaldoReal = chkSaldoReal ? chkSaldoReal.checked : false;
+
+        // Saldo de caixa real: total já confirmado (recebido - pago), respeitando o filtro de empresa
+        const recebidosReal = contasReceber.filter(c => c.status === 'recebido' && (!empresaSel || c.empresa_id == empresaSel));
+        const pagosReal     = contasPagar.filter(c => c.status === 'pago' && (!empresaSel || c.empresa_id == empresaSel));
+        const saldoRealAtual = recebidosReal.reduce((s,c) => s + parseFloat(c.valor||0), 0)
+                             - pagosReal.reduce((s,c) => s + parseFloat(c.valor||0), 0);
+
+        const cardSaldoRealBox = document.getElementById('fcpCardSaldoRealBox');
+        const cardSaldoReal    = document.getElementById('fcpCardSaldoReal');
+        if (cardSaldoRealBox) cardSaldoRealBox.style.display = incluirSaldoReal ? '' : 'none';
+        if (cardSaldoReal) {
+            cardSaldoReal.textContent = fmtValSig(saldoRealAtual);
+            cardSaldoReal.style.color = saldoRealAtual >= 0 ? '#28a745' : '#dc3545';
+        }
 
         // Aviso
         const avisoEl = document.getElementById('fcpAviso');
@@ -7644,8 +8023,8 @@
         }
 
         if (!anoSel) {
-            const card = document.getElementById('cardFCPMensal');
-            if (card) card.style.display = 'none';
+            const cardDRE = document.getElementById('cardFCPDRE');
+            if (cardDRE) cardDRE.style.display = 'none';
             return;
         }
 
@@ -7656,15 +8035,17 @@
         }
 
         // Filtrar apenas pendentes do ano selecionado
-        const recAno = contasReceber.filter(c => c.status === 'pendente' && dataFCP(c,'rec').startsWith(anoSel));
-        const pagAno = contasPagar.filter(c => c.status === 'pendente' && dataFCP(c,'pag').startsWith(anoSel));
+        let recAno = contasReceber.filter(c => c.status === 'pendente' && dataFCP(c,'rec').startsWith(anoSel));
+        let pagAno = contasPagar.filter(c => c.status === 'pendente' && dataFCP(c,'pag').startsWith(anoSel));
+        if (empresaSel) {
+            recAno = recAno.filter(c => c.empresa_id == empresaSel);
+            pagAno = pagAno.filter(c => c.empresa_id == empresaSel);
+        }
 
         // Totais para cards
         const totalEnt   = recAno.reduce((s,c) => s + parseFloat(c.valor||0), 0);
         const totalSai   = pagAno.reduce((s,c) => s + parseFloat(c.valor||0), 0);
         const saldoLiq   = totalEnt - totalSai;
-        const pendRec    = contasReceber.filter(c => c.status === 'pendente');
-        const pendPag    = contasPagar.filter(c => c.status === 'pendente');
         const totPendRec = recAno.reduce((s,c) => s + parseFloat(c.valor||0), 0); // já filtrado por ano
         const totPendPag = pagAno.reduce((s,c) => s + parseFloat(c.valor||0), 0);
 
@@ -7680,132 +8061,12 @@
         document.getElementById('fcpCardPendPag').textContent       = fmtBRL(totPendPag);
         document.getElementById('fcpCardPendPagCount').textContent  = pagAno.length + ' conta' + (pagAno.length !== 1 ? 's' : '') + ' (pendentes ' + anoSel + ')';
 
-        // Título
-        document.getElementById('fcpTituloTabela').textContent = '📅 Fluxo de Caixa Projetado — Jan a Dez ' + anoSel;
-
-        // ── Montar tabela mensal horizontal (igual à DRE mensal) ─────────────
-        const mNomes = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-
-        // Cabeçalho
-        const headerRow = document.getElementById('fcpHeaderMeses');
-        if (headerRow) {
-            headerRow.innerHTML = '<th style="min-width:200px;text-align:left;padding:6px 10px;background:#2c3e50;color:#fff;">Descrição</th>' +
-                mNomes.map(m => '<th style="text-align:right;min-width:95px;padding:6px 8px;background:#2c3e50;color:#fff;">' + m + '/' + String(anoSel).slice(2) + '</th>').join('') +
-                '<th style="text-align:right;min-width:105px;padding:6px 8px;background:#1a252f;color:#fff;font-weight:700;">Total</th>';
-        }
-
-        // Calcular entradas e saídas por mês
-        // Entradas: agrupar recebimentos por categoria (ou "Receita" se sem categoria)
-        const catRec = {}; // { catNome: [val_m0..val_m11] }
-        recAno.forEach(c => {
-            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
-            const key = cat ? cat.nome : 'Receita';
-            if (!catRec[key]) catRec[key] = Array(12).fill(0);
-            const m = parseInt(dataFCP(c,'rec').substring(5,7)) - 1;
-            if (m >= 0 && m <= 11) catRec[key][m] += parseFloat(c.valor || 0);
-        });
-
-        // Saídas: agrupar pagamentos por categoria
-        const catPag = {};
-        pagAno.forEach(c => {
-            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
-            const key = cat ? cat.nome : 'Pagamento';
-            if (!catPag[key]) catPag[key] = Array(12).fill(0);
-            const m = parseInt(dataFCP(c,'pag').substring(5,7)) - 1;
-            if (m >= 0 && m <= 11) catPag[key][m] += parseFloat(c.valor || 0);
-        });
-
-        // Totais por mês
-        const totEntMes = Array(12).fill(0);
-        const totSaiMes = Array(12).fill(0);
-        Object.values(catRec).forEach(arr => arr.forEach((v,m) => { totEntMes[m] += v; }));
-        Object.values(catPag).forEach(arr => arr.forEach((v,m) => { totSaiMes[m] += v; }));
-        const saldoMes = totEntMes.map((e,m) => e - totSaiMes[m]);
-        let acumArr = [];
-        saldoMes.reduce((acc, v, m) => { acumArr[m] = acc + v; return acc + v; }, 0);
-
-        const fmtV = v => v !== 0 ? 'R$&nbsp;' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '-';
-        const cor  = v => v < 0 ? 'color:#dc3545;' : v > 0 ? 'color:#28a745;' : 'color:#ccc;';
-
-        const tbody = document.getElementById('fcpCorpoMensal');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        // ── Função auxiliar para uma linha ──
-        function linhaTabela(label, vals, opts = {}) {
-            const { bg = '', fc = '', bold = false, indent = false } = opts;
-            const total = vals.reduce((s,v) => s + v, 0);
-            const rowStyle = (bg ? 'background:' + bg + ';' : '') + (fc ? 'color:' + fc + ';' : '') + (bold ? 'font-weight:700;' : '');
-            const lbl = (indent ? '&nbsp;&nbsp;&nbsp;↳ ' : '') + label;
-            return '<tr style="' + rowStyle + '">' +
-                '<td style="padding:5px 8px;' + (bold ? 'font-weight:700;' : '') + (indent ? 'color:#555;' : '') + '">' + lbl + '</td>' +
-                vals.map(v => '<td style="text-align:right;padding:5px 8px;' + (fc ? '' : cor(v)) + '">' + fmtV(v) + '</td>').join('') +
-                '<td style="text-align:right;padding:5px 8px;font-weight:700;' + (fc ? '' : cor(total)) + '">' + fmtV(total) + '</td>' +
-                '</tr>';
-        }
-
-        function linhaSeparador(label) {
-            return '<tr style="background:#e9ecef;"><td colspan="' + (13+1) + '" style="font-weight:700;font-size:11px;color:#555;padding:5px 10px;text-transform:uppercase;letter-spacing:0.5px;">' + label + '</td></tr>';
-        }
-
-        // ── Seção ENTRADAS ──
-        tbody.innerHTML += linhaSeparador('ENTRADAS DE CAIXA');
-        if (Object.keys(catRec).length === 0) {
-            tbody.innerHTML += '<tr><td colspan="' + (13+1) + '" style="padding:6px 10px;color:#aaa;font-size:12px;">Nenhum recebimento no período</td></tr>';
-        } else {
-            Object.entries(catRec).sort((a,b) => b[1].reduce((s,v)=>s+v,0) - a[1].reduce((s,v)=>s+v,0)).forEach(([cat, arr]) => {
-                tbody.innerHTML += linhaTabela(cat, arr, { indent: true });
-            });
-        }
-        tbody.innerHTML += linhaTabela('= Total Entradas', totEntMes, { bg: '#d4edda', fc: '#155724', bold: true });
-
-        // ── Seção SAÍDAS ──
-        tbody.innerHTML += linhaSeparador('SAÍDAS DE CAIXA');
-        if (Object.keys(catPag).length === 0) {
-            tbody.innerHTML += '<tr><td colspan="' + (13+1) + '" style="padding:6px 10px;color:#aaa;font-size:12px;">Nenhum pagamento no período</td></tr>';
-        } else {
-            Object.entries(catPag).sort((a,b) => b[1].reduce((s,v)=>s+v,0) - a[1].reduce((s,v)=>s+v,0)).forEach(([cat, arr]) => {
-                const negArr = arr.map(v => -v);
-                tbody.innerHTML += linhaTabela(cat, negArr, { indent: true });
-            });
-        }
-        tbody.innerHTML += linhaTabela('= Total Saídas', totSaiMes.map(v => -v), { bg: '#f8d7da', fc: '#721c24', bold: true });
-
-        // ── Saldo mensal e acumulado ──
-        tbody.innerHTML += linhaSeparador('SALDO');
-        tbody.innerHTML += linhaTabela('Saldo Mensal (Entradas - Saídas)', saldoMes, { bg: '#f5f5f5', bold: true });
-        tbody.innerHTML += linhaTabela('Saldo Acumulado', acumArr, { bg: 'var(--cor-primaria)', fc: 'white', bold: true });
-
-        // Mostrar card
-        const cardMensal = document.getElementById('cardFCPMensal');
-        if (cardMensal) cardMensal.style.display = '';
-
-        // ── Gráfico ──
-        const ctx = document.getElementById('chartFCP');
-        if (ctx) {
-            if (charts.fcp) charts.fcp.destroy();
-            charts.fcp = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: mNomes.map(m => m + '/' + String(anoSel).slice(2)),
-                    datasets: [
-                        { label: 'Entradas', data: totEntMes, backgroundColor: 'rgba(40,167,69,0.65)', borderColor: '#28a745', borderWidth: 1, borderRadius: 4 },
-                        { label: 'Saídas',   data: totSaiMes, backgroundColor: 'rgba(220,53,69,0.65)',  borderColor: '#dc3545', borderWidth: 1, borderRadius: 4 },
-                        { label: 'Saldo Acumulado', data: acumArr, type: 'line', borderColor: '#FF7A42', backgroundColor: 'rgba(255,122,66,0.1)', borderWidth: 2, pointBackgroundColor: '#FF7A42', pointRadius: 4, tension: 0.3, fill: false }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: true, position: 'top' },
-                        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': R$ ' + Math.abs(ctx.parsed.y).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) } }
-                    },
-                    scales: {
-                        y: { ticks: { callback: v => 'R$ ' + v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}) }, grid: { color: 'rgba(0,0,0,0.05)' } },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
+        // DRE Projetado — Jan a Dez (usa data de vencimento das pendências do ano/empresa selecionados)
+        const cardFCPDRE = document.getElementById('cardFCPDRE');
+        if (cardFCPDRE) {
+            cardFCPDRE.style.display = '';
+            document.getElementById('tituloFCPDRE').textContent = '🏆 DRE Projetado — ' + anoSel;
+            gerarTabelaDREGenerica('fcpDREHeaderMeses', 'fcpDRECorpo', recAno, pagAno, anoSel, 'data_vencimento', 'data_vencimento');
         }
     }
 
@@ -7818,7 +8079,7 @@
         doc.setFontSize(9);
         doc.text('Gerado em: ' + new Date().toLocaleDateString('pt-BR'), 14, 22);
 
-        const table = document.getElementById('tabelaFCPMensal');
+        const table = document.getElementById('tabelaFCPDRE');
         if (table && window.autoTable) {
             doc.autoTable({ html: table, startY: 26, styles: { fontSize: 7, cellPadding: 2 }, headStyles: { fillColor: [230,102,34] } });
         }
@@ -8254,6 +8515,135 @@
                 '</tr>';
 
             // Subcategorias expandidas
+            if (linha.expandir && linha.expandir.length > 0) {
+                linha.expandir.forEach(([nomeSub, mesesSub]) => {
+                    const totalSub = mesesSub.reduce((s,v)=>s+v,0);
+                    if (totalSub === 0) return;
+                    tbody.innerHTML += '<tr style="background:#fafafa;">' +
+                        '<td style="padding:4px 8px 4px 22px;font-size:11px;color:#888;">' +
+                        '<span style="color:#bbb;margin-right:4px;">\u21b3</span>' + nomeSub + '</td>' +
+                        mesesSub.map(v => '<td style="text-align:right;padding:4px 8px;font-size:11px;color:#dc3545;">' + (v > 0 ? fmtV(-v) : '-') + '</td>').join('') +
+                        '<td style="text-align:right;padding:4px 8px;font-size:11px;font-weight:600;color:#dc3545;">' + fmtV(-totalSub) + '</td>' +
+                        '</tr>';
+                });
+            }
+        });
+    }
+
+    // ================================================================
+    // MODELO DRE (JAN A DEZ) GENÉRICO — usado no DFC (regime de caixa)
+    // e no FCP (regime projetado), reaproveitando os grupos da DRE
+    // ================================================================
+    function gerarTabelaDREGenerica(headerElId, bodyElId, listaRec, listaPag, ano, campoRec, campoPag) {
+        const headerRow = document.getElementById(headerElId);
+        const tbody = document.getElementById(bodyElId);
+        if (!headerRow || !tbody) return;
+        const mNomes = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+        headerRow.innerHTML = '<th style="min-width:200px;text-align:left;padding:6px 8px;">Descrição</th>' +
+            mNomes.map(m => '<th style="text-align:right;min-width:95px;padding:6px 8px;">' + m + '/' + String(ano).slice(2) + '</th>').join('') +
+            '<th style="text-align:right;min-width:105px;padding:6px 8px;font-weight:700;">Total</th>';
+
+        const dados = {};
+        DRE_GRUPOS.forEach(g => { dados[g.id] = Array(12).fill(0); });
+
+        (listaRec || []).filter(c => c[campoRec] && c[campoRec].startsWith(ano)).forEach(c => {
+            const m = parseInt(c[campoRec].substring(5,7)) - 1;
+            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
+            const g = (cat && cat.grupo_dre) ? cat.grupo_dre : 'RECEITA_BRUTA';
+            if (m < 0 || m > 11 || !dados[g]) return;
+            dados[g][m] += parseFloat(c.valor || 0);
+        });
+
+        (listaPag || []).filter(c => c[campoPag] && c[campoPag].startsWith(ano)).forEach(c => {
+            const m = parseInt(c[campoPag].substring(5,7)) - 1;
+            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
+            const g = (cat && cat.grupo_dre) ? cat.grupo_dre : 'DESP_ADMIN';
+            if (m < 0 || m > 11 || !dados[g]) return;
+            dados[g][m] += parseFloat(c.valor || 0);
+        });
+
+        const calcMes = (m) => {
+            const rb  = dados['RECEITA_BRUTA'][m];
+            const ded = dados['DEDUCOES'][m];
+            const rl  = rb - ded;
+            const cpv = dados['CPV'][m];
+            const lb  = rl - cpv;
+            const dc  = dados['DESP_COMERCIAL'][m];
+            const da  = dados['DESP_ADMIN'][m];
+            const rf  = dados['RECEITA_FINANCEIRA'][m];
+            const df  = dados['DESP_FINANCEIRA'][m];
+            const ebt = lb - dc - da + rf - df;
+            const emp = dados['EMPRESTIMO'][m];
+            const inv = dados['INVESTIMENTO'][m];
+            const or  = dados['OUTRAS_RECEITAS'][m];
+            const od  = dados['OUTRAS_DESPESAS'][m];
+            const res = ebt - emp - inv + or - od;
+            return { rb, ded, rl, cpv, lb, dc, da, rf, df, ebt, emp, inv, or, od, res };
+        };
+
+        const fmtV = v => v !== 0 ? 'R$&nbsp;' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '-';
+        const cor  = v => v < 0 ? 'color:#dc3545;' : v > 0 ? 'color:#28a745;' : 'color:#ccc;';
+
+        // Subcategorias do CPV por mês
+        const cpvSubcats = {};
+        (listaPag || []).filter(c => {
+            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
+            return cat && cat.grupo_dre === 'CPV' && c[campoPag] && c[campoPag].startsWith(ano);
+        }).forEach(c => {
+            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
+            const nome = cat ? cat.nome : 'Sem Categoria';
+            if (!cpvSubcats[nome]) cpvSubcats[nome] = Array(12).fill(0);
+            const m = parseInt(c[campoPag].substring(5,7)) - 1;
+            if (m >= 0 && m < 12) cpvSubcats[nome][m] += parseFloat(c.valor || 0);
+        });
+        const cpvSubOrdenado = Object.entries(cpvSubcats).sort((a,b) => b[1].reduce((s,v)=>s+v,0) - a[1].reduce((s,v)=>s+v,0));
+
+        // Subcategorias de Despesas Administrativas por mês
+        const daSubcats = {};
+        (listaPag || []).filter(c => {
+            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
+            return cat && cat.grupo_dre === 'DESP_ADMIN' && c[campoPag] && c[campoPag].startsWith(ano);
+        }).forEach(c => {
+            const cat = dadosCache.categorias.find(x => x.id === c.categoria_id);
+            const nome = cat ? cat.nome : 'Sem Categoria';
+            if (!daSubcats[nome]) daSubcats[nome] = Array(12).fill(0);
+            const m = parseInt(c[campoPag].substring(5,7)) - 1;
+            if (m >= 0 && m < 12) daSubcats[nome][m] += parseFloat(c.valor || 0);
+        });
+        const daSubOrdenado = Object.entries(daSubcats).sort((a,b) => b[1].reduce((s,v)=>s+v,0) - a[1].reduce((s,v)=>s+v,0));
+
+        const linhas = [
+            { label: 'Receita Bruta',             fn: m => calcMes(m).rb,   bg: '' },
+            { label: '(-) Dedu\u00e7\u00f5es',   fn: m => -calcMes(m).ded, bg: '' },
+            { label: '= Receita L\u00edquida',    fn: m => calcMes(m).rl,   bg: '#f5f5f5', bold: true },
+            { label: '(-) CPV/CSP',               fn: m => -calcMes(m).cpv, bg: '', expandir: cpvSubOrdenado },
+            { label: '= Lucro Bruto',             fn: m => calcMes(m).lb,   bg: '#f5f5f5', bold: true },
+            { label: '(-) Desp. Comerciais',      fn: m => -calcMes(m).dc,  bg: '' },
+            { label: '(-) Desp. Administrativas', fn: m => -calcMes(m).da,  bg: '', expandir: daSubOrdenado },
+            { label: '(+) Rec. Financeiras',      fn: m => calcMes(m).rf,   bg: '' },
+            { label: '(-) Desp. Financeiras',     fn: m => -calcMes(m).df,  bg: '' },
+            { label: '= EBITDA',                  fn: m => calcMes(m).ebt,  bg: '#e8f4fd', bold: true },
+            { label: '(-) Empr\u00e9stimos',      fn: m => -calcMes(m).emp, bg: '' },
+            { label: '(-) Investimentos',         fn: m => -calcMes(m).inv, bg: '' },
+            { label: '(+) Outras Receitas',       fn: m => calcMes(m).or,   bg: '' },
+            { label: '(-) Outras Despesas',       fn: m => -calcMes(m).od,  bg: '' },
+            { label: '= Resultado L\u00edquido',  fn: m => calcMes(m).res,  bg: 'var(--cor-primaria)', cor: 'white', bold: true },
+        ];
+
+        tbody.innerHTML = '';
+        linhas.forEach(linha => {
+            const vals = Array.from({length: 12}, (_, m) => linha.fn(m));
+            const total = vals.reduce((s, v) => s + v, 0);
+            const rowBg = linha.bg ? 'background:' + linha.bg + ';' : '';
+            const rowFc = linha.cor ? 'color:' + linha.cor + ';' : '';
+            const bold  = linha.bold ? 'font-weight:700;' : '';
+            tbody.innerHTML += '<tr style="' + rowBg + rowFc + bold + '">' +
+                '<td style="padding:5px 8px;' + bold + '">' + linha.label + '</td>' +
+                vals.map(v => '<td style="text-align:right;padding:5px 8px;' + (linha.cor ? '' : cor(v)) + '">' + fmtV(v) + '</td>').join('') +
+                '<td style="text-align:right;padding:5px 8px;font-weight:700;' + (linha.cor ? '' : cor(total)) + '">' + fmtV(total) + '</td>' +
+                '</tr>';
+
             if (linha.expandir && linha.expandir.length > 0) {
                 linha.expandir.forEach(([nomeSub, mesesSub]) => {
                     const totalSub = mesesSub.reduce((s,v)=>s+v,0);
@@ -8880,55 +9270,7 @@
         const margem = 12;
         const altLinha = 7;
 
-        // ---- Seção 1: Análise de Fluxo (tabelaDFC) ----
-        const col1 = 90; const col2 = 45; const col3 = 35;
-        doc.setFillColor(80, 80, 80);
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(8);
-        doc.setFont(undefined, 'bold');
-        doc.rect(margem, y, col1, altLinha, 'F');
-        doc.text('Descrição', margem + 2, y + 5);
-        doc.rect(margem + col1, y, col2, altLinha, 'F');
-        doc.text('Valor', margem + col1 + col2 / 2, y + 5, { align: 'center' });
-        doc.rect(margem + col1 + col2, y, col3, altLinha, 'F');
-        doc.text('% Mudança', margem + col1 + col2 + col3 / 2, y + 5, { align: 'center' });
-        y += altLinha;
-
-        const linhasDFC = document.querySelectorAll('#tabelaDFC tbody tr');
-        doc.setFont(undefined, 'normal');
-        linhasDFC.forEach((tr, idx) => {
-            const tds = tr.querySelectorAll('td');
-            if (tds.length === 0) return;
-            const isBold = tr.style.fontWeight === '600' || tr.style.fontWeight === 'bold';
-            const bgSec = tr.style.backgroundColor && (tr.style.backgroundColor.includes('240') || tr.style.backgroundColor.includes('f0f0f0'));
-            const bgPri = tr.style.backgroundColor && tr.style.backgroundColor.includes('255, 122, 66');
-
-            if (bgPri) {
-                doc.setFillColor(255, 122, 66); doc.setTextColor(255, 255, 255);
-            } else if (bgSec) {
-                doc.setFillColor(230, 230, 230); doc.setTextColor(0, 0, 0);
-            } else {
-                doc.setFillColor(idx % 2 === 0 ? 255 : 248, idx % 2 === 0 ? 255 : 248, idx % 2 === 0 ? 255 : 248);
-                doc.setTextColor(0, 0, 0);
-            }
-
-            doc.rect(margem, y, col1 + col2 + col3, altLinha, 'FD');
-            doc.setFontSize(8);
-            doc.setFont(undefined, isBold ? 'bold' : 'normal');
-
-            const colspan = tds[0].getAttribute('colspan');
-            if (colspan && parseInt(colspan) > 1) {
-                doc.text(normalizarTexto(tds[0].innerText.trim()), margem + 2, y + 4.8);
-            } else {
-                doc.text(normalizarTexto(tds[0] ? tds[0].innerText.trim() : ''), margem + 2, y + 4.8);
-                if (tds[1]) doc.text(normalizarTexto(tds[1].innerText.trim()), margem + col1 + col2 - 2, y + 4.8, { align: 'right' });
-                if (tds[2]) doc.text(normalizarTexto(tds[2].innerText.trim()), margem + col1 + col2 + col3 - 2, y + 4.8, { align: 'right' });
-            }
-            doc.setTextColor(0, 0, 0);
-            y += altLinha;
-        });
-
-        // ---- Seção 2: DFC Mensal (se visível) ----
+        // ---- Seção: DFC Mensal/Diário (se visível) ----
         const cardMensal = document.getElementById('cardDFCMensal');
         if (cardMensal && cardMensal.style.display !== 'none') {
             y += 8;
@@ -8941,8 +9283,9 @@
             doc.text(normalizarTexto(titMensal ? titMensal.textContent.trim() : 'DFC Mensal'), margem, y + 5);
             y += 9;
 
-            const cM = [35, 38, 38, 38, 38]; // Mês, Entradas, Saídas, Fluxo, Acumulado
-            const hMensal = ['Mês', 'Entradas', 'Saídas', 'Fluxo Líquido', 'Acumulado'];
+            const colDescEl = document.getElementById('dfcMensalColDesc');
+            const cM = [35, 38, 38, 38, 38]; // Dia/Mês, Entradas, Saídas, Fluxo, Acumulado
+            const hMensal = [(colDescEl ? colDescEl.textContent.trim() : 'Mês'), 'Entradas', 'Saídas', 'Fluxo Líquido', 'Acumulado'];
             doc.setFillColor(80, 80, 80);
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(7.5);
@@ -9096,6 +9439,12 @@
         <form onsubmit="salvarEdicaoLancamento(event)">
             <input type="hidden" id="editLancId">
             <input type="hidden" id="editLancTipo">
+            <div class="form-group">
+                <label>Empresa</label>
+                <select id="editLancEmpresa">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
             <div class="form-group" id="editLancFornecedorWrap">
                 <label>Fornecedor*</label>
                 <select id="editLancFornecedor">
@@ -9165,11 +9514,29 @@ ALTER TABLE subcategorias DISABLE ROW LEVEL SECURITY;
 ALTER TABLE produtos DISABLE ROW LEVEL SECURITY;
 ALTER TABLE fornecedores DISABLE ROW LEVEL SECURITY;
 ALTER TABLE clientes DISABLE ROW LEVEL SECURITY;
+ALTER TABLE empresas DISABLE ROW LEVEL SECURITY;
 ALTER TABLE contas_a_receber DISABLE ROW LEVEL SECURITY;
 ALTER TABLE contas_a_pagar DISABLE ROW LEVEL SECURITY;
 
 GRANT ALL ON ALL TABLES IN SCHEMA public TO anon;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon;</pre>
+            <strong style="font-size:12px; color:#856404; display:block; margin-top:12px;">🏢 Se a tela de Empresas não carregar, crie a tabela (e as colunas de vínculo) com:</strong>
+            <pre style="font-size:11px; margin-top:6px; background:#f5f5f5; padding:8px; border-radius:4px; overflow-x:auto;">CREATE TABLE IF NOT EXISTS empresas (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    cnpj TEXT,
+    email TEXT,
+    telefone TEXT,
+    endereco TEXT,
+    ativo BOOLEAN DEFAULT true
+);
+
+ALTER TABLE contas_a_receber ADD COLUMN IF NOT EXISTS empresa_id INTEGER REFERENCES empresas(id);
+ALTER TABLE contas_a_pagar  ADD COLUMN IF NOT EXISTS empresa_id INTEGER REFERENCES empresas(id);
+
+ALTER TABLE empresas DISABLE ROW LEVEL SECURITY;
+GRANT ALL ON empresas TO anon;
+GRANT ALL ON empresas_id_seq TO anon;</pre>
         </div>
         <div class="form-actions" style="margin-top:12px;">
             <button class="btn btn-primary" onclick="diagnosticarConexao()">🔄 Testar novamente</button>
