@@ -2164,15 +2164,6 @@
                 </div>
             </div>
 
-            <!-- Card saldo de caixa real -->
-            <div class="dashboard-grid" style="margin-bottom:14px;" id="fcpSaldoRealGrid">
-                <div class="stat-card" id="fcpCardSaldoRealBox" style="border-left-color:#6f42c1;display:none;">
-                    <div class="stat-label">💵 Saldo de Caixa Real (atual)</div>
-                    <div class="stat-value" id="fcpCardSaldoReal" style="font-size:20px;">R$ 0,00</div>
-                    <div class="stat-change">Recebido − Pago (confirmados até hoje)</div>
-                </div>
-            </div>
-
             <!-- Cards resumo FCP -->
             <div class="dashboard-grid" style="margin-bottom:20px;">
                 <div class="stat-card" style="border-left-color:#28a745;">
@@ -2315,8 +2306,14 @@
                 <div class="filter-row" style="align-items:flex-end;gap:12px;flex-wrap:wrap;">
                     <div class="form-group">
                         <label>Grupo DRE</label>
-                        <select id="filtroGrupoDREAnaliseCat" onchange="renderizarAnaliseCategorias()">
+                        <select id="filtroGrupoDREAnaliseCat" onchange="atualizarSelectCategoriaAnaliseCat();renderizarAnaliseCategorias()">
                             <option value="">Todos os grupos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select id="filtroCategoriaAnaliseCat" onchange="renderizarAnaliseCategorias()">
+                            <option value="">Todas as categorias</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -2484,7 +2481,8 @@
             <!-- Preview parcelas -->
             <div id="previewParcelasReceber" style="display:none; margin-bottom:16px;">
                 <div style="font-size:12px; font-weight:600; color:var(--cor-primaria); margin-bottom:6px;" id="previewParcelasReceberTitulo">Parcelas geradas:</div>
-                <div id="listaParcelasReceber" style="max-height:140px; overflow-y:auto; border:1px solid #eee; border-radius:6px; padding:8px; font-size:12px;"></div>
+                <div id="listaParcelasReceber" style="max-height:180px; overflow-y:auto; border:1px solid #eee; border-radius:6px; padding:8px; font-size:12px;"></div>
+                <div id="totalParcelasReceber" style="font-size:11px;margin-top:6px;font-weight:600;"></div>
             </div>
 
             <div class="form-section">
@@ -2605,7 +2603,8 @@
             <!-- Preview parcelas -->
             <div id="previewParcelasPagar" style="display:none; margin-bottom:16px;">
                 <div style="font-size:12px; font-weight:600; color:var(--cor-primaria); margin-bottom:6px;" id="previewParcelasPagarTitulo">Parcelas geradas:</div>
-                <div id="listaParcelasPagar" style="max-height:140px; overflow-y:auto; border:1px solid #eee; border-radius:6px; padding:8px; font-size:12px;"></div>
+                <div id="listaParcelasPagar" style="max-height:180px; overflow-y:auto; border:1px solid #eee; border-radius:6px; padding:8px; font-size:12px;"></div>
+                <div id="totalParcelasPagar" style="font-size:11px;margin-top:6px;font-weight:600;"></div>
             </div>
 
             <div class="form-section">
@@ -4074,9 +4073,17 @@
             valorLancamento = Math.round((valorTotal / numLancamentos) * 100) / 100;
         }
 
+        // Se as parcelas foram editadas manualmente (valor e/ou data), usar os valores informados
+        const datasCustom = [], valoresCustom = [];
+        if (!custoFixo && numLancamentos > 1) {
+            document.querySelectorAll('.parc-data-receber').forEach(inp => { datasCustom[parseInt(inp.dataset.idx, 10)] = inp.value; });
+            document.querySelectorAll('.parc-valor-receber').forEach(inp => { valoresCustom[parseInt(inp.dataset.idx, 10)] = parseFloat(inp.value); });
+        }
+
         let erros = 0;
         for (let i = 0; i < numLancamentos; i++) {
-            const dataVenc = addMonths(dataBase, i);
+            const dataVenc = (datasCustom[i]) ? datasCustom[i] : addMonths(dataBase, i);
+            const valorParc = (valoresCustom[i] !== undefined && !isNaN(valoresCustom[i])) ? valoresCustom[i] : valorLancamento;
             let descParc = descricao;
             if (custoFixo) descParc = descricao + ' (Fixo ' + (i+1) + '/' + numLancamentos + ')';
             else if (numLancamentos > 1) descParc = descricao + ' (' + (i+1) + '/' + numLancamentos + ')';
@@ -4084,7 +4091,7 @@
                 cliente_id: clienteId,
                 empresa_id: empresaId,
                 descricao: descParc,
-                valor: valorLancamento,
+                valor: valorParc,
                 data_competencia: custoFixo ? addMonths(competencia, i) : competencia,
                 data_vencimento: dataVenc,
                 parcela_atual: i + 1,
@@ -4222,9 +4229,17 @@
             valorLancamento = Math.round((valorTotal / numLancamentos) * 100) / 100;
         }
 
+        // Se as parcelas foram editadas manualmente (valor e/ou data), usar os valores informados
+        const datasCustom = [], valoresCustom = [];
+        if (!custoFixo && numLancamentos > 1) {
+            document.querySelectorAll('.parc-data-pagar').forEach(inp => { datasCustom[parseInt(inp.dataset.idx, 10)] = inp.value; });
+            document.querySelectorAll('.parc-valor-pagar').forEach(inp => { valoresCustom[parseInt(inp.dataset.idx, 10)] = parseFloat(inp.value); });
+        }
+
         let erros = 0;
         for (let i = 0; i < numLancamentos; i++) {
-            const dataVenc = addMonths(dataBase, i);
+            const dataVenc = (datasCustom[i]) ? datasCustom[i] : addMonths(dataBase, i);
+            const valorParc = (valoresCustom[i] !== undefined && !isNaN(valoresCustom[i])) ? valoresCustom[i] : valorLancamento;
             let descParc = descricao;
             if (custoFixo) descParc = descricao + ' (Fixo ' + (i+1) + '/' + numLancamentos + ')';
             else if (numLancamentos > 1) descParc = descricao + ' (' + (i+1) + '/' + numLancamentos + ')';
@@ -4234,7 +4249,7 @@
                 categoria_id: categoriaId,
                 subcategoria_id: subcategoriaId,
                 descricao: descParc,
-                valor: valorLancamento,
+                valor: valorParc,
                 data_competencia: custoFixo ? addMonths(competencia, i) : competencia,
                 data_vencimento: dataVenc,
                 parcela_atual: i + 1,
@@ -7229,6 +7244,7 @@
         const preview = document.getElementById('previewParcelasReceber');
         const lista = document.getElementById('listaParcelasReceber');
         const titulo = document.getElementById('previewParcelasReceberTitulo');
+        const totalEl = document.getElementById('totalParcelasReceber');
         const fixo = document.getElementById('custoFixoReceber').checked;
 
         if (fixo) {
@@ -7246,25 +7262,49 @@
                     '</div>';
             }
             lista.innerHTML = html;
+            if (totalEl) totalEl.innerHTML = '';
             preview.style.display = 'block';
             return;
         }
 
         const n = parseInt(document.getElementById('parcelasReceber').value) || 1;
         if (!valor || !dataBase || n <= 1) { preview.style.display = 'none'; return; }
-        titulo.textContent = 'Parcelas geradas:';
+        titulo.textContent = 'Parcelas geradas (ajuste valor e data se necessário):';
         const parc = Math.round((valor / n) * 100) / 100;
-        let html = '';
+        let html = '<div style="display:flex;gap:6px;padding:0 0 5px;font-size:10.5px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:0.3px;">' +
+            '<span style="width:34px;">Nº</span><span style="flex:1;">Data</span><span style="width:110px;text-align:right;">Valor</span></div>';
         for (let i = 0; i < n; i++) {
-            const dt = new Date(addMonths(dataBase, i) + 'T12:00:00');
-            html += '<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f0f0f0;">' +
-                '<span>' + (i+1) + '/' + n + '</span>' +
-                '<span>' + dt.toLocaleDateString('pt-BR') + '</span>' +
-                '<span style="color:#28a745;font-weight:600;">R$ ' + parc.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</span>' +
+            const dt = addMonths(dataBase, i);
+            html += '<div style="display:flex;gap:6px;align-items:center;padding:3px 0;border-bottom:1px solid #f0f0f0;">' +
+                '<span style="width:34px;font-size:11px;color:#888;">' + (i+1) + '/' + n + '</span>' +
+                '<input type="date" class="parc-data-receber" data-idx="' + i + '" value="' + dt + '" style="flex:1;padding:4px 6px;font-size:12px;border:1px solid #ddd;border-radius:4px;">' +
+                '<input type="number" step="0.01" class="parc-valor-receber" data-idx="' + i + '" value="' + parc.toFixed(2) + '" oninput="atualizarTotalParcelas(\'receber\', ' + valor + ')" style="width:110px;padding:4px 6px;font-size:12px;border:1px solid #ddd;border-radius:4px;text-align:right;color:#28a745;font-weight:600;">' +
                 '</div>';
         }
         lista.innerHTML = html;
         preview.style.display = 'block';
+        atualizarTotalParcelas('receber', valor);
+    }
+
+    // Recalcula e exibe o total das parcelas editadas manualmente, comparando com o valor total do lançamento
+    function atualizarTotalParcelas(tipo, valorEsperado) {
+        const inputs = document.querySelectorAll('.parc-valor-' + tipo);
+        let soma = 0;
+        inputs.forEach(inp => { soma += parseFloat(inp.value) || 0; });
+        const el = document.getElementById(tipo === 'receber' ? 'totalParcelasReceber' : 'totalParcelasPagar');
+        if (!el) return;
+        soma = Math.round(soma * 100) / 100;
+        const diff = Math.round((soma - valorEsperado) * 100) / 100;
+        const somaFmt = soma.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2});
+        const espFmt = valorEsperado.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2});
+        if (Math.abs(diff) < 0.01) {
+            el.innerHTML = '✅ Total das parcelas: R$ ' + somaFmt + ' (confere com o valor total)';
+            el.style.color = '#28a745';
+        } else {
+            const diffFmt = Math.abs(diff).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2});
+            el.innerHTML = '⚠️ Total das parcelas: R$ ' + somaFmt + ' (' + (diff > 0 ? 'R$ ' + diffFmt + ' a mais' : 'R$ ' + diffFmt + ' a menos') + ' que o valor total de R$ ' + espFmt + ')';
+            el.style.color = '#e6a817';
+        }
     }
 
     function calcularParcelasPagar() {
@@ -7273,6 +7313,7 @@
         const preview = document.getElementById('previewParcelasPagar');
         const lista = document.getElementById('listaParcelasPagar');
         const titulo = document.getElementById('previewParcelasPagarTitulo');
+        const totalEl = document.getElementById('totalParcelasPagar');
         const fixo = document.getElementById('custoFixoPagar').checked;
 
         if (fixo) {
@@ -7290,25 +7331,28 @@
                     '</div>';
             }
             lista.innerHTML = html;
+            if (totalEl) totalEl.innerHTML = '';
             preview.style.display = 'block';
             return;
         }
 
         const n = parseInt(document.getElementById('parcelasPagar').value) || 1;
         if (!valor || !dataBase || n <= 1) { preview.style.display = 'none'; return; }
-        titulo.textContent = 'Parcelas geradas:';
+        titulo.textContent = 'Parcelas geradas (ajuste valor e data se necessário):';
         const parc = Math.round((valor / n) * 100) / 100;
-        let html = '';
+        let html = '<div style="display:flex;gap:6px;padding:0 0 5px;font-size:10.5px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:0.3px;">' +
+            '<span style="width:34px;">Nº</span><span style="flex:1;">Data</span><span style="width:110px;text-align:right;">Valor</span></div>';
         for (let i = 0; i < n; i++) {
-            const dt = new Date(addMonths(dataBase, i) + 'T12:00:00');
-            html += '<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f0f0f0;">' +
-                '<span>' + (i+1) + '/' + n + '</span>' +
-                '<span>' + dt.toLocaleDateString('pt-BR') + '</span>' +
-                '<span style="color:#dc3545;font-weight:600;">R$ ' + parc.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</span>' +
+            const dt = addMonths(dataBase, i);
+            html += '<div style="display:flex;gap:6px;align-items:center;padding:3px 0;border-bottom:1px solid #f0f0f0;">' +
+                '<span style="width:34px;font-size:11px;color:#888;">' + (i+1) + '/' + n + '</span>' +
+                '<input type="date" class="parc-data-pagar" data-idx="' + i + '" value="' + dt + '" style="flex:1;padding:4px 6px;font-size:12px;border:1px solid #ddd;border-radius:4px;">' +
+                '<input type="number" step="0.01" class="parc-valor-pagar" data-idx="' + i + '" value="' + parc.toFixed(2) + '" oninput="atualizarTotalParcelas(\'pagar\', ' + valor + ')" style="width:110px;padding:4px 6px;font-size:12px;border:1px solid #ddd;border-radius:4px;text-align:right;color:#dc3545;font-weight:600;">' +
                 '</div>';
         }
         lista.innerHTML = html;
         preview.style.display = 'block';
+        atualizarTotalParcelas('pagar', valor);
     }
 
     // ================================================================
@@ -7443,12 +7487,13 @@
         const totalPendPag = pendentes_pagar.reduce((s,c) => s + parseFloat(c.valor||0), 0);
         const fluxoLiquido = totalReceber - totalPagar;
 
-        // ⚠️ Aviso importante: DFC/DRE só mostram lançamentos com status "recebido" ou "pago"
+        // ⚠️ Aviso importante: a DFC (regime de caixa) só mostra lançamentos "recebido"/"pago".
+        // A DRE é por competência e pode incluir esses mesmos lançamentos mesmo estando pendentes.
         const avisoEl = document.getElementById('dfcAviso');
         const qtdPend = pendentes_receber.length + pendentes_pagar.length;
         if (avisoEl) {
             avisoEl.textContent = qtdPend > 0
-                ? '⚠️ Há ' + qtdPend + ' lançamento(s) com status "pendente" que NÃO são exibidos aqui. DFC e DRE consideram apenas lançamentos marcados como Recebido/Pago.'
+                ? '⚠️ Há ' + qtdPend + ' lançamento(s) com status "pendente" que NÃO são exibidos aqui. A DFC (regime de caixa) considera apenas lançamentos marcados como Recebido/Pago. Esses mesmos lançamentos podem aparecer na DRE, que é por competência e independe do status.'
                 : '✅ Todos os lançamentos estão registrados no DFC.';
             avisoEl.style.display = 'block';
             avisoEl.style.background = qtdPend > 0 ? '#fff3cd' : '#d4edda';
@@ -8004,14 +8049,6 @@
         const saldoRealAtual = recebidosReal.reduce((s,c) => s + parseFloat(c.valor||0), 0)
                              - pagosReal.reduce((s,c) => s + parseFloat(c.valor||0), 0);
 
-        const cardSaldoRealBox = document.getElementById('fcpCardSaldoRealBox');
-        const cardSaldoReal    = document.getElementById('fcpCardSaldoReal');
-        if (cardSaldoRealBox) cardSaldoRealBox.style.display = incluirSaldoReal ? '' : 'none';
-        if (cardSaldoReal) {
-            cardSaldoReal.textContent = fmtValSig(saldoRealAtual);
-            cardSaldoReal.style.color = saldoRealAtual >= 0 ? '#28a745' : '#dc3545';
-        }
-
         // Aviso
         const avisoEl = document.getElementById('fcpAviso');
         if (avisoEl) {
@@ -8066,7 +8103,7 @@
         if (cardFCPDRE) {
             cardFCPDRE.style.display = '';
             document.getElementById('tituloFCPDRE').textContent = '🏆 DRE Projetado — ' + anoSel;
-            gerarTabelaDREGenerica('fcpDREHeaderMeses', 'fcpDRECorpo', recAno, pagAno, anoSel, 'data_vencimento', 'data_vencimento');
+            gerarTabelaDREGenerica('fcpDREHeaderMeses', 'fcpDRECorpo', recAno, pagAno, anoSel, 'data_vencimento', 'data_vencimento', incluirSaldoReal ? saldoRealAtual : null);
         }
     }
 
@@ -8155,8 +8192,8 @@
         const avisoEl = document.getElementById('dreAviso');
         if (avisoEl) {
             avisoEl.textContent = pendentes > 0
-                ? '📌 ' + pendentes + ' lançamento(s) pendentes incluídos na DRE pelo regime de competência (data de competência). Para excluí-los, marque-os como Recebido/Pago ou use a DFC para fluxo de caixa real.'
-                : '✅ Todos os lançamentos confirmados estão na DRE.';
+                ? '📌 ' + pendentes + ' lançamento(s) pendente(s) incluído(s) na DRE por competência (usa a data de competência, independente do status). Marcar como Recebido/Pago NÃO remove o lançamento da DRE. Para ver apenas o fluxo de caixa já realizado (recebido/pago), use a tela de DFC.'
+                : '✅ Não há lançamentos pendentes no momento; todos já estão confirmados (Recebido/Pago).';
             avisoEl.style.cssText = 'display:block;padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:13px;' +
                 (pendentes > 0 ? 'background:#e8f4fd;color:#0c5460;border:1px solid #bee5eb;' : 'background:#d4edda;color:#155724;border:1px solid #c3e6cb;');
         }
@@ -8440,7 +8477,7 @@
             return { rb, ded, rl, cpv, lb, dc, da, rf, df, ebt, emp, inv, or, od, res };
         };
 
-        const fmtV = v => v !== 0 ? 'R$&nbsp;' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '-';
+        const fmtV = v => v !== 0 ? (v < 0 ? '-' : '') + 'R$&nbsp;' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '-';
         const cor  = v => v < 0 ? 'color:#dc3545;' : v > 0 ? 'color:#28a745;' : 'color:#ccc;';
 
         // ---- Subcategorias do CPV por mes ----
@@ -8498,20 +8535,21 @@
             { label: '(-) Investimentos',         fn: m => -calcMes(m).inv, bg: '' },
             { label: '(+) Outras Receitas',       fn: m => calcMes(m).or,   bg: '' },
             { label: '(-) Outras Despesas',       fn: m => -calcMes(m).od,  bg: '' },
-            { label: '= Resultado L\u00edquido',  fn: m => calcMes(m).res,  bg: 'var(--cor-primaria)', cor: 'white', bold: true },
+            { label: '= Resultado L\u00edquido',  fn: m => calcMes(m).res,  bg: 'var(--cor-primaria)', cor: 'white', bold: true, bgPorSinal: true },
         ];
 
         tbody.innerHTML = '';
         linhas.forEach(linha => {
             const vals = Array.from({length: 12}, (_, m) => linha.fn(m));
             const total = vals.reduce((s, v) => s + v, 0);
-            const rowBg = linha.bg ? 'background:' + linha.bg + ';' : '';
             const rowFc = linha.cor ? 'color:' + linha.cor + ';' : '';
             const bold  = linha.bold ? 'font-weight:700;' : '';
-            tbody.innerHTML += '<tr style="' + rowBg + rowFc + bold + '">' +
-                '<td style="padding:5px 8px;' + bold + '">' + linha.label + '</td>' +
-                vals.map(v => '<td style="text-align:right;padding:5px 8px;' + (linha.cor ? '' : cor(v)) + '">' + fmtV(v) + '</td>').join('') +
-                '<td style="text-align:right;padding:5px 8px;font-weight:700;' + (linha.cor ? '' : cor(total)) + '">' + fmtV(total) + '</td>' +
+            const bgCel = v => linha.bgPorSinal ? 'background:' + (v < 0 ? '#dc3545' : 'var(--cor-primaria)') + ';' : '';
+            const rowBgFallback = linha.bg && !linha.bgPorSinal ? 'background:' + linha.bg + ';' : '';
+            tbody.innerHTML += '<tr style="' + rowBgFallback + rowFc + bold + '">' +
+                '<td style="padding:5px 8px;' + bold + (linha.bgPorSinal ? bgCel(total) : '') + '">' + linha.label + '</td>' +
+                vals.map(v => '<td style="text-align:right;padding:5px 8px;' + (linha.cor ? bgCel(v) : cor(v)) + '">' + fmtV(v) + '</td>').join('') +
+                '<td style="text-align:right;padding:5px 8px;font-weight:700;' + (linha.cor ? bgCel(total) : cor(total)) + '">' + fmtV(total) + '</td>' +
                 '</tr>';
 
             // Subcategorias expandidas
@@ -8534,7 +8572,7 @@
     // MODELO DRE (JAN A DEZ) GENÉRICO — usado no DFC (regime de caixa)
     // e no FCP (regime projetado), reaproveitando os grupos da DRE
     // ================================================================
-    function gerarTabelaDREGenerica(headerElId, bodyElId, listaRec, listaPag, ano, campoRec, campoPag) {
+    function gerarTabelaDREGenerica(headerElId, bodyElId, listaRec, listaPag, ano, campoRec, campoPag, saldoInicial = null) {
         const headerRow = document.getElementById(headerElId);
         const tbody = document.getElementById(bodyElId);
         if (!headerRow || !tbody) return;
@@ -8582,7 +8620,16 @@
             return { rb, ded, rl, cpv, lb, dc, da, rf, df, ebt, emp, inv, or, od, res };
         };
 
-        const fmtV = v => v !== 0 ? 'R$&nbsp;' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '-';
+        // Quando um saldo inicial é informado (ex.: saldo de caixa real), o Resultado
+        // Líquido passa a ser acumulado mês a mês a partir desse saldo.
+        let acumResultado = null;
+        if (saldoInicial !== null) {
+            acumResultado = [];
+            let acc = saldoInicial;
+            for (let m = 0; m < 12; m++) { acc += calcMes(m).res; acumResultado[m] = acc; }
+        }
+
+        const fmtV = v => v !== 0 ? (v < 0 ? '-' : '') + 'R$&nbsp;' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '-';
         const cor  = v => v < 0 ? 'color:#dc3545;' : v > 0 ? 'color:#28a745;' : 'color:#ccc;';
 
         // Subcategorias do CPV por mês
@@ -8628,20 +8675,34 @@
             { label: '(-) Investimentos',         fn: m => -calcMes(m).inv, bg: '' },
             { label: '(+) Outras Receitas',       fn: m => calcMes(m).or,   bg: '' },
             { label: '(-) Outras Despesas',       fn: m => -calcMes(m).od,  bg: '' },
-            { label: '= Resultado L\u00edquido',  fn: m => calcMes(m).res,  bg: 'var(--cor-primaria)', cor: 'white', bold: true },
         ];
+
+        if (saldoInicial !== null) {
+            const linhaInicial = Array(12).fill(0);
+            linhaInicial[0] = saldoInicial;
+            linhas.push({ label: '💵 Saldo Inicial (Caixa Real)', fn: m => linhaInicial[m], bg: '#ece3f9', cor: '#4a2f7a', bold: true, bgPorSinal: 'inicial' });
+            linhas.push({ label: '= Resultado L\u00edquido Acumulado', fn: m => acumResultado[m], bg: 'var(--cor-primaria)', cor: 'white', bold: true, totalOverride: acumResultado[11], bgPorSinal: 'resultado' });
+        } else {
+            linhas.push({ label: '= Resultado L\u00edquido', fn: m => calcMes(m).res, bg: 'var(--cor-primaria)', cor: 'white', bold: true, bgPorSinal: 'resultado' });
+        }
 
         tbody.innerHTML = '';
         linhas.forEach(linha => {
             const vals = Array.from({length: 12}, (_, m) => linha.fn(m));
-            const total = vals.reduce((s, v) => s + v, 0);
-            const rowBg = linha.bg ? 'background:' + linha.bg + ';' : '';
+            const total = linha.totalOverride !== undefined ? linha.totalOverride : vals.reduce((s, v) => s + v, 0);
             const rowFc = linha.cor ? 'color:' + linha.cor + ';' : '';
             const bold  = linha.bold ? 'font-weight:700;' : '';
-            tbody.innerHTML += '<tr style="' + rowBg + rowFc + bold + '">' +
-                '<td style="padding:5px 8px;' + bold + '">' + linha.label + '</td>' +
-                vals.map(v => '<td style="text-align:right;padding:5px 8px;' + (linha.cor ? '' : cor(v)) + '">' + fmtV(v) + '</td>').join('') +
-                '<td style="text-align:right;padding:5px 8px;font-weight:700;' + (linha.cor ? '' : cor(total)) + '">' + fmtV(total) + '</td>' +
+            // Nas linhas de resultado, o fundo reflete o sinal do valor (vermelho se negativo)
+            const bgCel = v => {
+                if (linha.bgPorSinal === 'resultado') return 'background:' + (v < 0 ? '#dc3545' : 'var(--cor-primaria)') + ';';
+                if (linha.bgPorSinal === 'inicial') return 'background:' + (v < 0 ? '#f8d7da' : '#ece3f9') + ';';
+                return '';
+            };
+            const rowBgFallback = (linha.bg && !linha.bgPorSinal) ? 'background:' + linha.bg + ';' : '';
+            tbody.innerHTML += '<tr style="' + rowBgFallback + rowFc + bold + '">' +
+                '<td style="padding:5px 8px;' + bold + (linha.bgPorSinal ? bgCel(total) : '') + '">' + linha.label + '</td>' +
+                vals.map(v => '<td style="text-align:right;padding:5px 8px;' + (linha.bgPorSinal ? bgCel(v) : (linha.cor ? '' : cor(v))) + '">' + fmtV(v) + '</td>').join('') +
+                '<td style="text-align:right;padding:5px 8px;font-weight:700;' + (linha.bgPorSinal ? bgCel(total) : (linha.cor ? '' : cor(total))) + '">' + fmtV(total) + '</td>' +
                 '</tr>';
 
             if (linha.expandir && linha.expandir.length > 0) {
@@ -9029,6 +9090,8 @@
             });
         }
 
+        atualizarSelectCategoriaAnaliseCat();
+
         const selAno = document.getElementById('filtroAnoAnaliseCat');
         if (selAno && selAno.options.length === 0) {
             const anoAtual = new Date().getFullYear();
@@ -9043,6 +9106,25 @@
         renderizarAnaliseCategorias();
     }
 
+    // Repopula o filtro de Categoria da Análise de Categorias, respeitando o Grupo DRE selecionado
+    function atualizarSelectCategoriaAnaliseCat() {
+        const selGrupo = document.getElementById('filtroGrupoDREAnaliseCat');
+        const selCat = document.getElementById('filtroCategoriaAnaliseCat');
+        if (!selCat) return;
+        const grupoSel = selGrupo ? selGrupo.value : '';
+        const valorAtual = selCat.value;
+
+        const categorias = (dadosCache.categorias || [])
+            .filter(cat => !grupoSel || cat.grupo_dre === grupoSel)
+            .slice()
+            .sort((a, b) => a.nome.localeCompare(b.nome));
+
+        selCat.innerHTML = '<option value="">Todas as categorias</option>' +
+            categorias.map(cat => '<option value="' + cat.id + '">' + cat.nome + '</option>').join('');
+
+        if (valorAtual && categorias.some(c => String(c.id) === valorAtual)) selCat.value = valorAtual;
+    }
+
     function renderizarAnaliseCategorias() {
         const cabecalho = document.getElementById('analiseCategoriasCabecalho');
         const corpo = document.getElementById('analiseCategoriasCorpo');
@@ -9050,9 +9132,11 @@
         if (!cabecalho || !corpo) return;
 
         const selGrupo = document.getElementById('filtroGrupoDREAnaliseCat');
+        const selCategoria = document.getElementById('filtroCategoriaAnaliseCat');
         const selAno = document.getElementById('filtroAnoAnaliseCat');
         const selMes = document.getElementById('filtroMesAnaliseCat');
         const grupoSel = selGrupo ? selGrupo.value : '';
+        const categoriaSel = selCategoria ? selCategoria.value : '';
         const anoSel = (selAno && selAno.value) ? selAno.value : String(new Date().getFullYear());
         const mesSel = selMes ? selMes.value : '';
 
@@ -9065,7 +9149,10 @@
         cabecalho.innerHTML = headHtml;
 
         const contas = (dadosCache.contasAnaliseCategorias || []).filter(c => c.data_competencia && c.data_competencia.startsWith(anoSel));
-        const categorias = (dadosCache.categorias || []).filter(cat => !grupoSel || cat.grupo_dre === grupoSel);
+        const categorias = (dadosCache.categorias || []).filter(cat =>
+            (!grupoSel || cat.grupo_dre === grupoSel) &&
+            (!categoriaSel || String(cat.id) === categoriaSel)
+        );
 
         const totalPorMes = {};
         mesesExibir.forEach(m => totalPorMes[m] = 0);
