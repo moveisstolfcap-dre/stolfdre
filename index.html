@@ -838,6 +838,7 @@
             <div class="menu-item" onclick="showPage('fornecedores')">🏭 Fornecedores</div>
             <div class="menu-item" onclick="showPage('clientes')">👥 Clientes</div>
             <div class="menu-item" onclick="showPage('bancos')">🏦 Bancos</div>
+            <div class="menu-item" onclick="showPage('transferencias')">🔁 Transferência entre Contas</div>
             <div class="menu-item" onclick="showPage('empresas')">🏢 Empresas</div>
         </div>
 
@@ -1233,6 +1234,70 @@
                     <button type="button" class="btn btn-success btn-small" onclick="confirmarTodasSugestoes()">✅ Confirmar todas as sugestões</button>
                 </div>
                 <div id="conciliacaoResultado"></div>
+            </div>
+        </div>
+
+        <!-- TRANSFERÊNCIA ENTRE CONTAS -->
+        <div id="transferencias" class="page">
+            <div class="page-header">
+                <h1>🔁 Transferência entre Contas</h1>
+            </div>
+            <div class="alert alert-success" id="alertTransferencias"></div>
+
+            <div class="card" style="max-width:760px;">
+                <div class="card-title">Nova Transferência</div>
+                <div style="font-size:12px;color:#888;margin-bottom:14px;">Movimenta um valor de uma conta bancária para outra. O valor é debitado da conta de origem e creditado na conta de destino, refletindo automaticamente no saldo dos bancos e no extrato bancário de cada um.</div>
+                <form onsubmit="realizarTransferencia(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Conta de Origem*</label>
+                            <select id="transfBancoOrigem" required onchange="atualizarInfoSaldoOrigem()">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Conta de Destino*</label>
+                            <select id="transfBancoDestino" required>
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Valor*</label>
+                            <input type="number" id="transfValor" step="0.01" min="0.01" placeholder="0,00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data*</label>
+                            <input type="date" id="transfData" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Observação</label>
+                        <input type="text" id="transfObs" placeholder="Opcional">
+                    </div>
+                    <div id="transfSaldoOrigemInfo" style="font-size:12px;color:#888;margin:-6px 0 14px;"></div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">🔁 Realizar Transferência</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card" style="margin-top:20px;">
+                <div class="card-title">📜 Histórico de Transferências</div>
+                <div class="table-container">
+                    <table id="tabelaTransferencias">
+                        <thead><tr>
+                            <th style="width:100px;">Data</th>
+                            <th>Origem</th>
+                            <th>Destino</th>
+                            <th style="text-align:right;width:130px;">Valor</th>
+                            <th>Observação</th>
+                            <th style="width:90px;">Ações</th>
+                        </tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -5082,6 +5147,7 @@
             else if (pageId === 'analise-categorias') carregarAnaliseCategorias();
             else if (pageId === 'fcp') carregarFCP();
             else if (pageId === 'bancos') carregarBancos();
+            else if (pageId === 'transferencias') carregarTransferencias();
             else if (pageId === 'dashboard') atualizarDashboard();
         }
     }
@@ -6187,7 +6253,7 @@
     // ================================================================
     // BANCOS
     // ================================================================
-    function _calcularSaldosBancos(bancos, recebidas, pagas) {
+    function _calcularSaldosBancos(bancos, recebidas, pagas, transferencias) {
         const saldos = {};
         bancos.forEach(b => { saldos[b.id] = parseFloat(b.saldo_inicial || 0); });
         (recebidas || []).filter(c => c.status === 'recebido' && c.banco_id).forEach(c => {
@@ -6196,20 +6262,28 @@
         (pagas || []).filter(c => c.status === 'pago' && c.banco_id).forEach(c => {
             if (saldos[c.banco_id] !== undefined) saldos[c.banco_id] -= parseFloat(c.valor || 0);
         });
+        // Transferências entre contas: debita da origem e credita no destino
+        (transferencias || []).forEach(t => {
+            const valor = parseFloat(t.valor || 0);
+            if (saldos[t.banco_origem_id] !== undefined) saldos[t.banco_origem_id] -= valor;
+            if (saldos[t.banco_destino_id] !== undefined) saldos[t.banco_destino_id] += valor;
+        });
         return saldos;
     }
 
     async function carregarBancos() {
-        const [bancos, recebidas, pagas] = await Promise.all([
+        const [bancos, recebidas, pagas, transferencias] = await Promise.all([
             fetchSupabase('bancos', 'GET'),
             fetchSupabase('contas_a_receber', 'GET', null, 'status=eq.recebido'),
-            fetchSupabase('contas_a_pagar',   'GET', null, 'status=eq.pago')
+            fetchSupabase('contas_a_pagar',   'GET', null, 'status=eq.pago'),
+            fetchSupabase('transferencias', 'GET')
         ]);
         if (!bancos) return;
         dadosCache.bancos = bancos;
         if (recebidas) dadosCache.contasRecebidas = recebidas;
         if (pagas)     dadosCache.contasPagas     = pagas;
-        const saldos = _calcularSaldosBancos(bancos, recebidas || [], pagas || []);
+        dadosCache.transferencias = transferencias || [];
+        const saldos = _calcularSaldosBancos(bancos, recebidas || [], pagas || [], dadosCache.transferencias);
         atualizarTabelaBancos(saldos);
         atualizarCardsSaldoBancos(saldos);
         _popularSelectExtrato();
@@ -6347,6 +6421,28 @@
                 complemento: fornecedor?fornecedor.nome:'', banco: banco?banco.nome:'-',
                 valor: parseFloat(c.valor||0) });
         });
+        // Transferências entre contas: gera uma saída na conta de origem e uma entrada na conta de destino
+        (dadosCache.transferencias || []).forEach(t => {
+            const data = t.data || ''; if (!data) return;
+            if (anoFiltro && !data.startsWith(anoFiltro)) return;
+            if (mesFiltro && !data.includes('-' + mesFiltro + '-')) return;
+            const descBase = 'transferência' + (t.observacao ? ' — ' + t.observacao : '');
+            if (busca && !descBase.includes(busca)) return;
+            const bancoOrigem  = (dadosCache.bancos||[]).find(b => b.id === t.banco_origem_id);
+            const bancoDestino = (dadosCache.bancos||[]).find(b => b.id === t.banco_destino_id);
+            const incluirOrigem  = !bancoIdFiltro || String(bancoIdFiltro) === String(t.banco_origem_id);
+            const incluirDestino = !bancoIdFiltro || String(bancoIdFiltro) === String(t.banco_destino_id);
+            if (incluirOrigem) {
+                movimentos.push({ data, tipo:'debito', descricao:'Transferência enviada'+(t.observacao?' — '+t.observacao:''),
+                    complemento: bancoDestino ? 'para '+bancoDestino.nome : '', banco: bancoOrigem?bancoOrigem.nome:'-',
+                    valor: parseFloat(t.valor||0) });
+            }
+            if (incluirDestino) {
+                movimentos.push({ data, tipo:'credito', descricao:'Transferência recebida'+(t.observacao?' — '+t.observacao:''),
+                    complemento: bancoOrigem ? 'de '+bancoOrigem.nome : '', banco: bancoDestino?bancoDestino.nome:'-',
+                    valor: parseFloat(t.valor||0) });
+            }
+        });
         movimentos.sort((a,b) => a.data.localeCompare(b.data));
         let saldoInicial = 0;
         (dadosCache.bancos||[]).filter(b => bancoIdFiltro ? String(b.id)===String(bancoIdFiltro) : b.ativo)
@@ -6355,12 +6451,48 @@
         movimentos.forEach(m => { if (!porDia[m.data]) porDia[m.data]=[]; porDia[m.data].push(m); });
         const fmtData = d => { const p=d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
         const fmtVal  = v => 'R$ ' + v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+        const nomesDiaSemana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
         tbody.innerHTML = ''; let acumulado=saldoInicial, totalCred=0, totalDeb=0;
         if (saldoInicial !== 0) {
             const cor = saldoInicial>=0?'#28a745':'#dc3545';
             tbody.innerHTML += '<tr style="background:#f8f9fa;"><td colspan="4" style="font-weight:600;color:#555;">Saldo Inicial</td>' +
                 '<td></td><td></td><td></td><td style="text-align:right;font-weight:700;color:'+cor+';">'+fmtVal(saldoInicial)+'</td></tr>';
         }
+        // Modo diário completo: com Ano e Mês selecionados, lista todos os dias do mês
+        // (mesmo sem lançamento), com valores acumulados por dia (crédito e débito somados,
+        // sem detalhar por lançamento/categoria), dia da semana e destaque de fins de semana.
+        const modoDiarioCompleto = !!(anoFiltro && mesFiltro);
+        if (modoDiarioCompleto) {
+            const anoNum = parseInt(anoFiltro, 10);
+            const mesNum = parseInt(mesFiltro, 10);
+            const ultimoDiaMes = new Date(anoNum, mesNum, 0).getDate();
+            for (let d = 1; d <= ultimoDiaMes; d++) {
+                const dd  = String(d).padStart(2, '0');
+                const iso = anoFiltro + '-' + mesFiltro + '-' + dd;
+                const diaSemana   = new Date(anoNum, mesNum - 1, d, 12, 0, 0).getDay();
+                const isFimSemana = diaSemana === 0 || diaSemana === 6;
+                const movs = porDia[iso] || [];
+                let credDia = 0, debDia = 0;
+                movs.forEach(m => { if (m.tipo === 'credito') credDia += m.valor; else debDia += m.valor; });
+                const saldoDia = credDia - debDia;
+                acumulado += saldoDia; totalCred += credDia; totalDeb += debDia;
+                const hasData = credDia > 0 || debDia > 0;
+                const corDia  = saldoDia >= 0 ? '#28a745' : '#dc3545';
+                const corAcum = acumulado >= 0 ? '#28a745' : '#dc3545';
+                const rowBg   = isFimSemana ? 'background:#fdecea;' : '';
+                const diaCor  = isFimSemana ? '#c0392b' : (hasData ? '#333' : '#999');
+                const corCred = hasData ? '#28a745' : (isFimSemana ? '#e2a099' : '#ccc');
+                const corDeb  = hasData ? '#dc3545' : (isFimSemana ? '#e2a099' : '#ccc');
+                const corSD   = hasData ? corDia    : (isFimSemana ? '#e2a099' : '#ccc');
+                tbody.innerHTML += '<tr style="'+rowBg+'">' +
+                    '<td style="font-weight:600;color:'+diaCor+';">'+dd+'/'+mesFiltro+' <span style="font-weight:600;font-size:10px;letter-spacing:0.3px;'+(isFimSemana?'color:#c0392b;':'color:#999;')+'">'+nomesDiaSemana[diaSemana]+'</span></td>' +
+                    '<td colspan="3" style="color:#999;font-size:11px;">'+(hasData ? movs.length+' lançamento'+(movs.length>1?'s':'') : '-')+'</td>' +
+                    '<td style="text-align:right;color:'+corCred+';font-weight:'+(hasData?'600':'400')+';">'+(credDia>0?fmtVal(credDia):'-')+'</td>' +
+                    '<td style="text-align:right;color:'+corDeb+';font-weight:'+(hasData?'600':'400')+';">'+(debDia>0?fmtVal(debDia):'-')+'</td>' +
+                    '<td style="text-align:right;font-weight:700;color:'+corSD+';">'+(hasData ? fmtVal(Math.abs(saldoDia))+(saldoDia<0?' ▼':' ▲') : '-')+'</td>' +
+                    '<td style="text-align:right;font-weight:700;color:'+corAcum+';">'+fmtVal(acumulado)+'</td></tr>';
+            }
+        } else {
         const dias = Object.keys(porDia).sort();
         if (dias.length===0) tbody.innerHTML += '<tr><td colspan="8" style="text-align:center;color:#999;padding:24px;">Nenhum lançamento encontrado para o período.</td></tr>';
         dias.forEach(dia => {
@@ -6383,6 +6515,7 @@
                     '<td rowspan="'+n+'" style="text-align:right;font-weight:700;color:'+corAcum+';vertical-align:middle;">'+fmtVal(acumulado)+'</td>':'') + '</tr>';
             });
         });
+        }
         const fluxo=totalCred-totalDeb;
         tfoot.innerHTML = '<tr style="font-weight:700;background:#333;color:white;">' +
             '<td colspan="4">TOTAIS DO PERÍODO</td>' +
@@ -6395,6 +6528,131 @@
             '<div class="stat-card" style="border-left-color:#dc3545;"><div class="stat-label">❤️ Total Débitos</div><div class="stat-value" style="color:#dc3545;font-size:20px;">'+fmtVal(totalDeb)+'</div><div class="stat-change">'+movimentos.filter(m=>m.tipo==='debito').length+' saídas</div></div>' +
             '<div class="stat-card" style="border-left-color:'+(fluxo>=0?'#28a745':'#dc3545')+'"><div class="stat-label">📊 Fluxo do Período</div><div class="stat-value" style="color:'+(fluxo>=0?'#28a745':'#dc3545')+';font-size:20px;">'+fmtVal(Math.abs(fluxo))+'</div><div class="stat-change">'+(fluxo>=0?'Positivo':'Negativo')+'</div></div>' +
             '<div class="stat-card" style="border-left-color:#FF7A42;"><div class="stat-label">🏦 Saldo Acumulado</div><div class="stat-value" style="color:'+(acumulado>=0?'#28a745':'#dc3545')+';font-size:20px;">'+fmtVal(acumulado)+'</div><div class="stat-change">incl. saldo inicial</div></div>';
+    }
+
+    // ================================================================
+    // TRANSFERÊNCIA ENTRE CONTAS
+    // ================================================================
+    async function carregarTransferencias() {
+        const [bancos, transferencias] = await Promise.all([
+            dadosCache.bancos && dadosCache.bancos.length ? Promise.resolve(dadosCache.bancos) : fetchSupabase('bancos', 'GET'),
+            fetchSupabase('transferencias', 'GET')
+        ]);
+        if (bancos) dadosCache.bancos = bancos;
+        dadosCache.transferencias = transferencias || [];
+
+        _popularSelectsTransferencia();
+
+        const dataEl = document.getElementById('transfData');
+        if (dataEl && !dataEl.value) dataEl.value = new Date().toISOString().slice(0, 10);
+
+        atualizarInfoSaldoOrigem();
+        _renderizarTabelaTransferencias();
+    }
+
+    function _popularSelectsTransferencia() {
+        const selOrigem  = document.getElementById('transfBancoOrigem');
+        const selDestino = document.getElementById('transfBancoDestino');
+        if (!selOrigem || !selDestino) return;
+        const valOrigem  = selOrigem.value;
+        const valDestino = selDestino.value;
+        const opcoes = (dadosCache.bancos || []).filter(b => b.ativo)
+            .map(b => '<option value="'+b.id+'">'+b.nome+(b.conta?' — '+b.conta:'')+'</option>').join('');
+        selOrigem.innerHTML  = '<option value="">Selecione...</option>' + opcoes;
+        selDestino.innerHTML = '<option value="">Selecione...</option>' + opcoes;
+        if (valOrigem)  selOrigem.value  = valOrigem;
+        if (valDestino) selDestino.value = valDestino;
+    }
+
+    function atualizarInfoSaldoOrigem() {
+        const info = document.getElementById('transfSaldoOrigemInfo');
+        if (!info) return;
+        const bancoId = (document.getElementById('transfBancoOrigem')||{}).value || '';
+        if (!bancoId) { info.textContent = ''; return; }
+        const recebidas = dadosCache.contasRecebidas || [];
+        const pagas     = dadosCache.contasPagas     || [];
+        const saldos = _calcularSaldosBancos(dadosCache.bancos || [], recebidas, pagas, dadosCache.transferencias || []);
+        const saldo = saldos[bancoId] !== undefined ? saldos[bancoId] : 0;
+        const cor = saldo >= 0 ? '#28a745' : '#dc3545';
+        info.innerHTML = 'Saldo atual da conta de origem: <b style="color:'+cor+';">R$ '+saldo.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'</b>';
+    }
+
+    async function realizarTransferencia(event) {
+        event.preventDefault();
+        const bancoOrigemId  = document.getElementById('transfBancoOrigem').value;
+        const bancoDestinoId = document.getElementById('transfBancoDestino').value;
+        const valor = parseFloat(document.getElementById('transfValor').value || 0);
+        const data  = document.getElementById('transfData').value;
+        const obs   = document.getElementById('transfObs').value || '';
+
+        if (!bancoOrigemId || !bancoDestinoId) {
+            showAlert('Selecione a conta de origem e a conta de destino.', 'alertTransferencias', 'danger');
+            return;
+        }
+        if (bancoOrigemId === bancoDestinoId) {
+            showAlert('A conta de origem e a conta de destino devem ser diferentes.', 'alertTransferencias', 'danger');
+            return;
+        }
+        if (!valor || valor <= 0) {
+            showAlert('Informe um valor de transferência válido.', 'alertTransferencias', 'danger');
+            return;
+        }
+        if (!data) {
+            showAlert('Informe a data da transferência.', 'alertTransferencias', 'danger');
+            return;
+        }
+
+        const payload = {
+            banco_origem_id: parseInt(bancoOrigemId, 10),
+            banco_destino_id: parseInt(bancoDestinoId, 10),
+            valor: valor,
+            data: data,
+            observacao: obs || null
+        };
+
+        const resultado = await fetchSupabase('transferencias', 'POST', payload);
+        if (!resultado) return;
+
+        showAlert('Transferência realizada com sucesso!', 'alertTransferencias', 'success');
+        document.getElementById('transfValor').value = '';
+        document.getElementById('transfObs').value = '';
+
+        // Recarrega dados de bancos/transferências para refletir saldos e extrato atualizados
+        await carregarBancos();
+        await carregarTransferencias();
+    }
+
+    function _renderizarTabelaTransferencias() {
+        const tbody = document.querySelector('#tabelaTransferencias tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        const fmtData = d => { if (!d) return '-'; const p = d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
+        const fmtVal  = v => 'R$ ' + parseFloat(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+        const lista = (dadosCache.transferencias || []).slice().sort((a,b) => (b.data||'').localeCompare(a.data||''));
+        if (lista.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999;padding:20px;">Nenhuma transferência realizada ainda.</td></tr>';
+            return;
+        }
+        lista.forEach(t => {
+            const origem  = (dadosCache.bancos||[]).find(b => b.id === t.banco_origem_id);
+            const destino = (dadosCache.bancos||[]).find(b => b.id === t.banco_destino_id);
+            tbody.innerHTML += '<tr>' +
+                '<td>'+fmtData(t.data)+'</td>' +
+                '<td>'+(origem?origem.nome:'-')+'</td>' +
+                '<td>'+(destino?destino.nome:'-')+'</td>' +
+                '<td style="text-align:right;font-weight:600;">'+fmtVal(t.valor)+'</td>' +
+                '<td>'+(t.observacao||'-')+'</td>' +
+                '<td><button class="btn btn-danger btn-small" onclick="deletarTransferencia('+t.id+')">Deletar</button></td></tr>';
+        });
+    }
+
+    async function deletarTransferencia(id) {
+        if (!confirm('Deseja realmente excluir esta transferência? O saldo dos bancos envolvidos será recalculado.')) return;
+        const resultado = await fetchSupabase('transferencias', 'DELETE', null, 'id=eq.' + id);
+        if (resultado === null) return;
+        showAlert('Transferência excluída.', 'alertTransferencias', 'success');
+        await carregarBancos();
+        await carregarTransferencias();
     }
 
     // ================================================================
@@ -9648,6 +9906,20 @@ ALTER TABLE contas_a_pagar  ADD COLUMN IF NOT EXISTS empresa_id INTEGER REFERENC
 ALTER TABLE empresas DISABLE ROW LEVEL SECURITY;
 GRANT ALL ON empresas TO anon;
 GRANT ALL ON empresas_id_seq TO anon;</pre>
+            <strong style="font-size:12px; color:#856404; display:block; margin-top:12px;">🔁 Se a tela de Transferência entre Contas não carregar, crie a tabela com:</strong>
+            <pre style="font-size:11px; margin-top:6px; background:#f5f5f5; padding:8px; border-radius:4px; overflow-x:auto;">CREATE TABLE IF NOT EXISTS transferencias (
+    id SERIAL PRIMARY KEY,
+    banco_origem_id INTEGER NOT NULL REFERENCES bancos(id),
+    banco_destino_id INTEGER NOT NULL REFERENCES bancos(id),
+    valor NUMERIC(14,2) NOT NULL,
+    data DATE NOT NULL,
+    observacao TEXT,
+    created_at TIMESTAMP DEFAULT now()
+);
+
+ALTER TABLE transferencias DISABLE ROW LEVEL SECURITY;
+GRANT ALL ON transferencias TO anon;
+GRANT ALL ON transferencias_id_seq TO anon;</pre>
         </div>
         <div class="form-actions" style="margin-top:12px;">
             <button class="btn btn-primary" onclick="diagnosticarConexao()">🔄 Testar novamente</button>
