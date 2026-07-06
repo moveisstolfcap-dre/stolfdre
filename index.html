@@ -7457,6 +7457,11 @@
             pagos     = pagos.filter(c => c.empresa_id == empresaSel);
         }
 
+        // Guarda referência (após status/empresa, antes do filtro de período) para
+        // calcular o saldo acumulado de períodos anteriores no fluxo diário
+        const recebidosBase = recebidos;
+        const pagosBase     = pagos;
+
         // Modo do período: 'intervalo' (De/Até) tem prioridade sobre Ano/Mês
         let modoPeriodo = 'todos';
         if (dataIniSel && dataFimSel) {
@@ -7538,7 +7543,16 @@
                     tituloPeriodo = mNomesLong[parseInt(mesSel,10)-1] + '/' + anoSel;
                 }
                 document.getElementById('tituloDFCMensal').textContent = '📅 DFC Diário — ' + tituloPeriodo;
-                gerarTabelaDiariaDFC(recebidos, pagos, diaIni, diaFim);
+                // Saldo do mês anterior: soma de tudo que foi recebido/pago ANTES do início do período,
+                // para que o fluxo diário comece a acumular a partir do saldo real acumulado até então.
+                const saldoAnteriorEnt = recebidosBase
+                    .filter(c => c.data_recebimento && c.data_recebimento < diaIni)
+                    .reduce((s,c) => s + parseFloat(c.valor||0), 0);
+                const saldoAnteriorSai = pagosBase
+                    .filter(c => c.data_pagamento && c.data_pagamento < diaIni)
+                    .reduce((s,c) => s + parseFloat(c.valor||0), 0);
+                const saldoAnterior = saldoAnteriorEnt - saldoAnteriorSai;
+                gerarTabelaDiariaDFC(recebidos, pagos, diaIni, diaFim, saldoAnterior);
             } else if (modoPeriodo === 'ano') {
                 cardMensal.style.display = '';
                 if (colDesc) colDesc.textContent = 'Mês';
@@ -7854,10 +7868,13 @@
     // Visão compacta por dia — usada quando o filtro de Mês ou o período "De/Até" está ativo.
     // Só lista os dias com movimentação real (compacto), mas o acumulado considera
     // corretamente a passagem dos dias sem movimento (que não alteram o saldo).
-    function gerarTabelaDiariaDFC(recebidos, pagos, diaIniStr, diaFimStr) {
+    // saldoAnterior: saldo acumulado de tudo o que foi recebido/pago ANTES do início do
+    // período (ex.: saldo do mês anterior), usado como ponto de partida do acumulado.
+    function gerarTabelaDiariaDFC(recebidos, pagos, diaIniStr, diaFimStr, saldoAnterior) {
         const tbody = document.querySelector('#tabelaDFCMensal tbody');
         if (!tbody || !diaIniStr || !diaFimStr) return;
         tbody.innerHTML = '';
+        saldoAnterior = parseFloat(saldoAnterior || 0);
 
         // Agrupar movimentações reais por dia (chave = data ISO yyyy-mm-dd)
         const porDia = {};
@@ -7891,7 +7908,14 @@
             return;
         }
 
-        let totEnt = 0, totSai = 0, acumulado = 0;
+        // Linha de saldo do mês anterior (ponto de partida do acumulado)
+        const corSaldoAnt = saldoAnterior >= 0 ? '#28a745' : '#dc3545';
+        tbody.innerHTML += `<tr style="background:#f8f9fa;">
+            <td colspan="4" style="font-weight:600;color:#555;">Saldo do mês anterior</td>
+            <td style="text-align:left;font-weight:700;color:${corSaldoAnt};">${fmtValSig(saldoAnterior)}</td>
+        </tr>`;
+
+        let totEnt = 0, totSai = 0, acumulado = saldoAnterior;
         dias.forEach(({ iso, diaMes, diaSemana }) => {
             const mov = porDia[iso] || { ent: 0, sai: 0 };
             const ent = mov.ent, sai = mov.sai;
