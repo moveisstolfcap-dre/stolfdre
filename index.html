@@ -7176,17 +7176,25 @@ function enhanceSearchableSelect(select, opts) {
 // campos (CNPJ, contato, etc.) podem ser completados depois na tela de
 // Fornecedores/Clientes, editando o cadastro.
 async function criarFornecedorRapido(nome) {
+  // Se já existe um cadastro com o mesmo nome, só seleciona (evita duplicar).
+  const _norm = t => String(t || '').trim().toLowerCase();
+  const existente = (db.fornecedores || []).find(x => _norm(x.nome) === _norm(nome));
+  if (existente) return existente.id;
   const novo = { id: uid(), nome, cnpj:'', contato:'', tel:'', email:'', cat:'', obs:'' };
   const ok = await sbFetch('fornecedores', 'POST', novo);
-  if (!ok) { alert('❌ Erro ao cadastrar fornecedor. Verifique sua conexão e tente novamente.'); return null; }
+  if (!ok) { alert('❌ Erro ao cadastrar fornecedor.' + sbErroMsg()); return null; }
   db.fornecedores.push(novo);
   populateFornSelects();
   return novo.id;
 }
 async function criarClienteRapido(nome) {
+  // Se já existe um cadastro com o mesmo nome, só seleciona (evita duplicar).
+  const _norm = t => String(t || '').trim().toLowerCase();
+  const existente = (db.clientes || []).find(x => _norm(x.nome) === _norm(nome));
+  if (existente) return existente.id;
   const novo = { id: uid(), nome, cnpj:'', contato:'', tel:'', email:'', cat:'', obs:'' };
   const ok = await sbFetch('clientes', 'POST', novo);
-  if (!ok) { alert('❌ Erro ao cadastrar cliente. Verifique sua conexão e tente novamente.'); return null; }
+  if (!ok) { alert('❌ Erro ao cadastrar cliente.' + sbErroMsg()); return null; }
   db.clientes.push(novo);
   populateClienteSelects();
   return novo.id;
