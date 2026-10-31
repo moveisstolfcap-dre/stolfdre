@@ -767,44 +767,37 @@ th.ef-th { padding:8px 8px 8px 12px; }
 .btn-pdf:hover { background:#faf9f7; color:#ea580c; border-color:#ea580c; }
 .btn-pdf svg { width:13px; height:13px; flex-shrink:0; }
 
-/* ── BOTÕES SUSPENSOS (ATALHOS DE LANÇAMENTO) ── */
-#fab-lancamentos {
-  position:fixed; right:22px; bottom:22px; z-index:900;
-  display:none; flex-direction:column; align-items:flex-end; gap:10px;
+/* ── ATALHOS FLUTUANTES: NOVO LANÇAMENTO (menu radial estilo app) ── */
+.fab-fundo { position:fixed; inset:0; z-index:899; background:rgba(17,24,39,.62); opacity:0; pointer-events:none; transition:opacity .18s ease; }
+.fab-lanc { position:fixed; right:26px; bottom:26px; z-index:900; width:60px; height:60px; }
+.fab-lanc.aberto ~ .fab-fundo, .fab-fundo.aberto { opacity:1; pointer-events:auto; }
+.fab-item {
+  position:absolute; left:50%; top:50%; width:110px; margin-left:-55px; margin-top:-34px;
+  display:flex; flex-direction:column; align-items:center; gap:7px;
+  background:none; border:none; cursor:pointer; padding:0;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; font-weight:600; color:#fff; text-align:center; line-height:1.2;
+  opacity:0; pointer-events:none; transform:translate(0,0) scale(.3);
+  transition:transform .22s cubic-bezier(.2,.9,.3,1.2), opacity .16s ease;
+  text-shadow:0 1px 3px rgba(0,0,0,.45);
 }
-body.logado #fab-lancamentos { display:flex; }
-body.logado.fabs-ocultos #fab-lancamentos { display:none; }
-.fab {
-  display:inline-flex; align-items:center; gap:9px;
-  padding:12px 18px; border:none; border-radius:30px; cursor:pointer;
-  font-family:inherit; font-size:13px; font-weight:700; color:#fff;
-  box-shadow:0 6px 18px rgba(0,0,0,.18); transition:.18s;
-  white-space:nowrap;
-}
-.fab:hover { transform:translateY(-2px); box-shadow:0 9px 24px rgba(0,0,0,.24); }
-.fab:active { transform:translateY(0); }
-.fab-pagar   { background:#ea580c; }
-.fab-pagar:hover   { background:#c2410c; }
-.fab-receber { background:#0f766e; }
-.fab-receber:hover { background:#0d5f59; }
-.fab-ico { font-size:15px; line-height:1; }
+.fab-lanc.aberto .fab-item { opacity:1; pointer-events:auto; transform:translate(var(--dx),var(--dy)) scale(1); }
+.fab-circ { width:68px; height:68px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,.28); transition:transform .12s ease; }
+.fab-item:hover .fab-circ { transform:scale(1.08); }
+.fab-circ svg { width:32px; height:32px; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .fab-toggle {
-  width:26px; height:26px; border-radius:50%; cursor:pointer;
-  border:1.5px solid #e7e5e4; background:#fff; color:#a8a29e;
-  font-size:13px; line-height:1; font-family:inherit;
-  box-shadow:0 3px 10px rgba(0,0,0,.12); transition:.15s;
-  align-self:flex-end;
+  position:absolute; inset:0; width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+  background:#ea580c; color:#fff; box-shadow:0 8px 22px rgba(234,88,12,.45);
+  display:flex; align-items:center; justify-content:center; z-index:2;
+  transition:transform .2s ease, background .2s ease;
 }
-.fab-toggle:hover { color:#ea580c; border-color:#ea580c; }
-.fab-restore {
-  position:fixed; right:22px; bottom:22px; z-index:900; display:none;
-  width:44px; height:44px; border-radius:50%; cursor:pointer;
-  border:none; background:#ea580c; color:#fff; font-size:20px; line-height:1;
-  font-family:inherit; box-shadow:0 6px 18px rgba(0,0,0,.18); transition:.18s;
-}
-.fab-restore:hover { background:#c2410c; transform:translateY(-2px); }
-body.logado.fabs-ocultos .fab-restore { display:block; }
-@media print { #fab-lancamentos, .fab-restore { display:none !important; } }
+.fab-toggle svg { width:28px; height:28px; stroke:#fff; stroke-width:3; stroke-linecap:round; transition:transform .2s ease; }
+.fab-toggle:hover { transform:scale(1.06); }
+.fab-lanc.aberto .fab-toggle { background:#1f2937; box-shadow:0 8px 22px rgba(0,0,0,.35); }
+.fab-lanc.aberto .fab-toggle svg { transform:rotate(45deg); }
+@media (max-width:640px) { .fab-lanc { right:18px; bottom:18px; } }
+@media print { .fab-fundo { display:none !important; } }
+body:not(.logado) .fab-lanc, body:not(.logado) .fab-fundo { display:none !important; }
+
 
 /* ── PARCELAS: cabeçalho com ação de recalcular ── */
 .parc-acao {
@@ -981,6 +974,154 @@ tr.cob-dia-vazio > td {
   color:#a8a29e; margin:16px 0 9px;
 }
 .fd-det-meta { font-size:11px; color:#a8a29e; margin-top:3px; }
+
+/* ── MODAL EDITAR LANÇAMENTO A PAGAR ── */
+.el-modal { width:780px !important; padding:0 !important; }
+.el-head { display:flex; align-items:center; gap:14px; padding:22px 28px 18px; border-bottom:1px solid #f0eeec; position:sticky; top:0; background:#fff; z-index:3; }
+.el-head-ico { width:42px; height:42px; border-radius:12px; background:#fff1e6; color:#ea580c; display:flex; align-items:center; justify-content:center; flex:0 0 42px; }
+.el-head-ico svg { width:22px; height:22px; }
+.el-head .modal-title { margin:0; font-size:17px; }
+.el-head-sub { font-size:12.5px; color:#78716c; margin-top:2px; }
+.el-x { margin-left:auto; width:34px; height:34px; border-radius:50%; border:none; background:#f5f4f2; color:#57534e; font-size:17px; cursor:pointer; }
+.el-x:hover { background:#e7e5e4; }
+.el-body { padding:8px 28px 4px; }
+.el-sec { padding:18px 0 4px; border-bottom:1px dashed #ece9e6; }
+.el-sec:last-child { border-bottom:none; }
+.el-sec-t { font-size:11px; font-weight:800; letter-spacing:.9px; text-transform:uppercase; color:#a8a29e; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.el-sec-t::before { content:''; width:4px; height:13px; border-radius:2px; background:#ea580c; }
+.el-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 16px; }
+.el-grid .span2 { grid-column:span 2; }
+.el-valor input { font-family:'DM Mono',monospace; font-weight:700; font-size:15px; }
+.el-seg { display:inline-flex; background:#f5f4f2; border-radius:10px; padding:3px; gap:3px; }
+.el-seg button { border:none; background:none; padding:8px 18px; border-radius:8px; font-weight:700; font-size:13px; color:#78716c; cursor:pointer; font-family:inherit; }
+.el-seg button.on { background:#fff; color:#1f2937; box-shadow:0 1px 4px rgba(0,0,0,.12); }
+.el-seg button.on.sim { color:#16a34a; }
+.el-seg button.on.nao { color:#ea580c; }
+.el-pay { margin-top:14px; background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #16a34a; border-radius:12px; padding:16px 16px 4px; }
+.el-quick { display:flex; gap:6px; margin-top:-8px; margin-bottom:14px; }
+.el-quick button { border:1px solid #e7e5e4; background:#fff; border-radius:999px; padding:4px 11px; font-size:11.5px; font-weight:600; color:#57534e; cursor:pointer; font-family:inherit; }
+.el-quick button:hover { border-color:#ea580c; color:#ea580c; }
+.el-ou { display:flex; align-items:center; gap:10px; color:#a8a29e; font-size:11.5px; font-weight:700; margin:4px 0 12px; }
+.el-ou::before, .el-ou::after { content:''; flex:1; height:1px; background:#e2e8f0; }
+.el-cc-btn { width:100%; display:flex; align-items:center; justify-content:center; gap:10px; background:#1f2937; color:#fff; border:none; border-radius:10px; padding:12px; font-weight:700; font-size:13.5px; cursor:pointer; margin-bottom:12px; font-family:inherit; }
+.el-cc-btn:hover { background:#111827; }
+.el-cc-btn small { font-weight:500; opacity:.7; font-size:11.5px; }
+.el-aviso { background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:10px; padding:10px 14px; font-size:12.5px; margin-top:12px; }
+.el-foot { display:flex; justify-content:flex-end; gap:10px; padding:16px 28px 22px; border-top:1px solid #f0eeec; position:sticky; bottom:0; background:#fff; z-index:3; }
+@media (max-width:700px) { .el-grid { grid-template-columns:1fr; } .el-grid .span2 { grid-column:auto; } .el-head, .el-body, .el-foot { padding-left:18px; padding-right:18px; } }
+
+/* ── CARTÕES DE CRÉDITO ── */
+.cc-wrap { max-width:820px; }
+.cc-lista { background:#fff; border:1px solid var(--border); border-radius:16px; padding:6px 24px; box-shadow:0 1px 4px rgba(26,62,122,0.06); }
+.cc-item { display:flex; align-items:center; gap:18px; padding:18px 0; border-bottom:1px solid #f0eeec; cursor:pointer; }
+.cc-item:hover .cc-nome { color:var(--accent); }
+.cc-ico { width:48px; height:32px; flex:0 0 48px; border-radius:7px; background:linear-gradient(135deg,#ea580c,#7c2d12); position:relative; box-shadow:0 2px 6px rgba(0,0,0,.15); }
+.cc-ico::after { content:''; position:absolute; left:7px; top:9px; width:11px; height:9px; border-radius:2px; background:#fde68a; }
+.cc-info { flex:1; min-width:0; }
+.cc-nome { font-size:15.5px; font-weight:700; color:#1f2937; }
+.cc-nome span { font-weight:500; color:#a8a29e; font-size:13.5px; }
+.cc-val { font-family:'DM Mono',monospace; font-size:18px; font-weight:700; color:#dc2626; margin-top:4px; }
+.cc-sub { font-size:12px; color:#78716c; margin-top:4px; }
+.cc-sub b { color:#b91c1c; }
+.cc-add { width:36px; height:36px; flex:0 0 36px; border-radius:50%; border:2px solid var(--accent); color:var(--accent); background:#fff; font-size:21px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.cc-add:hover { background:var(--accent); color:#fff; }
+.cc-acts { display:flex; gap:6px; align-items:center; }
+.cc-mini { width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:#fff; color:#78716c; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; }
+.cc-mini:hover { color:#1f2937; border-color:#a8a29e; }
+.cc-mini.del:hover { color:#dc2626; border-color:#fca5a5; background:#fef2f2; }
+.cc-total { display:flex; justify-content:space-between; padding:18px 0 12px; font-size:19px; font-weight:700; color:#1f2937; }
+.cc-total span:last-child { font-family:'DM Mono',monospace; }
+.cc-nav { display:flex; align-items:center; justify-content:space-between; background:var(--accent); color:#fff; border-radius:16px 16px 0 0; padding:14px 22px; }
+.cc-nav button { background:none; border:none; color:#fff; font-size:26px; cursor:pointer; padding:0 8px; line-height:1; }
+.cc-nav div { font-size:18px; font-weight:700; }
+.cc-det { background:#fff; border:1px solid var(--border); border-top:none; border-radius:0 0 16px 16px; padding:20px 24px; }
+.cc-det-nome { text-align:center; font-size:19px; font-weight:700; margin:10px 0 18px; }
+.cc-det-info { display:grid; grid-template-columns:1fr 1fr; gap:16px 28px; margin-bottom:18px; }
+.cc-det-info .lbl { font-size:12px; color:#a8a29e; }
+.cc-det-info .val { font-size:16px; font-weight:700; color:#1f2937; margin-top:2px; }
+.cc-det-acoes { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.cc-busca { width:100%; border-radius:999px !important; padding:11px 18px !important; margin-bottom:8px; }
+.cc-dia { font-size:14px; font-weight:700; color:#1f2937; margin:18px 0 6px; }
+.cc-desp { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:1px solid #f5f4f2; }
+.cc-desp-ico { width:38px; height:38px; flex:0 0 38px; border-radius:50%; background:#fff1e6; color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:17px; }
+.cc-desp-txt { flex:1; min-width:0; }
+.cc-desp-txt b { font-size:14px; color:#1f2937; }
+.cc-desp-txt div { font-size:12px; color:#a8a29e; margin-top:2px; }
+.cc-desp-val { text-align:right; font-family:'DM Mono',monospace; font-weight:700; color:#dc2626; }
+.cc-desp-val .actions { justify-content:flex-end; margin-top:4px; }
+.cc-band { width:52px; height:34px; flex:0 0 52px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; letter-spacing:.3px; color:#fff; box-shadow:0 2px 6px rgba(0,0,0,.15); text-align:center; line-height:1.05; overflow:hidden; background:#fff; }
+.cc-band img { width:100%; height:100%; object-fit:contain; }
+.cc-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.cc-chip { display:flex; align-items:center; gap:8px; border:1.5px solid var(--border); border-radius:10px; padding:6px 10px 6px 6px; background:#fff; cursor:pointer; font-size:13px; font-weight:600; color:#1f2937; }
+.cc-chip .cc-band { width:40px; height:26px; flex-basis:40px; font-size:8.5px; box-shadow:none; }
+.cc-chip.sel { border-color:var(--accent); background:#fff7ed; box-shadow:0 0 0 2px rgba(234,88,12,.15); }
+.cc-pagar-cartao { width:100%; margin-bottom:18px; background:#1f2937; color:#fff; border:none; border-radius:10px; padding:11px; font-weight:700; font-size:13px; cursor:pointer; }
+.cc-pagar-cartao:hover { background:#111827; }
+.badge-cc { background:#fff1e6; color:#c2410c; border:1px solid #fed7aa; }
+@media (max-width:640px) { .cc-det-info { grid-template-columns:1fr; } }
+
+
+/* ══ MENU LATERAL — visual profissional ══ */
+.sidebar { width:248px; background:#ffffff; border-right:1px solid #ece9e6; box-shadow:none; }
+.main { margin-left:248px; }
+body.menu-oculto .sidebar { transform:translateX(-248px); }
+.sidebar-logo { padding:18px 18px 14px; border-bottom:1px solid #f1efed; }
+.sidebar-logo img { max-width:128px !important; }
+.nav { padding:6px 12px 14px; scrollbar-width:thin; scrollbar-color:#e7e5e4 transparent; }
+.nav::-webkit-scrollbar { width:6px; }
+.nav::-webkit-scrollbar-thumb { background:#e7e5e4; border-radius:3px; }
+.nav-label, .nav-group-header {
+  font-size:10.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase;
+  color:#a8a29e; padding:16px 10px 6px; margin:0; border-radius:0; background:none !important;
+}
+.nav-group-header { margin-top:0 !important; }
+.nav-group-header:hover, .nav-group-header.open { color:#78716c; }
+.nav-group-arrow { display:flex; transform:rotate(-90deg); transition:transform .2s; }
+.nav-group-arrow svg { width:13px; height:13px; }
+.nav-group-header.open .nav-group-arrow { transform:rotate(0deg); }
+.nav-item, .nav-sub-item {
+  position:relative; display:flex; align-items:center; gap:11px;
+  padding:8px 10px; margin:0 0 2px !important; border-radius:9px;
+  font-size:13.2px; font-weight:500; color:#44403c; line-height:1.25;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:background .12s, color .12s;
+}
+.nav-item svg, .nav-sub-item svg { width:17px; height:17px; flex-shrink:0; color:#a8a29e; stroke-width:1.9; transition:color .12s; }
+.nav-item:hover, .nav-sub-item:hover { background:#f6f5f3; color:#1c1917; }
+.nav-item:hover svg, .nav-sub-item:hover svg { color:#57534e; }
+.nav-item.active, .nav-sub-item.active { background:#fff4ec; color:#c2410c; font-weight:650; }
+.nav-item.active svg, .nav-sub-item.active svg { color:#ea580c; }
+.nav-item.active::before, .nav-sub-item.active::before {
+  content:''; position:absolute; left:0; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0; background:#ea580c;
+}
+.sidebar-footer { padding:12px 12px 10px; border-top:1px solid #f1efed; }
+.sf-card { display:flex; align-items:center; gap:10px; padding:8px; border-radius:12px; background:#faf9f8; border:1px solid #f1efed; }
+.sf-avatar { width:34px; height:34px; flex:0 0 34px; border-radius:50%; background:linear-gradient(135deg,#f97316,#c2410c); color:#fff; font-size:12.5px; font-weight:800; display:flex; align-items:center; justify-content:center; letter-spacing:.5px; }
+.sf-info { flex:1; min-width:0; }
+.sidebar-footer .sf-user { font-size:13px; font-weight:700; color:#1f2937; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sf-sub { font-size:11px; color:#a8a29e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sf-logout { width:32px; height:32px; flex:0 0 32px; border-radius:8px; border:none; background:transparent; color:#a8a29e; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.12s; }
+.sf-logout svg { width:17px; height:17px; }
+.sf-logout:hover { background:#fef2f2; color:#dc2626; }
+.sf-build { font-size:9.5px; color:#d6d3d1; margin-top:7px; padding:0 4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* ── Importar fatura ── */
+#cc-imp-opcoes label { display:inline-flex !important; align-items:center; gap:8px; margin:0; font-weight:500; }
+#cc-imp-opcoes input, .cc-imp-tab input[type=checkbox] { width:auto !important; margin:0; padding:0; }
+.cc-imp-box { max-height:46vh; overflow:auto; border:1px solid #ece9e6; border-radius:12px; }
+.cc-imp-vazio { padding:36px 20px; text-align:center; color:#78716c; font-size:13.5px; line-height:1.7; }
+.cc-imp-vazio span { font-size:12px; color:#a8a29e; }
+.cc-imp-tab { width:100%; border-collapse:collapse; font-size:12.5px; }
+.cc-imp-tab th { position:sticky; top:0; background:#faf9f8; text-align:left; padding:9px 10px; font-size:10.5px; letter-spacing:.8px; text-transform:uppercase; color:#a8a29e; border-bottom:1px solid #ece9e6; z-index:1; }
+.cc-imp-tab td { padding:7px 10px; border-bottom:1px solid #f5f4f2; vertical-align:middle; }
+.cc-imp-tab tr.off td { opacity:.45; }
+.cc-imp-cat { padding:5px 8px !important; font-size:12px !important; min-width:150px; }
+.cc-imp-tag { font-size:10px; font-weight:700; border-radius:999px; padding:1px 7px; margin-left:4px; }
+.cc-imp-tag.dup { background:#fef3c7; color:#92400e; }
+.cc-imp-tag.pg { background:#e0e7ff; color:#3730a3; }
+.cc-imp-tag.cr { background:#dcfce7; color:#166534; }
+
+
 </style>
 </head>
 <body>
@@ -1025,7 +1166,7 @@ tr.cob-dia-vazio > td {
     </div>
 
     <!-- ══ SELETOR GLOBAL DE EMPRESA ══ -->
-    <div id="empresa-switch" style="padding:10px 14px 12px;border-bottom:1px solid #e7e5e4;background:#fff8f3;">
+    <div id="empresa-switch" style="padding:10px 16px 12px;border-bottom:1px solid #f1efed;background:#fffaf6;">
       <label style="display:block;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9a3412;margin-bottom:5px;">Empresa</label>
       <select id="empresa-ativa" onchange="trocarEmpresa(this.value)"
               style="width:100%;padding:8px 10px;font-size:13px;font-weight:600;border:1.5px solid #ea580c;border-radius:6px;background:#fff;color:#3A3B3D;cursor:pointer;">
@@ -1034,6 +1175,7 @@ tr.cob-dia-vazio > td {
     </div>
 
     <nav class="nav">
+      <div class="nav-label" style="margin-top:0">Visão Geral</div>
       <!-- Dashboard -->
       <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard" style="margin-bottom:8px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -1058,10 +1200,10 @@ tr.cob-dia-vazio > td {
 
       <!-- GRUPO: Contas a Pagar -->
       <div class="nav-group-header open" onclick="toggleNavGroup('grp-pagar',this)">
-        <span>📦 Contas a Pagar</span>
-        <span class="nav-group-arrow">▶</span>
+        <span>Contas a Pagar</span>
+        <span class="nav-group-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
-      <div class="nav-group-items" id="grp-pagar" style="max-height:400px">
+      <div class="nav-group-items" id="grp-pagar" style="max-height:600px">
         <div class="nav-sub-item" onclick="showPage('bancos')" id="nav-bancos">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           Bancos / Caixas
@@ -1090,6 +1232,10 @@ tr.cob-dia-vazio > td {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           Contas Pagas
         </div>
+        <div class="nav-sub-item" onclick="showPage('cartoes')" id="nav-cartoes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+          Cartões de Crédito
+        </div>
         <div class="nav-sub-item" onclick="showPage('custos-fixos')" id="nav-custos-fixos">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
           Custos Fixos
@@ -1098,8 +1244,8 @@ tr.cob-dia-vazio > td {
 
       <!-- GRUPO: Contas a Receber -->
       <div class="nav-group-header open" onclick="toggleNavGroup('grp-receber',this)" style="margin-top:4px;">
-        <span>💰 Contas a Receber</span>
-        <span class="nav-group-arrow">▶</span>
+        <span>Contas a Receber</span>
+        <span class="nav-group-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
       <div class="nav-group-items" id="grp-receber" style="max-height:400px">
         <div class="nav-sub-item" onclick="showPage('clientes')" id="nav-clientes">
@@ -1139,8 +1285,8 @@ tr.cob-dia-vazio > td {
 
       <!-- GRUPO: DFC -->
       <div class="nav-group-header open" onclick="toggleNavGroup('grp-dfc',this)" style="margin-top:4px;">
-        <span>📊 DFC</span>
-        <span class="nav-group-arrow">▶</span>
+        <span>DFC</span>
+        <span class="nav-group-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
       <div class="nav-group-items" id="grp-dfc" style="max-height:400px">
         <div class="nav-sub-item" onclick="showPage('dfc-categorias')" id="nav-dfc-categorias">
@@ -1155,8 +1301,8 @@ tr.cob-dia-vazio > td {
 
       <!-- GRUPO: DRE -->
       <div class="nav-group-header open" onclick="toggleNavGroup('grp-dre',this)" style="margin-top:4px;">
-        <span>📈 DRE</span>
-        <span class="nav-group-arrow">▶</span>
+        <span>DRE</span>
+        <span class="nav-group-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
       <div class="nav-group-items" id="grp-dre" style="max-height:400px">
         <div class="nav-sub-item" onclick="showPage('dre-grupos')" id="nav-dre-grupos">
@@ -1185,10 +1331,15 @@ tr.cob-dia-vazio > td {
       </div>
     </nav>
     <div class="sidebar-footer">
-      <div class="sf-user" id="sidebar-user">—</div>
-      <div style="font-size:11px;color:#a8a29e;margin-top:2px;" id="sidebar-last-login">Sessão ativa</div>
-      <div style="font-size:10px;color:#c4c0bb;margin-top:2px;" id="sidebar-build">build —</div>
-      <button class="btn-logout" onclick="doLogout()">Sair do sistema</button>
+      <div class="sf-card">
+        <div class="sf-avatar" id="sidebar-avatar">—</div>
+        <div class="sf-info">
+          <div class="sf-user" id="sidebar-user">—</div>
+          <div class="sf-sub" id="sidebar-last-login">Sessão ativa</div>
+        </div>
+        <button class="sf-logout" onclick="doLogout()" title="Sair do sistema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+      </div>
+      <div class="sf-build" id="sidebar-build">build —</div>
     </div>
   </div>
 
@@ -1474,8 +1625,8 @@ tr.cob-dia-vazio > td {
           <div style="align-self:flex-end"><button class="btn btn-secondary" onclick="clearPagasFiltros()">Limpar</button></div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-pagas-row">
-          <th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Vencimento</th><th>Data Competência</th><th>Data Pgto</th><th>Forma Pgto</th><th>NF</th><th>Financeiro</th><th>Ações</th>
-        </tr></thead><tbody id="tb-pagas"><tr><td colspan="12" class="empty-state">Nenhuma parcela paga.</td></tr></tbody></table></div>
+          <th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Vencimento</th><th>Data Competência</th><th>Data Pgto</th><th>Forma Pgto</th><th>Banco</th><th>NF</th><th>Financeiro</th><th>Ações</th>
+        </tr></thead><tbody id="tb-pagas"><tr><td colspan="13" class="empty-state">Nenhuma parcela paga.</td></tr></tbody></table></div>
       </div>
     </div>
 
@@ -1561,6 +1712,25 @@ tr.cob-dia-vazio > td {
         </tr></thead><tbody id="tb-empresas">
           <tr><td colspan="6" class="empty-state">Nenhuma empresa cadastrada.</td></tr>
         </tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ══ CARTÕES DE CRÉDITO ══ -->
+    <div class="page" id="page-cartoes">
+      <div class="page-header">
+        <div><div class="page-title">Cartões de Crédito</div><div class="page-sub" style="margin-bottom:0">Despesas lançadas no cartão, faturas e pagamento</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary" onclick="ccAbrirImportacao()">📥 Importar Fatura</button>
+          <button class="btn btn-secondary" onclick="ccAbrirCadastro()">💳 Novo Cartão</button>
+          <button class="btn-novo" onclick="ccAbrirDespesa()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Despesa no Cartão
+          </button>
+        </div>
+      </div>
+      <div class="est-aviso" id="cc-aviso" style="display:none;margin-top:14px"></div>
+      <div class="cc-wrap" style="margin-top:16px">
+        <div id="cc-lista-wrap"></div>
+        <div id="cc-detalhe-wrap" style="display:none"></div>
       </div>
     </div>
 
@@ -2593,39 +2763,6 @@ tr.cob-dia-vazio > td {
         </button>
       </div>
 
-      <!-- MODAL: Nova transferência -->
-      <div class="modal-overlay" id="modal-transf">
-        <div class="modal transf-modal" role="dialog" aria-labelledby="transf-modal-title">
-          <div class="transf-head">
-            <div>
-              <div class="transf-title" id="transf-modal-title">Nova transferência</div>
-              <div class="transf-sub">O valor sai da conta de origem e entra na conta de destino na data informada.</div>
-            </div>
-            <button type="button" class="dre-det-x" onclick="closeModal('modal-transf')" aria-label="Fechar" title="Fechar (Esc)">&times;</button>
-          </div>
-          <div class="transf-contas">
-            <div class="form-group"><label for="transf-origem">Conta de origem *</label>
-              <select id="transf-origem"><option value="">Selecione...</option></select>
-            </div>
-            <button type="button" class="transf-swap" onclick="inverterContasTransf()" title="Inverter origem e destino" aria-label="Inverter origem e destino">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 4l3 3-3 3"/><path d="M20 7H4"/><path d="M7 20l-3-3 3-3"/><path d="M4 17h16"/></svg>
-            </button>
-            <div class="form-group"><label for="transf-destino">Conta de destino *</label>
-              <select id="transf-destino"><option value="">Selecione...</option></select>
-            </div>
-          </div>
-          <div class="grid2" style="gap:14px">
-            <div class="form-group"><label for="transf-valor">Valor (R$) *</label><input id="transf-valor" type="number" step="0.01" min="0" placeholder="0,00" /></div>
-            <div class="form-group"><label for="transf-data">Data *</label><input id="transf-data" type="date" /></div>
-          </div>
-          <div class="form-group"><label for="transf-obs">Observação</label><input id="transf-obs" type="text" placeholder="Informações adicionais (opcional)" /></div>
-          <div class="modal-footer" style="margin-top:8px;padding-top:16px">
-            <button class="btn btn-secondary" onclick="closeModal('modal-transf')">Cancelar</button>
-            <button class="btn btn-primary" id="transf-btn-salvar" onclick="saveTransferencia()">Registrar transferência</button>
-          </div>
-        </div>
-      </div>
-
       <div class="card" style="margin-top:12px">
         <div class="card-title">Transferências realizadas</div>
         <div class="table-scroll"><table><thead><tr id="th-transferencias-row">
@@ -2828,17 +2965,29 @@ tr.cob-dia-vazio > td {
   </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- ══ BOTÕES SUSPENSOS: ATALHOS DE LANÇAMENTO ══ -->
-<div id="fab-lancamentos">
-  <button class="fab-toggle" onclick="alternarBotoesSuspensos()" title="Ocultar botões de atalho">&#10005;</button>
-  <button class="fab fab-pagar" onclick="abrirModalLanc()" title="Novo lançamento de conta a pagar">
-    <span class="fab-ico">&#128230;</span><span>Lançamento a Pagar</span>
-  </button>
-  <button class="fab fab-receber" onclick="abrirModalLancReceber()" title="Novo lançamento de conta a receber">
-    <span class="fab-ico">&#128176;</span><span>Lançamento a Receber</span>
-  </button>
-</div>
-<button id="fab-restore" class="fab-restore" onclick="alternarBotoesSuspensos()" title="Mostrar botões de atalho">&#43;</button>
+<!-- ══ ATALHOS FLUTUANTES DE LANÇAMENTO (menu radial estilo app) ══ -->
+  <div class="fab-lanc" id="fab-lanc">
+    <button class="fab-item" style="--dx:-200px;--dy:-17px" onclick="fabAcao('transferencia')" title="Nova transferência entre contas">
+      <span class="fab-circ"><svg viewBox="0 0 24 24" stroke="#3b82f6"><path d="M17 3l4 4-4 4"/><path d="M21 7H8a4 4 0 0 0-4 4"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h13a4 4 0 0 0 4-4"/></svg></span>
+      Transferência
+    </button>
+    <button class="fab-item" style="--dx:-164px;--dy:-115px" onclick="fabAcao('receita')" title="Novo lançamento de Contas a Receber">
+      <span class="fab-circ"><svg viewBox="0 0 24 24" stroke="#16a34a"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+      Receita
+    </button>
+    <button class="fab-item" style="--dx:-85px;--dy:-181px" onclick="fabAcao('cartao')" title="Nova despesa no cartão de crédito">
+      <span class="fab-circ"><svg viewBox="0 0 24 24" stroke="#0d9488"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M14 15h2"/><circle cx="18" cy="15" r=".6" fill="#0d9488"/></svg></span>
+      Despesa<br>Cartão
+    </button>
+    <button class="fab-item" style="--dx:7px;--dy:-205px" onclick="fabAcao('despesa')" title="Novo lançamento de Contas a Pagar">
+      <span class="fab-circ"><svg viewBox="0 0 24 24" stroke="#dc2626"><path d="M3 7l6 6 4-4 8 8"/><path d="M21 11v6h-6"/></svg></span>
+      Despesa
+    </button>
+    <button class="fab-toggle" id="fab-toggle" onclick="alternarFabLanc()" title="Novo lançamento">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+  </div>
+  <div class="fab-fundo" id="fab-fundo" onclick="fecharFabLanc()"></div>
 
 
 <!-- ══ MODAL DETALHE DIA CALENDÁRIO ══ -->
@@ -3688,68 +3837,118 @@ tr.cob-dia-vazio > td {
 </div>
 
 <div class="modal-overlay" id="modal-lanc">
-  <div class="modal">
-    <div class="modal-title">Editar Lançamento</div>
+  <div class="modal el-modal">
+    <div class="el-head">
+      <div class="el-head-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></div>
+      <div><div class="modal-title">Editar Lançamento</div><div class="el-head-sub" id="edit-sub">Contas a Pagar</div></div>
+      <button type="button" class="el-x" onclick="closeModal('modal-lanc')" title="Fechar">✕</button>
+    </div>
     <input type="hidden" id="edit-lanc-id" />
-    <div class="grid3">
-      <div class="form-group"><label>Empresa *</label><select id="edit-empresa" class="sel-empresa"><option value="">Selecione...</option></select></div>
-    </div>
-    <div class="grid3">
-      <div class="form-group"><label>Data da Competência</label><input id="edit-dtcompra" type="date" /></div>
-      <div class="form-group"><label>Previsão de Pagamento</label><input id="edit-dtprev" type="date" /></div>
-      <div class="form-group"><label>Nº Nota Fiscal</label><input id="edit-nf" type="text" /></div>
-    </div>
-    <div class="grid3">
-      <div class="form-group"><label class="label-add">Despesas/Fornecedor<button type="button" class="btn-add-inline" title="Cadastrar nova despesa/fornecedor" onclick="abrirCadastroRapido('fornecedor','edit-forn')">+</button></label><select id="edit-forn"></select></div>
-      <div class="form-group"><label class="label-add">Item<button type="button" class="btn-add-inline" title="Cadastrar novo item" onclick="abrirCadastroRapido('produto','edit-prod')">+</button></label><select id="edit-prod"></select></div>
-      <div class="form-group"><label>Valor Total</label><input id="edit-valor" type="number" step="0.01" /></div>
-    </div>
-    <div class="grid3">
-      <div class="form-group" style="grid-column:span 2"><label class="label-add">Categoria<button type="button" class="btn-add-inline" title="Cadastrar nova categoria" onclick="abrirCadastroRapido('categoria','edit-catdre')">+</button></label><select id="edit-catdre"><option value="">Nenhuma</option></select></div>
-    </div>
-    <div class="grid3">
-      <div class="form-group"><label>Parcelas</label>
-        <select id="edit-parcelas" onchange="toggleParcelaDates('edit-parcelas','edit-parcela-dates')">
-          <option value="1">1x</option><option value="2">2x</option><option value="3">3x</option>
-          <option value="4">4x</option><option value="5">5x</option><option value="6">6x</option>
-          <option value="7">7x</option><option value="8">8x</option><option value="9">9x</option>
-          <option value="10">10x</option><option value="11">11x</option><option value="12">12x</option>
-          <option value="13">13x</option><option value="14">14x</option><option value="15">15x</option>
-          <option value="16">16x</option><option value="17">17x</option><option value="18">18x</option>
-          <option value="19">19x</option><option value="20">20x</option><option value="21">21x</option>
-          <option value="22">22x</option><option value="23">23x</option><option value="24">24x</option>
-          <option value="25">25x</option><option value="26">26x</option><option value="27">27x</option>
-          <option value="28">28x</option><option value="29">29x</option><option value="30">30x</option>
-          <option value="31">31x</option><option value="32">32x</option><option value="33">33x</option>
-          <option value="34">34x</option><option value="35">35x</option><option value="36">36x</option>
-        </select>
+    <div class="el-body">
+      <div class="el-sec">
+        <div class="el-sec-t">Dados da compra</div>
+        <div class="el-grid">
+          <div class="form-group"><label>Empresa *</label><select id="edit-empresa" class="sel-empresa"><option value="">Selecione...</option></select></div>
+          <div class="form-group"><label>Data da Competência</label><input id="edit-dtcompra" type="date" /></div>
+          <div class="form-group"><label>Previsão de Pagamento</label><input id="edit-dtprev" type="date" /></div>
+          <div class="form-group"><label class="label-add">Despesas/Fornecedor<button type="button" class="btn-add-inline" title="Cadastrar nova despesa/fornecedor" onclick="abrirCadastroRapido('fornecedor','edit-forn')">+</button></label><select id="edit-forn"></select></div>
+          <div class="form-group"><label class="label-add">Item<button type="button" class="btn-add-inline" title="Cadastrar novo item" onclick="abrirCadastroRapido('produto','edit-prod')">+</button></label><select id="edit-prod"></select></div>
+          <div class="form-group"><label>Nº Nota Fiscal</label><input id="edit-nf" type="text" placeholder="Opcional" /></div>
+          <div class="form-group el-valor"><label>Valor Total (R$)</label><input id="edit-valor" type="number" step="0.01" /></div>
+        </div>
       </div>
-      <div class="form-group"><label>Incluído no Financeiro?</label>
-        <select id="edit-financeiro"><option value="nao">Não</option><option value="sim">Sim</option></select>
+
+      <div class="el-sec">
+        <div class="el-sec-t">Classificação</div>
+        <div class="el-grid">
+          <div class="form-group span2"><label class="label-add">Categoria<button type="button" class="btn-add-inline" title="Cadastrar nova categoria" onclick="abrirCadastroRapido('categoria','edit-catdre')">+</button></label><select id="edit-catdre"><option value="">Nenhuma</option></select></div>
+          <div class="form-group"><label>Incluído no Financeiro?</label>
+            <select id="edit-financeiro"><option value="nao">Não</option><option value="sim">Sim</option></select>
+          </div>
+        </div>
       </div>
-      <div class="form-group"><label>Pago?</label>
-        <select id="edit-pago" onchange="toggleDtPago('edit')"><option value="nao">Não</option><option value="sim">Sim</option></select>
+
+      <div class="el-sec">
+        <div class="el-sec-t">Parcelamento</div>
+        <div class="el-grid">
+          <div class="form-group"><label>Parcelas</label>
+            <select id="edit-parcelas" onchange="toggleParcelaDates('edit-parcelas','edit-parcela-dates')">
+              <option value="1">1x</option>
+              <option value="2">2x</option>
+              <option value="3">3x</option>
+              <option value="4">4x</option>
+              <option value="5">5x</option>
+              <option value="6">6x</option>
+              <option value="7">7x</option>
+              <option value="8">8x</option>
+              <option value="9">9x</option>
+              <option value="10">10x</option>
+              <option value="11">11x</option>
+              <option value="12">12x</option>
+              <option value="13">13x</option>
+              <option value="14">14x</option>
+              <option value="15">15x</option>
+              <option value="16">16x</option>
+              <option value="17">17x</option>
+              <option value="18">18x</option>
+              <option value="19">19x</option>
+              <option value="20">20x</option>
+              <option value="21">21x</option>
+              <option value="22">22x</option>
+              <option value="23">23x</option>
+              <option value="24">24x</option>
+              <option value="25">25x</option>
+              <option value="26">26x</option>
+              <option value="27">27x</option>
+              <option value="28">28x</option>
+              <option value="29">29x</option>
+              <option value="30">30x</option>
+              <option value="31">31x</option>
+              <option value="32">32x</option>
+              <option value="33">33x</option>
+              <option value="34">34x</option>
+              <option value="35">35x</option>
+              <option value="36">36x</option>
+            </select>
+          </div>
+        </div>
+        <div id="edit-parcela-dates" style="display:none;margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:600;color:#ea580c;margin-bottom:10px;padding:8px 12px;background:#fff1e6;border-radius:6px;border-left:3px solid #ea580c;">
+            📅 Datas e valores de cada parcela — preenchidos automaticamente, edite se precisar
+          </div>
+          <div id="edit-parcela-dates-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;"></div>
+        </div>
       </div>
-    </div>
-    <div class="grid3">
-      <div class="form-group"><label>Banco / Conta *</label>
-        <select id="edit-banco"><option value="">Não informado</option></select>
+
+      <div class="el-sec">
+        <div class="el-sec-t">Pagamento</div>
+        <input type="hidden" id="edit-pago" value="nao" />
+        <div class="el-seg" id="edit-pago-seg">
+          <button type="button" data-v="nao" onclick="elSetPago('nao')">Em aberto</button>
+          <button type="button" data-v="sim" onclick="elSetPago('sim')">✓ Pago</button>
+        </div>
+        <div id="edit-cc-aviso" class="el-aviso" style="display:none"></div>
+        <div class="el-pay" id="edit-dtpago-wrap" style="display:none">
+          <div class="el-grid">
+            <div class="form-group"><label>Data do Pagamento *</label><input id="edit-dtpago" type="date" /></div>
+            <div class="form-group"><label>Forma de Pagamento</label>
+              <select id="edit-tipo-pag" onchange="onTipoPagChange(this)"><option value="">Não informado</option></select>
+            </div>
+            <div class="form-group"><label>Banco / Conta *</label>
+              <select id="edit-banco"><option value="">Não informado</option></select>
+            </div>
+          </div>
+          <div class="el-quick">
+            <button type="button" onclick="document.getElementById('edit-dtpago').value=today()">Hoje</button>
+            <button type="button" onclick="document.getElementById('edit-dtpago').value=document.getElementById('edit-dtprev').value||today()">Data de vencimento</button>
+          </div>
+          <div class="el-ou">OU</div>
+          <button type="button" class="el-cc-btn" onclick="elPagarComCartao()">💳 Pagar com Cartão de Crédito <small>— vai para a fatura do cartão</small></button>
+        </div>
       </div>
-    </div>
-    <div class="grid3" id="edit-dtpago-wrap" style="display:none;">
-      <div class="form-group">
-        <label style="color:#b45309">Data do Pagamento *</label>
-        <input id="edit-dtpago" type="date" />
-        <div style="font-size:11px;color:#a8a29e;margin-top:4px;">Obrigatória quando o lançamento é salvo como <b>Pago</b>.</div>
-      </div>
-    </div>
-    <!-- Datas manuais de parcelas no modal -->
-    <div id="edit-parcela-dates" style="display:none;margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:600;color:#ea580c;margin-bottom:10px;padding:8px 12px;background:#fff1e6;border-radius:6px;border-left:3px solid #ea580c;">
-        📅 Datas e valores de cada parcela — preenchidos automaticamente, edite se precisar
-      </div>
-      <div id="edit-parcela-dates-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;"></div>
-    </div>
+
+      <div class="el-sec">
+        <div class="el-sec-t">Custo fixo</div>
     <!-- ══ CUSTO FIXO + VIGÊNCIAS ══ -->
     <div style="border:1px solid #e7e5e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;background:#fcfcfb;">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:#44403c;margin:0;">
@@ -3777,8 +3976,13 @@ tr.cob-dia-vazio > td {
         <div id="edit-vig-lista"></div>
       </div>
     </div>
-    <div class="form-group"><label>Observações</label><textarea id="edit-obs" rows="2"></textarea></div>
-    <div class="modal-footer">
+      </div>
+
+      <div class="el-sec">
+        <div class="form-group"><label>Observações</label><textarea id="edit-obs" rows="2" placeholder="Informações adicionais"></textarea></div>
+      </div>
+    </div>
+    <div class="el-foot">
       <button class="btn btn-secondary" onclick="closeModal('modal-lanc')">Cancelar</button>
       <button class="btn btn-primary" onclick="updateLancamento()">Salvar Alterações</button>
     </div>
@@ -3854,6 +4058,7 @@ tr.cob-dia-vazio > td {
       <button class="btn btn-secondary" style="flex:1;font-size:12px" onclick="usarHoje()">Hoje</button>
       <button class="btn btn-secondary" style="flex:1;font-size:12px" onclick="usarVencimento()">Data de Vencimento</button>
     </div>
+    <button type="button" class="cc-pagar-cartao" onclick="ccPagarContaComCartao()">💳 Pagar com Cartão de Crédito</button>
     <div class="form-group">
       <label>Forma de Pagamento</label>
       <select id="modal-pago-tipo-pag" onchange="onTipoPagChange(this)"><option value="">Não informado</option></select>
@@ -4077,6 +4282,147 @@ tr.cob-dia-vazio > td {
   </div>
 </div>
 
+<!-- MODAL: Nova transferência -->
+      <div class="modal-overlay" id="modal-transf">
+        <div class="modal transf-modal" role="dialog" aria-labelledby="transf-modal-title">
+          <div class="transf-head">
+            <div>
+              <div class="transf-title" id="transf-modal-title">Nova transferência</div>
+              <div class="transf-sub">O valor sai da conta de origem e entra na conta de destino na data informada.</div>
+            </div>
+            <button type="button" class="dre-det-x" onclick="closeModal('modal-transf')" aria-label="Fechar" title="Fechar (Esc)">&times;</button>
+          </div>
+          <div class="transf-contas">
+            <div class="form-group"><label for="transf-origem">Conta de origem *</label>
+              <select id="transf-origem"><option value="">Selecione...</option></select>
+            </div>
+            <button type="button" class="transf-swap" onclick="inverterContasTransf()" title="Inverter origem e destino" aria-label="Inverter origem e destino">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 4l3 3-3 3"/><path d="M20 7H4"/><path d="M7 20l-3-3 3-3"/><path d="M4 17h16"/></svg>
+            </button>
+            <div class="form-group"><label for="transf-destino">Conta de destino *</label>
+              <select id="transf-destino"><option value="">Selecione...</option></select>
+            </div>
+          </div>
+          <div class="grid2" style="gap:14px">
+            <div class="form-group"><label for="transf-valor">Valor (R$) *</label><input id="transf-valor" type="number" step="0.01" min="0" placeholder="0,00" /></div>
+            <div class="form-group"><label for="transf-data">Data *</label><input id="transf-data" type="date" /></div>
+          </div>
+          <div class="form-group"><label for="transf-obs">Observação</label><input id="transf-obs" type="text" placeholder="Informações adicionais (opcional)" /></div>
+          <div class="modal-footer" style="margin-top:8px;padding-top:16px">
+            <button class="btn btn-secondary" onclick="closeModal('modal-transf')">Cancelar</button>
+            <button class="btn btn-primary" id="transf-btn-salvar" onclick="saveTransferencia()">Registrar transferência</button>
+          </div>
+        </div>
+      </div>
+
+<!-- ══ MODAL CARTÃO — CADASTRO ══ -->
+<div class="modal-overlay" id="modal-cc-cartao">
+  <div class="modal" style="width:480px;">
+    <div class="modal-title" id="cc-c-titulo">Novo Cartão de Crédito</div>
+    <input type="hidden" id="cc-c-id" />
+    <div class="form-group"><label>Nome do Cartão *</label><input id="cc-c-nome" type="text" placeholder="Ex.: Cartão Cap, Vicente..." /></div>
+    <div class="form-group"><label>Bandeira *</label><input type="hidden" id="cc-c-bandeira" /><div class="cc-chips" id="cc-c-bandeiras"></div></div>
+    <div class="grid2">
+      <div class="form-group"><label>Dia do Fechamento *</label><input id="cc-c-fech" type="number" min="1" max="31" placeholder="Ex.: 20" /></div>
+      <div class="form-group"><label>Dia do Vencimento *</label><input id="cc-c-venc" type="number" min="1" max="31" placeholder="Ex.: 3" /></div>
+    </div>
+    <div class="grid2">
+      <div class="form-group"><label>Banco / Conta de pagamento *</label><select id="cc-c-banco"><option value="">Selecione...</option></select></div>
+      <div class="form-group"><label>Limite (R$)</label><input id="cc-c-limite" type="number" step="0.01" min="0" placeholder="Opcional" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="cc-c-excluir" style="margin-right:auto;display:none" onclick="ccExcluirCartao(document.getElementById('cc-c-id').value)">Excluir cartão</button>
+      <button class="btn btn-secondary" onclick="closeModal('modal-cc-cartao')">Cancelar</button>
+      <button class="btn btn-primary" onclick="ccSalvarCartao()">Salvar Cartão</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CARTÃO — DESPESA ══ -->
+<div class="modal-overlay" id="modal-cc-despesa">
+  <div class="modal" style="width:620px;">
+    <div class="modal-title" id="cc-d-titulo">Nova Despesa no Cartão</div>
+    <input type="hidden" id="cc-d-grupo" />
+    <input type="hidden" id="cc-d-orig-lanc" />
+    <input type="hidden" id="cc-d-orig-parc" />
+    <input type="hidden" id="cc-d-parc-fixa" />
+    <div id="cc-d-orig-info" class="lanc-note" style="display:none;margin-bottom:14px"></div>
+    <div class="form-group"><label>Cartão *</label>
+      <select id="cc-d-cartao" onchange="ccAtualizarFaturas(true);ccRenderChipsCartao()" style="display:none"></select>
+      <div class="cc-chips" id="cc-d-cartoes"></div>
+    </div>
+    <div class="form-group"><label>Data da Compra *</label><input id="cc-d-data" type="date" onchange="ccAtualizarFaturas(true)" /></div>
+    <div class="form-group"><label>Descrição *</label><input id="cc-d-desc" type="text" placeholder="Ex.: TV Samsung" /></div>
+    <div class="form-group"><label>Categoria</label><select id="cc-d-cat"><option value="">Nenhuma</option></select></div>
+    <div class="grid2">
+      <div class="form-group"><label>Valor (R$) *</label><input id="cc-d-valor" type="number" step="0.01" min="0" placeholder="0,00" oninput="ccPreviaParcelas()" /></div>
+      <div class="form-group"><label>Fatura (vencimento) *</label><select id="cc-d-fatura" onchange="ccPreviaParcelas()"></select></div>
+    </div>
+    <div class="grid2">
+      <div class="form-group"><label>Parcelada?</label>
+        <select id="cc-d-parcelada" onchange="ccToggleParcelada()"><option value="nao">Não (à vista)</option><option value="sim">Sim</option></select>
+      </div>
+      <div class="form-group" id="cc-d-parc-grp" style="display:none"><label>Nº de Parcelas</label><select id="cc-d-parcelas" onchange="ccPreviaParcelas()"></select></div>
+    </div>
+    <div class="form-group" id="cc-d-tipoval-grp" style="display:none"><label>O valor informado é</label>
+      <select id="cc-d-tipoval" onchange="ccPreviaParcelas()"><option value="total">Valor total da compra</option><option value="parcela">Valor de cada parcela</option></select>
+    </div>
+    <div id="cc-d-previa" class="lanc-note" style="display:none;margin-bottom:14px"></div>
+    <div class="form-group"><label>Observação</label><input id="cc-d-obs" type="text" placeholder="Opcional" /></div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="cc-d-excluir" style="margin-right:auto;display:none" onclick="ccExcluirDespesa(document.getElementById('cc-d-grupo').value)">Apagar</button>
+      <button class="btn btn-secondary" onclick="closeModal('modal-cc-despesa')">Cancelar</button>
+      <button class="btn btn-primary" onclick="ccSalvarDespesa()">Salvar Despesa</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CARTÃO — IMPORTAR FATURA ══ -->
+<div class="modal-overlay" id="modal-cc-importar">
+  <div class="modal el-modal" style="width:900px !important">
+    <div class="el-head">
+      <div class="el-head-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <div><div class="modal-title">Importar Fatura do Cartão</div><div class="el-head-sub">Arquivo exportado pelo banco: OFX, CSV ou Excel</div></div>
+      <button type="button" class="el-x" onclick="closeModal('modal-cc-importar')" title="Fechar">✕</button>
+    </div>
+    <div class="el-body">
+      <div class="el-sec">
+        <div class="el-grid">
+          <div class="form-group"><label>Cartão *</label><select id="cc-imp-cartao" onchange="ccImpMontarFaturas()"></select></div>
+          <div class="form-group"><label>Importar na fatura *</label><select id="cc-imp-fatura" onchange="ccImpMarcarDuplicadas();ccImpRender()"></select></div>
+          <div class="form-group"><label>Arquivo da fatura *</label><input id="cc-imp-arquivo" type="file" accept=".ofx,.csv,.txt,.xlsx,.xls" onchange="ccImpLerArquivo(this)" /></div>
+        </div>
+        <div id="cc-imp-opcoes" style="display:none;margin:-4px 0 12px;font-size:12.5px;color:#57534e">
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="cc-imp-inverter" onchange="ccImpInverter()"> Inverter sinais (use se as compras aparecerem em verde)</label>
+        </div>
+      </div>
+      <div class="el-sec">
+        <div id="cc-imp-previa" class="cc-imp-box"></div>
+        <div id="cc-imp-resumo" style="font-size:12.5px;color:#57534e;margin:10px 0 6px"></div>
+      </div>
+    </div>
+    <div class="el-foot">
+      <button class="btn btn-secondary" onclick="closeModal('modal-cc-importar')">Cancelar</button>
+      <button class="btn btn-primary" id="cc-imp-btn" disabled onclick="ccImpConfirmar()">📥 Importar selecionados</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CARTÃO — PAGAR FATURA ══ -->
+<div class="modal-overlay" id="modal-cc-pagar">
+  <div class="modal" style="width:440px;">
+    <div class="modal-title">💳 Pagar Fatura do Cartão</div>
+    <div id="cc-pg-info" style="font-size:13px;color:#57534e;background:#faf9f8;border:1px solid #f5f4f2;border-radius:10px;padding:12px;margin-bottom:16px;"></div>
+    <div class="form-group"><label>Data do Pagamento *</label><input id="cc-pg-data" type="date" /></div>
+    <div class="form-group"><label>Banco / Conta *</label><select id="cc-pg-banco"><option value="">Selecione...</option></select></div>
+    <div class="form-group"><label>Forma de Pagamento</label><input type="text" value="Cartão de Crédito" readonly style="background:#f5f4f2" /></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-cc-pagar')">Cancelar</button>
+      <button class="btn btn-primary" onclick="ccConfirmarPagamento()">✓ Confirmar Pagamento</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL EDITAR CATEGORIA (Contas Pagas) ══ -->
 <div class="modal-overlay" id="modal-editar-categoria-pago">
   <div class="modal" style="width:420px;">
@@ -4132,6 +4478,7 @@ const PAGES_CONFIG = [
   { id:'lancamentos',       label:'Lançamentos (Compra)',grupo:'pagar'   },
   { id:'apagar',            label:'Contas a Pagar',      grupo:'pagar'   },
   { id:'pagas',             label:'Contas Pagas',        grupo:'pagar'   },
+  { id:'cartoes',           label:'Cartões de Crédito',  grupo:'pagar'   },
   { id:'custos-fixos',      label:'Custos Fixos',        grupo:'pagar'   },
   { id:'clientes',          label:'Clientes',            grupo:'receber' },
   { id:'prodvenda',         label:'Produtos de Venda',   grupo:'receber' },
@@ -4537,7 +4884,9 @@ let db = {
   // Custos fixos: mapa "id do lançamento" -> { ativo:true, vigencias:[...] }.
   // Fica guardado na tabela `config` que já existe (key = "custofixo_<id>"),
   // então não é preciso criar tabela nem coluna nova no Supabase.
-  custosfixos: {}
+  custosfixos: {},
+  cartoes: [],
+  cartao_despesas: []
 };
 
 // ══════════════════════════════════════════
@@ -4557,7 +4906,8 @@ const EMPRESA_KEY = 'stolf_empresa_ativa';
 // que são compartilhadas entre todas as empresas.
 const TABELAS_POR_EMPRESA = [
   'lancamentos','lancreceber','dfc_lancamentos',
-  'faturamento','recebimentos','pedidos_cancelados','reposicoes'
+  'faturamento','recebimentos','pedidos_cancelados','reposicoes',
+  'cartoes','cartao_despesas'
 ];
 
 function empresaAtual() {
@@ -4661,7 +5011,9 @@ async function loadAllData() {
       // 20 — Modelos de mensagem de cobrança (WhatsApp)
       sbFetch('config', 'GET', null, '?key=eq.cobranca_mensagens&limit=1'),
       // 21 — Auditoria: histórico de alterações (tabela `config`)
-      sbFetch('config', 'GET', null, '?key=like.audit:*&order=key.desc&limit=3000')
+      sbFetch('config', 'GET', null, '?key=like.audit:*&order=key.desc&limit=3000'),
+      fetchAll('cartoes', 'nome'),          // 22 — cartões de crédito
+      fetchAll('cartao_despesas', 'data')   // 23 — despesas lançadas nos cartões
     ]);
 
     const val = (i) => results[i].status === 'fulfilled' ? results[i].value : null;
@@ -4676,6 +5028,8 @@ async function loadAllData() {
     db.dfc_lans     = val(10) || [];
     db.bancos       = val(11) || [];
     db.transferencias = val(13) || [];
+    db.cartoes      = val(22) || [];
+    db.cartao_despesas = val(23) || [];
     // Formas extras cadastradas pelo usuário (config key/value)
     formasPagExtra = []; formasRecebExtra = []; motivosCancelExtra = []; motivosRepoExtra = [];
     (val(14) || []).forEach(c => {
@@ -4842,8 +5196,10 @@ function _finalizarLogin(found) {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.body.classList.add('logado');
-  carregarBotoesSuspensos();
+  restaurarFabLanc();
   document.getElementById('sidebar-user').textContent = found.nome;
+  const _av = document.getElementById('sidebar-avatar');
+  if (_av) _av.textContent = String(found.nome || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0] || '').join('').toUpperCase() || '?';
   // Mostrar último login na sidebar
   const log = getLoginLog();
   const prev = log.find((e, i) => i > 0 && e.user === found.user);
@@ -4914,6 +5270,7 @@ function paginaVisivel(p) {
 let _paginaAtual = 'dashboard';
 
 function showPage(p) {
+  setTimeout(() => { const _nv = document.getElementById('nav-' + p); if (_nv && document.getElementById('page-' + p) && document.getElementById('page-' + p).classList.contains('active')) { document.querySelectorAll('.nav-item.active, .nav-sub-item.active').forEach(x => { if (x !== _nv) x.classList.remove('active'); }); _nv.classList.add('active'); } }, 0);
   // Telas ocultas não abrem nem por chamada direta
   if (paginaOculta(p)) return;
   // Verificar permissão (exceto admin e páginas de administração)
@@ -4935,6 +5292,7 @@ function showPage(p) {
   if (p === 'lancamentos')    renderLancamentos();
   if (p === 'apagar')         renderApagar();
   if (p === 'pagas')          renderPagas();
+  if (p === 'cartoes')        ccAbrirPagina();
   if (p === 'custos-fixos')   renderCustosFixos();
   if (p === 'bancos')         { renderBancos(); renderFluxoBancoDiario(); }
   if (p === 'transferencias') { populateTransfSelects(); renderTransferencias(); }
@@ -4974,6 +5332,7 @@ function renderPaginaAtual() {
   if (p === 'lancamentos')    renderLancamentos();
   if (p === 'apagar')         renderApagar();
   if (p === 'pagas')          renderPagas();
+  if (p === 'cartoes')        ccAbrirPagina();
   if (p === 'custos-fixos')   renderCustosFixos();
   if (p === 'bancos')         { renderBancos(); renderFluxoBancoDiario(); }
   if (p === 'transferencias') { populateTransfSelects(); renderTransferencias(); }
@@ -5019,6 +5378,34 @@ const FAB_KEY = 'stolf_fabs_ocultos';
 function aplicarBotoesSuspensos(ocultos) {
   document.body.classList.toggle('fabs-ocultos', !!ocultos);
 }
+
+function _pintarFabLanc(aberto) {
+  const box = document.getElementById('fab-lanc');
+  const fundo = document.getElementById('fab-fundo');
+  const btn = document.getElementById('fab-toggle');
+  if (!box) return;
+  box.classList.toggle('aberto', aberto);
+  if (fundo) fundo.classList.toggle('aberto', aberto);
+  if (btn) btn.title = aberto ? 'Fechar' : 'Novo lançamento';
+}
+function alternarFabLanc() {
+  const box = document.getElementById('fab-lanc');
+  if (box) _pintarFabLanc(!box.classList.contains('aberto'));
+}
+function fecharFabLanc() { _pintarFabLanc(false); }
+// O menu sempre começa fechado (como no app)
+function restaurarFabLanc() { _pintarFabLanc(false); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { const box = document.getElementById('fab-lanc'); if (box && box.classList.contains('aberto')) fecharFabLanc(); }
+});
+function fabAcao(tipo) {
+  fecharFabLanc();
+  if (tipo === 'receita') abrirModalLancReceber();
+  else if (tipo === 'despesa') abrirModalLanc();
+  else if (tipo === 'cartao') ccAbrirDespesa();
+  else if (tipo === 'transferencia') abrirNovaTransferencia();
+}
+
 
 function alternarBotoesSuspensos() {
   const ocultos = !document.body.classList.contains('fabs-ocultos');
@@ -6093,8 +6480,8 @@ function renderLancamentos() {
     return `<tr>
       <td>${fmtDate(l.dtcompra)}</td>
       <td>${getFornNome(l.forn)}</td>
-      <td>${l.prod ? getProdNome(l.prod) : '—'}</td>
-      <td>${catCell}</td>
+      <td>${l.cartao_fatura ? ccRotuloFatura(l.cartao_fatura) : (l.prod ? getProdNome(l.prod) : '—')}</td>
+      <td>${l.cartao_fatura ? '<span class="badge badge-cc">💳 Cartão de Crédito</span>' : catCell}</td>
       <td style="font-family:DM Mono,monospace">${fmtBRL(l.valor)}</td>
       <td>${l.parcelas}x</td>
       <td>${fmtDate(l.dtprev)}</td>
@@ -6103,8 +6490,8 @@ function renderLancamentos() {
       <td>${finBadge}</td>
       <td>${pagBadge}</td>
       <td class="actions">
-        <button class="btn btn-secondary btn-sm" onclick="editLancamento('${l.id}')">Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteLancamento('${l.id}')">Excluir</button>
+        ${l.cartao_fatura ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${l.cartao_fatura}')">💳 Ver no Cartão</button>` : `<button class="btn btn-secondary btn-sm" onclick="editLancamento('${l.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteLancamento('${l.id}')">Excluir</button>`}
       </td>
     </tr>`;
   }).join('');
@@ -6121,6 +6508,7 @@ function clearLancamentoFiltros() {
 function editLancamento(id) {
   const l = db.lancamentos.find(x=>x.id===id);
   if(!l) return;
+  if (l.cartao_fatura) { ccIrParaFatura(l.cartao_fatura); return; }
   document.getElementById('edit-lanc-id').value = id;
   document.getElementById('edit-dtcompra').value = l.dtcompra;
   document.getElementById('edit-dtprev').value = l.dtprev||'';
@@ -6130,8 +6518,16 @@ function editLancamento(id) {
   document.getElementById('edit-financeiro').value = l.financeiro;
   document.getElementById('edit-pago').value = l.pago;
   document.getElementById('edit-obs').value = l.obs||'';
+  populateEmpresaSelects();
+  const _eemp = document.getElementById('edit-empresa');
+  if (_eemp && l.empresa_id) _eemp.value = l.empresa_id;
+  populateBancoSelects();
   const eb = document.getElementById('edit-banco');
   if (eb) eb.value = l.banco || '';
+  const etp = document.getElementById('edit-tipo-pag');
+  etp.innerHTML = _montarOptsFormas(getFormasPagamento().filter(f => !ccEhFormaCartao(f)), l.tipo_pag || '', '+ Cadastrar nova forma de pagamento...');
+  etp.value = l.tipo_pag || '';
+  document.getElementById('edit-sub').textContent = `Contas a Pagar · ${getFornNome(l.forn) || '—'} · ${fmtBRL(l.valor || 0)}`;
   const ef = document.getElementById('edit-forn');
   ef.innerHTML = '<option value="">Selecione...</option>' + db.fornecedores.map(f=>`<option value="${f.id}">${f.nome}</option>`).join('');
   ef.value = l.forn;
@@ -6144,7 +6540,14 @@ function editLancamento(id) {
   // Data do pagamento (só aparece quando o lançamento está como Pago)
   const edtp = document.getElementById('edit-dtpago');
   if (edtp) edtp.value = l.dtpago || '';
-  toggleDtPago('edit', false);
+  // Parcelas já pagas com cartão: o pagamento é controlado pela tela do cartão
+  const _orig = ccOrigensSet();
+  const _viaCC = Array.from({ length: l.parcelas || 1 }, (_, k) => k + 1).filter(k => _orig.has(`${l.id}|${k}`));
+  const _av = document.getElementById('edit-cc-aviso');
+  _av.style.display = _viaCC.length ? '' : 'none';
+  _av.innerHTML = _viaCC.length ? `💳 ${(l.parcelas || 1) > 1 ? 'Parcela(s) ' + _viaCC.join(', ') + ' paga(s)' : 'Paga'} com cartão de crédito. Para desfazer, exclua a despesa na tela de Cartões de Crédito.` : '';
+  document.getElementById('edit-pago-seg').dataset.trava = _viaCC.length && (l.parcelas || 1) === 1 ? '1' : '';
+  elSetPago(l.pago === 'sim' ? 'sim' : 'nao', true);
   // Custo fixo e vigências já cadastradas
   const cfDados = cfDadosDoLanc(id);
   _vigTemp.edit = cfDados ? (cfDados.vigencias || []).map(v => Object.assign({}, v)) : [];
@@ -6170,10 +6573,11 @@ async function updateLancamento() {
   const l = db.lancamentos.find(x=>x.id===id);
   if(!l) return;
   const pago = document.getElementById('edit-pago').value;
-  const banco = document.getElementById('edit-banco') ? document.getElementById('edit-banco').value : (l.banco||'');
-  if (!validarBancoObrigatorio(pago, banco)) return;
-  const dtpagoEdit = campoValor('edit-dtpago');
-  if (!validarDataPagamentoObrigatoria(pago, dtpagoEdit, 'edit-dtpago')) return;
+  const _travaCC = document.getElementById('edit-pago-seg').dataset.trava === '1';
+  const banco = _travaCC ? (l.banco || '') : (document.getElementById('edit-banco') ? document.getElementById('edit-banco').value : (l.banco||''));
+  if (!_travaCC && !validarBancoObrigatorio(pago, banco)) return;
+  const dtpagoEdit = _travaCC ? (l.dtpago || '') : campoValor('edit-dtpago');
+  if (!_travaCC && !validarDataPagamentoObrigatoria(pago, dtpagoEdit, 'edit-dtpago')) return;
   if (!cfIncluirVigenciaPendente('edit')) return;
   const ehCustoFixoEdit = !!(document.getElementById('edit-custofixo') && document.getElementById('edit-custofixo').checked);
   if (ehCustoFixoEdit && !(_vigTemp.edit || []).length) {
@@ -6226,6 +6630,8 @@ async function updateLancamento() {
 }
 
 async function deleteLancamento(id) {
+  const _lcc = db.lancamentos.find(x=>x.id===id);
+  if (_lcc && _lcc.cartao_fatura) { alert('Esta é a fatura de um cartão de crédito. Ela é atualizada automaticamente pelas despesas lançadas na tela Cartões de Crédito.'); return; }
   if(!confirm('Excluir este lançamento?')) return;
   await sbFetch('lancamentos', 'DELETE', null, `?id=eq.${id}`);
   if (cfEhCustoFixo(id)) await cfSalvarNoBanco(id, false, []);
@@ -6278,7 +6684,8 @@ function _buildParcelas() {
         catId,
         parcIdx: i,
         totalParc: n,
-        isPago
+        isPago,
+        cartaoFatura: l.cartao_fatura || ''
       });
     }
   });
@@ -6788,6 +7195,7 @@ async function criarClienteRapido(nome) {
 // repopulados normalmente depois pelas funções populate* já existentes;
 // a busca sempre lê as opções mais recentes na hora de abrir o painel.
 function ativarSelectsPesquisaveis() {
+  enhanceSearchableSelect(document.getElementById('cc-d-cat'));
   // Fornecedor — com cadastro rápido nas telas de lançamento de despesas
   enhanceSearchableSelect(document.getElementById('l-forn'), { criarNovo: criarFornecedorRapido });
   enhanceSearchableSelect(document.getElementById('edit-forn'), { criarNovo: criarFornecedorRapido });
@@ -6905,8 +7313,8 @@ function renderApagar() {
       : `<span class="badge badge-gray" style="cursor:pointer" onclick="abrirEditarCategoriaPago('${p.lancId}','')" title="Clique para definir a categoria">Sem categoria ✎</span>`;
     return `<tr>
       <td>${getFornNome(p.forn)}</td>
-      <td>${p.prod ? getProdNome(p.prod) : '—'}</td>
-      <td>${catCell}</td>
+      <td>${p.cartaoFatura ? ccRotuloFatura(p.cartaoFatura) : (p.prod ? getProdNome(p.prod) : '—')}</td>
+      <td>${p.cartaoFatura ? '<span class="badge badge-cc">💳 Cartão de Crédito</span>' : catCell}</td>
       <td style="font-family:DM Mono,monospace">${p.parcIdx}/${p.totalParc}</td>
       <td style="font-family:DM Mono,monospace">${fmtBRL(p.valParc)}</td>
       <td style="font-family:DM Mono,monospace;font-size:12px;color:#57534e">${fmtDate(p.dtcompra)}</td>
@@ -6915,8 +7323,8 @@ function renderApagar() {
       <td style="font-family:DM Mono,monospace;font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
       <td class="actions">
-        <button class="btn btn-secondary btn-sm" onclick="editLancamento('${p.lancId}')">Editar</button>
-        <button class="btn btn-primary btn-sm" onclick="marcarPago('${p.lancId}', ${p.parcIdx})">Marcar Pago</button>
+        ${p.cartaoFatura ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${p.cartaoFatura}')" title="A fatura do cartão só pode ser paga pela tela do cartão">💳 Pagar no Cartão</button>` : `<button class="btn btn-secondary btn-sm" onclick="editLancamento('${p.lancId}')">Editar</button>
+        <button class="btn btn-primary btn-sm" onclick="marcarPago('${p.lancId}', ${p.parcIdx})">Marcar Pago</button>`}
         ${p.totalParc>1?`<button class="btn btn-danger btn-sm" onclick="excluirParcela('pagar','${p.lancId}',${p.parcIdx})" title="Excluir somente esta parcela">✕ Parcela</button>`:''}
       </td>
     </tr>`;
@@ -6926,12 +7334,14 @@ function renderApagar() {
 function marcarPago(id, parcIdx) {
   const l = db.lancamentos.find(x=>x.id===id);
   if(!l) return;
+  if (l.cartao_fatura) { ccIrParaFatura(l.cartao_fatura); return; }
   document.getElementById('modal-pago-id').value = id;
   document.getElementById('modal-pago-parc').value = parcIdx || 1;
   document.getElementById('modal-pago-data').value = today();
   const selPagForma = document.getElementById('modal-pago-tipo-pag');
-  selPagForma.innerHTML = _montarOptsFormas(getFormasPagamento(), l.tipo_pag || '', '+ Cadastrar nova forma de pagamento...');
-  selPagForma.value = l.tipo_pag || '';
+  const _tipoIniOk = ccEhFormaCartao(l.tipo_pag) ? '' : (l.tipo_pag || '');
+  selPagForma.innerHTML = _montarOptsFormas(getFormasPagamento().filter(f => !ccEhFormaCartao(f)), _tipoIniOk, '+ Cadastrar nova forma de pagamento...');
+  selPagForma.value = _tipoIniOk;
   document.getElementById('modal-pago-banco').value = l.banco || '';
   openModal('modal-pago');
 }
@@ -6957,6 +7367,7 @@ async function confirmarPago() {
   const banco = document.getElementById('modal-pago-banco').value;
   const tipoPag = document.getElementById('modal-pago-tipo-pag').value;
   if(!dtpago) { alert('Informe a data do pagamento.'); return; }
+  if (ccEhFormaCartao(tipoPag)) { ccPagarContaComCartao(); return; }
   if(!banco) { alert('Selecione o banco/conta de onde o valor foi pago.'); return; }
   const l = db.lancamentos.find(x=>x.id===id);
   if(!l) return;
@@ -7018,7 +7429,7 @@ function atualizarPreviewMarcarPagoMassa() {
   const prev = document.getElementById('mp-preview');
   if (!prev) return;
   if (!dataDe || !dataAte) { prev.style.display = 'none'; return; }
-  const alvo = getParcelas(false).filter(p => p.venc && p.venc >= dataDe && p.venc <= dataAte);
+  const alvo = getParcelas(false).filter(p => !p.cartaoFatura && p.venc && p.venc >= dataDe && p.venc <= dataAte);
   const total = alvo.reduce((s,p)=>s+p.valParc, 0);
   prev.style.display = '';
   prev.innerHTML = alvo.length
@@ -7034,7 +7445,7 @@ async function confirmarMarcarPagoMassa() {
   if (dataDe > dataAte) { alert('A data "De" não pode ser depois da data "Até".'); return; }
   if (!banco) { alert('Selecione o banco/conta.'); return; }
 
-  const alvo = getParcelas(false).filter(p => p.venc && p.venc >= dataDe && p.venc <= dataAte);
+  const alvo = getParcelas(false).filter(p => !p.cartaoFatura && p.venc && p.venc >= dataDe && p.venc <= dataAte);
   if (!alvo.length) { alert('Nenhuma parcela em aberto foi encontrada nesse período de vencimento.'); return; }
 
   const total = alvo.reduce((s,p)=>s+p.valParc, 0);
@@ -7472,7 +7883,8 @@ function renderPagas() {
   const tipoPagF = document.getElementById('pgf-tipo-pag') ? document.getElementById('pgf-tipo-pag').value : '';
   const nfPG = document.getElementById('pgf-nf') ? document.getElementById('pgf-nf').value.trim().toLowerCase() : '';
   const tb = document.getElementById('tb-pagas');
-  let list = getParcelas(true);
+  const _ccOrig = ccOrigensSet();
+  let list = getParcelas(true).filter(p => !_ccOrig.has(`${p.lancId}|${p.parcIdx}`));
 
   list = list.filter(p => {
     if(forn && p.forn !== forn) return false;
@@ -7513,6 +7925,7 @@ function renderPagas() {
     { key:'dtcompra', label:'Data Competência', get:p=>p.dtcompra, display:p=>fmtDate(p.dtcompra) },
     { key:'dtpago', label:'Data Pgto', get:p=>p.dtpago, display:p=>fmtDate(p.dtpago) },
     { key:'tipopag', label:'Forma Pgto', get:p=>p.tipoPag||null },
+    { key:'banco', label:'Banco', get:p=>p.banco?getBancoNome(p.banco):null },
     { key:'nf', label:'NF', get:p=>p.nf||null },
     { key:'financeiro', label:'Financeiro', get:p=>p.financeiro==='sim'?'Sim':'Não' },
     { key:'acoes', label:'Ações', get:()=>'', noFilter:true }
@@ -7531,10 +7944,10 @@ function renderPagas() {
     <div class="card kpi"><div class="kpi-val">${totalQuitados}</div><div class="kpi-lbl">Lançamentos quitados</div></div>
     <div class="card kpi"><div class="kpi-val">${totalEmAberto}</div><div class="kpi-lbl">Lançamentos em aberto</div></div>`;
 
-  if(!list.length) { tb.innerHTML='<tr><td colspan="12" class="empty-state">Nenhuma parcela paga.</td></tr>'; return; }
+  if(!list.length) { tb.innerHTML='<tr><td colspan="13" class="empty-state">Nenhuma parcela paga.</td></tr>'; return; }
   if(!_efState('pagas').sortKey) list.sort((a,b)=>(b.venc||'').localeCompare(a.venc||''));
   window._pdfLists = window._pdfLists || {}; window._pdfLists.pagas = list.slice();
-  const _c = _cortarLista(list, 12);
+  const _c = _cortarLista(list, 13);
   tb.innerHTML = _c.aviso + _c.itens.map(p=>{
     const finBadge = p.financeiro==='sim' ? '<span class="badge badge-green">Sim</span>' : '<span class="badge badge-red">Não</span>';
     const dtpagoCell = p.dtpago
@@ -7546,14 +7959,15 @@ function renderPagas() {
       : `<span class="badge badge-gray" style="cursor:pointer" onclick="abrirEditarCategoriaPago('${p.lancId}','')" title="Clique para definir a categoria">Sem categoria ✎</span>`;
     return `<tr>
       <td>${getFornNome(p.forn)}</td>
-      <td>${p.prod ? getProdNome(p.prod) : '—'}</td>
-      <td>${catCell}</td>
+      <td>${p.cartaoFatura ? ccRotuloFatura(p.cartaoFatura) : (p.prod ? getProdNome(p.prod) : '—')}</td>
+      <td>${p.cartaoFatura ? '<span class="badge badge-cc">💳 Cartão de Crédito</span>' : catCell}</td>
       <td style="font-family:DM Mono,monospace">${p.parcIdx}/${p.totalParc}</td>
       <td style="font-family:DM Mono,monospace">${fmtBRL(p.valParc)}</td>
       <td>${fmtDate(p.venc)}</td>
       <td>${fmtDate(p.dtcompra)}</td>
       <td>${dtpagoCell}</td>
       <td>${p.tipoPag ? `<span class="badge badge-blue">${p.tipoPag}</span>` : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
+      <td>${p.banco ? getBancoNome(p.banco) : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
       <td style="font-family:DM Mono,monospace;font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
       <td class="actions"><button class="btn btn-danger btn-sm" onclick="estornarPago('${p.lancId}', ${p.parcIdx})" title="Desfazer pagamento">↩ Estornar</button>${p.totalParc>1?`<button class="btn btn-danger btn-sm" onclick="excluirParcela('pagar','${p.lancId}',${p.parcIdx})" title="Excluir somente esta parcela">✕ Parcela</button>`:''}</td>
@@ -11026,6 +11440,7 @@ function _catmassaAlvo() {
   const catAtual = catAtualEl ? catAtualEl.value : '';
   const lista = tabela === 'lancamentos' ? db.lancamentos : db.lancreceber;
   return lista.filter(x => {
+    if (x.cartao_fatura) return false;
     if (produtoId && x.prod !== produtoId) return false;
     if (escopo === 'sem-categoria' && x.cat_dre) return false;
     if (catAtual && x.cat_dre !== catAtual) return false;
@@ -13985,6 +14400,7 @@ function _pdfDiaColsDef(pagina) {
       { key:'dtcompra',  label:'Dt. Competência', get:p=>fmtDate(p.dtcompra) },
       { key:'dtpago',    label:'Dt. Pgto',       get:p=>fmtDate(p.dtpago) },
       { key:'forma',     label:'Forma Pgto',     get:p=>p.tipoPag||'—' },
+      { key:'banco',     label:'Banco',          get:p=>p.banco?getBancoNome(p.banco):'—' },
       { key:'nf',        label:'NF',             get:p=>p.nf||'—' },
       { key:'financeiro',label:'Financeiro',     get:p=>p.financeiro==='sim'?'Sim':'Não' }
     ],
@@ -15215,8 +15631,994 @@ function clearCustosFixosFiltros() {
 }
 
 
+
+// Compatibilidade: funções usadas pelo módulo de cartões
+if (typeof _dataComDiaFixo !== 'function') {
+  window._dataComDiaFixo = function (ano, mes, dia) {
+    const ultimo = new Date(ano, mes, 0).getDate();
+    return `${ano}-${String(mes).padStart(2,'0')}-${String(Math.min(dia, ultimo)).padStart(2,'0')}`;
+  };
+}
+function sbErroDetalhe() { return typeof sbErroMsg === 'function' ? sbErroMsg() : ''; }
+// ══════════════════════════════════════════════════════════════════
+// CARTÕES DE CRÉDITO
+// • Cadastro de vários cartões (dia de fechamento e de vencimento).
+// • Despesas lançadas no cartão (à vista ou parceladas): cada parcela é
+//   uma linha em "cartao_despesas", ligada à fatura do mês (AAAA-MM do
+//   vencimento).
+// • Cada fatura vira UM lançamento em Contas a Pagar (forma de pagamento
+//   "Cartão de Crédito", campo cartao_fatura = "idCartão|AAAA-MM"), com o
+//   valor total da fatura. Ela só pode ser paga pela tela do cartão,
+//   informando a conta (banco) e a data — depois aparece em Contas Pagas.
+// ══════════════════════════════════════════════════════════════════
+const CC_FORMA_PAG = 'Cartão de Crédito';
+const ccSel = { cartao: null, mes: null, busca: '', pendente: null };
+
+// Bandeiras. Para exibir a logo oficial no lugar do selo, informe em "img"
+// o caminho do arquivo da logo (ex.: 'logos/visa.png') publicado junto do index.html.
+const CC_BANDEIRAS = [
+  { id: 'mastercard', nome: 'Mastercard',       bg: 'linear-gradient(135deg,#eb001b 0 50%,#f79e1b 50% 100%)', img: '' },
+  { id: 'visa',       nome: 'Visa',             bg: '#1a1f71', img: '' },
+  { id: 'elo',        nome: 'Elo',              bg: '#111111', img: '' },
+  { id: 'amex',       nome: 'American Express', bg: '#2e77bb', img: '' },
+  { id: 'hipercard',  nome: 'Hipercard',        bg: '#b3131b', img: '' },
+  { id: 'outro',      nome: 'Outro',            bg: 'linear-gradient(135deg,#ea580c,#7c2d12)', img: '' }
+];
+function ccBandeira(id) { return CC_BANDEIRAS.find(b => b.id === id) || CC_BANDEIRAS[CC_BANDEIRAS.length - 1]; }
+function ccBandeiraHtml(id) {
+  const b = ccBandeira(id);
+  if (b.img) return `<div class="cc-band" title="${b.nome}"><img src="${b.img}" alt="${b.nome}"></div>`;
+  const txt = { outro: '💳', amex: 'AMEX', mastercard: 'MASTER', hipercard: 'HIPER' }[b.id] || b.nome.toUpperCase();
+  return `<div class="cc-band" title="${b.nome}" style="background:${b.bg}">${txt}</div>`;
+}
+function ccEhFormaCartao(f) {
+  const t = String(f || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return t.includes('cartao de credito') || t === 'credito' || t === 'cartao credito';
+}
+// Parcelas de Contas a Pagar que foram pagas com cartão ("idLanc|parcela")
+function ccOrigensSet() {
+  return new Set((db.cartao_despesas || []).filter(d => d.origem_lanc).map(d => `${d.origem_lanc}|${d.origem_parc || 1}`));
+}
+
+function ccAddMes(ym, n) {
+  const [y, m] = ym.split('-').map(Number);
+  const t = y * 12 + (m - 1) + n;
+  return `${Math.floor(t / 12)}-${String(t % 12 + 1).padStart(2, '0')}`;
+}
+function ccCartao(id) { return (db.cartoes || []).find(c => c.id === id); }
+function ccChave(cid, mes) { return `${cid}|${mes}`; }
+function ccFechaAntesVence(c) { return (c.dia_vencimento || 1) > (c.dia_fechamento || 1); }
+// Data de vencimento da fatura do mês "mes" (AAAA-MM)
+function ccDataVencimento(c, mes) {
+  const [y, m] = mes.split('-').map(Number);
+  return _dataComDiaFixo(y, m, c.dia_vencimento || 1);
+}
+// Data de fechamento da fatura que vence em "mes"
+function ccDataFechamento(c, mes) {
+  const ym = ccFechaAntesVence(c) ? mes : ccAddMes(mes, -1);
+  const [y, m] = ym.split('-').map(Number);
+  return _dataComDiaFixo(y, m, c.dia_fechamento || 1);
+}
+// Fatura (mês de vencimento) em que cai uma compra feita na data "data"
+function ccFaturaPadrao(c, data) {
+  const ymCompra = data.slice(0, 7);
+  const [y, m] = ymCompra.split('-').map(Number);
+  const fech = _dataComDiaFixo(y, m, c.dia_fechamento || 1);
+  const ymFech = data < fech ? ymCompra : ccAddMes(ymCompra, 1);
+  return ccFechaAntesVence(c) ? ymFech : ccAddMes(ymFech, 1);
+}
+function ccMesLabel(mes) {
+  const [y, m] = mes.split('-').map(Number);
+  return `${meses[m]} ${y}`;
+}
+function ccMesCurto(mes) {
+  const [y, m] = mes.split('-').map(Number);
+  return `${mesesAbr[m]}/${y}`;
+}
+function ccRotuloFatura(chave) {
+  const [cid, mes] = String(chave).split('|');
+  const c = ccCartao(cid);
+  return `💳 Fatura ${mes ? ccMesCurto(mes) : ''}${c ? ' · ' + c.nome : ''}`;
+}
+function ccLancFatura(cid, mes) {
+  const k = ccChave(cid, mes);
+  return db.lancamentos.find(l => l.cartao_fatura === k);
+}
+function ccFaturaPaga(cid, mes) {
+  const l = ccLancFatura(cid, mes);
+  return !!(l && l.pago === 'sim');
+}
+function ccDespesasFatura(cid, mes) {
+  return (db.cartao_despesas || []).filter(d => d.cartao_id === cid && d.fatura === mes);
+}
+function ccTotalFatura(cid, mes) {
+  return Math.round(ccDespesasFatura(cid, mes).reduce((s, d) => s + (Number(d.valor) || 0), 0) * 100) / 100;
+}
+function ccMesAtualCartao(c) { return ccFaturaPadrao(c, today()); }
+function ccSituacao(cid, mes) {
+  const c = ccCartao(cid);
+  const l = ccLancFatura(cid, mes);
+  if (l && l.pago === 'sim') return { txt: 'Paga', cor: '#16a34a' };
+  if (!c) return { txt: '—', cor: '#57534e' };
+  const hoje = today();
+  if (hoje > ccDataVencimento(c, mes) && ccTotalFatura(cid, mes) > 0) return { txt: 'Vencida', cor: '#dc2626' };
+  if (hoje >= ccDataFechamento(c, mes)) return { txt: 'Fechada', cor: '#d97706' };
+  return { txt: 'Aberta', cor: '#2563eb' };
+}
+
+// Cria/atualiza/remove o lançamento da fatura em Contas a Pagar
+async function ccSincronizarFatura(cid, mes) {
+  const c = ccCartao(cid);
+  if (!c) return true;
+  const total = ccTotalFatura(cid, mes);
+  const l = ccLancFatura(cid, mes);
+  if (l && l.pago === 'sim') return true; // fatura paga não é alterada
+  const dados = {
+    dtcompra: ccDataFechamento(c, mes),
+    dtprev: ccDataVencimento(c, mes),
+    forn: `Cartão de Crédito – ${c.nome}`,
+    valor: total,
+    obs: `Fatura ${ccMesLabel(mes)} do cartão ${c.nome}`
+  };
+  if (l) {
+    if (total <= 0) {
+      const ok = await sbFetch('lancamentos', 'DELETE', null, `?id=eq.${l.id}`);
+      if (!ok) return false;
+      db.lancamentos = db.lancamentos.filter(x => x.id !== l.id);
+    } else {
+      const ok = await sbFetch('lancamentos', 'PATCH', dados, `?id=eq.${l.id}`);
+      if (!ok) return false;
+      Object.assign(l, dados);
+    }
+  } else if (total > 0) {
+    const rec = {
+      id: uid(), empresa_id: c.empresa_id || empresaAtual() || null, ...dados,
+      nf: '', prod: '', parcelas: 1, financeiro: 'nao',
+      pago: 'nao', dtpago: '', tipo_pag: CC_FORMA_PAG, banco: '',
+      cat_dre: '', subcat: '', cartao_fatura: ccChave(cid, mes)
+    };
+    const ok = await sbFetch('lancamentos', 'POST', rec);
+    if (!ok) return false;
+    db.lancamentos.push(rec);
+  }
+  bumpDbVer();
+  return true;
+}
+
+function ccAtualizarTelas() {
+  bumpDbVer();
+  ccRender();
+  if (typeof renderApagar === 'function') { try { renderApagar(); renderPagas(); renderLancamentos(); } catch (e) { console.warn(e); } }
+}
+
+// ── Página ──
+function ccAbrirPagina() {
+  if (ccSel.pendente) {
+    const [cid, mes] = ccSel.pendente.split('|');
+    ccSel.pendente = null;
+    if (ccCartao(cid)) { ccSel.cartao = cid; ccSel.mes = mes; ccSel.busca = ''; }
+  }
+  ccRender();
+}
+function ccIrParaFatura(chave) {
+  ccSel.pendente = chave;
+  showPage('cartoes');
+}
+function ccRender() {
+  const lw = document.getElementById('cc-lista-wrap');
+  const dw = document.getElementById('cc-detalhe-wrap');
+  if (!lw || !dw) return;
+  if (ccSel.cartao && ccCartao(ccSel.cartao)) {
+    lw.style.display = 'none'; dw.style.display = '';
+    ccRenderDetalhe();
+  } else {
+    ccSel.cartao = null;
+    dw.style.display = 'none'; lw.style.display = '';
+    ccRenderLista();
+  }
+}
+function ccVoltarLista() { ccSel.cartao = null; ccRender(); }
+
+function ccRenderLista() {
+  const lw = document.getElementById('cc-lista-wrap');
+  const cartoes = (db.cartoes || []).slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+  if (!cartoes.length) {
+    lw.innerHTML = `<div class="cc-lista" style="padding:36px 24px;text-align:center;color:#78716c">
+      Nenhum cartão cadastrado ainda.<br><br>
+      <button class="btn btn-primary" onclick="ccAbrirCadastro()">💳 Cadastrar primeiro cartão</button></div>`;
+    return;
+  }
+  let totalGeral = 0;
+  const itens = cartoes.map(c => {
+    const mes = ccMesAtualCartao(c);
+    const val = ccTotalFatura(c.id, mes);
+    totalGeral += val;
+    // faturas anteriores ainda não pagas
+    const abertas = [...new Set((db.cartao_despesas || []).filter(d => d.cartao_id === c.id && d.fatura < mes).map(d => d.fatura))]
+      .filter(m => !ccFaturaPaga(c.id, m) && ccTotalFatura(c.id, m) > 0);
+    const atrasado = abertas.reduce((s, m) => s + ccTotalFatura(c.id, m), 0);
+    const sit = ccSituacao(c.id, mes);
+    return `<div class="cc-item" onclick="ccAbrirDetalhe('${c.id}')">
+      ${ccBandeiraHtml(c.bandeira)}
+      <div class="cc-info">
+        <div class="cc-nome">${c.nome} <span>· Fecha em ${fmtDate(ccDataFechamento(c, mes)).slice(0, 5)} · Vence ${fmtDate(ccDataVencimento(c, mes)).slice(0, 5)}</span></div>
+        <div class="cc-val">${fmtBRL(val)} <span style="font-size:12px;font-weight:600;color:${sit.cor};font-family:inherit">${sit.txt}</span></div>
+        ${atrasado > 0 ? `<div class="cc-sub">Faturas anteriores em aberto: <b>${fmtBRL(atrasado)}</b></div>` : ''}
+        <div class="cc-sub">🏦 ${c.banco_id ? 'Pago pela conta ' + getBancoNome(c.banco_id) : '<span style="color:#d97706">Sem banco vinculado — clique em ✎ para vincular</span>'}${c.limite ? ' · Limite ' + fmtBRL(c.limite) : ''}</div>
+      </div>
+      <div class="cc-acts" onclick="event.stopPropagation()">
+        <button class="cc-mini" title="Editar cartão" onclick="ccAbrirCadastro('${c.id}')">✎</button>
+        <button class="cc-mini del" title="Excluir cartão" onclick="ccExcluirCartao('${c.id}')">🗑</button>
+        <button class="cc-add" title="Nova despesa neste cartão" onclick="ccAbrirDespesa('${c.id}')">+</button>
+      </div>
+    </div>`;
+  }).join('');
+  lw.innerHTML = `<div class="cc-lista">${itens}
+    <div class="cc-total"><span>Total (faturas atuais)</span><span>${fmtBRL(totalGeral)}</span></div></div>`;
+}
+
+function ccAbrirDetalhe(cid) {
+  const c = ccCartao(cid);
+  if (!c) return;
+  ccSel.cartao = cid; ccSel.mes = ccMesAtualCartao(c); ccSel.busca = '';
+  ccRender();
+}
+function ccNavMes(n) { ccSel.mes = ccAddMes(ccSel.mes, n); ccRenderDetalhe(); }
+
+function ccRenderDetalhe() {
+  const dw = document.getElementById('cc-detalhe-wrap');
+  const c = ccCartao(ccSel.cartao);
+  const mes = ccSel.mes;
+  const total = ccTotalFatura(c.id, mes);
+  const sit = ccSituacao(c.id, mes);
+  const l = ccLancFatura(c.id, mes);
+  const paga = l && l.pago === 'sim';
+  const pagoInfo = paga ? `<div><div class="lbl">Pago em</div><div class="val">${fmtDate(l.dtpago)} · ${getBancoNome(l.banco)}</div></div>` : '';
+  dw.innerHTML = `
+    <div style="margin-bottom:10px"><button class="btn btn-secondary btn-sm" onclick="ccVoltarLista()">← Todos os cartões</button></div>
+    <div class="cc-nav">
+      <button onclick="ccNavMes(-1)" title="Fatura anterior">‹</button>
+      <div>${ccMesLabel(mes)}</div>
+      <button onclick="ccNavMes(1)" title="Próxima fatura">›</button>
+    </div>
+    <div class="cc-det">
+      <div class="cc-det-nome" style="display:flex;align-items:center;justify-content:center;gap:12px">${ccBandeiraHtml(c.bandeira)}${c.nome}</div>
+      <div class="cc-det-info">
+        <div><div class="lbl">Fechamento</div><div class="val">${fmtDate(ccDataFechamento(c, mes))}</div></div>
+        <div><div class="lbl">Vencimento</div><div class="val">${fmtDate(ccDataVencimento(c, mes))}</div></div>
+        <div><div class="lbl">Situação</div><div class="val" style="color:${sit.cor}">${sit.txt}</div></div>
+        <div><div class="lbl">Valor</div><div class="val" style="color:#dc2626">${fmtBRL(total)}</div></div>
+        <div><div class="lbl">Banco vinculado</div><div class="val">${c.banco_id ? getBancoNome(c.banco_id) : '—'}</div></div>
+        ${pagoInfo}
+      </div>
+      <div class="cc-det-acoes">
+        ${paga
+          ? `<button class="btn btn-secondary btn-sm" onclick="ccEstornarFatura('${c.id}','${mes}')">↺ Desfazer pagamento</button>`
+          : `<button class="btn btn-primary btn-sm" ${total > 0 ? '' : 'disabled'} onclick="ccAbrirPagamento('${c.id}','${mes}')">✓ Pagar fatura</button>`}
+        <button class="btn btn-secondary btn-sm" onclick="ccAbrirDespesa('${c.id}','${mes}')">+ Despesa</button>
+        <button class="btn btn-secondary btn-sm" onclick="ccAbrirImportacao('${c.id}','${mes}')">📥 Importar fatura</button>
+        <button class="btn btn-secondary btn-sm" onclick="ccAbrirCadastro('${c.id}')">✎ Editar cartão</button>
+        <button class="btn btn-danger btn-sm" onclick="ccExcluirCartao('${c.id}')">🗑 Excluir cartão</button>
+      </div>
+      <input class="cc-busca" id="cc-busca" type="text" placeholder="Busca" value="${(ccSel.busca || '').replace(/"/g, '&quot;')}" oninput="ccSel.busca=this.value;ccRenderDetalheLista()" />
+      <div id="cc-det-lista"></div>
+    </div>`;
+  ccRenderDetalheLista();
+}
+
+function ccRenderDetalheLista() {
+  const box = document.getElementById('cc-det-lista');
+  if (!box) return;
+  const c = ccCartao(ccSel.cartao);
+  const paga = ccFaturaPaga(c.id, ccSel.mes);
+  const q = (ccSel.busca || '').trim().toLowerCase();
+  let lista = ccDespesasFatura(c.id, ccSel.mes);
+  if (q) lista = lista.filter(d => (d.descricao || '').toLowerCase().includes(q) || (d.cat_dre ? getDreCatNome(d.cat_dre) : '').toLowerCase().includes(q));
+  lista.sort((a, b) => (b.data || '').localeCompare(a.data || '') || (a.descricao || '').localeCompare(b.descricao || ''));
+  if (!lista.length) { box.innerHTML = '<div class="empty-state" style="padding:28px 0">Nenhuma despesa nesta fatura.</div>'; return; }
+  let html = '', diaAtual = null;
+  lista.forEach(d => {
+    if (d.data !== diaAtual) {
+      diaAtual = d.data;
+      const dt = new Date(d.data + 'T12:00:00');
+      const sem = dt.toLocaleDateString('pt-BR', { weekday: 'long' });
+      html += `<div class="cc-dia">${sem.charAt(0).toUpperCase() + sem.slice(1)}, ${dt.getDate()}</div>`;
+    }
+    const parc = (d.total_parcelas || 1) > 1 ? ` (${d.parcela}/${d.total_parcelas})` : '';
+    const cat = d.cat_dre ? getDreCatNome(d.cat_dre) : 'Sem categoria';
+    html += `<div class="cc-desp">
+      <div class="cc-desp-ico">💳</div>
+      <div class="cc-desp-txt"><b>${d.descricao || '—'}${parc}</b><div>${cat} | ${c.nome}${d.origem_lanc ? ' · <span style="color:#c2410c">conta a pagar</span>' : ''}${d.obs ? ' · ' + d.obs : ''}</div></div>
+      <div class="cc-desp-val" style="${Number(d.valor) < 0 ? 'color:#16a34a' : ''}">${fmtBRL(d.valor)}
+        ${paga ? '' : `<div class="actions"><button class="btn btn-secondary btn-sm" onclick="ccAbrirDespesa(null,null,'${d.grupo}')">Editar</button><button class="btn btn-danger btn-sm" onclick="ccExcluirDespesa('${d.grupo}')">Excluir</button></div>`}
+      </div>
+    </div>`;
+  });
+  box.innerHTML = html;
+}
+
+// ── Cadastro de cartão ──
+function ccAbrirCadastro(cid) {
+  const c = cid ? ccCartao(cid) : null;
+  document.getElementById('cc-c-titulo').textContent = c ? 'Editar Cartão de Crédito' : 'Novo Cartão de Crédito';
+  document.getElementById('cc-c-id').value = c ? c.id : '';
+  document.getElementById('cc-c-nome').value = c ? c.nome : '';
+  document.getElementById('cc-c-fech').value = c ? c.dia_fechamento : '';
+  document.getElementById('cc-c-venc').value = c ? c.dia_vencimento : '';
+  document.getElementById('cc-c-limite').value = c && c.limite ? c.limite : '';
+  const selBco = document.getElementById('cc-c-banco');
+  selBco.innerHTML = '<option value="">Selecione...</option>' + (db.bancos || []).map(b => `<option value="${b.id}">${b.nome}</option>`).join('');
+  selBco.value = c ? (c.banco_id || '') : '';
+  document.getElementById('cc-c-bandeira').value = c ? (c.bandeira || 'outro') : '';
+  ccRenderChipsBandeira();
+  document.getElementById('cc-c-excluir').style.display = c ? '' : 'none';
+  openModal('modal-cc-cartao');
+  setTimeout(() => document.getElementById('cc-c-nome').focus(), 50);
+}
+function ccRenderChipsBandeira() {
+  const atual = document.getElementById('cc-c-bandeira').value;
+  document.getElementById('cc-c-bandeiras').innerHTML = CC_BANDEIRAS.map(b =>
+    `<div class="cc-chip ${b.id === atual ? 'sel' : ''}" onclick="document.getElementById('cc-c-bandeira').value='${b.id}';ccRenderChipsBandeira()">${ccBandeiraHtml(b.id)}${b.nome}</div>`).join('');
+}
+async function ccSalvarCartao() {
+  const id = document.getElementById('cc-c-id').value;
+  const nome = document.getElementById('cc-c-nome').value.trim();
+  const fech = parseInt(document.getElementById('cc-c-fech').value, 10);
+  const venc = parseInt(document.getElementById('cc-c-venc').value, 10);
+  const limite = parseFloat(document.getElementById('cc-c-limite').value) || null;
+  const bandeira = document.getElementById('cc-c-bandeira').value;
+  const banco_id = document.getElementById('cc-c-banco').value;
+  if (!nome) { alert('Informe o nome do cartão.'); return; }
+  if (!banco_id) { alert('Selecione o banco/conta de onde a fatura deste cartão é paga.'); return; }
+  if (!bandeira) { alert('Escolha a bandeira do cartão (Mastercard, Visa, Elo...).'); return; }
+  if (!(fech >= 1 && fech <= 31)) { alert('Informe o dia do fechamento (1 a 31).'); return; }
+  if (!(venc >= 1 && venc <= 31)) { alert('Informe o dia do vencimento (1 a 31).'); return; }
+  const _empCC = id ? ((ccCartao(id) || {}).empresa_id || empresaAtual()) : exigirEmpresaAtiva('um cartão de crédito');
+  if (!id && !_empCC) return;
+  if ((db.cartoes || []).some(c => c.id !== id && (c.empresa_id || '') === (_empCC || '') && (c.nome || '').toLowerCase() === nome.toLowerCase())) { alert('Já existe um cartão com esse nome nesta empresa.'); return; }
+  const dados = { nome, dia_fechamento: fech, dia_vencimento: venc, limite, bandeira, banco_id };
+  if (id) {
+    const c = ccCartao(id);
+    const mudouDias = c.dia_fechamento !== fech || c.dia_vencimento !== venc;
+    const ok = await sbFetch('cartoes', 'PATCH', dados, `?id=eq.${id}`);
+    if (!ok) { alert('❌ Erro ao salvar o cartão.' + sbErroDetalhe()); return; }
+    Object.assign(c, dados);
+    // Atualiza nome/datas das faturas ainda não pagas
+    const mesesC = [...new Set((db.cartao_despesas || []).filter(d => d.cartao_id === id).map(d => d.fatura))];
+    for (const m of mesesC) await ccSincronizarFatura(id, m);
+    if (mudouDias) alert('Dias atualizados. As despesas já lançadas continuam nas faturas em que estavam; as novas seguirão os novos dias.');
+  } else {
+    const rec = { id: uid(), empresa_id: _empCC, ...dados };
+    const ok = await sbFetch('cartoes', 'POST', rec);
+    if (!ok) { alert('❌ Erro ao salvar o cartão.' + sbErroDetalhe() + '\n\nSe for o primeiro uso, execute antes o script cartoes_credito.sql no Supabase.'); return; }
+    db.cartoes.push(rec);
+  }
+  closeModal('modal-cc-cartao');
+  ccAtualizarTelas();
+}
+async function ccExcluirCartao(id) {
+  const c = ccCartao(id);
+  if (!c) return;
+  const desps = (db.cartao_despesas || []).filter(d => d.cartao_id === id);
+  const faturasPagas = [...new Set(desps.map(d => d.fatura))].filter(m => ccFaturaPaga(id, m));
+  if (faturasPagas.length) {
+    alert(`O cartão "${c.nome}" tem fatura(s) já paga(s) (${faturasPagas.map(ccMesCurto).join(', ')}) e não pode ser excluído, para não apagar o histórico de pagamentos.\n\nSe quiser, desfaça o pagamento dessas faturas antes.`);
+    return;
+  }
+  const grupos = [...new Set(desps.map(d => d.grupo))];
+  const origens = [...new Map(desps.filter(d => d.origem_lanc).map(d => [d.grupo, d])).values()];
+  let msg = `Tem certeza que deseja excluir o cartão "${c.nome}"?`;
+  if (grupos.length) msg += `\n\n${grupos.length} despesa(s) lançada(s) e as faturas em aberto deste cartão também serão excluídas.`;
+  if (origens.length) msg += `\n${origens.length} conta(s) a pagar paga(s) com este cartão voltarão para Contas a Pagar, em aberto.`;
+  msg += '\n\nEsta ação não pode ser desfeita.';
+  if (!confirm(msg)) return;
+  if (desps.length) {
+    const ok = await sbFetch('cartao_despesas', 'DELETE', null, `?cartao_id=eq.${id}`);
+    if (!ok) { alert('❌ Erro ao excluir as despesas do cartão.' + sbErroDetalhe()); return; }
+    db.cartao_despesas = db.cartao_despesas.filter(d => d.cartao_id !== id);
+    for (const m of new Set(desps.map(d => d.fatura))) await ccSincronizarFatura(id, m);
+    for (const d of origens) await ccDesfazerParcelaViaCartao(d.origem_lanc, d.origem_parc || 1);
+  }
+  const ok = await sbFetch('cartoes', 'DELETE', null, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao excluir o cartão.' + sbErroDetalhe()); return; }
+  db.cartoes = db.cartoes.filter(x => x.id !== id);
+  if (ccSel.cartao === id) ccSel.cartao = null;
+  closeModal('modal-cc-cartao');
+  ccAtualizarTelas();
+}
+
+// ── Despesa no cartão ──
+function ccRenderChipsCartao() {
+  const sel = document.getElementById('cc-d-cartao');
+  document.getElementById('cc-d-cartoes').innerHTML = [...sel.options].map(o => {
+    const c = ccCartao(o.value);
+    return `<div class="cc-chip ${o.value === sel.value ? 'sel' : ''}" onclick="ccEscolherCartao('${o.value}')">${ccBandeiraHtml(c && c.bandeira)}${o.textContent}</div>`;
+  }).join('');
+}
+function ccEscolherCartao(cid) {
+  document.getElementById('cc-d-cartao').value = cid;
+  ccAtualizarFaturas(true); ccRenderChipsCartao();
+}
+// orig = { lanc, parc, desc, valor, cat, data } quando a despesa vem de uma conta a pagar
+function ccAbrirDespesa(cid, mes, grupo, orig) {
+  if (!(db.cartoes || []).length) { alert('Cadastre um cartão de crédito primeiro.'); ccAbrirCadastro(); return; }
+  const linhas = grupo ? (db.cartao_despesas || []).filter(d => d.grupo === grupo).sort((a, b) => a.parcela - b.parcela) : [];
+  if (grupo && !linhas.length) return;
+  if (linhas.some(d => ccFaturaPaga(d.cartao_id, d.fatura))) {
+    alert('Esta despesa tem parcela em fatura já paga e não pode ser alterada.\nDesfaça o pagamento da fatura para editar.');
+    return;
+  }
+  const selC = document.getElementById('cc-d-cartao');
+  selC.innerHTML = (db.cartoes || []).slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || ''))
+    .map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+  const selCat = document.getElementById('cc-d-cat');
+  selCat.innerHTML = '<option value="">Nenhuma</option>' + (db.dfc_cats || []).slice()
+    .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''))
+    .map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+  const selP = document.getElementById('cc-d-parcelas');
+  selP.innerHTML = Array.from({ length: 47 }, (_, i) => `<option value="${i + 2}">${i + 2}x</option>`).join('');
+
+  const p1 = linhas[0];
+  document.getElementById('cc-d-titulo').textContent = p1 ? 'Editar Despesa no Cartão' : 'Nova Despesa no Cartão';
+  document.getElementById('cc-d-grupo').value = p1 ? grupo : '';
+  selC.value = p1 ? p1.cartao_id : (cid || ccSel.cartao || selC.options[0].value);
+  document.getElementById('cc-d-data').value = p1 ? p1.data : today();
+  document.getElementById('cc-d-desc').value = p1 ? p1.descricao : '';
+  selCat.value = p1 ? (p1.cat_dre || '') : '';
+  const n = linhas.length || 1;
+  // despesa importada da fatura (ex.: parcela 4/10 sozinha): mantém a marcação
+  document.getElementById('cc-d-parc-fixa').value = (linhas.length === 1 && (p1.total_parcelas || 1) > 1) ? `${p1.parcela}/${p1.total_parcelas}` : '';
+  const tot = Math.round(linhas.reduce((s, d) => s + (Number(d.valor) || 0), 0) * 100) / 100;
+  document.getElementById('cc-d-valor').value = p1 ? tot : '';
+  document.getElementById('cc-d-parcelada').value = n > 1 ? 'sim' : 'nao';
+  selP.value = String(n > 1 ? n : 2);
+  document.getElementById('cc-d-tipoval').value = 'total';
+  document.getElementById('cc-d-obs').value = p1 ? (p1.obs || '') : '';
+  document.getElementById('cc-d-excluir').style.display = p1 ? '' : 'none';
+  const oLanc = p1 ? (p1.origem_lanc || '') : (orig ? orig.lanc : '');
+  const oParc = p1 ? (p1.origem_parc || '') : (orig ? orig.parc : '');
+  document.getElementById('cc-d-orig-lanc').value = oLanc;
+  document.getElementById('cc-d-orig-parc').value = oParc;
+  if (orig && !p1) {
+    document.getElementById('cc-d-titulo').textContent = 'Pagar Conta com Cartão de Crédito';
+    document.getElementById('cc-d-desc').value = orig.desc || '';
+    document.getElementById('cc-d-valor').value = orig.valor || '';
+    selCat.value = orig.cat || '';
+    if (orig.data) document.getElementById('cc-d-data').value = orig.data;
+  }
+  const infoO = document.getElementById('cc-d-orig-info');
+  infoO.style.display = oLanc ? '' : 'none';
+  infoO.innerHTML = oLanc ? 'Esta despesa veio de <b>Contas a Pagar</b>. Ao salvar, a conta sai de Contas a Pagar e passa a fazer parte da fatura do cartão escolhido.' : '';
+  ccAtualizarFaturas(false, p1 ? p1.fatura : (mes || null));
+  ccRenderChipsCartao();
+  ccToggleParcelada();
+  if (typeof enhanceSearchableSelect === 'function') { try { enhanceSearchableSelect(selCat); } catch (e) {} }
+  openModal('modal-cc-despesa');
+}
+// Monta a lista de faturas possíveis (a padrão pela data da compra + vizinhas)
+function ccAtualizarFaturas(recalcular, mesForcado) {
+  const c = ccCartao(document.getElementById('cc-d-cartao').value);
+  const data = document.getElementById('cc-d-data').value || today();
+  const sel = document.getElementById('cc-d-fatura');
+  if (!c) { sel.innerHTML = ''; return; }
+  const padrao = ccFaturaPadrao(c, data);
+  const atual = recalcular ? padrao : (mesForcado || padrao);
+  const opts = [];
+  for (let i = -2; i <= 3; i++) opts.push(ccAddMes(padrao, i));
+  if (!opts.includes(atual)) opts.push(atual);
+  opts.sort();
+  sel.innerHTML = opts.map(m => `<option value="${m}">${ccMesLabel(m)} — vence ${fmtDate(ccDataVencimento(c, m))}${ccFaturaPaga(c.id, m) ? ' (paga)' : ''}</option>`).join('');
+  sel.value = atual;
+  ccPreviaParcelas();
+}
+function ccToggleParcelada() {
+  const sim = document.getElementById('cc-d-parcelada').value === 'sim';
+  document.getElementById('cc-d-parc-grp').style.display = sim ? '' : 'none';
+  document.getElementById('cc-d-tipoval-grp').style.display = sim ? '' : 'none';
+  ccPreviaParcelas();
+}
+// Divide o valor em parcelas (centavos de diferença ficam na 1ª)
+function ccMontarParcelas() {
+  const sim = document.getElementById('cc-d-parcelada').value === 'sim';
+  const fixa = document.getElementById('cc-d-parc-fixa').value;
+  if (!sim && fixa) {
+    const [pa, pt] = fixa.split('/').map(Number);
+    return [{ parcela: pa, total_parcelas: pt, valor: Math.round((parseFloat(document.getElementById('cc-d-valor').value) || 0) * 100) / 100, fatura: document.getElementById('cc-d-fatura').value }];
+  }
+  const n = sim ? (parseInt(document.getElementById('cc-d-parcelas').value, 10) || 1) : 1;
+  const v = parseFloat(document.getElementById('cc-d-valor').value) || 0;
+  const porParcela = sim && document.getElementById('cc-d-tipoval').value === 'parcela';
+  const totalC = Math.round((porParcela ? v * n : v) * 100);
+  const base = Math.floor(totalC / n);
+  const sobra = totalC - base * n;
+  const mes = document.getElementById('cc-d-fatura').value;
+  return Array.from({ length: n }, (_, i) => ({
+    parcela: i + 1, total_parcelas: n,
+    valor: (base + (i === 0 ? sobra : 0)) / 100,
+    fatura: mes ? ccAddMes(mes, i) : ''
+  }));
+}
+function ccPreviaParcelas() {
+  const box = document.getElementById('cc-d-previa');
+  if (!box) return;
+  const ps = ccMontarParcelas();
+  const v = parseFloat(document.getElementById('cc-d-valor').value) || 0;
+  if (ps.length < 2 || v <= 0) { box.style.display = 'none'; return; }
+  const total = ps.reduce((s, p) => s + p.valor, 0);
+  box.style.display = '';
+  box.innerHTML = `<b>${ps.length}x</b> — total ${fmtBRL(total)} · 1ª parcela ${fmtBRL(ps[0].valor)} na fatura de ${ccMesCurto(ps[0].fatura)}, última na fatura de ${ccMesCurto(ps[ps.length - 1].fatura)}.`;
+}
+async function ccSalvarDespesa() {
+  const grupoAnt = document.getElementById('cc-d-grupo').value;
+  const cid = document.getElementById('cc-d-cartao').value;
+  const data = document.getElementById('cc-d-data').value;
+  const descricao = document.getElementById('cc-d-desc').value.trim();
+  const cat_dre = document.getElementById('cc-d-cat').value;
+  const obs = document.getElementById('cc-d-obs').value.trim();
+  const valor = parseFloat(document.getElementById('cc-d-valor').value) || 0;
+  if (!cid) { alert('Selecione o cartão.'); return; }
+  if (!data) { alert('Informe a data da compra.'); return; }
+  if (!descricao) { alert('Informe a descrição.'); return; }
+  if (!valor) { alert('Informe o valor.'); return; }
+  if (valor < 0 && document.getElementById('cc-d-parcelada').value === 'sim') { alert('Crédito/estorno (valor negativo) não pode ser parcelado.'); return; }
+  const ps = ccMontarParcelas();
+  if (!ps[0].fatura) { alert('Selecione a fatura.'); return; }
+  const pagas = ps.filter(p => ccFaturaPaga(cid, p.fatura));
+  if (pagas.length) { alert(`A fatura de ${ccMesLabel(pagas[0].fatura)} já foi paga. Escolha outra fatura ou desfaça o pagamento dela.`); return; }
+
+  const antigas = grupoAnt ? db.cartao_despesas.filter(d => d.grupo === grupoAnt) : [];
+  const afetadas = new Set(antigas.map(d => `${d.cartao_id}|${d.fatura}`));
+  if (grupoAnt) {
+    const ok = await sbFetch('cartao_despesas', 'DELETE', null, `?grupo=eq.${grupoAnt}`);
+    if (!ok) { alert('❌ Erro ao salvar a despesa.' + sbErroDetalhe()); return; }
+    db.cartao_despesas = db.cartao_despesas.filter(d => d.grupo !== grupoAnt);
+  }
+  const grupo = grupoAnt || uid();
+  const origem_lanc = document.getElementById('cc-d-orig-lanc').value || null;
+  const origem_parc = origem_lanc ? (parseInt(document.getElementById('cc-d-orig-parc').value, 10) || 1) : null;
+  const recs = ps.map(p => ({
+    id: uid() + p.parcela, empresa_id: (ccCartao(cid) || {}).empresa_id || empresaAtual() || null, cartao_id: cid, grupo,
+    data, descricao, cat_dre, obs, origem_lanc, origem_parc, ...p
+  }));
+  const ok = await sbFetch('cartao_despesas', 'POST', recs);
+  if (!ok) { alert('❌ Erro ao salvar a despesa.' + sbErroDetalhe() + '\n\nSe for o primeiro uso, execute antes o script cartoes_credito.sql no Supabase.'); return; }
+  db.cartao_despesas.push(...recs);
+  recs.forEach(r => afetadas.add(`${r.cartao_id}|${r.fatura}`));
+  let falhou = false;
+  for (const k of afetadas) { const [c, m] = k.split('|'); if (!(await ccSincronizarFatura(c, m))) falhou = true; }
+  if (falhou) alert('⚠️ A despesa foi salva, mas houve erro ao atualizar a fatura em Contas a Pagar.' + sbErroDetalhe());
+  closeModal('modal-cc-despesa');
+  if (origem_lanc && !grupoAnt) {
+    // a conta original é quitada "via cartão" (sem banco); o dinheiro sai quando a fatura for paga
+    if (!(await ccMarcarParcelaViaCartao(origem_lanc, origem_parc, data))) alert('⚠️ A despesa foi para o cartão, mas houve erro ao baixar a conta em Contas a Pagar.' + sbErroDetalhe());
+    ccAtualizarTelas();
+    ccIrParaFatura(ccChave(cid, ps[0].fatura));
+    return;
+  }
+  ccAtualizarTelas();
+}
+
+// Envia a conta a pagar aberta no "Confirmar Pagamento" para um cartão
+function ccPagarContaComCartao() {
+  const id = document.getElementById('modal-pago-id').value;
+  const parc = parseInt(document.getElementById('modal-pago-parc').value, 10) || 1;
+  closeModal('modal-pago');
+  ccEnviarParcelaParaCartao(id, parc, document.getElementById('modal-pago-data').value || today());
+}
+function ccEnviarParcelaParaCartao(id, parc, data) {
+  const p = getParcelas(false).find(x => x.lancId === id && x.parcIdx === parc);
+  if (!p) { alert('Parcela não encontrada.'); return; }
+  if (!(db.cartoes || []).length) { alert('Cadastre um cartão de crédito primeiro (Contas a Pagar → Cartões de Crédito).'); return; }
+  const desc = getFornNome(p.forn) + (p.prod ? ' – ' + getProdNome(p.prod) : '') + (p.totalParc > 1 ? ` (parc. ${p.parcIdx}/${p.totalParc})` : '');
+  ccAbrirDespesa(null, null, null, {
+    lanc: id, parc, desc, valor: Math.round((p.valParc || 0) * 100) / 100, cat: p.catId || '', data
+  });
+}
+async function ccMarcarParcelaViaCartao(id, parcIdx, data) {
+  const l = db.lancamentos.find(x => x.id === id);
+  if (!l) return true;
+  const n = l.parcelas || 1;
+  const ehMulti = _parseParcelas(l.parcela_datas).multi;
+  if (!ehMulti) { l.banco = ''; l.tipo_pag = CC_FORMA_PAG; }
+  let ok;
+  if (n > 1 || ehMulti) {
+    l.parcela_datas = _setParcelaPagoStatus(l, parcIdx, true, data, '', CC_FORMA_PAG);
+    const { pagos } = _parseParcelas(l.parcela_datas);
+    const todas = pagos.slice(0, n).every(x => x === true);
+    l.pago = todas ? 'sim' : 'nao'; l.dtpago = todas ? data : '';
+    ok = await sbFetch('lancamentos', 'PATCH', { parcela_datas: l.parcela_datas, pago: l.pago, dtpago: l.dtpago, banco: l.banco, tipo_pag: l.tipo_pag }, `?id=eq.${id}`);
+  } else {
+    l.pago = 'sim'; l.dtpago = data;
+    ok = await sbFetch('lancamentos', 'PATCH', { pago: 'sim', dtpago: data, banco: '', tipo_pag: CC_FORMA_PAG }, `?id=eq.${id}`);
+  }
+  bumpDbVer();
+  return !!ok;
+}
+async function ccDesfazerParcelaViaCartao(id, parcIdx) {
+  const l = db.lancamentos.find(x => x.id === id);
+  if (!l) return;
+  const n = l.parcelas || 1;
+  if (n > 1 || _parseParcelas(l.parcela_datas).multi) {
+    l.parcela_datas = _setParcelaPagoStatus(l, parcIdx, false, '');
+    l.pago = 'nao'; l.dtpago = '';
+    await sbFetch('lancamentos', 'PATCH', { parcela_datas: l.parcela_datas, pago: 'nao', dtpago: '' }, `?id=eq.${id}`);
+  } else {
+    l.pago = 'nao'; l.dtpago = '';
+    await sbFetch('lancamentos', 'PATCH', { pago: 'nao', dtpago: '' }, `?id=eq.${id}`);
+  }
+  bumpDbVer();
+}
+async function ccExcluirDespesa(grupo) {
+  const linhas = (db.cartao_despesas || []).filter(d => d.grupo === grupo);
+  if (!linhas.length) return;
+  if (linhas.some(d => ccFaturaPaga(d.cartao_id, d.fatura))) { alert('Esta despesa tem parcela em fatura já paga e não pode ser excluída.'); return; }
+  const n = linhas.length;
+  const orig = linhas[0].origem_lanc;
+  if (!confirm(`Excluir "${linhas[0].descricao}"${n > 1 ? ` e suas ${n} parcelas` : ''}?` + (orig ? '\n\nA conta voltará para Contas a Pagar, em aberto.' : ''))) return;
+  const ok = await sbFetch('cartao_despesas', 'DELETE', null, `?grupo=eq.${grupo}`);
+  if (!ok) { alert('❌ Erro ao excluir.' + sbErroDetalhe()); return; }
+  db.cartao_despesas = db.cartao_despesas.filter(d => d.grupo !== grupo);
+  const afetadas = new Set(linhas.map(d => `${d.cartao_id}|${d.fatura}`));
+  for (const k of afetadas) { const [c, m] = k.split('|'); await ccSincronizarFatura(c, m); }
+  if (orig) await ccDesfazerParcelaViaCartao(orig, linhas[0].origem_parc || 1);
+  closeModal('modal-cc-despesa');
+  ccAtualizarTelas();
+}
+
+// ── Pagamento da fatura (único caminho para pagar) ──
+let _ccPagando = null;
+function ccAbrirPagamento(cid, mes) {
+  const c = ccCartao(cid);
+  const l = ccLancFatura(cid, mes);
+  const total = ccTotalFatura(cid, mes);
+  if (!c || !l || total <= 0) { alert('Não há valor a pagar nesta fatura.'); return; }
+  _ccPagando = { cid, mes };
+  document.getElementById('cc-pg-info').innerHTML =
+    `<b>${c.nome}</b> — fatura de ${ccMesLabel(mes)}<br>Vencimento: ${fmtDate(ccDataVencimento(c, mes))}<br>` +
+    `Valor total: <b style="color:#dc2626">${fmtBRL(total)}</b><br><span style="font-size:11.5px;color:#a8a29e">A fatura é paga integralmente, de uma só vez.</span>`;
+  document.getElementById('cc-pg-data').value = today();
+  const selB = document.getElementById('cc-pg-banco');
+  selB.innerHTML = '<option value="">Selecione...</option>' + (db.bancos || []).map(b => `<option value="${b.id}">${b.nome}</option>`).join('');
+  selB.value = c.banco_id || '';
+  openModal('modal-cc-pagar');
+}
+async function ccConfirmarPagamento() {
+  if (!_ccPagando) return;
+  const { cid, mes } = _ccPagando;
+  const dtpago = document.getElementById('cc-pg-data').value;
+  const banco = document.getElementById('cc-pg-banco').value;
+  if (!dtpago) { alert('Informe a data do pagamento.'); return; }
+  if (!banco) { alert('Selecione a conta (banco) de onde saiu o pagamento.'); return; }
+  // garante que o valor do lançamento está igual ao total da fatura
+  if (!(await ccSincronizarFatura(cid, mes))) { alert('❌ Erro ao atualizar a fatura.' + sbErroDetalhe()); return; }
+  const l = ccLancFatura(cid, mes);
+  if (!l) return;
+  const dados = { pago: 'sim', dtpago, banco, tipo_pag: CC_FORMA_PAG };
+  const ok = await sbFetch('lancamentos', 'PATCH', dados, `?id=eq.${l.id}`);
+  if (!ok) { alert('❌ Erro ao registrar o pagamento.' + sbErroDetalhe()); return; }
+  Object.assign(l, dados);
+  _ccPagando = null;
+  closeModal('modal-cc-pagar');
+  ccAtualizarTelas();
+}
+async function ccEstornarFatura(cid, mes) {
+  const l = ccLancFatura(cid, mes);
+  if (!l || l.pago !== 'sim') return;
+  if (!confirm('Desfazer o pagamento desta fatura? Ela volta para Contas a Pagar.')) return;
+  const dados = { pago: 'nao', dtpago: '', banco: '' };
+  const ok = await sbFetch('lancamentos', 'PATCH', dados, `?id=eq.${l.id}`);
+  if (!ok) { alert('❌ Erro ao desfazer.' + sbErroDetalhe()); return; }
+  Object.assign(l, dados);
+  await ccSincronizarFatura(cid, mes);
+  ccAtualizarTelas();
+}
+
+
+
+// ══════════════════════════════════════════════════════════════════
+// IMPORTAR FATURA DO CARTÃO (OFX, CSV ou Excel exportados pelo banco)
+// Cada linha vira uma despesa na fatura escolhida. Compras parceladas
+// ("LOJA X 04/10") entram como a parcela 4 de 10 daquela fatura.
+// Créditos (estornos) entram com valor negativo; o pagamento da fatura
+// anterior vem desmarcado.
+// ══════════════════════════════════════════════════════════════════
+let _ccImp = { linhas: [], formato: '' };
+
+function ccAbrirImportacao(cid, mes) {
+  if (!(db.cartoes || []).length) { alert('Cadastre um cartão de crédito primeiro.'); return; }
+  const selC = document.getElementById('cc-imp-cartao');
+  selC.innerHTML = (db.cartoes || []).slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || ''))
+    .map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+  selC.value = cid || ccSel.cartao || selC.options[0].value;
+  ccImpMontarFaturas(mes);
+  document.getElementById('cc-imp-arquivo').value = '';
+  document.getElementById('cc-imp-inverter').checked = false;
+  _ccImp = { linhas: [], formato: '' };
+  ccImpRender();
+  openModal('modal-cc-importar');
+}
+function ccImpMontarFaturas(mes) {
+  const c = ccCartao(document.getElementById('cc-imp-cartao').value);
+  const sel = document.getElementById('cc-imp-fatura');
+  if (!c) { sel.innerHTML = ''; return; }
+  const base = mes || ccMesAtualCartao(c);
+  const opts = [];
+  for (let i = -6; i <= 3; i++) opts.push(ccAddMes(base, i));
+  sel.innerHTML = opts.map(m => `<option value="${m}">${ccMesLabel(m)} — vence ${fmtDate(ccDataVencimento(c, m))}${ccFaturaPaga(c.id, m) ? ' (paga)' : ''}</option>`).join('');
+  sel.value = base;
+  if (_ccImp.linhas.length) { ccImpMarcarDuplicadas(); ccImpRender(); }
+}
+
+// ── Leitura do arquivo ──
+async function ccImpLerArquivo(input) {
+  const f = input.files && input.files[0];
+  if (!f) return;
+  const nome = f.name.toLowerCase();
+  try {
+    let brutas;
+    if (nome.endsWith('.xlsx') || nome.endsWith('.xls')) {
+      await ccImpCarregarXLSX();
+      const wb = XLSX.read(await f.arrayBuffer(), { type: 'array', cellDates: true });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      brutas = ccImpDeTabela(XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: '' }));
+      _ccImp.formato = 'Excel';
+    } else {
+      const buf = await f.arrayBuffer();
+      let txt = new TextDecoder('utf-8').decode(buf);
+      if (txt.includes('�')) txt = new TextDecoder('windows-1252').decode(buf);
+      if (/<OFX>/i.test(txt) || /<STMTTRN>/i.test(txt)) { brutas = ccImpDeOFX(txt); _ccImp.formato = 'OFX'; }
+      else { brutas = ccImpDeTabela(ccImpCSV(txt)); _ccImp.formato = 'CSV'; }
+    }
+    brutas = brutas.filter(r => r.data && r.valor && !isNaN(r.valor));
+    if (!brutas.length) { alert('Não encontrei lançamentos neste arquivo.\n\nUse o arquivo da fatura exportado pelo banco em OFX, CSV ou Excel (com colunas de data, descrição e valor).'); return; }
+    // Convenção de sinal: o sinal mais comum é o das compras
+    const neg = brutas.filter(r => r.valor < 0).length;
+    // (no OFX a compra é sempre negativa; em CSV/Excel vale o sinal mais comum)
+    const sinalCompra = _ccImp.formato === 'OFX' ? -1 : (neg > brutas.length - neg ? -1 : 1);
+    const mapaCat = ccImpMapaCategorias();
+    _ccImp.linhas = brutas.map((r, i) => {
+      const p = ccImpParcela(r.desc);
+      const valor = Math.round(r.valor * sinalCompra * 100) / 100; // compra > 0, crédito < 0
+      const pagto = valor < 0 && /PAGAMENTO|PAGTO|PGTO|PAG FATURA|PAGO/i.test(r.desc);
+      return { i, data: r.data, desc: p.desc, parcela: p.parcela, total: p.total, valor,
+        cat: mapaCat[ccImpNorm(p.desc)] || '', sel: !pagto, pagto, dup: false };
+    });
+    ccImpMarcarDuplicadas();
+    ccImpRender();
+  } catch (e) {
+    console.error(e);
+    alert('Não foi possível ler o arquivo: ' + (e && e.message ? e.message : e));
+  }
+}
+function ccImpCarregarXLSX() {
+  if (window.XLSX) return Promise.resolve();
+  return new Promise((ok, erro) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = ok; s.onerror = () => erro(new Error('não consegui carregar o leitor de Excel (verifique a internet) — tente exportar em CSV ou OFX'));
+    document.head.appendChild(s);
+  });
+}
+function ccImpDeOFX(txt) {
+  const out = [];
+  const blocos = txt.split(/<STMTTRN>/i).slice(1);
+  const tag = (b, t) => { const m = b.match(new RegExp('<' + t + '>([^<\\r\\n]*)', 'i')); return m ? m[1].trim() : ''; };
+  blocos.forEach(b => {
+    const dt = tag(b, 'DTPOSTED');
+    const data = dt.length >= 8 ? `${dt.slice(0, 4)}-${dt.slice(4, 6)}-${dt.slice(6, 8)}` : '';
+    const valor = parseFloat(tag(b, 'TRNAMT').replace(',', '.'));
+    const desc = tag(b, 'MEMO') || tag(b, 'NAME');
+    out.push({ data, desc, valor });
+  });
+  return out;
+}
+function ccImpCSV(txt) {
+  const linhas = txt.replace(/\r/g, '').split('\n').filter(l => l.trim());
+  if (!linhas.length) return [];
+  const amostra = linhas.slice(0, 5).join('\n');
+  const delim = (amostra.match(/;/g) || []).length >= (amostra.match(/,/g) || []).length ? ';'
+    : ((amostra.match(/\t/g) || []).length > (amostra.match(/,/g) || []).length ? '\t' : ',');
+  return linhas.map(l => {
+    const cells = []; let cur = '', q = false;
+    for (let k = 0; k < l.length; k++) {
+      const ch = l[k];
+      if (ch === '"') { if (q && l[k + 1] === '"') { cur += '"'; k++; } else q = !q; }
+      else if (ch === delim && !q) { cells.push(cur); cur = ''; }
+      else cur += ch;
+    }
+    cells.push(cur);
+    return cells.map(c => c.trim());
+  });
+}
+// Descobre as colunas (pelo cabeçalho ou pelo conteúdo) e devolve {data, desc, valor}
+function ccImpDeTabela(rows) {
+  rows = rows.filter(r => r && r.some(c => String(c).trim() !== ''));
+  if (!rows.length) return [];
+  const norm = v => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  let iData = -1, iDesc = -1, iVal = -1, ini = 0;
+  for (let r = 0; r < Math.min(rows.length, 15); r++) {
+    const h = rows[r].map(norm);
+    const d = h.findIndex(x => /^data|^date|dt\.? ?(compra|lanc)/.test(x));
+    const v = h.findIndex(x => /valor|amount|value|^r\$|quantia/.test(x) && !/dolar|us\$|usd/.test(x));
+    if (d >= 0 && v >= 0) {
+      iData = d; iVal = v;
+      iDesc = h.findIndex(x => /descri|title|titulo|hist|estabelec|lancamento|detalhe|memo|nome/.test(x));
+      ini = r + 1; break;
+    }
+  }
+  if (iData < 0) {
+    // sem cabeçalho: deduz pelo conteúdo da primeira linha com data
+    const r0 = rows.find(r => r.some(c => ccImpData(c))) || rows[0];
+    iData = r0.findIndex(c => ccImpData(c));
+    iVal = r0.map((c, k) => k).reverse().find(k => k !== iData && ccImpValor(r0[k]) !== null && /\d/.test(String(r0[k])));
+    let maior = -1;
+    r0.forEach((c, k) => { if (k !== iData && k !== iVal && String(c).length > maior && isNaN(ccImpValor(c) ?? NaN)) { maior = String(c).length; iDesc = k; } });
+    ini = 0;
+  }
+  if (iDesc < 0) iDesc = rows[ini] ? rows[ini].findIndex((c, k) => k !== iData && k !== iVal) : -1;
+  return rows.slice(ini).map(r => ({ data: ccImpData(r[iData]), desc: String(r[iDesc] ?? '').trim(), valor: ccImpValor(r[iVal]) }));
+}
+function ccImpData(v) {
+  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);
+  const s = String(v || '').trim();
+  let m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})(?:[\/\-.](\d{2,4}))?$/);
+  if (!m) m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})\b/);
+  if (!m) return '';
+  const d = +m[1], mo = +m[2];
+  if (mo < 1 || mo > 12 || d < 1 || d > 31) return '';
+  let y = m[3] ? +m[3] : 0;
+  if (y && y < 100) y += 2000;
+  if (!y) { // "dd/mm" sem ano: usa o ano da fatura (ou o anterior)
+    const fat = document.getElementById('cc-imp-fatura').value || today().slice(0, 7);
+    const [fy, fm] = fat.split('-').map(Number);
+    y = mo > fm ? fy - 1 : fy;
+  }
+  return `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+function ccImpValor(v) {
+  if (typeof v === 'number') return v;
+  let s = String(v || '').trim();
+  if (!s) return null;
+  let neg = /^-|-$|^\(.*\)$|\sD$/i.test(s);
+  s = s.replace(/[^\d,.\-]/g, '').replace(/-/g, '');
+  if (!/\d/.test(s)) return null;
+  const lc = s.lastIndexOf(','), lp = s.lastIndexOf('.');
+  if (lc > lp) s = s.replace(/\./g, '').replace(',', '.');
+  else s = s.replace(/,/g, '');
+  const n = parseFloat(s);
+  return isNaN(n) ? null : (neg ? -n : n);
+}
+// "LOJA X 04/10", "LOJA X PARC 04/10", "LOJA X - Parcela 4 de 10"
+function ccImpParcela(desc) {
+  let d = String(desc || '').trim();
+  const m = d.match(/[\s\-]*(?:parc(?:ela)?\.?\s*)?(\d{1,2})\s*(?:\/|de)\s*(\d{1,2})\s*$/i);
+  if (m && +m[2] > 1 && +m[1] >= 1 && +m[1] <= +m[2]) {
+    return { desc: d.slice(0, m.index).replace(/[\s\-]+$/, '') || d, parcela: +m[1], total: +m[2] };
+  }
+  return { desc: d, parcela: 1, total: 1 };
+}
+function ccImpNorm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/\s+/g, ' ').trim(); }
+// Sugere a categoria usada da última vez para a mesma descrição
+function ccImpMapaCategorias() {
+  const mapa = {};
+  (db.cartao_despesas || []).slice().sort((a, b) => (a.data || '').localeCompare(b.data || ''))
+    .forEach(d => { if (d.cat_dre) mapa[ccImpNorm(d.descricao)] = d.cat_dre; });
+  return mapa;
+}
+function ccImpMarcarDuplicadas() {
+  const cid = document.getElementById('cc-imp-cartao').value;
+  const mes = document.getElementById('cc-imp-fatura').value;
+  const exist = ccDespesasFatura(cid, mes).map(d => `${d.data}|${Math.abs(Number(d.valor)).toFixed(2)}|${ccImpNorm(d.descricao)}`);
+  _ccImp.linhas.forEach(l => {
+    const k = `${l.data}|${Math.abs(l.valor).toFixed(2)}|${ccImpNorm(l.desc)}`;
+    const era = l.dup;
+    l.dup = exist.includes(k);
+    if (l.dup && !era) l.sel = false;
+  });
+}
+function ccImpInverter() {
+  _ccImp.linhas.forEach(l => {
+    l.valor = -l.valor;
+    l.pagto = l.valor < 0 && /PAGAMENTO|PAGTO|PGTO|PAG FATURA|PAGO/i.test(l.desc);
+    if (!l.dup) l.sel = !l.pagto;
+  });
+  ccImpRender();
+}
+function ccImpToggleTodos(v) { _ccImp.linhas.forEach(l => l.sel = v); ccImpRender(); }
+
+function ccImpRender() {
+  const box = document.getElementById('cc-imp-previa');
+  const res = document.getElementById('cc-imp-resumo');
+  const btn = document.getElementById('cc-imp-btn');
+  const ls = _ccImp.linhas;
+  document.getElementById('cc-imp-opcoes').style.display = ls.length ? '' : 'none';
+  if (!ls.length) {
+    box.innerHTML = '<div class="cc-imp-vazio">Escolha o arquivo da fatura exportado pelo banco.<br><span>Formatos aceitos: <b>OFX</b>, <b>CSV</b> ou <b>Excel</b> (.xlsx)</span></div>';
+    res.textContent = ''; btn.disabled = true; return;
+  }
+  const optsCat = '<option value="">Sem categoria</option>' + (db.dfc_cats || []).slice()
+    .sort((a, b) => (a.nome || '').localeCompare(b.nome || '')).map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+  box.innerHTML = `<table class="cc-imp-tab"><thead><tr>
+      <th style="width:30px"><input type="checkbox" ${ls.every(l => l.sel) ? 'checked' : ''} onchange="ccImpToggleTodos(this.checked)"></th>
+      <th>Data</th><th>Descrição</th><th>Parcela</th><th>Categoria</th><th style="text-align:right">Valor</th></tr></thead><tbody>
+    ${ls.map(l => `<tr class="${l.sel ? '' : 'off'}">
+      <td><input type="checkbox" ${l.sel ? 'checked' : ''} onchange="_ccImp.linhas[${l.i}].sel=this.checked;ccImpRender()"></td>
+      <td style="white-space:nowrap">${fmtDate(l.data)}</td>
+      <td>${l.desc.replace(/</g, '&lt;')}${l.dup ? ' <span class="cc-imp-tag dup">já lançada</span>' : ''}${l.pagto ? ' <span class="cc-imp-tag pg">pagamento</span>' : (l.valor < 0 ? ' <span class="cc-imp-tag cr">crédito</span>' : '')}</td>
+      <td style="white-space:nowrap">${l.total > 1 ? `${l.parcela}/${l.total}` : '—'}</td>
+      <td><select class="cc-imp-cat" onchange="_ccImp.linhas[${l.i}].cat=this.value">${optsCat.replace(`value="${l.cat}"`, `value="${l.cat}" selected`)}</select></td>
+      <td style="text-align:right;white-space:nowrap;font-family:'DM Mono',monospace;color:${l.valor < 0 ? '#16a34a' : '#dc2626'}">${fmtBRL(l.valor)}</td>
+    </tr>`).join('')}</tbody></table>`;
+  const sel = ls.filter(l => l.sel);
+  const tot = sel.reduce((s, l) => s + l.valor, 0);
+  res.innerHTML = `Arquivo ${_ccImp.formato}: ${ls.length} lançamento(s) · <b>${sel.length} selecionado(s)</b> · total <b>${fmtBRL(tot)}</b>`;
+  btn.disabled = !sel.length;
+}
+
+async function ccImpConfirmar() {
+  const cid = document.getElementById('cc-imp-cartao').value;
+  const mes = document.getElementById('cc-imp-fatura').value;
+  const sel = _ccImp.linhas.filter(l => l.sel);
+  if (!cid || !mes || !sel.length) return;
+  if (ccFaturaPaga(cid, mes)) { alert(`A fatura de ${ccMesLabel(mes)} já foi paga. Desfaça o pagamento para importar nela.`); return; }
+  const c = ccCartao(cid);
+  if (!confirm(`Importar ${sel.length} lançamento(s) na fatura de ${ccMesLabel(mes)} do cartão ${c.nome}?`)) return;
+  const emp = c.empresa_id || empresaAtual() || null;
+  const recs = sel.map((l, k) => ({
+    id: uid() + 'i' + k, empresa_id: emp, cartao_id: cid, grupo: uid() + 'g' + k,
+    data: l.data, descricao: l.desc, cat_dre: l.cat || '', obs: 'Importado da fatura',
+    valor: l.valor, parcela: l.parcela, total_parcelas: l.total, fatura: mes,
+    origem_lanc: null, origem_parc: null
+  }));
+  const ok = await sbFetch('cartao_despesas', 'POST', recs);
+  if (!ok) { alert('❌ Erro ao importar.' + sbErroDetalhe()); return; }
+  db.cartao_despesas.push(...recs);
+  if (!(await ccSincronizarFatura(cid, mes))) alert('⚠️ Importado, mas houve erro ao atualizar a fatura em Contas a Pagar.' + sbErroDetalhe());
+  closeModal('modal-cc-importar');
+  ccAtualizarTelas();
+  ccIrParaFatura(ccChave(cid, mes));
+  alert(`✅ ${recs.length} lançamento(s) importado(s).`);
+}
+
+
+// Seletor "Em aberto / Pago" do Editar Lançamento: ao marcar Pago, abre os
+// campos de pagamento (data, forma, banco) e o botão separado do cartão.
+function elSetPago(v, inicial) {
+  const seg = document.getElementById('edit-pago-seg');
+  if (!inicial && seg.dataset.trava === '1') { alert('Esta conta foi paga com cartão de crédito. Para alterar, exclua a despesa na tela de Cartões de Crédito.'); return; }
+  document.getElementById('edit-pago').value = v;
+  seg.querySelectorAll('button').forEach(b => b.className = b.dataset.v === v ? 'on ' + v : '');
+  if (inicial) {
+    const pay = document.getElementById('edit-dtpago-wrap');
+    pay.style.display = v === 'sim' && seg.dataset.trava !== '1' ? '' : 'none';
+    _marcarSecStatus('edit', v === 'sim');
+  } else {
+    toggleDtPago('edit');
+    if (v === 'sim') setTimeout(() => document.getElementById('edit-dtpago').focus(), 30);
+  }
+}
+// Botão separado "Pagar com Cartão de Crédito": salva as alterações (sem
+// mudar o status) e envia a parcela em aberto para a fatura do cartão.
+async function elPagarComCartao() {
+  const id = document.getElementById('edit-lanc-id').value;
+  const l = db.lancamentos.find(x => x.id === id);
+  if (!l) return;
+  const data = document.getElementById('edit-dtpago').value || today();
+  document.getElementById('edit-pago').value = l.pago === 'sim' ? 'sim' : 'nao';
+  if (l.pago !== 'sim') document.getElementById('edit-dtpago').value = '';
+  await updateLancamento();
+  if (document.getElementById('modal-lanc').classList.contains('open')) return; // não salvou
+  const orig = ccOrigensSet();
+  const abertas = getParcelas(false).filter(p => p.lancId === id && !orig.has(`${id}|${p.parcIdx}`)).sort((a, b) => a.parcIdx - b.parcIdx);
+  if (!abertas.length) { alert('Não há parcela em aberto neste lançamento.'); return; }
+  if (abertas.length > 1) alert(`Este lançamento tem ${abertas.length} parcelas em aberto. A parcela ${abertas[0].parcIdx} será enviada para o cartão agora; as demais você paga pelo botão "Marcar Pago" em Contas a Pagar.`);
+  ccEnviarParcelaParaCartao(id, abertas[0].parcIdx, data);
+}
+
 // ── Marcador de versão (para confirmar qual arquivo está no ar) ──
-window.APP_BUILD = '2026-10-22 · moveis-stolf · excluir-parcela';
+window.APP_BUILD = '2026-10-31 · moveis-stolf · cartoes-credito';
 (function(){ var b = document.getElementById('sidebar-build'); if (b) b.textContent = 'build ' + window.APP_BUILD; })();
 
 // Fechar modais clicando fora
