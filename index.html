@@ -212,6 +212,9 @@ th.ef-th { padding:8px 8px 8px 12px; }
 }
 .ef-combo-item.ef-combo-item-sel .ef-combo-item-sub { color:#c2703f; }
 .ef-combo-empty { padding:10px 12px; color:#a8a29e; }
+.ef-combo-ico { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; font-size:15px; flex-shrink:0; vertical-align:middle; margin-right:8px; }
+.ef-combo-item-row { display:flex; align-items:center; }
+.ef-combo-trigger-text .ef-combo-ico { margin-top:-2px; }
 .ef-combo-item-novo { color:var(--accent); font-weight:600; border-bottom:1px solid #f5f4f2; background:#faf9f8; }
 .ef-combo-item-novo:hover { background:var(--accent-light); }
 .kpi { text-align:center; }
@@ -7030,6 +7033,8 @@ function enhanceSearchableSelect(select, opts) {
     const opt = select.options[select.selectedIndex];
     const txt = opt ? opt.text : '';
     triggerText.textContent = txt || 'Selecione...';
+    const ic = (opts.icone && opt && opt.value) ? opts.icone(opt.value) : '';
+    if (ic) triggerText.innerHTML = `<span class="ef-combo-ico">${ic}</span>` + triggerText.innerHTML;
     triggerText.classList.toggle('ef-combo-placeholder', !txt);
   }
 
@@ -7101,7 +7106,11 @@ function enhanceSearchableSelect(select, opts) {
         return `<span class="ef-combo-item-nome">${nome}</span>` +
                (sub ? `<span class="ef-combo-item-sub">${sub}</span>` : '');
       };
-      const listaHtml = filtradas.map(o => `<div class="ef-combo-item${o.value === select.value ? ' ef-combo-item-sel' : ''}" data-value="${o.value.replace(/"/g, '&quot;')}">${montarLabel(o.label)}</div>`).join('');
+      const listaHtml = filtradas.map(o => {
+        const ic = (opts.icone && o.value) ? opts.icone(o.value) : '';
+        const conteudo = ic ? `<span class="ef-combo-item-row"><span class="ef-combo-ico">${ic}</span><span>${montarLabel(o.label)}</span></span>` : montarLabel(o.label);
+        return `<div class="ef-combo-item${o.value === select.value ? ' ef-combo-item-sel' : ''}" data-value="${o.value.replace(/"/g, '&quot;')}">${conteudo}</div>`;
+      }).join('');
       lista.innerHTML = novoHtml + (listaHtml || (novoHtml ? '' : '<div class="ef-combo-empty">Nenhum resultado</div>'));
     }
     renderLista('');
@@ -7230,9 +7239,10 @@ function ativarSelectsPesquisaveis() {
    'lf-cat','af-categoria','pgf-categoria'
   ].forEach(id => enhanceSearchableSelect(document.getElementById(id)));
 
-  // Banco/Conta do modal de marcação em massa
-  enhanceSearchableSelect(document.getElementById('mp-banco'));
-  enhanceSearchableSelect(document.getElementById('mr-banco'));
+  // Banco/Conta nas confirmações de pagamento/recebimento — com o ícone do banco
+  const iconeBanco = v => { const b = (db.bancos || []).find(x => x.id === v); return b ? bancoIconeHtml(b, 20) : ''; };
+  ['mp-banco','mr-banco','modal-pago-banco','modal-recebido-banco','cob-bx-banco']
+    .forEach(id => enhanceSearchableSelect(document.getElementById(id), { icone: iconeBanco }));
 }
 
 function renderApagar() {
