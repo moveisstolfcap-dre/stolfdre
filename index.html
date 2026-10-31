@@ -214,6 +214,10 @@ th.ef-th { padding:8px 8px 8px 12px; }
 .ef-combo-empty { padding:10px 12px; color:#a8a29e; }
 .ef-combo-ico { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; font-size:15px; flex-shrink:0; vertical-align:middle; margin-right:8px; }
 .ef-combo-item-row { display:flex; align-items:center; }
+.fb-logo-destaque { align-items:center; gap:16px; padding:10px 22px 10px 10px; border:1.5px solid #e7e5e4; border-radius:14px; background:#fff; box-shadow:0 4px 14px rgba(15,30,58,0.08); align-self:flex-end; }
+.fb-logo-img { width:72px; height:72px; border-radius:16px; display:flex; align-items:center; justify-content:center; background:#f5f4f2; overflow:hidden; flex-shrink:0; }
+.fb-logo-nome { font-size:20px; font-weight:800; color:#1f2937; line-height:1.15; }
+.fb-logo-sub { font-size:12px; color:#a8a29e; margin-top:3px; }
 .ef-combo-trigger-text .ef-combo-ico { margin-top:-2px; }
 .ef-combo-item-novo { color:var(--accent); font-weight:600; border-bottom:1px solid #f5f4f2; background:#faf9f8; }
 .ef-combo-item-novo:hover { background:var(--accent-light); }
@@ -2695,7 +2699,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
     <!-- ══ BANCOS / CAIXAS ══ -->
     <div class="page" id="page-bancos">
       <div class="page-header">
-        <div><div class="page-title">Bancos / Caixas</div><div class="page-sub" style="margin-bottom:0">Cadastro de contas bancárias e caixas</div></div>
+        <div><div class="page-title">Bancos / Caixas <span style="display:inline-block;margin-left:10px;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:600;vertical-align:middle;background:#f5f5f4;color:#57534e;border:1px solid #e7e5e4;" title="Saldos e extratos das contas sempre somam todas as empresas">📊 Consolidado</span></div><div class="page-sub" style="margin-bottom:0">Cadastro de contas bancárias e caixas — saldos e extratos sempre consolidados (todas as empresas)</div></div>
         <button class="btn-novo" id="btn-novo-bnk" onclick="toggleFormPanel('form-bnk',this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Novo
         </button>
@@ -2738,7 +2742,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
         <div class="card-title">Fluxo de Caixa Diário</div>
         <div class="page-sub" style="margin-bottom:14px">Entradas e saídas efetivamente pagas/recebidas, dia a dia (01 a 31)</div>
         <div class="filter-row" style="margin-bottom:16px">
-          <div class="form-group"><label>Conta</label>
+          <div class="form-group" style="min-width:240px"><label>Conta</label>
             <select id="fb-banco" onchange="renderFluxoBancoDiario()"><option value="">Todas as Contas</option></select>
           </div>
           <div class="form-group"><label>Mês</label>
@@ -2752,6 +2756,13 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div class="form-group"><label>Ano</label>
             <select id="fb-ano" onchange="renderFluxoBancoDiario()"></select>
           </div>
+          <div class="form-group"><label>Imprimir / PDF</label>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-secondary btn-sm" style="padding:10px 12px" onclick="imprimirExtratoBanco('retrato')" title="Extrato em folha A4 retrato">🖨 Retrato</button>
+              <button class="btn btn-secondary btn-sm" style="padding:10px 12px" onclick="imprimirExtratoBanco('paisagem')" title="Extrato em folha A4 paisagem">🖨 Paisagem</button>
+            </div>
+          </div>
+          <div id="fb-logo-destaque" class="fb-logo-destaque" style="display:none"></div>
         </div>
         <div id="fluxo-banco-wrap"></div>
       </div>
@@ -4949,7 +4960,15 @@ function pertenceEmpresaAtiva(empresa_id) {
 function saveDB() { /* Supabase — sem localStorage */ }
 function loadDB() { /* Supabase — sem localStorage */ }
 
-async function fetchAll(table, order='') {
+// Registros que NÃO são da empresa ativa (inclui os sem empresa). No consolidado
+// não busca nada, porque aí db.lancamentos/db.lancreceber já têm tudo.
+async function _fetchOutrasEmpresas(table, order) {
+  const emp = empresaAtual();
+  if (!emp) return [];
+  const e = encodeURIComponent(emp);
+  return await fetchAll(table, order, `&or=(empresa_id.neq.${e},empresa_id.is.null)`);
+}
+async function fetchAll(table, order='', filtroForcado) {
   // [OTIMIZADO] Busca paginada com páginas em PARALELO.
   // Antes as páginas vinham uma de cada vez: com 5 mil registros eram 5 idas e
   // voltas em sequência. Agora buscamos a 1ª página e, se ela veio cheia,
@@ -4957,7 +4976,7 @@ async function fetchAll(table, order='') {
   const limit = 1000;
   const PARALELO = 4;
   const orderParam = order ? `order=${order}&` : '';
-  const fEmp = filtroEmpresaQuery(table);
+  const fEmp = (filtroForcado !== undefined) ? filtroForcado : filtroEmpresaQuery(table);
   const pagina = off => sbFetch(table, 'GET', null, `?${orderParam}limit=${limit}&offset=${off}${fEmp}`);
 
   const primeira = await pagina(0);
@@ -5016,7 +5035,11 @@ async function loadAllData() {
       // 21 — Auditoria: histórico de alterações (tabela `config`)
       sbFetch('config', 'GET', null, '?key=like.audit:*&order=key.desc&limit=3000'),
       fetchAll('cartoes', 'nome'),          // 22 — cartões de crédito
-      fetchAll('cartao_despesas', 'data')   // 23 — despesas lançadas nos cartões
+      fetchAll('cartao_despesas', 'data'),  // 23 — despesas lançadas nos cartões
+      // 24/25 — Lançamentos das OUTRAS empresas: as contas bancárias são sempre
+      // vistas no consolidado (saldo e extrato não mudam ao trocar de empresa).
+      _fetchOutrasEmpresas('lancamentos', 'dtcompra'),
+      _fetchOutrasEmpresas('lancreceber', 'dtvenda')
     ]);
 
     const val = (i) => results[i].status === 'fulfilled' ? results[i].value : null;
@@ -5031,6 +5054,8 @@ async function loadAllData() {
     db.dfc_lans     = val(10) || [];
     db.bancos       = val(11) || [];
     db.transferencias = val(13) || [];
+    db._lancOutras  = val(24) || [];
+    db._lrOutras    = val(25) || [];
     db.cartoes      = val(22) || [];
     db.cartao_despesas = val(23) || [];
     // Formas extras cadastradas pelo usuário (config key/value)
@@ -6058,12 +6083,12 @@ async function salvarCadastroRapido() {
   } else if (tipo === 'fornecedor' || tipo === 'cliente') {
     rec = { id: uid(), nome, cnpj:'', contato:'', tel:'', email:'', cat:'', obs:'' };
   } else { // produto / prodvenda
-    rec = { id: uid(), nome, sku:'', unidade:'', cat:'', preco:0, obs:'' };
+    rec = { id: uid(), nome, sku:'', unidade:'UN', cat:'', preco:0, obs:'' };
     if (tipo === 'produto') rec.forn = '';
   }
 
   const ok = await sbFetch(cfg.tabela, 'POST', rec);
-  if (!ok) { alert('❌ Erro ao salvar. Verifique sua conexão e tente novamente.'); return; }
+  if (!ok) { alert('❌ Erro ao salvar.' + sbErroMsg()); return; }
   db[cfg.lista].push(rec);
 
   // Recarrega os selects e as listas afetadas
@@ -6600,6 +6625,7 @@ async function updateLancamento() {
   l.valor = parseFloat(document.getElementById('edit-valor').value)||0;
   l.parcelas = parseInt(document.getElementById('edit-parcelas').value)||1;
   l.financeiro = document.getElementById('edit-financeiro').value;
+  const _antPagoLanc = l.pago;
   l.pago = pago;
   l.obs = document.getElementById('edit-obs').value;
   l.tipo_pag = document.getElementById('edit-tipo-pag') ? document.getElementById('edit-tipo-pag').value : (l.tipo_pag||'');
@@ -6614,6 +6640,23 @@ async function updateLancamento() {
   l.dtpago = pago === 'sim' ? dtpagoEdit : '';
   if (l.parcelas > 1 && pago === 'sim') {
     l.parcela_datas = _marcarTodasParcelasPagas(l.parcela_datas, l.parcelas, dtpagoEdit);
+  } else if (l.parcelas > 1 && !_travaCC && _antPagoLanc === 'sim') {
+    // trocou de "Pago" para "Em aberto": reabre as parcelas (menos as pagas com cartão)
+    const _pp = _parseParcelas(l.parcela_datas), _orig = ccOrigensSet();
+    const _pagos = [], _dts = [];
+    for (let k = 0; k < l.parcelas; k++) {
+      const viaCC = _orig.has(`${l.id}|${k + 1}`);
+      _pagos.push(viaCC ? _pp.pagos[k] === true : false);
+      _dts.push(viaCC ? (_pp.dtpagos[k] || '') : '');
+    }
+    l.parcela_datas = JSON.stringify({ datas: _pp.datas, valores: _pp.valores, pagos: _pagos, dtpagos: _dts });
+  }
+  if (l.parcelas > 1) {
+    // status do lançamento acompanha as parcelas (pago só quando todas estão pagas)
+    const _pp2 = _parseParcelas(l.parcela_datas);
+    const _todas = _pp2.pagos.slice(0, l.parcelas).length === l.parcelas && _pp2.pagos.slice(0, l.parcelas).every(x => x === true);
+    l.pago = _todas ? 'sim' : 'nao';
+    if (!_todas) l.dtpago = '';
   }
   const okU = await sbFetch('lancamentos', 'PATCH', {
     empresa_id: l.empresa_id,
@@ -6660,9 +6703,9 @@ function getParcelas(pago=false) {
   if (!_parcCache.pagar) _parcCache.pagar = _buildParcelas();
   return _parcCache.pagar.filter(p => p.isPago === pago);
 }
-function _buildParcelas() {
+function _buildParcelas(lista) {
   const parcelas = [];
-  db.lancamentos.forEach(l => {
+  (lista || db.lancamentos).forEach(l => {
     const n = l.parcelas || 1;
     const { datas: manualDates, valores: manualValores, pagos, dtpagos } = _parseParcelas(l.parcela_datas);
     for(let i=1; i<=n; i++) {
@@ -7243,6 +7286,8 @@ function ativarSelectsPesquisaveis() {
   const iconeBanco = v => { const b = (db.bancos || []).find(x => x.id === v); return b ? bancoIconeHtml(b, 20) : ''; };
   ['mp-banco','mr-banco','modal-pago-banco','modal-recebido-banco','cob-bx-banco']
     .forEach(id => enhanceSearchableSelect(document.getElementById(id), { icone: iconeBanco }));
+  // Extrato da conta (Fluxo de Caixa Diário na tela de Bancos)
+  enhanceSearchableSelect(document.getElementById('fb-banco'), { icone: iconeBanco });
 }
 
 function renderApagar() {
@@ -8323,11 +8368,15 @@ function renderDashboard() {
     return true;
   });
   const _pfA = p=>{const d=(p.venc||p.dtcompra||'').split('-');return(!kpiAno||d[0]==kpiAno)&&(!kpiMes||parseInt(d[1])==parseInt(kpiMes));};
-  const _pfPag=getParcelas(false).filter(_pfA).concat(getParcelas(true).filter(_pfA));
+  // Contas pagas com cartão de crédito entram nos totais só uma vez: quando a
+  // fatura do cartão é paga pelo banco (a conta original fica fora da soma).
+  const _ccOri = ccOrigensSet();
+  const _naoViaCC = p => !_ccOri.has(`${p.lancId}|${p.parcIdx}`);
+  const _pfPag=getParcelas(false).filter(_pfA).concat(getParcelas(true).filter(_pfA)).filter(_naoViaCC);
   // Total Comprado = tudo que foi comprado no mês pesquisado, filtrado pela
   // DATA DA COMPRA (dtcompra) e NÃO pelo vencimento das parcelas.
   const _pfCompra = p=>{const d=(p.dtcompra||'').split('-');return(!kpiAno||d[0]==kpiAno)&&(!kpiMes||parseInt(d[1])==parseInt(kpiMes));};
-  const totalComprado=getParcelas(false).filter(_pfCompra).concat(getParcelas(true).filter(_pfCompra)).reduce((s,p)=>s+p.valParc,0);
+  const totalComprado=getParcelas(false).filter(_pfCompra).concat(getParcelas(true).filter(_pfCompra)).filter(_naoViaCC).reduce((s,p)=>s+p.valParc,0);
   const totalAPagar=_pfPag.filter(p=>!p.isPago).reduce((s,p)=>s+p.valParc,0);
   const totalPago=_pfPag.filter(p=>p.isPago).reduce((s,p)=>s+p.valParc,0);
   const filtroLabel = (kpiAno || kpiMes)
@@ -9747,14 +9796,33 @@ function parcelaVencimentoReceber(dtprev, parcela) {
   const dd = String(dt.getDate()).padStart(2, '0');
   return `${yy}-${mm}-${dd}`;
 }
+// Parcelas usadas nas CONTAS BANCÁRIAS: sempre de todas as empresas
+// (empresa ativa + db._lancOutras / db._lrOutras), para saldo e extrato
+// ficarem iguais em qualquer empresa selecionada.
+const _parcBancoCache = { ver: -1, pagar: null, receber: null };
+function _parcBancoValidar() {
+  if (_parcBancoCache.ver !== _dbVer) { _parcBancoCache.ver = _dbVer; _parcBancoCache.pagar = null; _parcBancoCache.receber = null; }
+}
+function getParcelasBanco(pago=true) {
+  if (!(db._lancOutras || []).length) return getParcelas(pago);
+  _parcBancoValidar();
+  if (!_parcBancoCache.pagar) _parcBancoCache.pagar = _buildParcelas(db.lancamentos.concat(db._lancOutras));
+  return _parcBancoCache.pagar.filter(p => p.isPago === pago);
+}
+function getParcelasReceberBanco(recebido=true) {
+  if (!(db._lrOutras || []).length) return getParcelasReceber(recebido);
+  _parcBancoValidar();
+  if (!_parcBancoCache.receber) _parcBancoCache.receber = _buildParcelasReceber(db.lancreceber.concat(db._lrOutras));
+  return _parcBancoCache.receber.filter(p => p.isRecebido === recebido);
+}
 function getParcelasReceber(recebido=false) {
   if (_parcCache.ver !== _dbVer) { _parcCache.ver = _dbVer; _parcCache.pagar = null; _parcCache.receber = null; }
   if (!_parcCache.receber) _parcCache.receber = _buildParcelasReceber();
   return _parcCache.receber.filter(p => p.isRecebido === recebido);
 }
-function _buildParcelasReceber() {
+function _buildParcelasReceber(lista) {
   const parcelas = [];
-  db.lancreceber.forEach(l => {
+  (lista || db.lancreceber).forEach(l => {
     const n = l.parcelas||1;
     const catId = l.cat_dre || ((db.prodvenda.find(x=>x.id===l.prod)||{}).cat) || '';
     const { datas: manualDates, valores: manualValores, pagos, dtpagos } = _parseParcelas(l.parcela_datas);
@@ -12786,12 +12854,12 @@ function getBancoSaldo(banco) {
   // parcelada com recebimento parcial já entra com o que foi recebido até agora).
   // Exige data de recebimento válida — mesmo critério usado no Fluxo de Caixa
   // Diário — para os dois saldos baterem sempre.
-  getParcelasReceber(true).forEach(p => {
+  getParcelasReceberBanco(true).forEach(p => {
     if (p.banco === banco.id && p.dtrecebido) saldo += (p.valParc || 0);
   });
   // Saídas: parcelas de contas a pagar já efetivamente pagas nesta conta (idem, por
   // parcela, exigindo data de pagamento válida).
-  getParcelas(true).forEach(p => {
+  getParcelasBanco(true).forEach(p => {
     if (p.banco === banco.id && p.dtpago) saldo -= (p.valParc || 0);
   });
   // Transferências entre contas: sai da conta de origem, entra na conta de destino
@@ -12861,6 +12929,18 @@ function renderFluxoBancoDiario() {
   const ano = parseInt(anoEl.value) || new Date().getFullYear();
   const bancoSel = bancoEl ? bancoEl.value : '';
 
+  // Logo grande da conta selecionada, ao lado dos filtros
+  const logoBox = document.getElementById('fb-logo-destaque');
+  if (logoBox) {
+    const bSel = bancoSel ? db.bancos.find(x => x.id === bancoSel) : null;
+    if (bSel) {
+      const ic = bancoIconeHtml(bSel, 72);
+      logoBox.innerHTML = `<div class="fb-logo-img">${ic.startsWith('<img') ? ic : `<span style="font-size:44px;line-height:1">${ic}</span>`}</div>
+        <div><div class="fb-logo-nome">${bSel.nome}</div><div class="fb-logo-sub">${[bSel.tipo, bSel.banco, bSel.agencia ? 'Ag: ' + bSel.agencia : '', bSel.conta ? 'CC: ' + bSel.conta : ''].filter(Boolean).join(' · ')}</div></div>`;
+      logoBox.style.display = 'flex';
+    } else { logoBox.style.display = 'none'; logoBox.innerHTML = ''; }
+  }
+
   if (!db.bancos.length) {
     wrap.innerHTML = '<div class="empty-state" style="padding:24px">Cadastre uma conta bancária para visualizar o fluxo de caixa.</div>';
     return;
@@ -12875,11 +12955,11 @@ function renderFluxoBancoDiario() {
 
   // Saldo acumulado até o dia anterior ao início do mês selecionado
   let saldoAcum = db.bancos.filter(b => bancoIds.includes(b.id)).reduce((s, b) => s + (b.saldo_inicial || 0), 0);
-  getParcelas(true).forEach(p => {
+  getParcelasBanco(true).forEach(p => {
     if (!bancoIds.includes(p.banco)) return;
     if (p.dtpago && p.dtpago < primeiroDiaMes) saldoAcum -= (p.valParc || 0);
   });
-  getParcelasReceber(true).forEach(p => {
+  getParcelasReceberBanco(true).forEach(p => {
     if (!bancoIds.includes(p.banco)) return;
     if (p.dtrecebido && p.dtrecebido < primeiroDiaMes) saldoAcum += (p.valParc || 0);
   });
@@ -12893,14 +12973,14 @@ function renderFluxoBancoDiario() {
   const porDia = {};
   for (let d = 1; d <= 31; d++) porDia[d] = { entrada: 0, saida: 0 };
 
-  getParcelas(true).forEach(p => {
+  getParcelasBanco(true).forEach(p => {
     if (!bancoIds.includes(p.banco) || !p.dtpago) return;
     const parts = p.dtpago.split('-');
     if (parseInt(parts[0]) !== ano || parseInt(parts[1]) !== mes) return;
     const d = parseInt(parts[2]);
     if (porDia[d]) porDia[d].saida += (p.valParc || 0);
   });
-  getParcelasReceber(true).forEach(p => {
+  getParcelasReceberBanco(true).forEach(p => {
     if (!bancoIds.includes(p.banco) || !p.dtrecebido) return;
     const parts = p.dtrecebido.split('-');
     if (parseInt(parts[0]) !== ano || parseInt(parts[1]) !== mes) return;
@@ -12957,6 +13037,140 @@ function renderFluxoBancoDiario() {
         <tbody>${linhas.join('')}</tbody>
       </table>
     </div>`;
+}
+
+// ── Extrato da conta para impressão / PDF (retrato ou paisagem) ──────────
+function imprimirExtratoBanco(orientacao) {
+  const mes = parseInt(document.getElementById('fb-mes').value) || (new Date().getMonth() + 1);
+  const ano = parseInt(document.getElementById('fb-ano').value) || new Date().getFullYear();
+  const bancoSel = document.getElementById('fb-banco').value;
+  if (!db.bancos.length) { alert('Cadastre uma conta bancária primeiro.'); return; }
+  const bancoIds = bancoSel ? [bancoSel] : db.bancos.map(b => b.id);
+  const variasContas = !bancoSel;
+  const esc = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const mesStr = String(mes).padStart(2, '0');
+  const ini = `${ano}-${mesStr}-01`;
+  const fim = `${ano}-${mesStr}-${String(new Date(ano, mes, 0).getDate()).padStart(2, '0')}`;
+
+  // Saldo anterior (até o dia anterior ao início do mês)
+  let saldoAnt = db.bancos.filter(b => bancoIds.includes(b.id)).reduce((s, b) => s + (b.saldo_inicial || 0), 0);
+  const movs = [];
+  const parcTxt = p => (p.totalParc > 1 ? ` (${p.parcIdx + 1}/${p.totalParc})` : '');
+  getParcelasBanco(true).forEach(p => {
+    if (!bancoIds.includes(p.banco) || !p.dtpago) return;
+    if (p.dtpago < ini) { saldoAnt -= (p.valParc || 0); return; }
+    if (p.dtpago > fim) return;
+    movs.push({ data: p.dtpago, hist: 'PAGTO ' + getFornNome(p.forn) + parcTxt(p), doc: p.nf || '', valor: -(p.valParc || 0), conta: p.banco });
+  });
+  getParcelasReceberBanco(true).forEach(p => {
+    if (!bancoIds.includes(p.banco) || !p.dtrecebido) return;
+    if (p.dtrecebido < ini) { saldoAnt += (p.valParc || 0); return; }
+    if (p.dtrecebido > fim) return;
+    movs.push({ data: p.dtrecebido, hist: 'RECEB ' + getClienteNome(p.cliente) + parcTxt(p), doc: p.nf || '', valor: (p.valParc || 0), conta: p.banco });
+  });
+  (db.transferencias || []).forEach(t => {
+    if (!t.data) return;
+    const sai = bancoIds.includes(t.origem), ent = bancoIds.includes(t.destino);
+    if (t.data < ini) { if (sai) saldoAnt -= (t.valor || 0); if (ent) saldoAnt += (t.valor || 0); return; }
+    if (t.data > fim) return;
+    if (sai) movs.push({ data: t.data, hist: 'TRANSF. ENVIADA p/ ' + getBancoNome(t.destino) + (t.obs ? ' — ' + t.obs : ''), doc: '', valor: -(t.valor || 0), conta: t.origem });
+    if (ent) movs.push({ data: t.data, hist: 'TRANSF. RECEBIDA de ' + getBancoNome(t.origem) + (t.obs ? ' — ' + t.obs : ''), doc: '', valor: (t.valor || 0), conta: t.destino });
+  });
+  movs.sort((a, b) => a.data.localeCompare(b.data) || (b.valor - a.valor));
+
+  let saldo = saldoAnt, totE = 0, totS = 0;
+  const brl = v => fmtBRL(v);
+  const cols = variasContas ? 6 : 5;
+  const linhas = [`<tr class="ant"><td>${fmtDate(ini)}</td><td colspan="${cols - 2}"><b>SALDO ANTERIOR</b></td><td class="num"><b>${brl(saldoAnt)}</b></td></tr>`];
+  movs.forEach(m => {
+    saldo += m.valor;
+    if (m.valor >= 0) totE += m.valor; else totS += -m.valor;
+    linhas.push(`<tr><td>${fmtDate(m.data)}</td><td>${esc(m.hist)}</td>${variasContas ? `<td>${esc(getBancoNome(m.conta))}</td>` : ''}<td>${esc(m.doc)}</td>
+      <td class="num ${m.valor >= 0 ? 'cred' : 'deb'}">${m.valor >= 0 ? brl(m.valor) + ' C' : brl(-m.valor) + ' D'}</td>
+      <td class="num ${saldo < 0 ? 'deb' : ''}">${brl(saldo)}</td></tr>`);
+  });
+  if (!movs.length) linhas.push(`<tr><td colspan="${cols}" style="text-align:center;color:#888;padding:18px">Nenhuma movimentação no período.</td></tr>`);
+  linhas.push(`<tr class="ant"><td>${fmtDate(fim)}</td><td colspan="${cols - 2}"><b>SALDO FINAL</b></td><td class="num ${saldo < 0 ? 'deb' : ''}"><b>${brl(saldo)}</b></td></tr>`);
+
+  // Cabeçalho: empresa + banco
+  // Contas bancárias são sempre consolidadas: cabeçalho com todas as empresas
+  const emp = db.empresas.length === 1 ? db.empresas[0] : null;
+  const empNome = emp ? (emp.nome || emp.apelido) : (db.empresas.map(e => e.apelido || e.nome).join(' / ') || 'Empresa');
+  const empCnpj = emp && emp.cnpj ? 'CNPJ: ' + emp.cnpj : '';
+  const b = bancoSel ? db.bancos.find(x => x.id === bancoSel) : null;
+  const icB = b ? bancoIconeHtml(b, 64) : '';
+  const logoBanco = icB.startsWith('<img') ? icB : `<div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:40px;background:#f5f4f2;border-radius:16px">${icB || '🏦'}</div>`;
+  const infoConta = b ? [b.tipo, b.banco, b.agencia ? 'Agência: ' + b.agencia : '', b.conta ? 'Conta: ' + b.conta : ''].filter(Boolean).join(' · ') : 'Consolidado de todas as contas';
+  const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const agora = new Date();
+  const emitido = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const paisagem = orientacao === 'paisagem';
+
+  const css = `
+    @page { size: A4 ${paisagem ? 'landscape' : 'portrait'}; margin: 12mm; }
+    * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: #1f2937; margin: 0; font-size: 11px; }
+    .top { display:flex; align-items:center; justify-content:space-between; gap:16px; padding-bottom:12px; border-bottom:3px solid #ea580c; }
+    .emp { display:flex; align-items:center; gap:12px; }
+    .emp img { width:56px; height:56px; border-radius:12px; }
+    .emp-nome { font-size:17px; font-weight:800; }
+    .emp-sub { font-size:10px; color:#78716c; margin-top:2px; }
+    .tit { text-align:right; }
+    .tit h1 { margin:0; font-size:20px; letter-spacing:1px; color:#ea580c; }
+    .tit div { font-size:10px; color:#78716c; margin-top:3px; }
+    .conta { display:flex; align-items:center; gap:14px; margin:14px 0; padding:12px 14px; border:1.5px solid #e7e5e4; border-radius:12px; }
+    .conta img { border-radius:14px !important; }
+    .conta-nome { font-size:18px; font-weight:800; }
+    .conta-sub { font-size:11px; color:#78716c; margin-top:2px; }
+    .conta-per { margin-left:auto; text-align:right; font-size:11px; color:#57534e; }
+    .conta-per b { display:block; font-size:14px; color:#1f2937; }
+    .res { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+    .res div { border:1px solid #e7e5e4; border-radius:10px; padding:8px 10px; }
+    .res span { display:block; font-size:9px; text-transform:uppercase; letter-spacing:.5px; color:#78716c; }
+    .res b { font-size:14px; font-family: Consolas, 'Courier New', monospace; }
+    table { width:100%; border-collapse:collapse; }
+    th { background:#1f2937; color:#fff; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:.4px; padding:7px 8px; }
+    td { padding:6px 8px; border-bottom:1px solid #eeecea; vertical-align:top; }
+    tbody tr:nth-child(even) td { background:#faf9f8; }
+    tr.ant td { background:#fff7ed !important; }
+    .num { text-align:right; white-space:nowrap; font-family: Consolas, 'Courier New', monospace; }
+    th.num { text-align:right; }
+    .cred { color:#166534; } .deb { color:#dc2626; }
+    thead { display: table-header-group; }
+    tr { page-break-inside: avoid; }
+    .rod { margin-top:16px; padding-top:8px; border-top:1px solid #e7e5e4; font-size:9px; color:#a8a29e; display:flex; justify-content:space-between; }`;
+
+  const html = `<!doctype html><html><head><meta charset="utf-8"><title>Extrato ${esc(b ? b.nome : 'Contas')} ${mesStr}-${ano}</title><style>${css}</style></head><body>
+    <div class="top">
+      <div class="emp"><img src="${LOGO_EMPRESA_CAIXA}" alt=""><div><div class="emp-nome">${esc(empNome)}</div><div class="emp-sub">${esc(empCnpj)}</div></div></div>
+      <div class="tit"><h1>EXTRATO DE CONTA</h1><div>Emitido em ${emitido}</div></div>
+    </div>
+    <div class="conta">
+      ${b ? logoBanco : ''}
+      <div><div class="conta-nome">${esc(b ? b.nome : 'Todas as Contas')}</div><div class="conta-sub">${esc(infoConta)}</div></div>
+      <div class="conta-per">Período<b>${meses[mes - 1]} / ${ano}</b>${fmtDate(ini)} a ${fmtDate(fim)}</div>
+    </div>
+    <div class="res">
+      <div><span>Saldo anterior</span><b>${brl(saldoAnt)}</b></div>
+      <div><span>Entradas (créditos)</span><b class="cred">${brl(totE)}</b></div>
+      <div><span>Saídas (débitos)</span><b class="deb">${brl(totS)}</b></div>
+      <div><span>Saldo final</span><b class="${saldo < 0 ? 'deb' : 'cred'}">${brl(saldo)}</b></div>
+    </div>
+    <table>
+      <thead><tr><th style="width:80px">Data</th><th>Histórico</th>${variasContas ? '<th>Conta</th>' : ''}<th style="width:90px">Documento</th><th class="num" style="width:120px">Valor</th><th class="num" style="width:120px">Saldo</th></tr></thead>
+      <tbody>${linhas.join('')}</tbody>
+    </table>
+    <div class="rod"><span>Movimentações efetivamente pagas/recebidas registradas no sistema.</span><span>${movs.length} lançamento(s)</span></div>
+  </body></html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) { alert('O navegador bloqueou a janela de impressão. Libere os pop-ups para este site e tente de novo.'); return; }
+  win.document.write(html);
+  win.document.close();
+  let impresso = false;
+  const imprimir = () => { if (impresso) return; impresso = true; try { win.focus(); win.print(); } catch (e) {} };
+  win.onload = () => setTimeout(imprimir, 300);
+  setTimeout(imprimir, 1200);
 }
 
 async function saveBanco() {
