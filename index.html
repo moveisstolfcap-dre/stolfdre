@@ -352,6 +352,104 @@ th.ef-th { padding:8px 8px 8px 12px; }
 .dfc-row-total-rl.negativo td { background:#fee2e2; color:#991b1b; border-top-color:#dc2626; }
 .dfc-val-pos { color:#166534; }
 .dfc-val-neg { color:#dc2626; }
+/* ── Central de Lançamentos ── */
+.pdl-modal { width:min(1080px,96vw) !important; max-width:96vw; padding:22px 24px !important; }
+.pdl-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
+.pdl-titulo { font-size:18px; font-weight:800; color:#1c1917; }
+.pdl-sub { font-size:12px; color:#78716c; margin-top:2px; }
+.pdl-x { background:none; border:none; cursor:pointer; color:#a8a29e; font-size:22px; line-height:1; padding:4px; }
+.pdl-resumo { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+@media (max-width:700px) { .pdl-resumo { grid-template-columns:1fr 1fr; } }
+.pdl-chip { border:1px solid #e7e5e4; border-top:3px solid var(--c); border-radius:10px; padding:9px 12px; background:#fff; }
+.pdl-chip span { display:block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:#78716c; }
+.pdl-chip b { display:block; font-family:'DM Mono',monospace; font-size:15px; color:var(--c); margin-top:3px; }
+.pdl-chip small { font-size:11px; color:#a8a29e; }
+.pdl-barra { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.pdl-barra input { max-width:300px; padding:7px 11px; font-size:13px; }
+.pdl-tabela-wrap { max-height:52vh; overflow:auto; border:1px solid #e7e5e4; border-radius:10px; }
+.pdl-tab { width:100%; border-collapse:collapse; font-size:12.5px; }
+.pdl-tab thead th { position:sticky; top:0; background:#faf9f7; z-index:1; text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#78716c; padding:9px 12px; border-bottom:1px solid #e7e5e4; }
+.pdl-tab td { padding:9px 12px; border-bottom:1px solid #f5f5f4; vertical-align:middle; }
+.pdl-tab tbody tr:hover { background:#fafaf9; }
+.pdl-row-v td:first-child { color:#b91c1c; font-weight:700; }
+.pdl-row-q { opacity:.72; }
+.pdl-nome { font-weight:600; color:#1c1917; display:flex; align-items:center; gap:7px; }
+.pdl-tipo { width:18px; height:18px; border-radius:5px; font-size:10px; font-weight:800; color:#fff; display:inline-flex; align-items:center; justify-content:center; flex:0 0 18px; }
+.pdl-tipo.r { background:#16a34a; } .pdl-tipo.p { background:#dc2626; }
+.pdl-meta { font-size:11px; color:#a8a29e; margin-top:2px; padding-left:25px; }
+.pdl-val { text-align:right; font-family:'DM Mono',monospace; font-weight:700; white-space:nowrap; }
+.pdl-badge { display:inline-block; font-size:11px; font-weight:600; padding:3px 8px; border-radius:20px; background:#f5f5f4; color:#57534e; white-space:nowrap; }
+.pdl-venc { background:#fee2e2; color:#b91c1c; } .pdl-hoje { background:#fef3c7; color:#92400e; }
+.pdl-av { background:#dbeafe; color:#1e40af; } .pdl-ok { background:#dcfce7; color:#166534; }
+.pdl-acoes { text-align:right; white-space:nowrap; }
+.pdl-btn { font-size:11.5px; font-weight:600; padding:5px 9px; border-radius:7px; border:1px solid #e7e5e4; background:#fff; color:#44403c; cursor:pointer; margin-left:4px; }
+.pdl-btn:hover { background:#f5f5f4; }
+.pdl-btn-rec { background:#16a34a; border-color:#16a34a; color:#fff; } .pdl-btn-rec:hover { background:#15803d; }
+.pdl-btn-pag { background:#ea580c; border-color:#ea580c; color:#fff; } .pdl-btn-pag:hover { background:#c2410c; }
+.pdl-btn-del { color:#b91c1c; border-color:#fecaca; }
+.pdl-rodape { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:12px; font-size:11.5px; color:#78716c; }
+.pd-click { cursor:pointer; }
+.pd-click:hover { background:#fafaf9; }
+.pd-rank-item.pd-click { border-radius:6px; padding:2px 4px; margin:0 -4px; }
+/* ── Painel de Decisão (Dashboard) ── */
+.pd-wrap { margin-bottom:22px; }
+.pd-head { display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
+.pd-titulo { font-size:16px; font-weight:800; color:#1c1917; letter-spacing:-.2px; }
+.pd-sub { font-size:12px; color:#78716c; }
+.pd-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+@media (max-width:900px) { .pd-kpis { grid-template-columns:1fr; } }
+.pd-kpi { background:#fff; border:1px solid #e7e5e4; border-radius:12px; padding:14px 16px; position:relative; overflow:hidden; cursor:default; }
+.pd-kpi.click { cursor:pointer; transition:box-shadow .15s, transform .15s; }
+.pd-kpi.click:hover { box-shadow:0 4px 14px rgba(0,0,0,.06); transform:translateY(-1px); }
+.pd-kpi::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--pd-cor,#a8a29e); }
+.pd-kpi-lbl { font-size:11px; font-weight:700; color:#78716c; text-transform:uppercase; letter-spacing:.5px; }
+.pd-kpi-val { font-family:'DM Mono',monospace; font-size:20px; font-weight:700; margin-top:6px; color:#1c1917; font-feature-settings:'tnum' 1; white-space:nowrap; }
+.pd-kpi-det { font-size:11.5px; color:#78716c; margin-top:4px; line-height:1.45; }
+.pd-kpi-det b { font-weight:700; }
+.pd-pos { color:#15803d !important; } .pd-neg { color:#b91c1c !important; } .pd-warn { color:#b45309 !important; }
+.pd-grid-2-1 { display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:16px; }
+.pd-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+.pd-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media (max-width:1100px) { .pd-grid-2-1, .pd-grid-2, .pd-grid-3 { grid-template-columns:1fr; } }
+.pd-card { margin-bottom:0 !important; }
+.pd-card-head { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.pd-seg { display:flex; gap:3px; background:#faf9f7; border-radius:8px; padding:3px; }
+.pd-seg button { padding:4px 10px; font-size:11.5px; font-weight:600; border:none; border-radius:6px; cursor:pointer; background:transparent; color:#57534e; }
+.pd-seg button.ativo { background:#ea580c; color:#fff; }
+.pd-mini { display:flex; gap:18px; flex-wrap:wrap; font-size:12px; color:#57534e; margin-bottom:8px; }
+.pd-mini b { font-family:'DM Mono',monospace; }
+.pd-alerta { display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid #f5f5f4; font-size:12.5px; color:#44403c; line-height:1.45; }
+.pd-alerta:last-child { border-bottom:none; }
+.pd-alerta-ic { width:22px; height:22px; border-radius:50%; flex:0 0 22px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; }
+.pd-ic-red { background:#dc2626; } .pd-ic-amb { background:#d97706; } .pd-ic-grn { background:#16a34a; } .pd-ic-blu { background:#2563eb; }
+.pd-tab { width:100%; border-collapse:collapse; font-size:12.5px; }
+.pd-tab th { text-align:right; font-size:10.5px; color:#78716c; text-transform:uppercase; letter-spacing:.4px; padding:6px 8px; border-bottom:2px solid #e7e5e4; font-weight:700; }
+.pd-tab th:first-child, .pd-tab td:first-child { text-align:left; }
+.pd-tab td { padding:7px 8px; border-bottom:1px solid #f5f5f4; text-align:right; font-family:'DM Mono',monospace; font-size:12px; white-space:nowrap; }
+.pd-tab td:first-child { font-family:inherit; font-size:12.5px; white-space:normal; }
+.pd-tab tr.tot td { font-weight:800; border-top:2px solid #e7e5e4; border-bottom:none; }
+.pd-rank { display:flex; flex-direction:column; gap:9px; }
+.pd-rank-item { font-size:12.5px; }
+.pd-rank-top { display:flex; justify-content:space-between; gap:8px; }
+.pd-rank-top span:first-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#292524; }
+.pd-rank-top span:last-child { font-family:'DM Mono',monospace; font-weight:700; white-space:nowrap; }
+.pd-bar { height:6px; background:#f5f5f4; border-radius:4px; margin-top:4px; overflow:hidden; }
+.pd-bar > i { display:block; height:100%; border-radius:4px; }
+.pd-rank-sub { font-size:10.5px; color:#a8a29e; margin-top:2px; }
+.pd-vazio { font-size:12px; color:#a8a29e; padding:12px 0; }
+.pd-dia { display:flex; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid #f5f5f4; font-size:12.5px; }
+.pd-dia:last-child { border-bottom:none; }
+.pd-dia-d { font-weight:700; color:#292524; min-width:74px; }
+.pd-dia-v { font-family:'DM Mono',monospace; font-size:12px; text-align:right; }
+.bkp-dia { display:flex; align-items:center; gap:4px; font-size:12px; padding:5px 9px; border:1px solid #e7e5e4; border-radius:7px; cursor:pointer; background:#fff; }
+.bkp-dia input { width:auto !important; margin:0; padding:0; accent-color:#ea580c; }
+.dfc-modo-seg { display:flex; gap:4px; background:#faf9f7; border-radius:8px; padding:3px; }
+.dfc-modo-seg button { padding:6px 14px; font-size:12px; font-weight:600; border:none; border-radius:6px; cursor:pointer; background:transparent; color:#57534e; }
+.dfc-modo-seg button.ativo { background:#ea580c; color:#fff; }
+.dfc-row-saldo td { font-weight:700; background:#eff6ff; color:#1e3a8a; border-top:2px solid #bfdbfe; }
+.dfc-row-saldo.negativo td { background:#fef2f2; color:#991b1b; border-top-color:#fecaca; }
+.dfc-row-saldo-ini td { font-weight:700; background:#f5f5f4; color:#44403c; }
+.dfc-col-atraso { background:#fff7ed !important; }
 .dfc-val-zero { color:#a8a29e; }
 .dfc-col-total { background:#faf9f7 !important; font-weight:700 !important; }
 .dre-row-subtotal td { font-weight:700; background:#fff; border-top:1.5px solid #d6d3d1; border-bottom:1.5px solid #d6d3d1; }
@@ -1331,6 +1429,10 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <div class="nav-item" id="nav-item-auditoria" onclick="showPage('auditoria')" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         Auditoria
+      </div>
+      <div class="nav-item" id="nav-item-backup" onclick="showPage('backup')" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        Backup
       </div>
       <div class="nav-item" id="nav-item-usuarios" onclick="showPage('usuarios')" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -2368,7 +2470,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
     <div class="page" id="page-dfc-categorias">
       <div class="page-header">
         <div><div class="page-title">Categorias</div><div class="page-sub" style="margin-bottom:0">Gerencie as categorias usadas no Demonstrativo de Fluxo de Caixa (DFC) e na DRE. O Grupo de cada categoria é cadastrado em DRE &rarr; Grupos.</div></div>
-        <button class="btn-novo" id="btn-novo-dfccat" onclick="toggleFormPanel('form-dfccat',this)">
+        <button class="btn-novo" id="btn-novo-dfccat" onclick="clearDfcCategoria();toggleFormPanel('form-dfccat',this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Novo
         </button>
       </div>
@@ -2419,6 +2521,85 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <th>Nome</th><th>Grupo</th><th>Tipo</th><th>Obs</th><th>Ações</th>
         </tr></thead><tbody id="tb-dfc-cats">
           <tr><td colspan="5" class="empty-state">Nenhuma categoria cadastrada.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ══ BACKUP DO SISTEMA ══ -->
+    <div class="page" id="page-backup">
+      <div class="page-header">
+        <div><div class="page-title">Backup do Sistema</div><div class="page-sub" style="margin-bottom:0">Cópia de segurança de todas as tabelas (todas as empresas) em arquivo .json, salva na pasta escolhida, no dia e hora programados.</div></div>
+        <button class="btn btn-primary" onclick="executarBackup('manual')">⬇ Fazer backup agora</button>
+      </div>
+
+      <div id="bkp-alerta"></div>
+
+      <div class="grid2" style="margin-bottom:20px;align-items:start;">
+        <div class="card">
+          <div class="card-title">📁 Pasta de destino</div>
+          <div id="bkp-pasta-info" style="font-size:13px;color:#57534e;margin-bottom:12px;"></div>
+          <div class="btn-row" style="margin-top:0">
+            <button class="btn btn-secondary" onclick="escolherPastaBackup()">Escolher pasta…</button>
+            <button class="btn btn-secondary" onclick="removerPastaBackup()">Remover pasta</button>
+          </div>
+          <p style="font-size:11px;color:#a8a29e;margin-top:12px;line-height:1.5">
+            A pasta fica gravada <b>neste computador / navegador</b> (Chrome ou Edge). Em outro computador, ou se o navegador não permitir escolher pasta, o arquivo é baixado na pasta de Downloads.
+            Pode ser uma pasta sincronizada (OneDrive, Google Drive, Dropbox) para ter cópia fora da máquina.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⏰ Programação</div>
+          <div class="grid2">
+            <div class="form-group"><label>Backup automático</label>
+              <select id="bkp-ativo"><option value="sim">Ativado</option><option value="nao">Desativado</option></select>
+            </div>
+            <div class="form-group"><label>Periodicidade</label>
+              <select id="bkp-freq" onchange="bkpAtualizarCamposFreq()">
+                <option value="diario">Diário</option>
+                <option value="semanal">Semanal (dias escolhidos)</option>
+                <option value="mensal">Mensal</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" id="bkp-dias-wrap"><label>Dias da semana</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;" id="bkp-dias">
+              <label class="bkp-dia"><input type="checkbox" value="1">Seg</label>
+              <label class="bkp-dia"><input type="checkbox" value="2">Ter</label>
+              <label class="bkp-dia"><input type="checkbox" value="3">Qua</label>
+              <label class="bkp-dia"><input type="checkbox" value="4">Qui</label>
+              <label class="bkp-dia"><input type="checkbox" value="5">Sex</label>
+              <label class="bkp-dia"><input type="checkbox" value="6">Sáb</label>
+              <label class="bkp-dia"><input type="checkbox" value="0">Dom</label>
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="form-group" id="bkp-diames-wrap"><label>Dia do mês</label>
+              <input id="bkp-diames" type="number" min="1" max="31" value="1" />
+            </div>
+            <div class="form-group"><label>Horário</label>
+              <input id="bkp-hora" type="time" value="18:00" />
+            </div>
+            <div class="form-group"><label>Manter na pasta (últimos arquivos)</label>
+              <input id="bkp-manter" type="number" min="0" value="30" title="0 = manter todos" />
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="salvarConfigBackup()">Salvar programação</button>
+          </div>
+          <div id="bkp-proximo" style="font-size:12px;color:#57534e;margin-top:10px;"></div>
+          <p style="font-size:11px;color:#a8a29e;margin-top:8px;line-height:1.5">
+            O backup roda com o sistema aberto por um administrador. Se o sistema estiver fechado no horário, o backup é feito assim que for aberto novamente.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Histórico de backups</div>
+        <div class="table-scroll"><table><thead><tr>
+          <th>Data / hora</th><th>Tipo</th><th>Arquivo</th><th>Destino</th><th>Registros</th><th>Usuário</th><th>Situação</th>
+        </tr></thead><tbody id="tb-bkp-hist">
+          <tr><td colspan="7" class="empty-state">Nenhum backup registrado.</td></tr>
         </tbody></table></div>
       </div>
     </div>
@@ -2491,30 +2672,22 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <div class="page-title">Demonstrativo de Fluxo de Caixa <span class="empresa-tag"></span></div>
       <div class="page-sub">Visão mensal com acumulado do ano</div>
 
-      <!-- Filtro Ano -->
+      <!-- Visão do DFC: Realizado (padrão) ou Projetado a partir do caixa -->
       <div class="card" style="padding:14px 20px;margin-bottom:16px;">
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-          <span style="font-size:11px;color:#a8a29e;font-weight:600;text-transform:uppercase;letter-spacing:.6px;">Ano:</span>
-          <select id="dfc-ano" onchange="renderDfc()" style="width:110px;padding:6px 10px;font-size:13px;">
-            <option value="">Selecione</option>
-          </select>
-          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
-            <input type="checkbox" id="dfc-incluir-pagar" checked onchange="renderDfc()" />
-            Incluir Contas a Pagar
-          </label>
-          <div style="display:flex;align-items:center;gap:4px;background:#faf9f7;border-radius:8px;padding:3px;">
-            <button id="btn-dfc-todos" onclick="setDfcFiltro('todos')" style="padding:5px 12px;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:#ea580c;color:#fff;">Todos</button>
-            <button id="btn-dfc-apagar" onclick="setDfcFiltro('apagar')" style="padding:5px 12px;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:transparent;color:#57534e;">Contas a Pagar</button>
+          <span style="font-size:11px;color:#a8a29e;font-weight:600;text-transform:uppercase;letter-spacing:.6px;">Visão:</span>
+          <div class="dfc-modo-seg">
+            <button id="btn-dfc-modo-realizado" class="ativo" onclick="setDfcModo('realizado')">Realizado (pago / recebido)</button>
+            <button id="btn-dfc-modo-projetado" onclick="setDfcModo('projetado')">Fluxo de caixa inicial + projeção</button>
           </div>
-          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
-            <input type="checkbox" id="dfc-incluir-receber" checked onchange="renderDfc()" />
-            Incluir Contas a Receber
-          </label>
-          <div style="display:flex;align-items:center;gap:4px;background:#faf9f7;border-radius:8px;padding:3px;">
-            <button id="btn-dfc-rec-todos" onclick="setDfcFiltroRec('todos')" style="padding:5px 12px;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:#ea580c;color:#fff;">Todos</button>
-            <button id="btn-dfc-rec-aberto" onclick="setDfcFiltroRec('aberto')" style="padding:5px 12px;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:transparent;color:#57534e;">Contas a Receber</button>
-          </div>
+          <span id="dfc-ano-wrap" style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:11px;color:#a8a29e;font-weight:600;text-transform:uppercase;letter-spacing:.6px;">Ano:</span>
+            <select id="dfc-ano" onchange="renderDfc()" style="width:110px;padding:6px 10px;font-size:13px;">
+              <option value="">Selecione</option>
+            </select>
+          </span>
         </div>
+        <div id="dfc-modo-desc" style="font-size:12px;color:#78716c;margin-top:10px;"></div>
       </div>
 
       <!-- Tabela DFC -->
@@ -2815,6 +2988,73 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 
       <!-- Frase do dia — troca automaticamente a cada dia -->
       <div id="frase-do-dia" class="frase-dia"></div>
+
+      <!-- ══ PAINEL DE DECISÃO (visão executiva: caixa, em aberto, projeção) ══ -->
+      <div class="pd-wrap">
+        <div class="pd-head">
+          <div>
+            <div class="pd-titulo">Painel de Decisão</div>
+            <div class="pd-sub" id="pd-sub">Posição de hoje — caixa, valores em aberto e projeção</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="font-size:11px;color:#a8a29e;font-weight:600;text-transform:uppercase;letter-spacing:.6px;">Análise:</span>
+            <select id="pd-ano" onchange="pdSalvarFiltro()" style="width:100px;padding:6px 10px;font-size:13px;"></select>
+            <select id="pd-mes" onchange="pdSalvarFiltro()" style="width:130px;padding:6px 10px;font-size:13px;">
+              <option value="">Ano inteiro</option>
+              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
+              <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
+              <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
+              <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="showPage('dfc-demonstrativo')">Ver Fluxo de Caixa →</button>
+          </div>
+        </div>
+        <div class="pd-kpis" id="pd-kpis"></div>
+        <div class="pd-grid-2-1">
+          <div class="card pd-card">
+            <div class="pd-card-head">
+              <div class="card-title" style="margin:0">Projeção do saldo em caixa</div>
+              <div class="pd-seg" id="pd-horiz">
+                <button data-d="30" onclick="pdSetHorizonte(30)">30 dias</button>
+                <button data-d="60" onclick="pdSetHorizonte(60)">60 dias</button>
+                <button data-d="90" onclick="pdSetHorizonte(90)">90 dias</button>
+              </div>
+            </div>
+            <div class="pd-mini" id="pd-proj-resumo"></div>
+            <div style="position:relative;height:260px;"><canvas id="pd-chart-proj"></canvas></div>
+          </div>
+          <div class="card pd-card">
+            <div class="card-title">⚠️ Alertas e pontos de atenção</div>
+            <div id="pd-alertas"></div>
+          </div>
+        </div>
+        <div class="pd-grid-2">
+          <div class="card pd-card">
+            <div class="card-title" id="pd-real-titulo">Recebido x Pago</div>
+            <div class="pd-mini" id="pd-real-resumo"></div>
+            <div style="position:relative;height:280px;"><canvas id="pd-chart-real"></canvas></div>
+          </div>
+          <div class="card pd-card">
+            <div class="card-title">Vencidos por faixa de atraso</div>
+            <div id="pd-aging"></div>
+          </div>
+        </div>
+        <div class="pd-grid-3">
+          <div class="card pd-card">
+            <div class="card-title" id="pd-top-rec-tit">Maiores valores a receber</div>
+            <div id="pd-top-rec"></div>
+          </div>
+          <div class="card pd-card">
+            <div class="card-title" id="pd-top-pag-tit">Maiores valores a pagar</div>
+            <div id="pd-top-pag"></div>
+          </div>
+          <div class="card pd-card">
+            <div class="card-title">Próximos 7 dias</div>
+            <div id="pd-prox7"></div>
+          </div>
+        </div>
+      </div>
+
 
       <!-- Filtros dos KPIs -->
       <div class="card" style="padding:14px 20px;margin-bottom:16px;">
@@ -3609,6 +3849,36 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 </div>
 
 <!-- ══ MODAL: LANÇAMENTOS DO DIA (Fluxo de Caixa Diário) ══ -->
+<!-- ══ MODAL: CENTRAL DE LANÇAMENTOS (Painel de Decisão) ══ -->
+<div class="modal-overlay" id="modal-pd-lanc" style="z-index:190;">
+  <div class="modal pdl-modal">
+    <div class="pdl-head">
+      <div>
+        <div class="pdl-titulo" id="pdl-titulo">Lançamentos</div>
+        <div class="pdl-sub" id="pdl-sub"></div>
+      </div>
+      <button class="pdl-x" onclick="pdlFechar()" title="Fechar">✕</button>
+    </div>
+    <div class="pdl-resumo" id="pdl-resumo"></div>
+    <div class="pdl-barra">
+      <div class="pd-seg" id="pdl-filtros">
+        <button data-f="aberto" onclick="pdlSetFiltro('aberto')">Em aberto</button>
+        <button data-f="vencido" onclick="pdlSetFiltro('vencido')">Vencidos</button>
+        <button data-f="quitado" onclick="pdlSetFiltro('quitado')">Pagos / Recebidos</button>
+        <button data-f="todos" onclick="pdlSetFiltro('todos')">Todos</button>
+      </div>
+      <input id="pdl-busca" type="text" placeholder="Buscar nome, produto, NF, valor..." oninput="pdlBuscar(this.value)" />
+    </div>
+    <div class="pdl-tabela-wrap">
+      <table class="pdl-tab">
+        <thead><tr><th>Vencimento</th><th>Cliente / Fornecedor</th><th style="text-align:center">Parcela</th><th style="text-align:right">Valor</th><th>Situação</th><th style="text-align:right">Ações</th></tr></thead>
+        <tbody id="pdl-tbody"></tbody>
+      </table>
+    </div>
+    <div class="pdl-rodape"><span id="pdl-rodape"></span><button class="btn btn-secondary" onclick="pdlFechar()">Fechar</button></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-fd-detalhe">
   <div class="modal" style="width:780px;">
     <div class="modal-title" id="fd-det-titulo">Lançamentos do dia</div>
@@ -5235,7 +5505,7 @@ function _finalizarLogin(found) {
   if (sll) sll.textContent = prev ? 'Último acesso: ' + fmtTs(prev.ts) : 'Primeiro acesso';
   // Mostrar/ocultar nav admin
   const isAdmin = found.role === 'admin';
-  ['nav-label-admin','nav-item-usuarios','nav-item-empresas','nav-item-auditoria'].forEach(id => {
+  ['nav-label-admin','nav-item-usuarios','nav-item-empresas','nav-item-auditoria','nav-item-backup'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = isAdmin ? '' : 'none';
   });
@@ -5306,6 +5576,9 @@ function showPage(p) {
   if (p === 'auditoria' && (!currentUser || currentUser.role !== 'admin')) {
     alert('A tela de Auditoria é exclusiva do administrador.'); return;
   }
+  if (p === 'backup' && (!currentUser || currentUser.role !== 'admin')) {
+    alert('A tela de Backup é exclusiva do administrador.'); return;
+  }
   if (p !== 'usuarios' && p !== 'empresas' && currentUser && currentUser.role !== 'admin') {
     const allowed = currentUser.pages || [];
     if (!allowed.includes(p)) { alert('Acesso não permitido para seu perfil.'); return; }
@@ -5345,6 +5618,7 @@ function showPage(p) {
   if (p === 'dre-analise-cat')   { popularCategoriasAnalise(); renderAnaliseCategoria(); }
   if (p === 'usuarios')          renderUsuariosAdmin();
   if (p === 'empresas')          renderEmpresas();
+  if (p === 'backup')            renderBackup();
 }
 
 // Redesenha a tela em que o usuário está — usado depois de trocar de empresa,
@@ -5385,6 +5659,7 @@ function renderPaginaAtual() {
   if (p === 'dre-analise-cat')   { popularCategoriasAnalise(); renderAnaliseCategoria(); }
   if (p === 'usuarios')          renderUsuariosAdmin();
   if (p === 'empresas')          renderEmpresas();
+  if (p === 'backup')            renderBackup();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -7791,6 +8066,303 @@ async function verificarBackupAutomatico() {
   }
 }
 
+// ══════════════════════════════════════════
+// BACKUP PROGRAMADO (pasta + dia/hora)
+// • Configuração (periodicidade, dias, horário, retenção) fica na tabela
+//   config (key = 'backup_config'), valendo para todos os administradores.
+// • A pasta de destino é escolhida pelo navegador (File System Access API —
+//   Chrome/Edge) e o "atalho" para ela fica guardado no IndexedDB deste
+//   computador. Sem pasta (ou navegador sem suporte) o arquivo é baixado.
+// • Um verificador roda a cada minuto enquanto o sistema está aberto por um
+//   admin: se o último horário programado já passou e ainda não houve backup
+//   depois dele, executa (inclusive recuperando horário perdido).
+// • Histórico dos últimos 30 backups em config (key = 'backup_historico').
+// ══════════════════════════════════════════
+const BKP_TABELAS = ['empresas','fornecedores','produtos','lancamentos','faturamento','recebimentos',
+  'metas','clientes','prodvenda','lancreceber','dfc_categorias','dfc_lancamentos',
+  'bancos','dre_grupos','transferencias','pedidos_cancelados','reposicoes',
+  'cartoes','cartao_despesas','config'];
+const BKP_CONFIG_PADRAO = { ativo: 'sim', freq: 'diario', dias: [1,2,3,4,5], diaMes: 1, hora: '18:00', manter: 30 };
+let bkpConfig = Object.assign({}, BKP_CONFIG_PADRAO);
+let _bkpTimer = null, _bkpRodando = false, _bkpPastaHandle = null, _bkpPastaStatus = 'nenhuma';
+
+// ── IndexedDB (guarda o atalho da pasta neste navegador) ──
+function _bkpIdb() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('stolf_backup', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('kv');
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+async function _bkpIdbGet(k) {
+  try { const d = await _bkpIdb(); return await new Promise(res => { const q = d.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => res(null); }); }
+  catch(e) { return null; }
+}
+async function _bkpIdbSet(k, v) {
+  try { const d = await _bkpIdb(); await new Promise(res => { const t = d.transaction('kv', 'readwrite'); v === undefined ? t.objectStore('kv').delete(k) : t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = res; }); }
+  catch(e) {}
+}
+
+function bkpSuportaPasta() { return typeof window.showDirectoryPicker === 'function'; }
+
+// Verifica se a pasta salva ainda tem permissão de escrita
+async function bkpCarregarPasta(pedirPermissao) {
+  _bkpPastaHandle = await _bkpIdbGet('pasta');
+  if (!_bkpPastaHandle) { _bkpPastaStatus = 'nenhuma'; return null; }
+  try {
+    let p = await _bkpPastaHandle.queryPermission({ mode: 'readwrite' });
+    if (p !== 'granted' && pedirPermissao) p = await _bkpPastaHandle.requestPermission({ mode: 'readwrite' });
+    _bkpPastaStatus = p === 'granted' ? 'ok' : 'sem-permissao';
+  } catch(e) { _bkpPastaStatus = 'sem-permissao'; }
+  return _bkpPastaHandle;
+}
+
+async function escolherPastaBackup() {
+  if (!bkpSuportaPasta()) { alert('Este navegador não permite escolher pasta. Use Google Chrome ou Microsoft Edge no computador. Enquanto isso, os backups são baixados na pasta Downloads.'); return; }
+  try {
+    const h = await window.showDirectoryPicker({ id: 'backup-stolf', mode: 'readwrite' });
+    await _bkpIdbSet('pasta', h);
+    await bkpCarregarPasta(true);
+    renderBackup();
+  } catch(e) { if (e && e.name !== 'AbortError') alert('Não foi possível usar essa pasta: ' + e.message); }
+}
+async function removerPastaBackup() {
+  if (!confirm('Remover a pasta de destino deste computador? Os próximos backups serão baixados na pasta Downloads.')) return;
+  await _bkpIdbSet('pasta', undefined);
+  _bkpPastaHandle = null; _bkpPastaStatus = 'nenhuma';
+  renderBackup();
+}
+async function reautorizarPastaBackup() { await bkpCarregarPasta(true); renderBackup(); }
+
+// ── Configuração ──
+async function carregarConfigBackup() {
+  try {
+    const r = await sbFetch('config', 'GET', null, '?key=eq.backup_config&limit=1');
+    bkpConfig = Object.assign({}, BKP_CONFIG_PADRAO, (r && r[0]) ? JSON.parse(r[0].value) : {});
+  } catch(e) { bkpConfig = Object.assign({}, BKP_CONFIG_PADRAO); }
+  return bkpConfig;
+}
+async function salvarConfigBackup() {
+  const dias = [...document.querySelectorAll('#bkp-dias input:checked')].map(x => parseInt(x.value));
+  const cfg = {
+    ativo: document.getElementById('bkp-ativo').value,
+    freq: document.getElementById('bkp-freq').value,
+    dias,
+    diaMes: Math.min(31, Math.max(1, parseInt(document.getElementById('bkp-diames').value) || 1)),
+    hora: document.getElementById('bkp-hora').value || '18:00',
+    manter: Math.max(0, parseInt(document.getElementById('bkp-manter').value) || 0)
+  };
+  if (cfg.freq === 'semanal' && !dias.length) { alert('Marque pelo menos um dia da semana.'); return; }
+  await sbFetch('config', 'DELETE', null, '?key=eq.backup_config');
+  const ok = await sbFetch('config', 'POST', { id: uid(), key: 'backup_config', value: JSON.stringify(cfg) });
+  if (!ok) { alert('❌ Erro ao salvar a programação do backup.'); return; }
+  bkpConfig = cfg;
+  renderBackup();
+  alert('✅ Programação do backup salva.');
+}
+function bkpAtualizarCamposFreq() {
+  const f = document.getElementById('bkp-freq').value;
+  document.getElementById('bkp-dias-wrap').style.display = f === 'semanal' ? '' : 'none';
+  document.getElementById('bkp-diames-wrap').style.display = f === 'mensal' ? '' : 'none';
+}
+
+// Datas programadas: último horário que já passou e próximo horário
+function _bkpEhDiaProgramado(d, cfg) {
+  if (cfg.freq === 'diario') return true;
+  if (cfg.freq === 'semanal') return (cfg.dias || []).includes(d.getDay());
+  const ultimoDia = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  return d.getDate() === Math.min(cfg.diaMes || 1, ultimoDia);
+}
+function _bkpHorarioNoDia(d, cfg) {
+  const [h, m] = String(cfg.hora || '18:00').split(':').map(Number);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), h || 0, m || 0, 0);
+}
+function bkpUltimoProgramado(cfg, agora) {
+  agora = agora || new Date();
+  for (let i = 0; i <= 62; i++) {
+    const d = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() - i);
+    if (!_bkpEhDiaProgramado(d, cfg)) continue;
+    const t = _bkpHorarioNoDia(d, cfg);
+    if (t <= agora) return t;
+  }
+  return null;
+}
+function bkpProximoProgramado(cfg, agora) {
+  agora = agora || new Date();
+  for (let i = 0; i <= 62; i++) {
+    const d = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() + i);
+    if (!_bkpEhDiaProgramado(d, cfg)) continue;
+    const t = _bkpHorarioNoDia(d, cfg);
+    if (t > agora) return t;
+  }
+  return null;
+}
+function _bkpFmtDH(d) {
+  if (!d) return '—';
+  const dt = d instanceof Date ? d : new Date(d);
+  return dt.toLocaleDateString('pt-BR') + ' ' + dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
+// ── Histórico ──
+async function bkpLerHistorico() {
+  try {
+    const r = await sbFetch('config', 'GET', null, '?key=eq.backup_historico&limit=1');
+    return (r && r[0]) ? (JSON.parse(r[0].value) || []) : [];
+  } catch(e) { return []; }
+}
+async function bkpGravarHistorico(item) {
+  const hist = await bkpLerHistorico();
+  hist.unshift(item);
+  await sbFetch('config', 'DELETE', null, '?key=eq.backup_historico');
+  await sbFetch('config', 'POST', { id: uid(), key: 'backup_historico', value: JSON.stringify(hist.slice(0, 30)) });
+}
+
+// Busca todas as tabelas, de TODAS as empresas, direto do banco
+async function bkpBuscarTudo() {
+  const results = await Promise.allSettled(BKP_TABELAS.map(t => fetchAll(t, '', '')));
+  const dados = {}; const falhas = [];
+  let total = 0;
+  BKP_TABELAS.forEach((nome, i) => {
+    if (results[i].status === 'fulfilled' && results[i].value !== null) { dados[nome] = results[i].value; total += dados[nome].length; }
+    else { dados[nome] = []; falhas.push(nome); }
+  });
+  return { dados, falhas, total };
+}
+
+// Apaga os backups mais antigos da pasta, mantendo os N mais recentes
+async function _bkpLimparAntigos(pasta, manter) {
+  if (!manter || manter < 1) return;
+  try {
+    const nomes = [];
+    for await (const [nome, h] of pasta.entries()) {
+      if (h.kind === 'file' && /^backup-moveis-stolf-.*\.json$/.test(nome)) nomes.push(nome);
+    }
+    nomes.sort().reverse();
+    for (const nome of nomes.slice(manter)) await pasta.removeEntry(nome);
+  } catch(e) { console.warn('[BACKUP] Não foi possível limpar backups antigos:', e); }
+}
+
+// Executa o backup: 'manual' ou 'automatico'
+async function executarBackup(tipo) {
+  if (_bkpRodando) { if (tipo === 'manual') alert('Já existe um backup em andamento.'); return; }
+  _bkpRodando = true;
+  const agora = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const nomeArquivo = `backup-moveis-stolf-${agora.getFullYear()}-${pad(agora.getMonth()+1)}-${pad(agora.getDate())}_${pad(agora.getHours())}h${pad(agora.getMinutes())}.json`;
+  let destino = 'Downloads', situacao = 'OK', total = 0;
+  try {
+    const { dados, falhas, total: t } = await bkpBuscarTudo();
+    total = t;
+    if (falhas.length) situacao = 'Parcial (falhou: ' + falhas.join(', ') + ')';
+    const json = JSON.stringify({ geradoEm: agora.toISOString(), sistema: 'Móveis Stolf — Gestão Financeira', tabelas: BKP_TABELAS, ...dados }, null, 2);
+
+    let salvoNaPasta = false;
+    if (bkpSuportaPasta()) {
+      const pasta = await bkpCarregarPasta(tipo === 'manual');
+      if (pasta && _bkpPastaStatus === 'ok') {
+        try {
+          const fh = await pasta.getFileHandle(nomeArquivo, { create: true });
+          const w = await fh.createWritable();
+          await w.write(json); await w.close();
+          destino = 'Pasta: ' + pasta.name;
+          salvoNaPasta = true;
+          await _bkpLimparAntigos(pasta, bkpConfig.manter);
+        } catch(e) { console.error('[BACKUP] Falha ao gravar na pasta, baixando o arquivo:', e); }
+      }
+    }
+    if (!salvoNaPasta) baixarBackupLocal(nomeArquivo, json);
+  } catch(e) {
+    situacao = 'Erro: ' + (e && e.message ? e.message : e);
+    console.error('[BACKUP] Erro:', e);
+  }
+
+  const item = { ts: agora.toISOString(), tipo, arquivo: nomeArquivo, destino, total, situacao,
+    usuario: (currentUser && (currentUser.nome || currentUser.user)) || '' };
+  try {
+    await bkpGravarHistorico(item);
+    if (tipo === 'automatico' || situacao === 'OK') {
+      await sbFetch('config', 'DELETE', null, '?key=eq.ultimo_backup_automatico');
+      await sbFetch('config', 'POST', { id: uid(), key: 'ultimo_backup_automatico',
+        value: JSON.stringify({ data: today(), ts: agora.toISOString(), arquivo: nomeArquivo }) });
+    }
+  } catch(e) { console.error('[BACKUP] Erro ao registrar histórico:', e); }
+  _bkpRodando = false;
+  if (tipo === 'manual') alert((situacao === 'OK' ? '✅ Backup gerado: ' : '⚠️ Backup: ') + nomeArquivo + '\nDestino: ' + destino + '\nRegistros: ' + total + (situacao !== 'OK' ? '\n' + situacao : ''));
+  if (paginaVisivel('backup')) renderBackup();
+}
+
+// Verifica se é hora de rodar o backup automático
+async function bkpVerificarAgendado() {
+  if (!currentUser || currentUser.role !== 'admin' || _bkpRodando) return;
+  try {
+    await carregarConfigBackup();
+    if (bkpConfig.ativo !== 'sim') return;
+    const ultimoProg = bkpUltimoProgramado(bkpConfig);
+    if (!ultimoProg) return;
+    const r = await sbFetch('config', 'GET', null, '?key=eq.ultimo_backup_automatico&limit=1');
+    const reg = (r && r[0]) ? JSON.parse(r[0].value) : null;
+    const ultimoFeito = reg && reg.ts ? new Date(reg.ts) : null;
+    if (ultimoFeito && ultimoFeito >= ultimoProg) return; // já feito depois do horário programado
+    await executarBackup('automatico');
+  } catch(e) { console.error('[BACKUP] Erro na verificação do backup programado:', e); }
+}
+function iniciarAgendadorBackup() {
+  if (_bkpTimer) clearInterval(_bkpTimer);
+  setTimeout(bkpVerificarAgendado, 5000);
+  _bkpTimer = setInterval(bkpVerificarAgendado, 60000);
+}
+
+// ── Tela ──
+async function renderBackup() {
+  await carregarConfigBackup();
+  await bkpCarregarPasta(false);
+  const c = bkpConfig;
+  document.getElementById('bkp-ativo').value = c.ativo;
+  document.getElementById('bkp-freq').value = c.freq;
+  document.querySelectorAll('#bkp-dias input').forEach(x => x.checked = (c.dias || []).includes(parseInt(x.value)));
+  document.getElementById('bkp-diames').value = c.diaMes || 1;
+  document.getElementById('bkp-hora').value = c.hora || '18:00';
+  document.getElementById('bkp-manter').value = c.manter ?? 30;
+  bkpAtualizarCamposFreq();
+
+  const info = document.getElementById('bkp-pasta-info');
+  const alerta = document.getElementById('bkp-alerta');
+  alerta.innerHTML = '';
+  if (!bkpSuportaPasta()) {
+    info.innerHTML = '⚠️ Este navegador não permite escolher pasta. Os backups são baixados em <b>Downloads</b>.';
+  } else if (_bkpPastaStatus === 'nenhuma') {
+    info.innerHTML = 'Nenhuma pasta definida neste computador. Os backups são baixados em <b>Downloads</b>.';
+  } else if (_bkpPastaStatus === 'sem-permissao') {
+    info.innerHTML = `📁 <b>${esc(_bkpPastaHandle.name)}</b> — <span style="color:#b45309">aguardando autorização</span>`;
+    alerta.innerHTML = `<div class="card" style="background:#fffbeb;border:1px solid #fcd34d;padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span style="font-size:13px;color:#92400e">O navegador pede confirmação para gravar na pasta <b>${esc(_bkpPastaHandle.name)}</b> depois que o sistema é reaberto. Sem isso, o backup automático é baixado em Downloads.</span>
+      <button class="btn btn-primary btn-sm" onclick="reautorizarPastaBackup()">Autorizar pasta</button></div>`;
+  } else {
+    info.innerHTML = `📁 <b>${esc(_bkpPastaHandle.name)}</b> — <span style="color:#16a34a">pronta</span>`;
+  }
+
+  const prox = bkpProximoProgramado(c);
+  const r = await sbFetch('config', 'GET', null, '?key=eq.ultimo_backup_automatico&limit=1');
+  const reg = (r && r[0]) ? JSON.parse(r[0].value) : null;
+  document.getElementById('bkp-proximo').innerHTML = c.ativo === 'sim'
+    ? `Próximo backup: <b>${_bkpFmtDH(prox)}</b> · Último: <b>${reg && reg.ts ? _bkpFmtDH(reg.ts) : '—'}</b>`
+    : '<span style="color:#b91c1c">Backup automático desativado.</span>';
+
+  const hist = await bkpLerHistorico();
+  const tb = document.getElementById('tb-bkp-hist');
+  tb.innerHTML = hist.length ? hist.map(h => `<tr>
+      <td>${_bkpFmtDH(h.ts)}</td>
+      <td>${h.tipo === 'manual' ? '<span class="badge badge-blue">Manual</span>' : '<span class="badge badge-green">Automático</span>'}</td>
+      <td style="font-family:DM Mono,monospace;font-size:11px">${esc(h.arquivo)}</td>
+      <td>${esc(h.destino)}</td>
+      <td>${(h.total || 0).toLocaleString('pt-BR')}</td>
+      <td>${esc(h.usuario || '—')}</td>
+      <td>${h.situacao === 'OK' ? '<span class="badge badge-green">OK</span>' : `<span class="badge badge-red">${esc(h.situacao)}</span>`}</td>
+    </tr>`).join('')
+    : '<tr><td colspan="7" class="empty-state">Nenhum backup registrado.</td></tr>';
+}
+
 async function estornarPago(id, parcIdx) {
   if(!confirm('Deseja desfazer o pagamento e mover esta parcela de volta para "A Pagar"?')) return;
   const l = db.lancamentos.find(x=>x.id===id);
@@ -8353,8 +8925,495 @@ function abrirRelatorioKPI(key) {
   openModal('modal-rel-kpi');
 }
 
+// ══════════════════════════════════════════════════════════
+// PAINEL DE DECISÃO (topo do Dashboard)
+// Posição de hoje, sem depender dos filtros de mês/ano:
+// caixa (bancos), em aberto a receber/pagar, vencidos, projeção do saldo,
+// realizado dos últimos meses, faixas de atraso e concentrações.
+// Contas pagas com cartão entram só pela fatura (não duplica).
+// ══════════════════════════════════════════════════════════
+let pdHorizonte = 30;
+try { pdHorizonte = parseInt(localStorage.getItem('stolf_pd_horiz')) || 30; } catch(e) {}
+function pdSetHorizonte(d) {
+  pdHorizonte = d;
+  try { localStorage.setItem('stolf_pd_horiz', String(d)); } catch(e) {}
+  renderPainelDecisao();
+}
+function pdSalvarFiltro() {
+  try {
+    localStorage.setItem('stolf_pd_ano', document.getElementById('pd-ano').value);
+    localStorage.setItem('stolf_pd_mes', document.getElementById('pd-mes').value);
+  } catch(e) {}
+  renderPainelDecisao();
+}
+function _pdPopularAnos() {
+  const el = document.getElementById('pd-ano');
+  if (!el) return;
+  const anoAtual = new Date().getFullYear();
+  const anos = new Set([anoAtual]);
+  getParcelasReceber(true).forEach(p => { if (p.dtrecebido) anos.add(parseInt(p.dtrecebido)); });
+  getParcelas(true).forEach(p => { if (p.dtpago) anos.add(parseInt(p.dtpago)); });
+  const lista = [...anos].filter(a => a > 1990 && a < 2200).sort((a, b) => b - a);
+  const atual = el.value || (() => { try { return localStorage.getItem('stolf_pd_ano'); } catch(e) { return ''; } })() || String(anoAtual);
+  el.innerHTML = lista.map(a => `<option value="${a}">${a}</option>`).join('');
+  el.value = lista.includes(parseInt(atual)) ? atual : String(anoAtual);
+  const em = document.getElementById('pd-mes');
+  if (em && !em.dataset.init) {
+    em.dataset.init = '1';
+    let mv = ''; try { mv = localStorage.getItem('stolf_pd_mes') || ''; } catch(e) {}
+    em.value = mv;
+  }
+}
+// Rótulos de dados nos gráficos (plugin chartjs-plugin-datalabels)
+function _pdPlugins() { return (typeof ChartDataLabels !== 'undefined') ? [ChartDataLabels] : []; }
+function _pdAdd(iso, n) { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); }
+function _pdDias(de, ate) { return Math.round((new Date(ate + 'T12:00:00') - new Date(de + 'T12:00:00')) / 86400000); }
+function _pdDM(iso) { const p = String(iso || '').split('-'); return p.length === 3 ? `${p[2]}/${p[1]}` : '—'; }
+function _pdK(v) {
+  const a = Math.abs(v);
+  if (a >= 1e6) return (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' mi';
+  if (a >= 1e3) return (v / 1e3).toLocaleString('pt-BR', { maximumFractionDigits: a < 1e5 ? 1 : 0 }) + ' mil';
+  return v.toLocaleString('pt-BR', { maximumFractionDigits: 0 });
+}
+
+// ══════════════════════════════════════════════════════════
+// CENTRAL DE LANÇAMENTOS (aberta pelos quadros e gráficos do Painel de Decisão)
+// Lista as parcelas que formam o número clicado, com filtros, busca e ações:
+// Pagar / Receber, Estornar, Editar e Excluir. Atualiza sozinha depois de
+// qualquer gravação (pagamento, edição, exclusão).
+// ══════════════════════════════════════════════════════════
+const _pdl = { ctx: null, filtro: 'aberto', busca: '', timer: null };
+
+// ctx = { titulo, subtitulo, rec: p => bool, pag: p => bool, filtro: 'aberto'|'todos'|... }
+function pdAbrirLanc(ctx) {
+  _pdl.ctx = ctx;
+  _pdl.filtro = ctx.filtro || 'aberto';
+  _pdl.busca = '';
+  const b = document.getElementById('pdl-busca'); if (b) b.value = '';
+  pdlRender();
+  openModal('modal-pd-lanc');
+}
+function pdlFechar() { closeModal('modal-pd-lanc'); _pdl.ctx = null; }
+function pdlSetFiltro(f) { _pdl.filtro = f; pdlRender(); }
+function pdlBuscar(v) { _pdl.busca = normText(v || ''); pdlRender(); }
+
+function _pdlItens() {
+  const c = _pdl.ctx; if (!c) return [];
+  const ccOri = (typeof ccOrigensSet === 'function') ? ccOrigensSet() : new Set();
+  const itens = [];
+  if (c.rec) getParcelasReceber(false).concat(getParcelasReceber(true)).forEach(p => {
+    const d = Object.assign({ kind: 'rec', _d: p.venc || p.dtvenda || '', _q: p.isRecebido, _dq: p.dtrecebido }, p);
+    if (c.rec(d)) itens.push(d);
+  });
+  if (c.pag) getParcelas(false).concat(getParcelas(true)).forEach(p => {
+    if (ccOri.has(`${p.lancId}|${p.parcIdx}`)) return;
+    const d = Object.assign({ kind: 'des', _d: p.venc || p.dtcompra || '', _q: p.isPago, _dq: p.dtpago }, p);
+    if (c.pag(d)) itens.push(d);
+  });
+  return itens;
+}
+
+function pdlRender() {
+  if (!_pdl.ctx) return;
+  const hoje = today();
+  const todos = _pdlItens();
+  const nome = p => p.kind === 'rec' ? getClienteNome(p.cliente) : getFornNome(p.forn);
+  const desc = p => p.cartaoFatura ? ccRotuloFatura(p.cartaoFatura)
+    : (p.prod ? (p.kind === 'rec' ? getProdVendaNome(p.prod) : getProdNome(p.prod)) : '');
+  const cat = p => p.catId ? getDfcCatNome(p.catId) : '';
+
+  const soma = arr => arr.reduce((a, p) => a + (p.valParc || 0), 0);
+  const ab = todos.filter(p => !p._q), venc = ab.filter(p => p._d && p._d < hoje), quit = todos.filter(p => p._q);
+  const temRec = todos.some(p => p.kind === 'rec'), temPag = todos.some(p => p.kind === 'des');
+
+  document.getElementById('pdl-titulo').textContent = _pdl.ctx.titulo || 'Lançamentos';
+  document.getElementById('pdl-sub').textContent = _pdl.ctx.subtitulo || '';
+  const chip = (lbl, v, n, cor) => `<div class="pdl-chip" style="--c:${cor}"><span>${lbl}</span><b>${fmtBRL(v)}</b><small>${n} parcela${n === 1 ? '' : 's'}</small></div>`;
+  document.getElementById('pdl-resumo').innerHTML =
+    chip('Total', soma(todos), todos.length, '#57534e') +
+    chip('Em aberto', soma(ab), ab.length, '#2563eb') +
+    chip('Vencido', soma(venc), venc.length, '#dc2626') +
+    chip(temRec && !temPag ? 'Recebido' : (temPag && !temRec ? 'Pago' : 'Quitado'), soma(quit), quit.length, '#16a34a');
+
+  document.querySelectorAll('#pdl-filtros button').forEach(b => b.classList.toggle('ativo', b.dataset.f === _pdl.filtro));
+
+  let lista = todos;
+  if (_pdl.filtro === 'aberto') lista = ab;
+  else if (_pdl.filtro === 'vencido') lista = venc;
+  else if (_pdl.filtro === 'quitado') lista = quit;
+  if (_pdl.busca) lista = lista.filter(p => normText(`${nome(p)} ${desc(p)} ${cat(p)} ${p.nf || ''} ${fmtDate(p._d)} ${fmtBRL(p.valParc)}`).includes(_pdl.busca));
+  lista = lista.slice().sort((a, b) => (a._d || '').localeCompare(b._d || '') || (b.valParc || 0) - (a.valParc || 0));
+
+  const situ = p => {
+    if (p._q) return `<span class="pdl-badge pdl-ok">${p.kind === 'rec' ? 'Recebido' : 'Pago'}${p._dq ? ' ' + fmtDate(p._dq) : ''}</span>`;
+    if (!p._d) return '<span class="pdl-badge">Sem data</span>';
+    const dias = Math.round((new Date(hoje + 'T12:00:00') - new Date(p._d + 'T12:00:00')) / 86400000);
+    if (dias > 0) return `<span class="pdl-badge pdl-venc">Vencido há ${dias} dia${dias === 1 ? '' : 's'}</span>`;
+    if (dias === 0) return '<span class="pdl-badge pdl-hoje">Vence hoje</span>';
+    return `<span class="pdl-badge pdl-av">Em ${-dias} dia${dias === -1 ? '' : 's'}</span>`;
+  };
+  const acoes = p => {
+    const tab = p.kind === 'rec' ? 'receber' : 'pagar';
+    let quit = '';
+    if (!p._q) quit = p.kind === 'rec'
+      ? `<button class="pdl-btn pdl-btn-rec" onclick="pdlQuitar('rec','${p.lancId}',${p.parcIdx})">✓ Receber</button>`
+      : `<button class="pdl-btn pdl-btn-pag" onclick="pdlQuitar('des','${p.lancId}',${p.parcIdx})">✓ Pagar</button>`;
+    else quit = `<button class="pdl-btn" onclick="pdlEstornar('${p.kind}','${p.lancId}',${p.parcIdx})" title="Desfazer ${p.kind === 'rec' ? 'recebimento' : 'pagamento'}">↺ Estornar</button>`;
+    return `${quit}
+      <button class="pdl-btn" onclick="pdlEditar('${tab}','${p.lancId}')" title="Editar lançamento">✎ Editar</button>
+      <button class="pdl-btn pdl-btn-del" onclick="pdlExcluir('${tab}','${p.lancId}')" title="Excluir lançamento (todas as parcelas)">🗑</button>`;
+  };
+
+  const tb = document.getElementById('pdl-tbody');
+  tb.innerHTML = lista.length ? lista.map(p => `<tr class="${p._q ? 'pdl-row-q' : (p._d && p._d < hoje ? 'pdl-row-v' : '')}">
+      <td style="white-space:nowrap">${p._d ? fmtDate(p._d) : '—'}</td>
+      <td><div class="pdl-nome"><span class="pdl-tipo ${p.kind === 'rec' ? 'r' : 'p'}">${p.kind === 'rec' ? 'R' : 'P'}</span>${esc(nome(p))}</div>
+        <div class="pdl-meta">${[desc(p), cat(p), p.nf ? 'NF ' + p.nf : '', p.banco ? getBancoNome(p.banco) : '', p.tipoPag || ''].filter(Boolean).map(esc).join(' · ') || '—'}</div></td>
+      <td style="text-align:center;white-space:nowrap">${p.totalParc > 1 ? `${p.parcIdx}/${p.totalParc}` : 'Única'}</td>
+      <td class="pdl-val" style="color:${p.kind === 'rec' ? '#15803d' : '#b91c1c'}">${fmtBRL(p.valParc)}</td>
+      <td>${situ(p)}</td>
+      <td class="pdl-acoes">${acoes(p)}</td>
+    </tr>`).join('')
+    : `<tr><td colspan="6" class="empty-state" style="padding:28px">Nenhum lançamento ${_pdl.filtro === 'todos' ? '' : 'neste filtro'}.</td></tr>`;
+  document.getElementById('pdl-rodape').textContent =
+    `${lista.length} parcela${lista.length === 1 ? '' : 's'} listada${lista.length === 1 ? '' : 's'} · ${fmtBRL(soma(lista))}` +
+    (lista.some(p => p.totalParc > 1) ? ' · Editar/Excluir age sobre o lançamento inteiro (todas as parcelas).' : '');
+}
+
+function pdlQuitar(kind, id, parcIdx) {
+  if (kind === 'rec') { marcarRecebido(id, parcIdx); return; }
+  const l = db.lancamentos.find(x => x.id === id);
+  if (l && l.cartao_fatura) { pdlFechar(); ccIrParaFatura(l.cartao_fatura); return; }
+  marcarPago(id, parcIdx);
+}
+function pdlEstornar(kind, id, parcIdx) {
+  if (kind === 'rec') estornarRecebido(id, parcIdx); else estornarPago(id, parcIdx);
+}
+function pdlEditar(tabela, id) {
+  if (tabela === 'pagar') {
+    const l = db.lancamentos.find(x => x.id === id);
+    if (l && l.cartao_fatura) { pdlFechar(); ccIrParaFatura(l.cartao_fatura); return; }
+    editLancamento(id);
+  } else editLancReceber(id);
+}
+async function pdlExcluir(tabela, id) { await excluirDoDetalhe(tabela, id); pdlRender(); }
+
+// Depois de qualquer gravação no banco, atualiza a central e o dashboard
+(function () {
+  const _orig = bumpDbVer;
+  bumpDbVer = function () {
+    _orig();
+    clearTimeout(_pdl.timer);
+    _pdl.timer = setTimeout(() => {
+      const m = document.getElementById('modal-pd-lanc');
+      if (m && m.classList.contains('open') && _pdl.ctx) pdlRender();
+      if (paginaVisivel('dashboard') && typeof renderPainelDecisao === 'function') {
+        try { renderPainelDecisao(); } catch (e) {}
+      }
+    }, 350);
+  };
+})();
+
+// Atalhos usados pelos quadros do Painel de Decisão
+function pdAbrirPessoa(kind, chave, prefixo, rotulo) {
+  const nome = kind === 'rec' ? getClienteNome(chave) : getFornNome(chave);
+  const f = p => ((kind === 'rec' ? p.cliente : p.forn) === chave || (chave === '—' && !(kind === 'rec' ? p.cliente : p.forn)))
+    && (!prefixo || (p._d || '').startsWith(prefixo));
+  pdAbrirLanc({ titulo: rotulo ? `${nome} — ${rotulo}` : nome,
+    subtitulo: (kind === 'rec' ? 'Contas a receber deste cliente' : 'Contas a pagar deste fornecedor/despesa') + (rotulo ? ` com vencimento em ${rotulo}` : ''),
+    rec: kind === 'rec' ? f : null, pag: kind === 'des' ? f : null, filtro: 'aberto' });
+}
+function pdAbrirAging(de, ate, rotulo) {
+  const hoje = today();
+  const f = p => { if (p._q || !p._d || p._d >= hoje) return false; const d = Math.round((new Date(hoje + 'T12:00:00') - new Date(p._d + 'T12:00:00')) / 86400000); return d >= de && d <= ate; };
+  pdAbrirLanc({ titulo: `Vencidos — ${rotulo}`, subtitulo: 'Parcelas em aberto vencidas nesta faixa de atraso', rec: f, pag: f, filtro: 'aberto' });
+}
+function pdAbrirDia(dia, incluirAtrasados) {
+  const f = p => !p._q && p._d && (incluirAtrasados ? p._d <= dia : p._d === dia);
+  pdAbrirLanc({ titulo: `Vencimentos de ${fmtDate(dia)}`, subtitulo: incluirAtrasados ? 'Em aberto: vence hoje + atrasados' : 'Em aberto com vencimento neste dia',
+    rec: f, pag: f, filtro: 'aberto' });
+}
+function pdAbrirRealizado(prefixo, rotulo, tipo) {
+  const fr = p => p._q && (p._dq || '').startsWith(prefixo);
+  pdAbrirLanc({ titulo: `${tipo === 'rec' ? 'Recebido' : tipo === 'des' ? 'Pago' : 'Recebido e pago'} — ${rotulo}`,
+    subtitulo: 'Pela data em que foi recebido / pago',
+    rec: tipo !== 'des' ? fr : null, pag: tipo !== 'rec' ? fr : null, filtro: 'quitado' });
+}
+
+function renderPainelDecisao() {
+  const elK = document.getElementById('pd-kpis');
+  if (!elK) return;
+  const hoje = today();
+  const ccOri = (typeof ccOrigensSet === 'function') ? ccOrigensSet() : new Set();
+  const naoCC = p => !ccOri.has(`${p.lancId}|${p.parcIdx}`);
+
+  const caixa = dfcSaldoCaixaAtual();
+  const nContas = (db.bancos || []).length;
+  const recAb = getParcelasReceber(false).filter(p => p.venc || p.dtvenda).map(p => Object.assign({}, p, { _d: p.venc || p.dtvenda }));
+  const pagAb = getParcelas(false).filter(naoCC).filter(p => p.venc || p.dtcompra).map(p => Object.assign({}, p, { _d: p.venc || p.dtcompra }));
+  const soma = arr => arr.reduce((s, p) => s + (p.valParc || 0), 0);
+
+  const recVenc = recAb.filter(p => p._d < hoje), pagVenc = pagAb.filter(p => p._d < hoje);
+  const lim30 = _pdAdd(hoje, 30);
+  const rec30 = recAb.filter(p => p._d <= lim30), pag30 = pagAb.filter(p => p._d <= lim30);
+  const totRec = soma(recAb), totPag = soma(pagAb);
+  const totRecVenc = soma(recVenc), totPagVenc = soma(pagVenc);
+  const totRec30 = soma(rec30), totPag30 = soma(pag30);
+
+  // Projeção diária (atrasados entram no dia de hoje)
+  const H = pdHorizonte;
+  const porDia = {};
+  const add = (d, v) => { const k = d < hoje ? hoje : d; porDia[k] = (porDia[k] || 0) + v; };
+  recAb.forEach(p => { if (p._d <= _pdAdd(hoje, H)) add(p._d, p.valParc || 0); });
+  pagAb.forEach(p => { if (p._d <= _pdAdd(hoje, H)) add(p._d, -(p.valParc || 0)); });
+  const serie = [], labels = [];
+  let s = caixa, minV = Infinity, minD = hoje, primeiroNeg = null;
+  for (let i = 0; i <= H; i++) {
+    const d = _pdAdd(hoje, i);
+    s += porDia[d] || 0;
+    serie.push(Math.round(s * 100) / 100); labels.push(_pdDM(d));
+    if (s < minV) { minV = s; minD = d; }
+    if (s < 0 && !primeiroNeg) primeiroNeg = { d, v: s };
+  }
+  const saldoFimH = serie[serie.length - 1];
+  // Saldo projetado em 30 dias (independente do horizonte do gráfico)
+  const saldo30 = caixa + totRec30 - totPag30;
+
+  // Realizado: mês atual e anterior
+  const recPagos = getParcelasReceber(true), pagPagos = getParcelas(true).filter(naoCC);
+  const ymHoje = hoje.slice(0, 7);
+  const ymAnt = (() => { const [y, m] = ymHoje.split('-').map(Number); const t = y * 12 + m - 2; return `${Math.floor(t / 12)}-${String(t % 12 + 1).padStart(2, '0')}`; })();
+  const realMes = ym => {
+    const r = recPagos.filter(p => (p.dtrecebido || '').slice(0, 7) === ym).reduce((a, p) => a + (p.valParc || 0), 0);
+    const g = pagPagos.filter(p => (p.dtpago || '').slice(0, 7) === ym).reduce((a, p) => a + (p.valParc || 0), 0);
+    return { r, g, res: r - g };
+  };
+  const mAt = realMes(ymHoje);
+  // Período escolhido no filtro "Análise" (ano inteiro ou mês)
+  _pdPopularAnos();
+  const fAno = parseInt((document.getElementById('pd-ano') || {}).value) || parseInt(hoje.slice(0, 4));
+  const fMes = parseInt((document.getElementById('pd-mes') || {}).value) || 0;
+  const realPrefixo = pre => {
+    const r = recPagos.filter(p => (p.dtrecebido || '').startsWith(pre)).reduce((a, p) => a + (p.valParc || 0), 0);
+    const g = pagPagos.filter(p => (p.dtpago || '').startsWith(pre)).reduce((a, p) => a + (p.valParc || 0), 0);
+    return { r, g, res: r - g };
+  };
+  const prefPer = fMes ? `${fAno}-${String(fMes).padStart(2, '0')}` : String(fAno);
+  const prefAnt = fMes
+    ? (() => { const t = fAno * 12 + fMes - 2; return `${Math.floor(t / 12)}-${String(t % 12 + 1).padStart(2, '0')}`; })()
+    : String(fAno - 1);
+  const rotPer = fMes ? `${meses[fMes]}/${fAno}` : String(fAno);
+  const perIni = fMes ? `${prefPer}-01` : `${fAno}-01-01`;
+  const perFim = fMes ? _ultimoDiaMes(fAno, fMes) : `${fAno}-12-31`;
+  const mPer = realPrefixo(prefPer), mAn = realPrefixo(prefAnt);
+  const saldoIniPer = perIni > hoje ? null : saldoCaixaConsolidadoEm(_diaAnterior(perIni));
+  const saldoFimPer = perIni > hoje ? null : saldoCaixaConsolidadoEm(perFim);
+  const cobertura = totPag30 > 0 ? (caixa + totRec30) / totPag30 : null;
+  const inad = totRec > 0 ? totRecVenc / totRec : 0;
+
+  const cls = v => v < 0 ? 'pd-neg' : 'pd-pos';
+  const kpi = (cor, lbl, val, det, onclick, valCls) =>
+    `<div class="pd-kpi${onclick ? ' click' : ''}" style="--pd-cor:${cor}" ${onclick ? `onclick="${onclick}"` : ''}>
+      <div class="pd-kpi-lbl">${lbl}</div>
+      <div class="pd-kpi-val ${valCls || ''}">${val}</div>
+      <div class="pd-kpi-det">${det}</div></div>`;
+  const nCli = new Set(recVenc.map(p => p.cliente)).size;
+  elK.innerHTML = [
+    kpi('#2563eb', 'Saldo em caixa', fmtBRL(caixa),
+      `${nContas} conta${nContas === 1 ? '' : 's'} · total da tela Bancos (todas as empresas)<br>Saldo inicial ${rotPer}: <b>${saldoIniPer == null ? '—' : fmtBRL(saldoIniPer)}</b>`, "showPage('bancos')", cls(caixa)),
+    kpi('#16a34a', 'A receber em aberto', fmtBRL(totRec),
+      `Vencido: <b class="${totRecVenc > 0 ? 'pd-warn' : ''}">${fmtBRL(totRecVenc)}</b><br>Próx. 30 dias: <b>${fmtBRL(totRec30 - totRecVenc)}</b>`, "showPage('areceber')", 'pd-pos'),
+    kpi('#dc2626', 'A pagar em aberto', fmtBRL(totPag),
+      `Vencido: <b class="${totPagVenc > 0 ? 'pd-neg' : ''}">${fmtBRL(totPagVenc)}</b><br>Próx. 30 dias: <b>${fmtBRL(totPag30 - totPagVenc)}</b>`, "showPage('apagar')", 'pd-neg'),
+    kpi(saldo30 < 0 ? '#dc2626' : '#ea580c', 'Saldo projetado em 30 dias', fmtBRL(saldo30),
+      `Caixa + a receber − a pagar até ${_pdDM(lim30)}`, "setDfcModo('projetado');showPage('dfc-demonstrativo')", cls(saldo30)),
+    kpi(mPer.res < 0 ? '#dc2626' : '#16a34a', `Resultado de caixa — ${rotPer}`, fmtBRL(mPer.res),
+      `Recebido <b class="pd-pos">${fmtBRL(mPer.r)}</b> · Pago <b class="pd-neg">${fmtBRL(mPer.g)}</b><br>${fMes ? 'Mês' : 'Ano'} anterior: <b class="${cls(mAn.res)}">${fmtBRL(mAn.res)}</b>`, "showPage('dfc-demonstrativo')", cls(mPer.res)),
+    kpi(cobertura != null && cobertura < 1 ? '#dc2626' : '#7c3aed', 'Cobertura 30 dias',
+      cobertura == null ? '—' : cobertura.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + 'x',
+      `(Caixa + a receber 30d) ÷ a pagar 30d<br>Inadimplência: <b class="${inad > .1 ? 'pd-neg' : ''}">${(inad * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%</b> do a receber`, null,
+      cobertura != null && cobertura < 1 ? 'pd-neg' : '')
+  ].join('');
+
+  const sub = document.getElementById('pd-sub');
+  if (sub) sub.textContent = `Posição de hoje, ${fmtDate(hoje)} — caixa, valores em aberto e projeção`;
+
+  // Botões do horizonte
+  document.querySelectorAll('#pd-horiz button').forEach(b => b.classList.toggle('ativo', parseInt(b.dataset.d) === H));
+  document.getElementById('pd-proj-resumo').innerHTML =
+    `<span>Hoje: <b>${fmtBRL(caixa)}</b></span>
+     <span>Em ${H} dias: <b class="${cls(saldoFimH)}">${fmtBRL(saldoFimH)}</b></span>
+     <span>Menor saldo: <b class="${cls(minV)}">${fmtBRL(minV)}</b> em ${_pdDM(minD)}</span>`;
+
+  // Gráfico de projeção
+  const ctxP = document.getElementById('pd-chart-proj');
+  if (ctxP && typeof Chart !== 'undefined') {
+    if (window._pdChartProj) window._pdChartProj.destroy();
+    const iMax = serie.indexOf(Math.max(...serie)), iMin = serie.indexOf(Math.min(...serie));
+    const marcar = new Set([0, serie.length - 1, iMax, iMin]);
+    window._pdChartProj = new Chart(ctxP, {
+      type: 'line', plugins: _pdPlugins(),
+      data: { labels, datasets: [{
+        label: 'Saldo projetado', data: serie, borderColor: '#ea580c', borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
+        tension: .15, stepped: false, fill: { target: { value: 0 }, above: 'rgba(234,88,12,.08)', below: 'rgba(220,38,38,.18)' },
+        segment: { borderColor: c => (c.p1.parsed.y < 0 ? '#dc2626' : '#ea580c') }
+      }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+        onClick: (e, els, ch) => { const pts = ch.getElementsAtEventForMode(e, 'index', { intersect: false }, false); if (!pts.length) return; const i = pts[0].index; pdAbrirDia(_pdAdd(hoje, i), i === 0); },
+        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+        layout: { padding: { top: 22, right: 30, left: 10 } },
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' Saldo: ' + fmtBRL(c.parsed.y) } },
+          datalabels: {
+            display: c => marcar.has(c.dataIndex),
+            align: c => c.dataIndex === iMin && c.dataIndex !== 0 ? 'bottom' : 'top', anchor: 'center', offset: 6, clip: false,
+            backgroundColor: c => serie[c.dataIndex] < 0 ? '#dc2626' : (c.dataIndex === iMax ? '#15803d' : '#ea580c'),
+            color: '#fff', borderRadius: 4, padding: { top: 2, bottom: 2, left: 5, right: 5 },
+            font: { size: 10, weight: '700', family: 'DM Mono, monospace' },
+            formatter: v => 'R$ ' + _pdK(v)
+          } },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxTicksLimit: 10, color: '#78716c', font: { size: 11 } } },
+          y: { grid: { color: '#f5f5f4' }, ticks: { color: '#78716c', font: { size: 11 }, callback: v => 'R$ ' + _pdK(v) } }
+        }
+      }
+    });
+  }
+
+  // Alertas
+  const alertas = [];
+  const al = (tipo, txt) => alertas.push(`<div class="pd-alerta"><span class="pd-alerta-ic pd-ic-${tipo}">${tipo === 'grn' ? '✓' : tipo === 'blu' ? 'i' : '!'}</span><span>${txt}</span></div>`);
+  if (primeiroNeg) al('red', `O saldo projetado fica <b>negativo em ${fmtDate(primeiroNeg.d)}</b> (${fmtBRL(primeiroNeg.v)}). Antecipe recebimentos ou renegocie pagamentos.`);
+  if (totPagVenc > 0) al('red', `<b>${fmtBRL(totPagVenc)}</b> em contas a pagar vencidas (${pagVenc.length} parcela${pagVenc.length === 1 ? '' : 's'}).`);
+  if (totRecVenc > 0) al('amb', `<b>${fmtBRL(totRecVenc)}</b> vencidos a receber de ${nCli} cliente${nCli === 1 ? '' : 's'}. <a href="#" onclick="showPage('cobranca');return false;">Ver cobrança →</a>`);
+  if (cobertura != null && cobertura < 1) al('red', `Caixa + recebimentos dos próximos 30 dias cobrem só <b>${Math.round(cobertura * 100)}%</b> dos pagamentos do período.`);
+  const pag7 = soma(pagAb.filter(p => p._d >= hoje && p._d <= _pdAdd(hoje, 6)));
+  if (pag7 > caixa && pag7 > 0) al('amb', `Pagamentos dos próximos 7 dias (<b>${fmtBRL(pag7)}</b>) superam o saldo atual em caixa.`);
+  // Concentração de clientes
+  const porCli = {};
+  recAb.forEach(p => { porCli[p.cliente] = (porCli[p.cliente] || 0) + (p.valParc || 0); });
+  const cliTop = Object.entries(porCli).sort((a, b) => b[1] - a[1])[0];
+  if (cliTop && totRec > 0 && cliTop[1] / totRec > .3) al('blu', `<b>${esc(getClienteNome(cliTop[0]))}</b> concentra ${Math.round(cliTop[1] / totRec * 100)}% do total a receber.`);
+  if (mAn.res !== 0 || mAt.res !== 0) {
+    if (mAt.res < 0) al('amb', `O caixa de ${meses[parseInt(ymHoje.slice(5))]} está negativo até agora (${fmtBRL(mAt.res)}): saiu mais do que entrou.`);
+  }
+  if (!alertas.length) al('grn', 'Nenhum ponto crítico: caixa projetado positivo e sem contas vencidas relevantes.');
+  document.getElementById('pd-alertas').innerHTML = alertas.join('');
+
+  // Recebido x Pago no período filtrado (ano → 12 meses; mês → dias), com o
+  // saldo de caixa consolidado (total Bancos) ao fim de cada período.
+  const buckets = [];
+  if (fMes) {
+    const nd = new Date(fAno, fMes, 0).getDate();
+    for (let d = 1; d <= nd; d++) { const k = `${prefPer}-${String(d).padStart(2, '0')}`; buckets.push({ pre: k, lab: String(d), fim: k }); }
+  } else {
+    for (let m = 1; m <= 12; m++) buckets.push({ pre: `${fAno}-${String(m).padStart(2, '0')}`, lab: mesesAbr[m], fim: _ultimoDiaMes(fAno, m) });
+  }
+  const reais = buckets.map(bk => realPrefixo(bk.pre));
+  const saldosB = buckets.map(bk => bk.pre.slice(0, fMes ? 10 : 7) > hoje.slice(0, fMes ? 10 : 7) ? null : saldoCaixaConsolidadoEm(bk.fim));
+  document.getElementById('pd-real-titulo').textContent = `Recebido x Pago — ${fMes ? meses[fMes] + ' de ' + fAno + ' (por dia)' : fAno + ' (por mês)'}`;
+  document.getElementById('pd-real-resumo').innerHTML =
+    `<span>Saldo inicial (total Bancos): <b>${saldoIniPer == null ? '—' : fmtBRL(saldoIniPer)}</b></span>
+     <span>Recebido: <b class="pd-pos">${fmtBRL(mPer.r)}</b></span>
+     <span>Pago: <b class="pd-neg">${fmtBRL(mPer.g)}</b></span>
+     <span>Saldo final: <b class="${saldoFimPer != null && saldoFimPer < 0 ? 'pd-neg' : ''}">${saldoFimPer == null ? '—' : fmtBRL(saldoFimPer)}</b></span>`;
+  const ctxR = document.getElementById('pd-chart-real');
+  if (ctxR && typeof Chart !== 'undefined') {
+    if (window._pdChartReal) window._pdChartReal.destroy();
+    const lblBar = { anchor: 'end', align: 'end', offset: 1, clip: false, font: { size: fMes ? 8 : 10, weight: '600', family: 'DM Mono, monospace' },
+      display: c => (c.dataset.data[c.dataIndex] || 0) !== 0, formatter: v => _pdK(v), rotation: fMes ? -90 : 0 };
+    window._pdChartReal = new Chart(ctxR, {
+      plugins: _pdPlugins(),
+      data: {
+        labels: buckets.map(bk => bk.lab),
+        datasets: [
+          { type: 'bar', label: 'Recebido', data: reais.map(x => x.r), backgroundColor: '#16a34a', borderRadius: 4, maxBarThickness: 26, yAxisID: 'y', order: 2,
+            datalabels: Object.assign({ color: '#15803d' }, lblBar) },
+          { type: 'bar', label: 'Pago', data: reais.map(x => x.g), backgroundColor: '#dc2626', borderRadius: 4, maxBarThickness: 26, yAxisID: 'y', order: 2,
+            datalabels: Object.assign({ color: '#b91c1c' }, lblBar) },
+          { type: 'line', label: 'Saldo em caixa (total Bancos)', data: saldosB, borderColor: '#2563eb', backgroundColor: '#2563eb', borderWidth: 2, pointRadius: fMes ? 2 : 3, tension: .25, yAxisID: 'y1', spanGaps: false, order: 1,
+            datalabels: { display: c => { const i = c.dataIndex, ult = saldosB.filter(v => v != null).length - 1;
+                return saldosB[i] != null && (i === 0 || i === ult || (fMes ? (i + 1) % 5 === 0 && ult - i > 2 : i % 3 === 0 && ult - i > 1)); },
+              align: 'top', offset: 4, clip: false, color: '#fff', backgroundColor: '#2563eb', borderRadius: 4,
+              padding: { top: 1, bottom: 1, left: 4, right: 4 }, font: { size: 9.5, weight: '700', family: 'DM Mono, monospace' }, formatter: v => _pdK(v) } }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+        onClick: (e, els, ch) => {
+          const pts = ch.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
+          const any = pts.length ? pts : ch.getElementsAtEventForMode(e, 'index', { intersect: false }, false);
+          if (!any.length) return;
+          const i = any[0].index, ds = pts.length ? pts[0].datasetIndex : 2;
+          const rot = fMes ? `${fmtDate(buckets[i].pre)}` : `${meses[i + 1]} de ${fAno}`;
+          pdAbrirRealizado(buckets[i].pre, rot, ds === 0 ? 'rec' : ds === 1 ? 'des' : 'ambos');
+        },
+        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+        layout: { padding: { top: 8, right: 8 } },
+        plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11 }, padding: 18 } },
+          tooltip: { callbacks: { label: c => c.parsed.y == null ? '' : ` ${c.dataset.label}: ${fmtBRL(c.parsed.y)}` } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#78716c', font: { size: 11 } } },
+          y: { position: 'left', grace: '12%', grid: { color: '#f5f5f4' }, ticks: { color: '#78716c', font: { size: 11 }, callback: v => 'R$ ' + _pdK(v) } },
+          y1: { position: 'right', grid: { display: false }, grace: '15%', ticks: { color: '#2563eb', font: { size: 11 }, callback: v => 'R$ ' + _pdK(v) } }
+        }
+      }
+    });
+  }
+
+  // Aging (faixas de atraso)
+  const faixas = [['1 a 30 dias', 1, 30], ['31 a 60 dias', 31, 60], ['61 a 90 dias', 61, 90], ['Mais de 90 dias', 91, 1e9]];
+  const fx = (arr, a, b) => arr.filter(p => { const d = _pdDias(p._d, hoje); return d >= a && d <= b; });
+  const linhasAging = faixas.map(([rot, a, b]) => {
+    const r = fx(recVenc, a, b), g = fx(pagVenc, a, b);
+    return `<tr class="pd-click" title="Ver lançamentos" onclick="pdAbrirAging(${a},${b},'${rot}')"><td>${rot}</td><td class="pd-pos">${r.length ? fmtBRL(soma(r)) : '—'}</td><td style="color:#a8a29e">${r.length || ''}</td>
+      <td class="pd-neg">${g.length ? fmtBRL(soma(g)) : '—'}</td><td style="color:#a8a29e">${g.length || ''}</td></tr>`;
+  }).join('');
+  document.getElementById('pd-aging').innerHTML = (recVenc.length || pagVenc.length)
+    ? `<table class="pd-tab"><thead><tr><th>Atraso</th><th>A receber</th><th>Qtd</th><th>A pagar</th><th>Qtd</th></tr></thead>
+       <tbody>${linhasAging}<tr class="tot"><td>Total vencido</td><td class="pd-pos">${fmtBRL(totRecVenc)}</td><td>${recVenc.length}</td><td class="pd-neg">${fmtBRL(totPagVenc)}</td><td>${pagVenc.length}</td></tr></tbody></table>`
+    : '<div class="pd-vazio">Nenhum valor vencido em aberto. 👏</div>';
+
+  // Rankings
+  const ranking = (arr, chave, nomeFn, cor) => {
+    const ag = {};
+    arr.forEach(p => {
+      const k = p[chave] || '—';
+      if (!ag[k]) ag[k] = { v: 0, venc: 0, n: 0 };
+      ag[k].v += p.valParc || 0; ag[k].n++;
+      if (p._d < hoje) ag[k].venc += p.valParc || 0;
+    });
+    const top = Object.entries(ag).sort((a, b) => b[1].v - a[1].v).slice(0, 6);
+    if (!top.length) return '<div class="pd-vazio">Nada em aberto.</div>';
+    const max = top[0][1].v || 1;
+    const kind = chave === 'cliente' ? 'rec' : 'des';
+    return '<div class="pd-rank">' + top.map(([k, o]) => `<div class="pd-rank-item pd-click" title="Ver lançamentos" onclick="pdAbrirPessoa('${kind}', decodeURIComponent('${encodeURIComponent(k).replace(/'/g, '%27')}'), '${prefPer}', '${rotPer}')">
+      <div class="pd-rank-top"><span title="${esc(nomeFn(k))}">${esc(nomeFn(k))}</span><span style="color:${cor}">${fmtBRL(o.v)}</span></div>
+      <div class="pd-bar"><i style="width:${Math.max(3, o.v / max * 100)}%;background:${cor}"></i></div>
+      <div class="pd-rank-sub">${o.n} parcela${o.n === 1 ? '' : 's'}${o.venc > 0 ? ` · <span style="color:#b45309">vencido ${fmtBRL(o.venc)}</span>` : ''}</div>
+    </div>`).join('') + '</div>';
+  };
+  // Rankings seguem o filtro "Análise" (ano/mês): em aberto com vencimento no período
+  const noPer = p => (p._d || '').startsWith(prefPer);
+  document.getElementById('pd-top-rec-tit').textContent = `Maiores valores a receber — ${rotPer}`;
+  document.getElementById('pd-top-pag-tit').textContent = `Maiores valores a pagar — ${rotPer}`;
+  document.getElementById('pd-top-rec').innerHTML = ranking(recAb.filter(noPer), 'cliente', id => getClienteNome(id), '#16a34a');
+  document.getElementById('pd-top-pag').innerHTML = ranking(pagAb.filter(noPer), 'forn', id => getFornNome(id), '#dc2626');
+
+  // Próximos 7 dias
+  const dias7 = [];
+  for (let i = 0; i < 7; i++) {
+    const d = _pdAdd(hoje, i);
+    const r = soma(recAb.filter(p => p._d === d)), g = soma(pagAb.filter(p => p._d === d));
+    if (r || g) dias7.push(`<div class="pd-dia pd-click" title="Ver lançamentos" onclick="pdAbrirDia('${d}', ${i === 0})"><span class="pd-dia-d">${i === 0 ? 'Hoje' : _pdDM(d)}</span>
+      <span class="pd-dia-v">${r ? `<span class="pd-pos">+ ${fmtBRL(r)}</span>` : ''}${r && g ? '<br>' : ''}${g ? `<span class="pd-neg">− ${fmtBRL(g)}</span>` : ''}</span></div>`);
+  }
+  document.getElementById('pd-prox7').innerHTML = dias7.length ? dias7.join('') : '<div class="pd-vazio">Nenhum vencimento nos próximos 7 dias.</div>';
+}
+
 function renderDashboard() {
   if (!paginaVisivel('dashboard')) return;
+  try { renderPainelDecisao(); } catch(e) { console.error('[Painel de Decisão]', e); }
   renderFatRecLists();
   renderCalendario();
   // Filtros KPI
@@ -10730,6 +11789,7 @@ async function saveDfcCategoria() {
   await sbFetch('dfc_categorias', 'POST', rec);
   db.dfc_cats.push(rec);
   clearDfcCategoria(); renderDfcCategorias(); populateDfcCatSelects(); populateDfcCatProdSelects(); popularCategoriasAnalise(); popularFiltrosGrupoCategoriaTodos();
+  fecharFormModalSeAberto('form-dfccat');
 }
 async function updateDfcCategoria(id) {
   const cat = db.dfc_cats.find(x => x.id === id);
@@ -10744,6 +11804,7 @@ async function updateDfcCategoria(id) {
   const res = await sbFetch('dfc_categorias', 'PATCH', { nome:cat.nome, grupo:cat.grupo, tipo:cat.tipo, obs:cat.obs }, `?id=eq.${id}`);
   if (!res) { alert('❌ Erro ao atualizar categoria.'); return; }
   clearDfcCategoria(); renderDfcCategorias(); populateDfcCatSelects(); populateDfcCatProdSelects(); popularCategoriasAnalise(); popularFiltrosGrupoCategoriaTodos();
+  fecharFormModalSeAberto('form-dfccat');
 }
 function editDfcCategoria(id) {
   const cat = db.dfc_cats.find(x => x.id === id);
@@ -10755,8 +11816,7 @@ function editDfcCategoria(id) {
   document.getElementById('dfc-cat-obs').value = cat.obs || '';
   document.getElementById('dfc-cat-form-title').textContent = 'Editar Categoria';
   document.getElementById('dfc-cat-btn-salvar').textContent = 'Salvar Alterações';
-  abrirFormPanel('form-dfccat', 'btn-novo-dfccat');
-  window.scrollTo({top:0, behavior:'smooth'});
+  abrirFormModal('form-dfccat', 'Editar Categoria');
 }
 function clearDfcCategoria() {
   ['dfc-cat-nome','dfc-cat-obs','dfc-cat-edit-id'].forEach(id => document.getElementById(id).value = '');
@@ -10921,44 +11981,92 @@ async function deleteDfcLancamento(id) {
 }
 
 // ── DEMONSTRATIVO ─────────────────────────────────────────────────
-let dfcFiltroPago = 'todos'; // 'todos' | 'apagar'
-let dfcFiltroRec  = 'todos'; // 'todos' | 'aberto'
+// Duas visões:
+//  • 'realizado' (padrão): o que foi efetivamente PAGO e RECEBIDO, pela data
+//    do pagamento/recebimento, mês a mês do ano selecionado.
+//  • 'projetado': fluxo de caixa inicial = saldo atual de todas as contas
+//    (bancos/caixa) e, daí para frente, tudo que está em aberto a receber e
+//    a pagar, pelo vencimento (atrasados numa coluna própria), com saldo
+//    acumulado mês a mês.
+// Contas pagas com cartão de crédito entram uma só vez: na fatura do cartão,
+// distribuída pelas categorias das despesas lançadas nela.
+let dfcModo = 'realizado';
 
-function setDfcFiltro(modo) {
-  dfcFiltroPago = modo;
-  const btnTodos  = document.getElementById('btn-dfc-todos');
-  const btnApagar = document.getElementById('btn-dfc-apagar');
-  if (modo === 'todos') {
-    btnTodos.style.background  = '#ea580c'; btnTodos.style.color  = '#fff';
-    btnApagar.style.background = 'transparent'; btnApagar.style.color = '#57534e';
-  } else {
-    btnApagar.style.background = '#ea580c'; btnApagar.style.color = '#fff';
-    btnTodos.style.background  = 'transparent'; btnTodos.style.color = '#57534e';
-  }
+function setDfcModo(modo) {
+  dfcModo = modo === 'projetado' ? 'projetado' : 'realizado';
+  const bR = document.getElementById('btn-dfc-modo-realizado');
+  const bP = document.getElementById('btn-dfc-modo-projetado');
+  if (bR) bR.classList.toggle('ativo', dfcModo === 'realizado');
+  if (bP) bP.classList.toggle('ativo', dfcModo === 'projetado');
   renderDfc();
 }
 
-function setDfcFiltroRec(modo) {
-  dfcFiltroRec = modo;
-  const btnT = document.getElementById('btn-dfc-rec-todos');
-  const btnA = document.getElementById('btn-dfc-rec-aberto');
-  if (modo === 'todos') {
-    btnT.style.background = '#ea580c'; btnT.style.color = '#fff';
-    btnA.style.background = 'transparent'; btnA.style.color = '#57534e';
-  } else {
-    btnA.style.background = '#ea580c'; btnA.style.color = '#fff';
-    btnT.style.background = 'transparent'; btnT.style.color = '#57534e';
-  }
-  renderDfc();
+// Grupo do DFC/DRE de uma categoria (com grupo padrão quando não houver)
+function _dfcGrupoDaCat(catId, padraoId) {
+  const catObj = catId ? db.dfc_cats.find(x => x.id === catId) : null;
+  const grupoId = catObj ? catObj.grupo : padraoId;
+  const sinal = catObj ? dreSinalCat(catObj.id, grupoId) : 1;
+  return { grupoId, sinal };
+}
+
+// Saldo atual somado de todas as contas cadastradas (bancos/caixa).
+// Sempre CONSOLIDADO (todas as empresas), igual ao total da tela Bancos —
+// não muda quando se troca a empresa no seletor.
+function dfcSaldoCaixaAtual() {
+  return (db.bancos || []).reduce((s, b) => s + (getBancoSaldo(b) || 0), 0);
+}
+// Saldo consolidado de todas as contas ao FINAL do dia informado (AAAA-MM-DD),
+// pelo mesmo critério da tela Bancos (saldo inicial + recebido − pago ± transferências).
+// Para hoje ou datas futuras devolve o saldo atual da tela Bancos.
+function saldoCaixaConsolidadoEm(dataISO) {
+  if (!dataISO || dataISO >= today()) return dfcSaldoCaixaAtual();
+  const ids = new Set((db.bancos || []).map(b => b.id));
+  let s = (db.bancos || []).reduce((a, b) => a + (b.saldo_inicial || 0), 0);
+  getParcelasReceberBanco(true).forEach(p => { if (ids.has(p.banco) && p.dtrecebido && p.dtrecebido <= dataISO) s += (p.valParc || 0); });
+  getParcelasBanco(true).forEach(p => { if (ids.has(p.banco) && p.dtpago && p.dtpago <= dataISO) s -= (p.valParc || 0); });
+  (db.transferencias || []).forEach(t => {
+    if (!t.data || t.data > dataISO) return;
+    if (ids.has(t.origem)) s -= (t.valor || 0);
+    if (ids.has(t.destino)) s += (t.valor || 0);
+  });
+  return s;
+}
+function _ultimoDiaMes(y, m) { return `${y}-${String(m).padStart(2,'0')}-${String(new Date(y, m, 0).getDate()).padStart(2,'0')}`; }
+function _diaAnterior(iso) { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() - 1); return d.toISOString().slice(0, 10); }
+
+// Parcela de fatura de cartão → quebra por categoria das despesas da fatura
+function _dfcQuebrarFatura(p) {
+  const [cid, mes] = String(p.cartaoFatura || '').split('|');
+  const desp = (typeof ccDespesasFatura === 'function') ? ccDespesasFatura(cid, mes) : [];
+  if (!desp.length) return [{ catId: p.catId || '', valor: p.valParc || 0 }];
+  const porCat = {};
+  desp.forEach(d => {
+    let cat = d.cat_dre || '';
+    if (!cat && d.origem_lanc) {
+      const o = db.lancamentos.find(x => x.id === d.origem_lanc);
+      if (o) cat = o.cat_dre || ((db.produtos.find(x => x.id === o.prod) || {}).cat) || '';
+    }
+    porCat[cat] = (porCat[cat] || 0) + (Number(d.valor) || 0);
+  });
+  const soma = Object.values(porCat).reduce((a, v) => a + v, 0);
+  // Ajusta eventual diferença de arredondamento para bater com a fatura
+  const dif = (p.valParc || 0) - soma;
+  const lista = Object.keys(porCat).map(k => ({ catId: k, valor: porCat[k] }));
+  if (Math.abs(dif) > 0.004 && lista.length) lista[0].valor += dif;
+  return lista;
 }
 
 function renderDfc() {
-  const ano = parseInt(document.getElementById('dfc-ano').value);
-  const inclPagar   = document.getElementById('dfc-incluir-pagar').checked;
-  const inclReceber = document.getElementById('dfc-incluir-receber').checked;
   const wrap = document.getElementById('dfc-tabela-wrap');
+  const anoWrap = document.getElementById('dfc-ano-wrap');
+  const desc = document.getElementById('dfc-modo-desc');
+  if (anoWrap) anoWrap.style.display = dfcModo === 'projetado' ? 'none' : 'flex';
+  if (desc) desc.innerHTML = dfcModo === 'projetado'
+    ? 'Parte do <b>saldo atual em caixa</b> (total da tela Bancos, todas as empresas) e soma, daqui para frente, tudo que está <b>em aberto a receber e a pagar</b>, pelo vencimento. Valores vencidos e não quitados aparecem na coluna <b>Atrasados</b>.'
+    : 'Somente o que foi <b>efetivamente recebido e pago</b>, pela data do recebimento/pagamento. Saldo inicial e final = <b>total em caixa da tela Bancos</b> (todas as empresas); o mês atual termina no saldo de hoje.';
 
-  if (!ano) {
+  const ano = parseInt(document.getElementById('dfc-ano').value);
+  if (dfcModo === 'realizado' && !ano) {
     wrap.innerHTML = '<div class="empty-state" style="padding:32px">Selecione um ano.</div>'; return;
   }
 
@@ -10972,153 +12080,202 @@ function renderDfc() {
     wrap.innerHTML = '<div class="empty-state" style="padding:32px">Nenhum grupo do tipo Entrada/Saída cadastrado. Cadastre pelo menos um em <b>DRE &rarr; Grupos</b> para visualizar o demonstrativo.</div>';
     return;
   }
-  // Grupo padrão para lançamentos sem categoria vinculada (mantém compatibilidade com dados antigos)
   const grupoPadraoReceita = grupos.find(g=>g.id==='receitas') || grupos.find(g=>g.tipo==='entrada') || grupos[0];
   const grupoPadraoCusto   = grupos.find(g=>g.id==='custos')   || grupos.find(g=>g.tipo==='saida') || grupos[0];
 
-  // Montar dados por mês (1-12) e por grupo
-  const dados = {}; // dados[mes][grupoId] = valor
-  const itens = {}; // itens[mes][grupoId] = [lançamentos que formaram o valor]
-  for (let m = 1; m <= 12; m++) {
-    dados[m] = {}; itens[m] = {};
-    grupos.forEach(g => { dados[m][g.id] = 0; itens[m][g.id] = []; });
-  }
-  // Guarda para o clique no número poder listar exatamente o que somou ali
-  const _guardar = (m, gid, item) => { if (itens[m] && itens[m][gid]) itens[m][gid].push(item); };
-
-  // 1. Contas a Receber → Categoria do lançamento, senão do produto de venda, senão Receitas
-  if (inclReceber) {
-    db.lancreceber.forEach(l => {
-      if (dfcFiltroRec === 'aberto' && l.recebido === 'sim') return;
-      const dtRef = l.dtprev || l.dtvenda;
-      if (!dtRef) return;
-      const parts = dtRef.split('-');
-      if (parseInt(parts[0]) !== ano) return;
-      const m = parseInt(parts[1]);
-      const valParc = (l.valor||0) / (l.parcelas||1);
-      const catLanc = l.cat_dre ? db.dfc_cats.find(x => x.id === l.cat_dre) : null;
-      const prodObj = db.prodvenda.find(x => x.id === l.prod);
-      const catProd = !catLanc && prodObj && prodObj.cat ? db.dfc_cats.find(x => x.id === prodObj.cat) : null;
-      const catObj  = catLanc || catProd;
-      const grupoId = catObj ? catObj.grupo : (grupoPadraoReceita && grupoPadraoReceita.id);
-      if (grupoId && dados[m][grupoId] !== undefined) {
-        dados[m][grupoId] += valParc * (catObj ? dreSinalCat(catObj.id, grupoId) : 1);
-        _guardar(m, grupoId, { kind: 'rec', lancId: l.id, cliente: l.cliente, prod: l.prod,
-          valParc, venc: dtRef, nf: l.nf, banco: l.banco, tipo_pag: l.tipo_pag,
-          parcIdx: 1, totalParc: l.parcelas || 1, isRecebido: l.recebido === 'sim' });
-      }
-    });
-  }
-
-  // 2. Contas a Pagar → Categoria do lançamento, senão do produto, senão Custos
-  if (inclPagar) {
-    db.lancamentos.forEach(l => {
-      if (dfcFiltroPago === 'apagar' && l.pago === 'sim') return;
-      const n = l.parcelas || 1;
-      const valParc = (l.valor || 0) / n;
-      const catLanc = l.cat_dre ? db.dfc_cats.find(x => x.id === l.cat_dre) : null;
-      const prodObj = db.produtos.find(x => x.id === l.prod);
-      const catProd = !catLanc && prodObj && prodObj.cat ? db.dfc_cats.find(x => x.id === prodObj.cat) : null;
-      const catObj  = catLanc || catProd;
-      const grupoId = catObj ? catObj.grupo : (grupoPadraoCusto && grupoPadraoCusto.id);
-      for (let i = 1; i <= n; i++) {
-        const venc = parcelaVencimento(l.dtprev, i, n) || l.dtcompra;
-        if (!venc) continue;
-        const parts = venc.split('-');
-        if (parseInt(parts[0]) !== ano) continue;
-        const m = parseInt(parts[1]);
-        if (grupoId && dados[m][grupoId] !== undefined) {
-          dados[m][grupoId] += valParc * (catObj ? dreSinalCat(catObj.id, grupoId) : 1);
-          const pagos = _parseParcelas(l.parcela_datas).pagos;
-          _guardar(m, grupoId, { kind: 'des', lancId: l.id, forn: l.forn, prod: l.prod,
-            valParc, venc, nf: l.nf, banco: l.banco, tipo_pag: l.tipo_pag,
-            parcIdx: i, totalParc: n,
-            isPago: n > 1 ? (pagos[i-1] === true) : (l.pago === 'sim') });
-        }
-      }
-    });
-  }
-
-  // 3. Lançamentos extras DFC
-  db.dfc_lans.forEach(l => {
-    if (!l.data) return;
-    const parts = l.data.split('-');
-    if (parseInt(parts[0]) !== ano) return;
-    const m = parseInt(parts[1]);
-    const catObj = db.dfc_cats.find(x => x.id === l.cat);
-    if (!catObj) return;
-    const key = catObj.grupo;
-    if (dados[m][key] !== undefined) {
-      dados[m][key] += (l.valor || 0) * dreSinalCat(catObj.id, key);
-      _guardar(m, key, { kind: 'dfc', id: l.id, cat: l.cat, desc: l.desc,
-        valor: l.valor || 0, data: l.data, recorrente: l.recorrente,
-        tipoEntrada: catObj.tipo === 'entrada' });
+  // ── Colunas ──
+  const hoje = today();
+  const [hA, hM] = hoje.split('-').map(Number);
+  const colunas = [];
+  if (dfcModo === 'realizado') {
+    for (let m = 1; m <= 12; m++) colunas.push({ key: String(m), label: MESES_ABR[m], titulo: `${meses[m]} de ${ano}` });
+  } else {
+    colunas.push({ key: 'atraso', label: 'Atrasados', titulo: 'Atrasados (vencidos em aberto)', atraso: true });
+    for (let i = 0; i < 12; i++) {
+      const t = hA * 12 + (hM - 1) + i;
+      const y = Math.floor(t / 12), m = t % 12 + 1;
+      colunas.push({ key: `${y}-${String(m).padStart(2,'0')}`, label: `${MESES_ABR[m]}/${String(y).slice(2)}`, titulo: `${meses[m]} de ${y}` });
     }
+  }
+  const chaves = new Set(colunas.map(c => c.key));
+  // Coluna onde cai uma data
+  const colDe = (data) => {
+    if (!data) return null;
+    if (dfcModo === 'realizado') {
+      const [y, m] = data.split('-').map(Number);
+      return y === ano ? String(m) : null;
+    }
+    if (data < hoje) return 'atraso';
+    const k = data.slice(0, 7);
+    return chaves.has(k) ? k : null;
+  };
+
+  const dados = {}, itens = {};
+  colunas.forEach(c => {
+    dados[c.key] = {}; itens[c.key] = {};
+    grupos.forEach(g => { dados[c.key][g.id] = 0; itens[c.key][g.id] = []; });
+  });
+  const somar = (col, gid, valor, item) => {
+    if (!col || !gid || !dados[col] || dados[col][gid] === undefined) return;
+    dados[col][gid] += valor;
+    if (item) itens[col][gid].push(item);
+  };
+
+  const realizado = dfcModo === 'realizado';
+  const _ccOri = (typeof ccOrigensSet === 'function') ? ccOrigensSet() : new Set();
+
+  // 1. Contas a Receber (por parcela)
+  getParcelasReceber(realizado).forEach(p => {
+    const col = colDe(realizado ? p.dtrecebido : (p.venc || p.dtvenda));
+    if (!col) return;
+    const { grupoId, sinal } = _dfcGrupoDaCat(p.catId, grupoPadraoReceita && grupoPadraoReceita.id);
+    somar(col, grupoId, (p.valParc || 0) * sinal, Object.assign({ kind: 'rec' }, p));
   });
 
-  // Disponibiliza para o clique nos números
-  _dfcDetalhe = { ano, itens, grupos };
+  // 2. Contas a Pagar (por parcela) — sem duplicar o que foi pago no cartão
+  getParcelas(realizado).forEach(p => {
+    if (_ccOri.has(`${p.lancId}|${p.parcIdx}`)) return;
+    const col = colDe(realizado ? p.dtpago : (p.venc || p.dtcompra));
+    if (!col) return;
+    const partes = p.cartaoFatura ? _dfcQuebrarFatura(p) : [{ catId: p.catId, valor: p.valParc || 0 }];
+    partes.forEach(pt => {
+      const { grupoId, sinal } = _dfcGrupoDaCat(pt.catId, grupoPadraoCusto && grupoPadraoCusto.id);
+      somar(col, grupoId, pt.valor * sinal, Object.assign({ kind: 'des' }, p, { valParc: pt.valor }));
+    });
+  });
 
-  // Calcular resultado líquido por mês (Entradas − todas as Saídas)
-  const liquido = {};
-  for (let m = 1; m <= 12; m++) {
-    let tot = 0;
-    grupos.forEach(g => { tot += g.tipo === 'entrada' ? dados[m][g.id] : -dados[m][g.id]; });
-    liquido[m] = tot;
-  }
+  // 3. Lançamentos avulsos do DFC (realizado: até hoje; projeção: de hoje em diante)
+  db.dfc_lans.forEach(l => {
+    if (!l.data) return;
+    if (realizado ? l.data > hoje : l.data < hoje) return;
+    const col = colDe(l.data);
+    const catObj = db.dfc_cats.find(x => x.id === l.cat);
+    if (!col || !catObj) return;
+    somar(col, catObj.grupo, (l.valor || 0) * dreSinalCat(catObj.id, catObj.grupo),
+      { kind: 'dfc', id: l.id, cat: l.cat, desc: l.desc, valor: l.valor || 0, data: l.data,
+        recorrente: l.recorrente, tipoEntrada: catObj.tipo === 'entrada' });
+  });
 
-  // Total ano
-  const totais = {};
+  _dfcDetalhe = { ano, itens, grupos, colunas, modo: dfcModo };
+
+  // Resultado por coluna e totais
+  const liquido = {}, totais = {};
   grupos.forEach(g => totais[g.id] = 0);
-  for (let m = 1; m <= 12; m++) {
-    grupos.forEach(g => totais[g.id] += dados[m][g.id]);
-  }
+  colunas.forEach(c => {
+    let tot = 0;
+    grupos.forEach(g => {
+      const v = dados[c.key][g.id];
+      tot += g.tipo === 'entrada' ? v : -v;
+      totais[g.id] += v;
+    });
+    liquido[c.key] = tot;
+  });
   let totalLiquido = 0;
   grupos.forEach(g => totalLiquido += g.tipo === 'entrada' ? totais[g.id] : -totais[g.id]);
 
-  // Montar cabeçalho
-  const mesesHeader = MESES_ABR.slice(1).map(m =>
-    `<th>${m}</th>`).join('') + '<th class="dfc-col-total">Total</th>';
+  // Receitas em verde, despesas em vermelho
+  const fmtCel = (v, tipo) => {
+    if (Math.abs(v) < 0.005) return '<span class="dfc-val-zero">—</span>';
+    const cls = tipo === 'entrada' ? 'dfc-val-pos' : 'dfc-val-neg';
+    return `<span class="${cls}">${v < 0 ? '− ' : ''}${fmtBRL(Math.abs(v))}</span>`;
+  };
+  const clsCol = (c) => c.atraso ? ' dfc-col-atraso' : '';
 
-  // Linha de um grupo
+  const header = colunas.map(c => `<th class="${c.atraso ? 'dfc-col-atraso' : ''}">${c.label}</th>`).join('')
+    + `<th class="dfc-col-total">Total</th>`;
+  const nCols = colunas.length + 2;
+
   const linha = (g) => {
-    const cells = Array.from({length:12},(_,i)=>{
-      const v = dados[i+1][g.id];
-      if (!(v > 0)) return '<td><span class="dfc-val-zero">—</span></td>';
-      return `<td class="num-click" title="Ver lançamentos" onclick="abrirDetalheDfc('${g.id}',${i+1})">${fmtDfcVal(v)}</td>`;
+    const cells = colunas.map(c => {
+      const v = dados[c.key][g.id];
+      if (Math.abs(v) < 0.005) return `<td class="${clsCol(c)}"><span class="dfc-val-zero">—</span></td>`;
+      return `<td class="num-click${clsCol(c)}" title="Ver lançamentos" onclick="abrirDetalheDfc('${g.id}','${c.key}')">${fmtCel(v, g.tipo)}</td>`;
     }).join('');
     const tot = totais[g.id];
-    const celTot = tot > 0
-      ? `<td class="dfc-col-total num-click" title="Ver lançamentos do ano" onclick="abrirDetalheDfc('${g.id}',0)">${fmtDfcVal(tot)}</td>`
+    const celTot = Math.abs(tot) >= 0.005
+      ? `<td class="dfc-col-total num-click" title="Ver lançamentos" onclick="abrirDetalheDfc('${g.id}',0)">${fmtCel(tot, g.tipo)}</td>`
       : '<td class="dfc-col-total"><span class="dfc-val-zero">—</span></td>';
     return `<tr class="dfc-row-sub"><td>${esc(g.nome)}</td>${cells}${celTot}</tr>`;
   };
 
-  // Linha de resultado
-  const linhaResult = (label, valores, total) => {
-    const cells = Array.from({length:12},(_,i)=>
-      `<td class="num-click" title="Ver todos os lançamentos do mês" onclick="abrirDetalheDfc('__todos__',${i+1})">${fmtDfcResult(valores[i+1])}</td>`).join('');
-    const rlCls = 'dfc-row-total-rl' + (total < 0 ? ' negativo' : '');
-    return `<tr class="${rlCls}"><td>${label}</td>${cells}<td class="dfc-col-total">${fmtDfcResult(total)}</td></tr>`;
+  const linhaResult = (label) => {
+    const cells = colunas.map(c =>
+      `<td class="num-click${clsCol(c)}" title="Ver todos os lançamentos" onclick="abrirDetalheDfc('__todos__','${c.key}')">${fmtDfcResult(liquido[c.key])}</td>`).join('');
+    const rlCls = 'dfc-row-total-rl' + (totalLiquido < 0 ? ' negativo' : '');
+    return `<tr class="${rlCls}"><td>${label}</td>${cells}<td class="dfc-col-total">${fmtDfcResult(totalLiquido)}</td></tr>`;
   };
+
+  // Saldo inicial (total em caixa da tela Bancos, consolidado) e saldo final
+  let linhasSaldo = '', linhaSaldoIni = '';
+  const tdS = (c, v, extra) => `<td class="${clsCol(c).trim()}" style="${v != null && v < 0 ? 'color:#991b1b;' : ''}${extra || ''}">${v == null ? '<span class="dfc-val-zero">—</span>' : fmtBRL(v)}</td>`;
+  if (!realizado) {
+    const saldoIni = dfcSaldoCaixaAtual();
+    let acum = saldoIni;
+    const iniCells = [], finCells = [];
+    colunas.forEach(c => {
+      iniCells.push(tdS(c, acum));
+      acum += liquido[c.key];
+      finCells.push(tdS(c, acum));
+    });
+    linhaSaldoIni = `<tr class="dfc-row-saldo-ini"><td>💰 Saldo inicial em caixa (total Bancos)</td>${iniCells.join('')}<td class="dfc-col-total">${fmtBRL(saldoIni)}</td></tr>`;
+    linhasSaldo = `<tr class="dfc-row-saldo${acum < 0 ? ' negativo' : ''}"><td>🏦 Saldo final projetado</td>${finCells.join('')}<td class="dfc-col-total">${fmtBRL(acum)}</td></tr>`;
+  } else {
+    // Realizado: saldo das contas no início e no fim de cada mês. O mês atual
+    // termina no saldo de hoje da tela Bancos; meses futuros ficam em branco.
+    const ymHoje = hoje.slice(0, 7);
+    const ini = {}, fin = {};
+    colunas.forEach(c => {
+      const m = parseInt(c.key);
+      const ym = `${ano}-${String(m).padStart(2,'0')}`;
+      if (ym > ymHoje) { ini[c.key] = null; fin[c.key] = null; return; }
+      ini[c.key] = saldoCaixaConsolidadoEm(_diaAnterior(`${ym}-01`));
+      fin[c.key] = ym === ymHoje ? dfcSaldoCaixaAtual() : saldoCaixaConsolidadoEm(_ultimoDiaMes(ano, m));
+    });
+    const keys = colunas.map(c => c.key).filter(k => ini[k] != null);
+    const iniAno = keys.length ? ini[keys[0]] : null;
+    const finAno = keys.length ? fin[keys[keys.length - 1]] : null;
+    // Diferença entre a variação do saldo das contas e o resultado da tabela
+    // (outras empresas, transferências, lançamentos sem conta/categoria)
+    const ajuste = {}; let temAjuste = false, ajTot = 0;
+    colunas.forEach(c => {
+      if (ini[c.key] == null) { ajuste[c.key] = null; return; }
+      const d = (fin[c.key] - ini[c.key]) - liquido[c.key];
+      ajuste[c.key] = Math.abs(d) < 0.005 ? 0 : d;
+      if (ajuste[c.key]) { temAjuste = true; ajTot += d; }
+    });
+    linhaSaldoIni = `<tr class="dfc-row-saldo-ini"><td>💰 Saldo inicial em caixa (total Bancos)</td>${colunas.map(c => tdS(c, ini[c.key])).join('')}<td class="dfc-col-total">${iniAno == null ? '—' : fmtBRL(iniAno)}</td></tr>`;
+    linhasSaldo = (temAjuste ? `<tr class="dfc-row-sub" title="Movimentações das contas que não entram nas linhas acima: outras empresas, transferências, lançamentos sem conta bancária ou sem categoria"><td style="font-style:italic">Outras movimentações das contas</td>${colunas.map(c => ajuste[c.key] == null ? tdS(c, null) : `<td class="${clsCol(c).trim()}" style="color:#78716c">${ajuste[c.key] ? (ajuste[c.key] < 0 ? '− ' : '+ ') + fmtBRL(Math.abs(ajuste[c.key])) : '<span class="dfc-val-zero">—</span>'}</td>`).join('')}<td class="dfc-col-total" style="color:#78716c">${(ajTot < 0 ? '− ' : '+ ') + fmtBRL(Math.abs(ajTot))}</td></tr>` : '')
+      + `<tr class="dfc-row-saldo${finAno != null && finAno < 0 ? ' negativo' : ''}"><td>🏦 Saldo final em caixa (total Bancos)</td>${colunas.map(c => tdS(c, fin[c.key])).join('')}<td class="dfc-col-total">${finAno == null ? '—' : fmtBRL(finAno)}</td></tr>`;
+  }
 
   const entradaGrupos = grupos.filter(g => g.tipo === 'entrada');
   const saidaGrupos   = grupos.filter(g => g.tipo !== 'entrada');
+  const totEntradas = c => entradaGrupos.reduce((a, g) => a + dados[c.key][g.id], 0);
+  const totSaidas   = c => saidaGrupos.reduce((a, g) => a + dados[c.key][g.id], 0);
+  const linhaTot = (rot, fn, tipo) => {
+    let soma = 0;
+    const cells = colunas.map(c => { const v = fn(c); soma += v; return `<td class="${clsCol(c).trim()}" style="font-weight:700">${fmtCel(v, tipo)}</td>`; }).join('');
+    return `<tr class="dfc-row-sub"><td style="font-weight:700;color:#1c1917">${rot}</td>${cells}<td class="dfc-col-total">${fmtCel(soma, tipo)}</td></tr>`;
+  };
 
-  const html = `<table class="dfc-table">
-    <thead><tr><th>Categoria</th>${mesesHeader}</tr></thead>
+  wrap.innerHTML = `<table class="dfc-table">
+    <thead><tr><th>Categoria</th>${header}</tr></thead>
     <tbody>
-      ${entradaGrupos.length ? `<tr class="dfc-row-group"><td colspan="14">📥 ENTRADAS</td></tr>` + entradaGrupos.map(linha).join('') : ''}
-      ${saidaGrupos.length ? `<tr class="dfc-row-group"><td colspan="14">📤 SAÍDAS</td></tr>` + saidaGrupos.map(linha).join('') : ''}
-      <tr><td colspan="14" style="padding:4px"></td></tr>
-      ${linhaResult('🟢 Resultado Líquido (Entradas − Saídas)', liquido, totalLiquido)}
+      ${linhaSaldoIni}
+      ${entradaGrupos.length ? `<tr class="dfc-row-group"><td colspan="${nCols}">📥 ENTRADAS ${realizado ? '(recebidas)' : '(a receber)'}</td></tr>` + entradaGrupos.map(linha).join('') + linhaTot('Total de entradas', totEntradas, 'entrada') : ''}
+      ${saidaGrupos.length ? `<tr class="dfc-row-group"><td colspan="${nCols}">📤 SAÍDAS ${realizado ? '(pagas)' : '(a pagar)'}</td></tr>` + saidaGrupos.map(linha).join('') + linhaTot('Total de saídas', totSaidas, 'saida') : ''}
+      <tr><td colspan="${nCols}" style="padding:4px"></td></tr>
+      ${linhaResult(realizado ? '🟢 Resultado Líquido (Recebido − Pago)' : '🟢 Resultado do período (A receber − A pagar)')}
+      ${linhasSaldo}
     </tbody>
   </table>`;
 
-  wrap.innerHTML = html;
-
-  // Gráfico
-  renderDfcChart(grupos, dados, liquido);
+  // Gráfico (oculto) — mantém compatibilidade
+  if (realizado && typeof Chart !== 'undefined') {
+    const d12 = {}, l12 = {};
+    for (let m = 1; m <= 12; m++) { d12[m] = dados[String(m)]; l12[m] = liquido[String(m)]; }
+    renderDfcChart(grupos, d12, l12);
+  }
 }
 
 function renderDfcChart(grupos, dados, liquido) {
@@ -13639,9 +14796,8 @@ async function initApp() {
   // Backup automático diário: roda em segundo plano, sem travar a tela
   // nem avisar o usuário; só baixa algo se ainda não tiver rodado hoje.
   // Restrito ao usuário admin (outros perfis não disparam o backup).
-  if (currentUser && currentUser.role === 'admin') {
-    setTimeout(() => { verificarBackupAutomatico().catch(e => console.error('[BACKUP] Falha inesperada:', e)); }, 3000);
-  }
+  // Agora segue a programação (dia/hora) da tela Administração → Backup.
+  if (currentUser && currentUser.role === 'admin') iniciarAgendadorBackup();
 }
 
 
@@ -13751,7 +14907,8 @@ const PAINEIS_MODAL = {
   'form-forn':    'Novo Fornecedor',
   'form-cli':     'Novo Cliente',
   'form-bnk':     'Nova Conta / Banco',
-  'form-empresa': 'Nova Empresa'
+  'form-empresa': 'Nova Empresa',
+  'form-dfccat':  'Nova Categoria'
 };
 
 let _formModalAtual = null;
@@ -18661,9 +19818,9 @@ var _dfcDetalhe = { ano: 0, itens: {}, grupos: [] };
 
 function abrirDetalheDfc(grupoId, mes) {
   abrirListaLancamentos('', () => {
-    const { ano, itens, grupos } = _dfcDetalhe;
+    const { ano, itens, grupos, colunas, modo } = _dfcDetalhe;
     const todos = [];
-    const mesesAlvo = mes ? [mes] : Array.from({ length: 12 }, (_, i) => i + 1);
+    const mesesAlvo = (mes !== 0 && mes !== '0') ? [mes] : Object.keys(itens);
     const gruposAlvo = grupoId === '__todos__' ? grupos.map(g => g.id) : [grupoId];
 
     mesesAlvo.forEach(m => gruposAlvo.forEach(gid => {
@@ -18672,11 +19829,12 @@ function abrirDetalheDfc(grupoId, mes) {
 
     const g = grupos.find(x => x.id === grupoId);
     const nomeGrupo = grupoId === '__todos__' ? 'Resultado líquido' : (g ? g.nome : 'Grupo');
-    const periodo = mes ? `${meses[mes]} de ${ano}` : `ano de ${ano}`;
+    const col = (colunas || []).find(c => String(c.key) === String(mes));
+    const periodo = (mes !== 0 && mes !== '0') ? (col ? col.titulo : `${meses[mes]} de ${ano}`) : (modo === 'projetado' ? 'toda a projeção' : `ano de ${ano}`);
 
     return {
       titulo: `${nomeGrupo} — ${periodo}`,
-      subtitulo: 'Pela previsão de vencimento, como no demonstrativo',
+      subtitulo: modo === 'projetado' ? 'Em aberto, pelo vencimento (projeção)' : 'Realizado: pela data em que foi pago / recebido',
       rec:    todos.filter(i => i.kind === 'rec'),
       des:    todos.filter(i => i.kind === 'des'),
       extras: todos.filter(i => i.kind === 'dfc')
