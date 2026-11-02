@@ -352,6 +352,44 @@ th.ef-th { padding:8px 8px 8px 12px; }
 .dfc-row-total-rl.negativo td { background:#fee2e2; color:#991b1b; border-top-color:#dc2626; }
 .dfc-val-pos { color:#166534; }
 .dfc-val-neg { color:#dc2626; }
+/* ── Boas-vindas (contas da semana) ── */
+.bv-modal { width:min(1040px,96vw) !important; max-width:96vw; padding:0 !important; overflow:hidden; }
+.bv-banner { background:linear-gradient(120deg,#ea580c 0%,#f97316 55%,#fb923c 100%); color:#fff; padding:22px 26px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.bv-saudacao { font-size:22px; font-weight:800; letter-spacing:-.3px; }
+.bv-data { font-size:13px; opacity:.92; margin-top:4px; }
+.bv-data::first-letter { text-transform:uppercase; }
+.bv-x { background:rgba(255,255,255,.18); border:none; color:#fff; width:32px; height:32px; border-radius:50%; font-size:16px; cursor:pointer; flex:0 0 32px; }
+.bv-x:hover { background:rgba(255,255,255,.3); }
+.bv-corpo { padding:18px 26px 6px; }
+.bv-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:16px; }
+.bv-kpi { border:1px solid #e7e5e4; border-left:4px solid var(--c); border-radius:10px; padding:10px 14px; background:#fff; }
+.bv-kpi span { display:block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:#78716c; }
+.bv-kpi b { display:block; font-family:'DM Mono',monospace; font-size:17px; color:var(--c); margin-top:3px; }
+.bv-kpi small { font-size:11px; color:#a8a29e; }
+.bv-abas { display:flex; gap:4px; background:#faf9f7; border-radius:9px; padding:3px; width:max-content; max-width:100%; margin-bottom:12px; flex-wrap:wrap; }
+.bv-abas button { border:none; background:transparent; padding:6px 13px; border-radius:7px; font-size:12.5px; font-weight:600; color:#57534e; cursor:pointer; }
+.bv-abas button small { font-weight:500; opacity:.75; margin-left:3px; }
+.bv-abas button em { font-style:normal; background:#dc2626; color:#fff; border-radius:10px; padding:0 6px; font-size:10.5px; margin-left:4px; }
+.bv-abas button.ativo { background:#ea580c; color:#fff; }
+.bv-colunas { display:grid; gap:14px; }
+@media (max-width:760px) { .bv-colunas { grid-template-columns:1fr !important; } }
+.bv-col { border:1px solid #e7e5e4; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; min-width:0; }
+.bv-col-head { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; font-size:12px; font-weight:800; letter-spacing:.5px; }
+.bv-col-head b { font-family:'DM Mono',monospace; font-size:14px; }
+.bv-col-head.rec { background:#f0fdf4; color:#166534; } .bv-col-head.des { background:#fef2f2; color:#991b1b; }
+.bv-lista { max-height:38vh; overflow-y:auto; }
+.bv-item { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:9px 14px; border-top:1px solid #f5f5f4; }
+.bv-item:hover { background:#fafaf9; }
+.bv-item.atr { background:#fffbfb; }
+.bv-item-info { min-width:0; }
+.bv-item-nome { font-size:13px; font-weight:600; color:#1c1917; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.bv-item-meta { font-size:11px; color:#a8a29e; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bv-item-val { font-family:'DM Mono',monospace; font-weight:700; font-size:13px; white-space:nowrap; }
+.bv-item-val.rec { color:#15803d; } .bv-item-val.des { color:#b91c1c; }
+.bv-tag { font-size:10.5px; font-weight:600; padding:2px 7px; border-radius:20px; background:#f5f5f4; color:#57534e; }
+.bv-hoje { background:#fef3c7; color:#92400e; } .bv-amanha { background:#dbeafe; color:#1e40af; } .bv-atr { background:#fee2e2; color:#b91c1c; }
+.bv-vazio { padding:22px 14px; font-size:12.5px; color:#a8a29e; text-align:center; }
+.bv-rodape { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:14px 26px 20px; border-top:1px solid #f5f5f4; margin-top:12px; }
 /* ── Central de Lançamentos ── */
 .pdl-modal { width:min(1080px,96vw) !important; max-width:96vw; padding:22px 24px !important; }
 .pdl-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
@@ -3849,6 +3887,33 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 </div>
 
 <!-- ══ MODAL: LANÇAMENTOS DO DIA (Fluxo de Caixa Diário) ══ -->
+<!-- ══ MODAL: BOAS-VINDAS (contas da semana) ══ -->
+<div class="modal-overlay" id="modal-boas-vindas" style="z-index:180;">
+  <div class="modal bv-modal">
+    <div class="bv-banner">
+      <div>
+        <div class="bv-saudacao" id="bv-saudacao"></div>
+        <div class="bv-data" id="bv-data"></div>
+      </div>
+      <button class="bv-x" onclick="fecharBoasVindas()" title="Fechar">✕</button>
+    </div>
+    <div class="bv-corpo">
+      <div class="bv-kpis" id="bv-kpis"></div>
+      <div class="bv-abas" id="bv-abas"></div>
+      <div class="bv-colunas" id="bv-colunas"></div>
+    </div>
+    <div class="bv-rodape">
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#78716c;cursor:pointer;margin:0;">
+        <input type="checkbox" id="bv-ocultar-hoje" style="width:auto;margin:0;accent-color:#ea580c;" /> Não mostrar novamente hoje
+      </label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-secondary" onclick="bvAbrirCentral()">Ver todas do mês</button>
+        <button class="btn btn-primary" onclick="fecharBoasVindas()">Ir para o sistema →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL: CENTRAL DE LANÇAMENTOS (Painel de Decisão) ══ -->
 <div class="modal-overlay" id="modal-pd-lanc" style="z-index:190;">
   <div class="modal pdl-modal">
@@ -9107,6 +9172,8 @@ async function pdlExcluir(tabela, id) { await excluirDoDetalhe(tabela, id); pdlR
     _pdl.timer = setTimeout(() => {
       const m = document.getElementById('modal-pd-lanc');
       if (m && m.classList.contains('open') && _pdl.ctx) pdlRender();
+      const bv = document.getElementById('modal-boas-vindas');
+      if (bv && bv.classList.contains('open') && typeof renderBoasVindas === 'function') renderBoasVindas();
       if (paginaVisivel('dashboard') && typeof renderPainelDecisao === 'function') {
         try { renderPainelDecisao(); } catch (e) {}
       }
@@ -9138,6 +9205,134 @@ function pdAbrirRealizado(prefixo, rotulo, tipo) {
   pdAbrirLanc({ titulo: `${tipo === 'rec' ? 'Recebido' : tipo === 'des' ? 'Pago' : 'Recebido e pago'} — ${rotulo}`,
     subtitulo: 'Pela data em que foi recebido / pago',
     rec: tipo !== 'des' ? fr : null, pag: tipo !== 'rec' ? fr : null, filtro: 'quitado' });
+}
+
+// ══════════════════════════════════════════════════════════
+// BOAS-VINDAS AO ENTRAR — contas a pagar e a receber da semana
+// Abre logo após o login com saudação (bom dia / boa tarde / boa noite),
+// resumo do mês e as parcelas em aberto que vencem de hoje até +6 dias
+// (data local real do computador), além dos atrasados e do mês inteiro.
+// Cada linha tem o botão Pagar / Receber (mesma confirmação das telas).
+// ══════════════════════════════════════════════════════════
+const _bv = { aba: 'semana' };
+
+function _bvHojeLocal() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function _bvAdd(iso, n) { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function _bvPode(p) { return !!currentUser && (currentUser.role === 'admin' || (currentUser.pages || []).includes(p)); }
+function _bvChaveOcultar() { return `stolf_bv_ocultar_${currentUser ? currentUser.user : ''}`; }
+
+function abrirBoasVindas(forcar) {
+  if (!currentUser) return;
+  if (!_bvPode('apagar') && !_bvPode('areceber')) return;
+  if (!forcar) {
+    try { if (localStorage.getItem(_bvChaveOcultar()) === _bvHojeLocal()) return; } catch (e) {}
+  }
+  _bv.aba = 'semana';
+  const chk = document.getElementById('bv-ocultar-hoje'); if (chk) chk.checked = false;
+  renderBoasVindas();
+  openModal('modal-boas-vindas');
+}
+function fecharBoasVindas() {
+  const chk = document.getElementById('bv-ocultar-hoje');
+  try {
+    if (chk && chk.checked) localStorage.setItem(_bvChaveOcultar(), _bvHojeLocal());
+    else localStorage.removeItem(_bvChaveOcultar());
+  } catch (e) {}
+  closeModal('modal-boas-vindas');
+}
+function bvSetAba(a) { _bv.aba = a; renderBoasVindas(); }
+
+function renderBoasVindas() {
+  const m = document.getElementById('modal-boas-vindas');
+  if (!m || !currentUser) return;
+  const hoje = _bvHojeLocal(), fimSem = _bvAdd(hoje, 6), ym = hoje.slice(0, 7);
+  const agora = new Date(), h = agora.getHours();
+  const saud = h < 12 ? 'Bom dia' : (h < 18 ? 'Boa tarde' : 'Boa noite');
+  const ic = h < 12 ? '☀️' : (h < 18 ? '🌤️' : '🌙');
+  const primeiro = String(currentUser.nome || currentUser.user || '').trim().split(/\s+/)[0] || '';
+  const dataExt = agora.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  const vRec = _bvPode('areceber'), vPag = _bvPode('apagar');
+  const ccOri = (typeof ccOrigensSet === 'function') ? ccOrigensSet() : new Set();
+  const rec = vRec ? getParcelasReceber(false).map(p => Object.assign({ kind: 'rec', _d: p.venc || p.dtvenda || '' }, p)) : [];
+  const pag = vPag ? getParcelas(false).filter(p => !ccOri.has(`${p.lancId}|${p.parcIdx}`)).map(p => Object.assign({ kind: 'des', _d: p.venc || p.dtcompra || '' }, p)) : [];
+  const soma = a => a.reduce((s, p) => s + (p.valParc || 0), 0);
+
+  const semana = p => p._d >= hoje && p._d <= fimSem;
+  const atras  = p => p._d && p._d < hoje;
+  const doMes  = p => (p._d || '').startsWith(ym);
+  const filtro = _bv.aba === 'atrasados' ? atras : (_bv.aba === 'mes' ? doMes : semana);
+
+  // Cabeçalho
+  document.getElementById('bv-saudacao').innerHTML = `${ic} Olá, Stolf! ${saud}, tudo bem?`;
+  document.getElementById('bv-data').textContent = `Hoje é ${dataExt}. Veja o que vence nesta semana.`;
+
+  // Resumo do mês
+  const recMes = rec.filter(doMes), pagMes = pag.filter(doMes);
+  const recAtr = rec.filter(atras), pagAtr = pag.filter(atras);
+  const recSem = rec.filter(semana), pagSem = pag.filter(semana);
+  const kp = (lbl, v, det, cor) => `<div class="bv-kpi" style="--c:${cor}"><span>${lbl}</span><b>${fmtBRL(v)}</b><small>${det}</small></div>`;
+  const kpis = [];
+  if (vRec) kpis.push(kp('A receber nesta semana', soma(recSem), `${recSem.length} parcela${recSem.length === 1 ? '' : 's'}`, '#16a34a'));
+  if (vPag) kpis.push(kp('A pagar nesta semana', soma(pagSem), `${pagSem.length} parcela${pagSem.length === 1 ? '' : 's'}`, '#dc2626'));
+  if (vRec) kpis.push(kp(`A receber em ${meses[parseInt(ym.slice(5))]}`, soma(recMes), `${recAtr.length ? 'Atrasado: ' + fmtBRL(soma(recAtr)) : 'Nada atrasado'}`, '#2563eb'));
+  if (vPag) kpis.push(kp(`A pagar em ${meses[parseInt(ym.slice(5))]}`, soma(pagMes), `${pagAtr.length ? 'Atrasado: ' + fmtBRL(soma(pagAtr)) : 'Nada atrasado'}`, '#ea580c'));
+  document.getElementById('bv-kpis').innerHTML = kpis.join('');
+
+  // Abas
+  const nAtr = recAtr.length + pagAtr.length;
+  document.getElementById('bv-abas').innerHTML = `
+    <button class="${_bv.aba === 'semana' ? 'ativo' : ''}" onclick="bvSetAba('semana')">Esta semana <small>${fmtDate(hoje).slice(0, 5)} a ${fmtDate(fimSem).slice(0, 5)}</small></button>
+    <button class="${_bv.aba === 'atrasados' ? 'ativo' : ''}" onclick="bvSetAba('atrasados')">Atrasados ${nAtr ? `<em>${nAtr}</em>` : ''}</button>
+    <button class="${_bv.aba === 'mes' ? 'ativo' : ''}" onclick="bvSetAba('mes')">Mês inteiro</button>`;
+
+  const quando = d => {
+    const dias = Math.round((new Date(d + 'T12:00:00') - new Date(hoje + 'T12:00:00')) / 86400000);
+    if (dias === 0) return '<span class="bv-tag bv-hoje">Hoje</span>';
+    if (dias === 1) return '<span class="bv-tag bv-amanha">Amanhã</span>';
+    if (dias < 0) return `<span class="bv-tag bv-atr">Atrasado há ${-dias} dia${dias === -1 ? '' : 's'}</span>`;
+    const sem = new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+    return `<span class="bv-tag">${sem} · em ${dias} dias</span>`;
+  };
+  const coluna = (lista, kind) => {
+    const itens = lista.filter(filtro).sort((a, b) => (a._d || '').localeCompare(b._d || '') || (b.valParc || 0) - (a.valParc || 0));
+    const tot = soma(itens);
+    const cab = `<div class="bv-col-head ${kind}"><span>${kind === 'rec' ? '📥 A RECEBER' : '📤 A PAGAR'}</span><b>${fmtBRL(tot)}</b></div>`;
+    if (!itens.length) return cab + `<div class="bv-vazio">${_bv.aba === 'atrasados' ? 'Nada atrasado 👏' : 'Nada para ' + (kind === 'rec' ? 'receber' : 'pagar') + ' neste período.'}</div>`;
+    return cab + '<div class="bv-lista">' + itens.map(p => {
+      const nome = kind === 'rec' ? getClienteNome(p.cliente) : getFornNome(p.forn);
+      const desc = p.cartaoFatura ? ccRotuloFatura(p.cartaoFatura) : (p.prod ? (kind === 'rec' ? getProdVendaNome(p.prod) : getProdNome(p.prod)) : '');
+      const meta = [fmtDate(p._d), p.totalParc > 1 ? `parc. ${p.parcIdx}/${p.totalParc}` : '', desc, p.nf ? 'NF ' + p.nf : ''].filter(Boolean).map(esc).join(' · ');
+      const btn = kind === 'rec'
+        ? `<button class="pdl-btn pdl-btn-rec" onclick="pdlQuitar('rec','${p.lancId}',${p.parcIdx})">✓ Receber</button>`
+        : `<button class="pdl-btn pdl-btn-pag" onclick="bvPagar('${p.lancId}',${p.parcIdx})">✓ Pagar</button>`;
+      return `<div class="bv-item${p._d < hoje ? ' atr' : ''}">
+        <div class="bv-item-info"><div class="bv-item-nome">${esc(nome)} ${quando(p._d)}</div><div class="bv-item-meta">${meta}</div></div>
+        <div class="bv-item-val ${kind}">${fmtBRL(p.valParc)}</div>
+        <div>${btn}</div></div>`;
+    }).join('') + '</div>';
+  };
+  const cols = [];
+  if (vRec) cols.push(`<div class="bv-col">${coluna(rec, 'rec')}</div>`);
+  if (vPag) cols.push(`<div class="bv-col">${coluna(pag, 'des')}</div>`);
+  const wrap = document.getElementById('bv-colunas');
+  wrap.style.gridTemplateColumns = cols.length > 1 ? '1fr 1fr' : '1fr';
+  wrap.innerHTML = cols.join('');
+}
+function bvPagar(id, parcIdx) {
+  const l = db.lancamentos.find(x => x.id === id);
+  if (l && l.cartao_fatura) { closeModal('modal-boas-vindas'); ccIrParaFatura(l.cartao_fatura); return; }
+  marcarPago(id, parcIdx);
+}
+function bvAbrirCentral() {
+  const ym = _bvHojeLocal().slice(0, 7);
+  closeModal('modal-boas-vindas');
+  const f = p => (p._d || '').startsWith(ym) || (!p._q && p._d && p._d < _bvHojeLocal());
+  pdAbrirLanc({ titulo: `Contas de ${meses[parseInt(ym.slice(5))]}`, subtitulo: 'Vencimentos do mês + atrasados em aberto',
+    rec: _bvPode('areceber') ? f : null, pag: _bvPode('apagar') ? f : null, filtro: 'aberto' });
 }
 
 function renderPainelDecisao() {
@@ -14798,6 +14993,8 @@ async function initApp() {
   // Restrito ao usuário admin (outros perfis não disparam o backup).
   // Agora segue a programação (dia/hora) da tela Administração → Backup.
   if (currentUser && currentUser.role === 'admin') iniciarAgendadorBackup();
+  // Tela de boas-vindas com as contas a pagar/receber da semana
+  setTimeout(() => { try { abrirBoasVindas(); } catch (e) { console.error('[Boas-vindas]', e); } }, 400);
 }
 
 
