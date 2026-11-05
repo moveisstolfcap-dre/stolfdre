@@ -529,6 +529,94 @@ th.ef-th { padding:8px 8px 8px 12px; }
 .dre-tb-link:hover { text-decoration:underline; }
 .dre-tb-btn { background:#fff; border:1px solid #e7e5e4; border-radius:7px; padding:4px 10px; font-size:12px; color:#44403c; cursor:pointer; font-family:inherit; }
 .dre-tb-btn:hover { background:#faf9f7; border-color:#d6d3d1; }
+/* ── Telas Lançamentos a Pagar / Contas a Pagar / Contas Pagas (compactas) ── */
+.cp-tela .page-header { margin-bottom:14px; }
+.cp-tela .page-header { justify-content:flex-start; gap:8px; flex-wrap:wrap; }
+.cp-tela .page-header > div:first-child { margin-right:auto; }
+.cp-tela > .card { padding:14px 16px; }
+.cp-tela .card-title { font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:#a8a29e; font-weight:700; margin-bottom:8px; }
+.cp-tela .filter-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px 10px; align-items:end; margin-bottom:12px; padding:10px 12px; background:#faf9f7; border:1px solid #f0eeec; border-radius:10px; }
+.cp-tela .filter-row .form-group { min-width:0; margin:0; }
+.cp-tela .filter-row label { font-size:10px; text-transform:uppercase; letter-spacing:.4px; color:#78716c; font-weight:700; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cp-tela .filter-row input, .cp-tela .filter-row select { height:32px; padding:5px 9px !important; font-size:12.5px !important; width:100% !important; background-color:#fff; }
+.cp-tela .filter-row .ef-combo-trigger { padding:6px 9px; font-size:12.5px; background:#fff; min-height:32px; }
+.cp-tela .filter-row .btn { height:32px; padding:0 12px; font-size:12px; white-space:nowrap; }
+.cp-tela .filter-row > div:last-child { grid-column:span 2; justify-self:end; }
+.cp-emp label { color:#c2410c !important; }
+.emp-chip { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:6px; background:#fff1e6; color:#9a3412; border:1px solid #fed7aa; white-space:nowrap; }
+.cp-emp select { border:1.5px solid #fb923c !important; background:#fff7ed !important; color:#9a3412; font-weight:700; }
+.cp-emp select.ativa { border-color:#ea580c !important; background:#ffedd5 !important; box-shadow:0 0 0 3px rgba(234,88,12,.12); }
+.cp-tela .grid4 { gap:10px; margin-bottom:12px !important; }
+.cp-tela .grid4 .card.kpi { padding:10px 14px; text-align:left; border-left:3px solid #e7e5e4; }
+.cp-tela .grid4 .card.kpi:nth-child(1) { border-left-color:#a8a29e; }
+.cp-tela .grid4 .card.kpi:nth-child(2) { border-left-color:#ea580c; }
+.cp-tela .grid4 .card.kpi:nth-child(3) { border-left-color:#dc2626; }
+.cp-tela .grid4 .card.kpi:nth-child(4) { border-left-color:#d97706; }
+#page-pagas .grid4 .card.kpi:nth-child(2) { border-left-color:#16a34a; }
+#page-pagas .grid4 .card.kpi:nth-child(3), #page-pagas .grid4 .card.kpi:nth-child(4) { border-left-color:#78716c; }
+.cp-tela .grid4 .kpi-val { font-size:18px; }
+.cp-tela .grid4 .kpi-lbl { font-size:10px; margin-top:2px; }
+.cp-tela table th { padding:7px 10px; font-size:10px; }
+.cp-tela table td { padding:6px 10px; font-size:12.5px; }
+.cp-tela table td .btn-sm { padding:4px 9px; font-size:11.5px; }
+@media (max-width:700px) { .cp-tela .filter-row .cp-emp, .cp-tela .filter-row > div:last-child { grid-column:auto; } }
+/* ── Despesa no cartão ── */
+.ccd-modal { width:720px !important; }
+.ccd-grid { gap:0 14px; }
+.ccd-modal .el-sec { padding:14px 0 2px; }
+.ccd-modal .form-group { margin-bottom:12px; }
+.ccd-modal .cc-chips { margin-bottom:2px; }
+@media (max-width:760px) { .ccd-grid { grid-template-columns:minmax(0,1fr); } .ccd-grid .span2 { grid-column:auto; } }
+/* ── Fluxo de Caixa Futuro ── */
+.ff-tb .ff-date { padding:5px 8px; font-size:12.5px; height:30px; width:140px; }
+.ff-seg .dre-seg-m input[type=radio] { position:absolute; opacity:0; width:1px; height:1px; }
+.ff-seg .dre-seg-m span { padding:5px 11px; }
+.ff-cen { flex-wrap:wrap; align-items:flex-start; }
+.ff-cen-lbl { min-width:74px; font-weight:700; padding-top:5px; }
+.ff-chips { display:inline-flex; flex-wrap:wrap; border:1px solid #e7e5e4; border-radius:8px; overflow:hidden; background:#fff; max-width:100%; }
+.ff-chips .dre-seg-m { border-left:1px solid #f0efed; }
+.ff-chips .dre-seg-m:first-child { border-left:none; }
+.ff-chips .dre-seg-m span { padding:4px 8px; font-size:11.5px; }
+.ff-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; margin-bottom:10px; }
+.ff-kpi { background:#fff; border:1px solid #eeecea; border-left:3px solid #a8a29e; border-radius:9px; padding:8px 12px; min-width:0; }
+.ff-kpi-lbl { font-size:10px; color:#78716c; text-transform:uppercase; letter-spacing:.5px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ff-kpi-val { font-size:16px; font-weight:700; font-family:'DM Mono',monospace; color:#1f2937; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ff-kpi-sub { font-size:10.5px; color:#a8a29e; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ff-alerta { display:flex; align-items:center; gap:8px; padding:7px 12px; border-radius:8px; margin-bottom:10px; font-size:12.5px; }
+.ff-alerta.neg { background:#fef2f2; border:1px solid #fecaca; color:#991b1b; }
+.ff-alerta.pos { background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; }
+.ff-cenario { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+.ff-tag { font-size:11px; padding:3px 9px; border-radius:20px; background:#fff1e6; color:#9a3412; border:1px solid #fed7aa; }
+.ff-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:10px; }
+.ff-chart-card { padding:12px 14px !important; }
+.ff-chart-box { position:relative; height:290px; }
+.ff-table-card { padding:0 !important; overflow:hidden; }
+.ff-table { width:100%; border-collapse:collapse; font-size:12px; }
+.ff-table thead th { position:sticky; top:0; z-index:1; background:#faf9f7; padding:7px 12px; text-align:right; font-size:10px; font-weight:700; color:#57534e; text-transform:uppercase; letter-spacing:.4px; border-bottom:1px solid #e7e5e4; white-space:nowrap; }
+.ff-table thead th:first-child, .ff-table td:first-child { text-align:left; }
+.ff-table td { padding:5px 12px; text-align:right; border-bottom:1px solid #f5f4f2; font-family:'DM Mono',monospace; white-space:nowrap; }
+.ff-table td:first-child { font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; color:#1f2937; }
+.ff-table td.ff-dsem { text-align:left; color:#a8a29e; font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; }
+.ff-table tbody tr:hover td { background:#fffaf5; }
+.ff-table tr.ff-neg td { background:#fef2f2; }
+.ff-table tr.ff-hoje td:first-child { box-shadow:inset 3px 0 0 #ea580c; }
+.ff-table tfoot td { background:#f5f4f2; font-weight:700; border-top:2px solid #e7e5e4; padding:7px 12px; }
+.ff-table .ff-click { cursor:pointer; }
+.ff-table .ff-click:hover { text-decoration:underline; }
+.ff-pos { color:#166534; } .ff-negc { color:#dc2626; } .ff-zero { color:#d6d3d1; }
+.ff-bar { display:inline-block; vertical-align:middle; height:6px; border-radius:3px; margin-left:8px; width:60px; background:#f5f4f2; position:relative; overflow:hidden; }
+.ff-bar i { position:absolute; left:0; top:0; bottom:0; border-radius:3px; }
+/* ── Várias formas de pagamento/recebimento no mesmo lançamento ── */
+.fp-link { background:none; border:none; padding:0; margin:-8px 0 14px; font-size:12px; color:#c2410c; cursor:pointer; font-family:inherit; font-weight:600; }
+.fp-link:hover { text-decoration:underline; }
+.fp-box { border:1px dashed #fdba74; background:#fffaf5; border-radius:10px; padding:10px 12px; margin:-6px 0 14px; }
+.fp-box-tit { display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:700; color:#9a3412; margin-bottom:8px; }
+.fp-row { display:grid; grid-template-columns:minmax(0,1fr) 120px 30px; gap:6px; margin-bottom:6px; align-items:center; }
+.fp-row select, .fp-row input { padding:6px 8px; font-size:12.5px; height:32px; }
+.fp-row button { height:32px; border:1px solid #e7e5e4; background:#fff; border-radius:7px; cursor:pointer; color:#dc2626; font-size:13px; }
+.fp-tot { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; font-size:12px; color:#57534e; margin-top:4px; }
+.fp-tot b.ok { color:#166534; } #modal-pago-split .fp-box-tit, #modal-recebido-split .fp-box-tit { gap:8px; } .fp-tot b.err { color:#dc2626; }
+.fp-det { font-size:10.5px; color:#78716c; margin-top:2px; white-space:normal; line-height:1.3; }
 /* ── Transferência: janela de lançamento ── */
 .transf-modal { width:600px; padding:22px 24px 18px; }
 .transf-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:18px; }
@@ -1583,7 +1671,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
     </div>
 
     <!-- ══ LANÇAMENTOS ══ -->
-    <div class="page" id="page-lancamentos">
+    <div class="page cp-tela" id="page-lancamentos">
       <div class="page-header">
         <div><div class="page-title">Lançamento de Contas a Pagar</div><div class="page-sub" style="margin-bottom:0">Registro de despesas e compras de itens</div></div>
         <button class="btn-pdf" onclick="imprimirPagina('lancamentos')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> PDF</button>
@@ -1596,6 +1684,9 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <div class="card">
         <div class="card-title">Filtros</div>
         <div class="filter-row">
+          <div class="form-group cp-emp"><label>🏢 Empresa</label>
+            <select id="lf-empresa" class="sel-empresa-filtro" onchange="pintarFiltroEmpresa(this); renderLancamentos()"><option value="">Todas as empresas</option></select>
+          </div>
           <div class="form-group"><label>Mês</label>
             <select id="lf-mes" onchange="renderLancamentos()">
               <option value="">Todos</option>
@@ -1612,7 +1703,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
             <select id="lf-forn" onchange="renderLancamentos()"><option value="">Todos</option></select>
           </div>
           <div class="form-group"><label>Grupo</label>
-            <select id="lf-grupo" onchange="popularSelectCategoriaFiltro('lf-cat','lf-grupo'); renderLancamentos()"><option value="">Todos</option></select>
+            <select id="lf-grupo" onchange="popularSelectCategoriaFiltro('lf-cat','lf-grupo','saida'); renderLancamentos()"><option value="">Todos</option></select>
           </div>
           <div class="form-group"><label>Categoria</label>
             <select id="lf-cat" onchange="renderLancamentos()"><option value="">Todos</option></select>
@@ -1648,19 +1739,22 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div style="align-self:flex-end"><button class="btn btn-secondary" onclick="clearLancamentoFiltros()">Limpar Filtros</button></div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-lancamentos-row">
-          <th>Data Competência</th><th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Valor</th><th>Parcelas</th>
+          <th>Empresa</th><th>Data Competência</th><th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Valor</th><th>Parcelas</th>
           <th>Prev. Pgto</th><th>Lead Time</th><th>NF</th><th>Financeiro</th><th>Pago</th><th>Ações</th>
-        </tr></thead><tbody id="tb-lancamentos"><tr><td colspan="12" class="empty-state">Nenhum lançamento registrado.</td></tr></tbody></table></div>
+        </tr></thead><tbody id="tb-lancamentos"><tr><td colspan="13" class="empty-state">Nenhum lançamento registrado.</td></tr></tbody></table></div>
       </div>
     </div>
 
     <!-- ══ A PAGAR ══ -->
-    <div class="page" id="page-apagar">
+    <div class="page cp-tela" id="page-apagar">
       <div class="page-header"><div><div class="page-title">Contas a Pagar</div><div class="page-sub" style="margin-bottom:0">Parcelas em aberto e próximas do vencimento</div></div><div style="display:flex;gap:8px"><button class="btn-pdf" onclick="abrirPdfDia('apagar')" style="background:#0f766e">📅 PDF por Dia</button><button class="btn-pdf" onclick="imprimirPagina('apagar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> PDF</button></div></div>
       <div id="apagar-kpis" class="grid4" style="margin-bottom:20px;"></div>
       <div class="card">
         <div class="card-title">Filtros</div>
         <div class="filter-row">
+          <div class="form-group cp-emp"><label>🏢 Empresa</label>
+            <select id="af-empresa" class="sel-empresa-filtro" onchange="pintarFiltroEmpresa(this); renderApagar()"><option value="">Todas as empresas</option></select>
+          </div>
           <div class="form-group"><label>Mês</label>
             <select id="af-mes" onchange="renderApagar()">
               <option value="">Todos</option>
@@ -1718,18 +1812,21 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           </div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-apagar-row">
-          <th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Dt. Competência</th><th>Vencimento</th><th>Situação</th><th>NF</th><th>Financeiro</th><th>Ações</th>
-        </tr></thead><tbody id="tb-apagar"><tr><td colspan="11" class="empty-state">Nenhuma parcela em aberto.</td></tr></tbody></table></div>
+          <th>Empresa</th><th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Dt. Competência</th><th>Vencimento</th><th>Situação</th><th>NF</th><th>Financeiro</th><th>Ações</th>
+        </tr></thead><tbody id="tb-apagar"><tr><td colspan="12" class="empty-state">Nenhuma parcela em aberto.</td></tr></tbody></table></div>
       </div>
     </div>
 
     <!-- ══ PAGAS ══ -->
-    <div class="page" id="page-pagas">
+    <div class="page cp-tela" id="page-pagas">
       <div class="page-header"><div><div class="page-title">Contas Pagas</div><div class="page-sub" style="margin-bottom:0">Histórico de pagamentos realizados</div></div><div style="display:flex;gap:8px"><button class="btn-pdf" onclick="abrirPdfDia('pagas')" style="background:#0f766e">📅 PDF por Dia</button><button class="btn-pdf" onclick="imprimirPagina('pagas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> PDF</button></div></div>
       <div id="pagas-kpis" class="grid4" style="margin-bottom:20px;"></div>
       <div class="card">
         <div class="card-title">Filtros</div>
         <div class="filter-row">
+          <div class="form-group cp-emp"><label>🏢 Empresa</label>
+            <select id="pgf-empresa" class="sel-empresa-filtro" onchange="pintarFiltroEmpresa(this); renderPagas()"><option value="">Todas as empresas</option></select>
+          </div>
           <div class="form-group"><label>Mês</label>
             <select id="pgf-mes" onchange="renderPagas()">
               <option value="">Todos</option>
@@ -1772,8 +1869,8 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div style="align-self:flex-end"><button class="btn btn-secondary" onclick="clearPagasFiltros()">Limpar</button></div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-pagas-row">
-          <th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Vencimento</th><th>Data Competência</th><th>Data Pgto</th><th>Forma Pgto</th><th>Banco</th><th>NF</th><th>Financeiro</th><th>Ações</th>
-        </tr></thead><tbody id="tb-pagas"><tr><td colspan="13" class="empty-state">Nenhuma parcela paga.</td></tr></tbody></table></div>
+          <th>Empresa</th><th>Despesas/Fornecedor</th><th>Item</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Vencimento</th><th>Data Competência</th><th>Data Pgto</th><th>Forma Pgto</th><th>Banco</th><th>NF</th><th>Financeiro</th><th>Ações</th>
+        </tr></thead><tbody id="tb-pagas"><tr><td colspan="14" class="empty-state">Nenhuma parcela paga.</td></tr></tbody></table></div>
       </div>
     </div>
 
@@ -1865,7 +1962,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
     <!-- ══ CARTÕES DE CRÉDITO ══ -->
     <div class="page" id="page-cartoes">
       <div class="page-header">
-        <div><div class="page-title">Cartões de Crédito</div><div class="page-sub" style="margin-bottom:0">Despesas lançadas no cartão, faturas e pagamento</div></div>
+        <div><div class="page-title">Cartões de Crédito <span style="display:inline-block;margin-left:10px;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:600;vertical-align:middle;background:#f5f5f4;color:#57534e;border:1px solid #e7e5e4;" title="Cartões não pertencem a nenhuma empresa: sempre mostram todas">📊 Consolidado</span></div><div class="page-sub" style="margin-bottom:0">Despesas lançadas no cartão, faturas e pagamento — sempre consolidado (todas as empresas)</div></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-secondary" onclick="ccAbrirImportacao()">📥 Importar Fatura</button>
           <button class="btn btn-secondary" onclick="ccAbrirCadastro()">💳 Novo Cartão</button>
@@ -2023,6 +2120,9 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <div class="card" style="margin-top:0">
         <div class="card-title">Filtros</div>
         <div class="filter-row">
+          <div class="form-group cp-emp"><label>🏢 Empresa</label>
+            <select id="lrf-empresa" class="sel-empresa-filtro" onchange="pintarFiltroEmpresa(this); renderLancReceber()"><option value="">Todas as empresas</option></select>
+          </div>
           <div class="form-group"><label>Mês</label>
             <select id="lrf-mes" onchange="renderLancReceber()">
               <option value="">Todos</option>
@@ -2078,9 +2178,9 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div style="align-self:flex-end"><button class="btn btn-secondary" onclick="clearLancReceberFiltros()">Limpar</button></div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-lancreceber-row">
-          <th>Data da Competência</th><th>Cliente</th><th>Produto</th><th>Categoria</th><th>Valor</th><th>Parcelas</th>
+          <th>Empresa</th><th>Data da Competência</th><th>Cliente</th><th>Produto</th><th>Categoria</th><th>Valor</th><th>Parcelas</th>
           <th>Prev. Receb.</th><th>NF</th><th>Financeiro</th><th>Recebido</th><th>Ações</th>
-        </tr></thead><tbody id="tb-lancreceber"><tr><td colspan="11" class="empty-state">Nenhum lançamento registrado.</td></tr></tbody></table></div>
+        </tr></thead><tbody id="tb-lancreceber"><tr><td colspan="12" class="empty-state">Nenhum lançamento registrado.</td></tr></tbody></table></div>
       </div>
     </div>
 
@@ -2106,6 +2206,9 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <div class="card">
         <div class="card-title">Filtros</div>
         <div class="filter-row">
+          <div class="form-group cp-emp"><label>🏢 Empresa</label>
+            <select id="arf-empresa" class="sel-empresa-filtro" onchange="pintarFiltroEmpresa(this); renderAReceber()"><option value="">Todas as empresas</option></select>
+          </div>
           <div class="form-group"><label>Mês</label>
             <select id="arf-mes" onchange="renderAReceber()">
               <option value="">Todos</option>
@@ -2161,8 +2264,8 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           </div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-areceber-row">
-          <th>Cliente</th><th>Produto</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Juros</th><th>Total c/ Juros</th><th>Dt. Competência</th><th>Vencimento</th><th>Situação</th><th>Forma Receb.</th><th>NF</th><th>Financeiro</th><th>Ações</th>
-        </tr></thead><tbody id="tb-areceber"><tr><td colspan="14" class="empty-state">Nenhuma parcela em aberto.</td></tr></tbody></table></div>
+          <th>Empresa</th><th>Cliente</th><th>Produto</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Juros</th><th>Total c/ Juros</th><th>Dt. Competência</th><th>Vencimento</th><th>Situação</th><th>Forma Receb.</th><th>NF</th><th>Financeiro</th><th>Ações</th>
+        </tr></thead><tbody id="tb-areceber"><tr><td colspan="15" class="empty-state">Nenhuma parcela em aberto.</td></tr></tbody></table></div>
       </div>
     </div>
 
@@ -2356,6 +2459,9 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <div class="card">
         <div class="card-title">Filtros</div>
         <div class="filter-row">
+          <div class="form-group cp-emp"><label>🏢 Empresa</label>
+            <select id="recf-empresa" class="sel-empresa-filtro" onchange="pintarFiltroEmpresa(this); renderRecebido()"><option value="">Todas as empresas</option></select>
+          </div>
           <div class="form-group"><label>Mês</label>
             <select id="recf-mes" onchange="renderRecebido()">
               <option value="">Todos</option>
@@ -2392,8 +2498,8 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div style="align-self:flex-end"><button class="btn btn-secondary" onclick="clearRecebidoFiltros()">Limpar</button></div>
         </div>
         <div class="table-scroll"><table><thead><tr id="th-recebido-row">
-          <th>Cliente</th><th>Produto</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Vencimento</th><th>Dt. Competência</th><th>Dt. Recebimento</th><th>Forma Receb.</th><th>NF</th><th>Financeiro</th><th>Ações</th>
-        </tr></thead><tbody id="tb-recebido"><tr><td colspan="12" class="empty-state">Nenhum recebimento registrado.</td></tr></tbody></table></div>
+          <th>Empresa</th><th>Cliente</th><th>Produto</th><th>Categoria</th><th>Parcela</th><th>Valor Parcela</th><th>Vencimento</th><th>Dt. Competência</th><th>Dt. Recebimento</th><th>Forma Receb.</th><th>NF</th><th>Financeiro</th><th>Ações</th>
+        </tr></thead><tbody id="tb-recebido"><tr><td colspan="13" class="empty-state">Nenhum recebimento registrado.</td></tr></tbody></table></div>
       </div>
     </div>
 
@@ -2998,21 +3104,64 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 
     <!-- ══ FLUXO DE CAIXA FUTURO ══ -->
     <div class="page" id="page-fluxo-futuro">
-      <div class="page-header"><div><div class="page-title">Fluxo de Caixa Futuro</div><div class="page-sub" style="margin-bottom:0">Projeção dia a dia de entradas e saídas previstas (por vencimento)</div></div></div>
-      <div class="card" style="margin-bottom:16px">
-        <div class="filter-row" style="align-items:flex-end">
-          <div class="form-group"><label>Período</label>
-            <select id="ff-horizonte" onchange="renderFluxoFuturo()">
+      <div class="page-header"><div><div class="page-title">Fluxo de Caixa Futuro</div><div class="page-sub" style="margin-bottom:0">Projeção de entradas e saídas em aberto, pelo vencimento — monte cenários escolhendo empresa, período e meses de receitas/despesas</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-pdf" onclick="ffImprimir('retrato')">📄 PDF Retrato</button>
+          <button class="btn-pdf" onclick="ffImprimir('paisagem')" style="background:#0f766e">📄 PDF Paisagem</button>
+        </div></div>
+      <div class="card dre-tb ff-tb">
+        <div class="dre-tb-row">
+          <div class="dre-tb-field"><span class="dre-tb-lbl">Empresa</span>
+            <select id="ff-empresa" onchange="renderFluxoFuturo()"><option value="">🏢 Consolidado (todas)</option></select>
+          </div>
+          <span class="dre-tb-sep" aria-hidden="true"></span>
+          <div class="dre-tb-field"><span class="dre-tb-lbl">Período</span>
+            <select id="ff-horizonte" onchange="ffOnHorizonte()">
               <option value="7">Próximos 7 dias</option>
               <option value="15">Próximos 15 dias</option>
               <option value="30" selected>Próximos 30 dias</option>
               <option value="60">Próximos 60 dias</option>
               <option value="90">Próximos 90 dias</option>
+              <option value="120">Próximos 120 dias</option>
+              <option value="150">Próximos 150 dias</option>
+              <option value="180">Próximos 180 dias</option>
+              <option value="270">Próximos 270 dias</option>
+              <option value="365">Próximos 12 meses</option>
+              <option value="540">Próximos 18 meses</option>
+              <option value="730">Próximos 24 meses</option>
+              <option value="custom">Personalizado...</option>
             </select>
+            <span id="ff-custom-wrap" style="display:none;align-items:center;gap:6px">
+              <input type="date" id="ff-de" onchange="renderFluxoFuturo()" class="ff-date" />
+              <span class="dre-tb-lbl">até</span>
+              <input type="date" id="ff-ate" onchange="renderFluxoFuturo()" class="ff-date" />
+            </span>
           </div>
-          <div class="form-group" style="flex-direction:row;align-items:center;gap:8px;display:flex;">
-            <input type="checkbox" id="ff-usar-saldo" checked onchange="renderFluxoFuturo()" style="width:16px;height:16px;" />
-            <label style="margin:0;">Usar saldo atual das contas como ponto de partida</label>
+          <span class="dre-tb-sep" aria-hidden="true"></span>
+          <div class="dre-tb-field"><span class="dre-tb-lbl">Ver por</span>
+            <div class="dre-seg ff-seg" role="radiogroup" aria-label="Agrupar por">
+              <label class="dre-seg-m"><input type="radio" name="ff-agrup" value="dia" checked onchange="renderFluxoFuturo()" /><span>Dia</span></label><label class="dre-seg-m"><input type="radio" name="ff-agrup" value="semana" onchange="renderFluxoFuturo()" /><span>Semana</span></label><label class="dre-seg-m"><input type="radio" name="ff-agrup" value="quinzena" onchange="renderFluxoFuturo()" /><span>Quinzena</span></label><label class="dre-seg-m"><input type="radio" name="ff-agrup" value="mes" onchange="renderFluxoFuturo()" /><span>Mês</span></label><label class="dre-seg-m"><input type="radio" name="ff-agrup" value="trimestre" onchange="renderFluxoFuturo()" /><span>Trimestre</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="dre-tb-row">
+          <label class="dre-tb-check" title="As contas bancárias são sempre consolidadas (todas as empresas)"><input type="checkbox" id="ff-usar-saldo" checked onchange="renderFluxoFuturo()" />Usar saldo atual das contas como ponto de partida</label>
+          <label class="dre-tb-check"><input type="checkbox" id="ff-ocultar-zero" onchange="renderFluxoFuturo()" />Ocultar períodos sem movimento</label>
+          <span style="flex:1"></span>
+          <button type="button" class="dre-tb-btn" onclick="ffLimparCenario()" title="Volta a considerar todas as receitas e despesas do período">↺ Limpar cenário</button>
+        </div>
+        <div class="dre-tb-row ff-cen-row">
+          <div class="dre-tb-field ff-cen"><span class="dre-tb-lbl ff-cen-lbl" style="color:#166534">▲ Receitas</span>
+            <div class="ff-chips" id="ff-chips-rec"></div>
+            <button type="button" class="dre-tb-link" onclick="ffMesesTodos('rec',true)">Todos</button>
+            <button type="button" class="dre-tb-link" onclick="ffMesesTodos('rec',false)">Nenhum</button>
+          </div>
+        </div>
+        <div class="dre-tb-row ff-cen-row">
+          <div class="dre-tb-field ff-cen"><span class="dre-tb-lbl ff-cen-lbl" style="color:#dc2626">▼ Despesas</span>
+            <div class="ff-chips" id="ff-chips-des"></div>
+            <button type="button" class="dre-tb-link" onclick="ffMesesTodos('des',true)">Todos</button>
+            <button type="button" class="dre-tb-link" onclick="ffMesesTodos('des',false)">Nenhum</button>
           </div>
         </div>
       </div>
@@ -3364,6 +3513,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div class="form-group"><label>Forma de pagamento</label><select id="l-tipo-pag" onchange="onTipoPagChange(this)"><option value="">Não informado</option></select></div>
           <div class="form-group"><label id="l-banco-lbl">Banco / Conta</label><select id="l-banco"><option value="">Não informado</option></select></div>
         </div>
+        <div id="l-tipo-pag-split"></div>
         <div class="lanc-aviso" id="l-status-aviso" style="display:none">
           Ao salvar como pago, a <b>data</b> e o <b>banco/conta</b> são obrigatórios — eles alimentam o saldo das contas e o fluxo de caixa.
         </div>
@@ -3477,6 +3627,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           <div class="form-group"><label>Forma de recebimento</label><select id="lr-tipo-pag" onchange="onTipoRecebChange(this)"><option value="">Não informado</option></select></div>
           <div class="form-group"><label id="lr-banco-lbl">Banco / Conta</label><select id="lr-banco"><option value="">Não informado</option></select></div>
         </div>
+        <div id="lr-tipo-pag-split"></div>
         <div class="lanc-aviso" id="lr-status-aviso" style="display:none">
           Ao salvar como recebido, a <b>data</b> e o <b>banco/conta</b> são obrigatórios — eles alimentam o saldo das contas e o fluxo de caixa.
         </div>
@@ -3666,6 +3817,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <label>Forma de Recebimento</label>
       <select id="modal-recebido-tipo-pag" onchange="onTipoRecebChange(this)"><option value="">Não informado</option></select>
     </div>
+    <div id="modal-recebido-split"></div>
     <div class="form-group">
       <label>Banco / Conta *</label>
       <select id="modal-recebido-banco"><option value="">Não informado</option></select>
@@ -4412,6 +4564,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <label>Forma de Pagamento</label>
       <select id="modal-pago-tipo-pag" onchange="onTipoPagChange(this)"><option value="">Não informado</option></select>
     </div>
+    <div id="modal-pago-split"></div>
     <div class="form-group">
       <label>Banco / Conta *</label>
       <select id="modal-pago-banco"><option value="">Não informado</option></select>
@@ -4689,36 +4842,54 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 
 <!-- ══ MODAL CARTÃO — DESPESA ══ -->
 <div class="modal-overlay" id="modal-cc-despesa">
-  <div class="modal" style="width:620px;">
-    <div class="modal-title" id="cc-d-titulo">Nova Despesa no Cartão</div>
+  <div class="modal el-modal ccd-modal">
+    <div class="el-head">
+      <div class="el-head-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg></div>
+      <div><div class="modal-title" id="cc-d-titulo">Nova Despesa no Cartão</div><div class="el-head-sub">Compra lançada na fatura do cartão de crédito</div></div>
+      <button type="button" class="el-x" onclick="closeModal('modal-cc-despesa')" title="Fechar">✕</button>
+    </div>
     <input type="hidden" id="cc-d-grupo" />
     <input type="hidden" id="cc-d-orig-lanc" />
     <input type="hidden" id="cc-d-orig-parc" />
     <input type="hidden" id="cc-d-parc-fixa" />
-    <div id="cc-d-orig-info" class="lanc-note" style="display:none;margin-bottom:14px"></div>
-    <div class="form-group"><label>Cartão *</label>
-      <select id="cc-d-cartao" onchange="ccAtualizarFaturas(true);ccRenderChipsCartao()" style="display:none"></select>
-      <div class="cc-chips" id="cc-d-cartoes"></div>
-    </div>
-    <div class="form-group"><label>Data da Compra *</label><input id="cc-d-data" type="date" onchange="ccAtualizarFaturas(true)" /></div>
-    <div class="form-group"><label>Descrição *</label><input id="cc-d-desc" type="text" placeholder="Ex.: TV Samsung" /></div>
-    <div class="form-group"><label>Categoria</label><select id="cc-d-cat"><option value="">Nenhuma</option></select></div>
-    <div class="grid2">
-      <div class="form-group"><label>Valor (R$) *</label><input id="cc-d-valor" type="number" step="0.01" min="0" placeholder="0,00" oninput="ccPreviaParcelas()" /></div>
-      <div class="form-group"><label>Fatura (vencimento) *</label><select id="cc-d-fatura" onchange="ccPreviaParcelas()"></select></div>
-    </div>
-    <div class="grid2">
-      <div class="form-group"><label>Parcelada?</label>
-        <select id="cc-d-parcelada" onchange="ccToggleParcelada()"><option value="nao">Não (à vista)</option><option value="sim">Sim</option></select>
+    <div class="el-body">
+      <div id="cc-d-orig-info" class="el-aviso" style="display:none;margin-top:16px"></div>
+      <div class="el-sec">
+        <div class="el-sec-t">Cartão</div>
+        <div class="form-group" style="margin-bottom:12px">
+          <select id="cc-d-cartao" onchange="ccAtualizarFaturas(true);ccRenderChipsCartao()" style="display:none"></select>
+          <div class="cc-chips" id="cc-d-cartoes"></div>
+        </div>
       </div>
-      <div class="form-group" id="cc-d-parc-grp" style="display:none"><label>Nº de Parcelas</label><select id="cc-d-parcelas" onchange="ccPreviaParcelas()"></select></div>
+      <div class="el-sec">
+        <div class="el-sec-t">Compra</div>
+        <div class="el-grid ccd-grid">
+          <div class="form-group"><label>Data da Compra *</label><input id="cc-d-data" type="date" onchange="ccAtualizarFaturas(true)" /></div>
+          <div class="form-group span2"><label>Descrição *</label><input id="cc-d-desc" type="text" placeholder="Ex.: TV Samsung" /></div>
+          <div class="form-group el-valor"><label>Valor (R$) *</label><input id="cc-d-valor" type="number" step="0.01" min="0" placeholder="0,00" oninput="ccPreviaParcelas()" /></div>
+          <div class="form-group"><label>Grupo</label><select id="cc-d-grp" onchange="ccPopularCategorias()"><option value="">Todos</option></select></div>
+          <div class="form-group"><label>Categoria</label><select id="cc-d-cat" onchange="ccCategoriaEscolhida()"><option value="">Nenhuma</option></select></div>
+        </div>
+      </div>
+      <div class="el-sec">
+        <div class="el-sec-t">Fatura e parcelamento</div>
+        <div class="el-grid ccd-grid">
+          <div class="form-group"><label>Fatura (vencimento) *</label><select id="cc-d-fatura" onchange="ccPreviaParcelas()"></select></div>
+          <div class="form-group"><label>Parcelada?</label>
+            <select id="cc-d-parcelada" onchange="ccToggleParcelada()"><option value="nao">Não (à vista)</option><option value="sim">Sim</option></select>
+          </div>
+          <div class="form-group" id="cc-d-parc-grp" style="display:none"><label>Nº de Parcelas</label><select id="cc-d-parcelas" onchange="ccPreviaParcelas()"></select></div>
+          <div class="form-group span2" id="cc-d-tipoval-grp" style="display:none"><label>O valor informado é</label>
+            <select id="cc-d-tipoval" onchange="ccPreviaParcelas()"><option value="total">Valor total da compra</option><option value="parcela">Valor de cada parcela</option></select>
+          </div>
+        </div>
+        <div id="cc-d-previa" class="lanc-note" style="display:none;margin-bottom:14px"></div>
+      </div>
+      <div class="el-sec">
+        <div class="form-group"><label>Observação</label><input id="cc-d-obs" type="text" placeholder="Opcional" /></div>
+      </div>
     </div>
-    <div class="form-group" id="cc-d-tipoval-grp" style="display:none"><label>O valor informado é</label>
-      <select id="cc-d-tipoval" onchange="ccPreviaParcelas()"><option value="total">Valor total da compra</option><option value="parcela">Valor de cada parcela</option></select>
-    </div>
-    <div id="cc-d-previa" class="lanc-note" style="display:none;margin-bottom:14px"></div>
-    <div class="form-group"><label>Observação</label><input id="cc-d-obs" type="text" placeholder="Opcional" /></div>
-    <div class="modal-footer">
+    <div class="el-foot">
       <button class="btn btn-danger" id="cc-d-excluir" style="margin-right:auto;display:none" onclick="ccExcluirDespesa(document.getElementById('cc-d-grupo').value)">Apagar</button>
       <button class="btn btn-secondary" onclick="closeModal('modal-cc-despesa')">Cancelar</button>
       <button class="btn btn-primary" onclick="ccSalvarDespesa()">Salvar Despesa</button>
@@ -5253,10 +5424,11 @@ const EMPRESA_KEY = 'stolf_empresa_ativa';
 // metas, perfis) são compartilhados entre todas as empresas.
 // Transferências ficam de fora: são movimentos entre contas próprias,
 // que são compartilhadas entre todas as empresas.
+// Cartões de crédito (cartoes / cartao_despesas) também ficam de fora:
+// são sempre vistos no consolidado e não pertencem a nenhuma empresa.
 const TABELAS_POR_EMPRESA = [
   'lancamentos','lancreceber','dfc_lancamentos',
-  'faturamento','recebimentos','pedidos_cancelados','reposicoes',
-  'cartoes','cartao_despesas'
+  'faturamento','recebimentos','pedidos_cancelados','reposicoes'
 ];
 
 function empresaAtual() {
@@ -5265,7 +5437,7 @@ function empresaAtual() {
 
 function empresaNome(id) {
   if (!id) return 'Consolidado';
-  const e = db.empresas.find(x => x.id === id);
+  const e = db.empresas.find(x => String(x.id) === String(id));
   return e ? (e.apelido || e.nome) : '(empresa removida)';
 }
 
@@ -5288,7 +5460,7 @@ function filtroEmpresaQuery(tabela) {
 // decidir se o registro deve continuar no array em memória.
 function pertenceEmpresaAtiva(empresa_id) {
   const atual = empresaAtual();
-  return !atual || empresa_id === atual;
+  return !atual || String(empresa_id) === String(atual);
 }
 
 // saveDB e loadDB agora são no-op — dados vão direto ao Supabase
@@ -5374,7 +5546,9 @@ async function loadAllData() {
       // 24/25 — Lançamentos das OUTRAS empresas: as contas bancárias são sempre
       // vistas no consolidado (saldo e extrato não mudam ao trocar de empresa).
       _fetchOutrasEmpresas('lancamentos', 'dtcompra'),
-      _fetchOutrasEmpresas('lancreceber', 'dtvenda')
+      _fetchOutrasEmpresas('lancreceber', 'dtvenda'),
+      // 26 — Várias formas de pagamento/recebimento por lançamento (tabela `config`)
+      sbFetch('config', 'GET', null, '?key=like.fpsplit:*&limit=10000')
     ]);
 
     const val = (i) => results[i].status === 'fulfilled' ? results[i].value : null;
@@ -5393,6 +5567,11 @@ async function loadAllData() {
     db._lrOutras    = val(25) || [];
     db.cartoes      = val(22) || [];
     db.cartao_despesas = val(23) || [];
+    fpSplits = {};
+    (val(26) || []).forEach(c => {
+      const k = String(c.key || '').slice('fpsplit:'.length);
+      try { const o = JSON.parse(c.value); if (k && o) fpSplits[k] = o; } catch(e) {}
+    });
     // Formas extras cadastradas pelo usuário (config key/value)
     formasPagExtra = []; formasRecebExtra = []; motivosCancelExtra = []; motivosRepoExtra = [];
     (val(14) || []).forEach(c => {
@@ -6477,11 +6656,36 @@ function popularSeletorEmpresa() {
   sel.innerHTML = '<option value="">🏢 Consolidado (todas)</option>' +
     empresasAtivas().map(e => `<option value="${e.id}">${e.apelido || e.nome}</option>`).join('');
   // Se a empresa salva não existe mais, volta para consolidado.
-  const existe = atual === '' || empresasAtivas().some(e => e.id === atual);
+  const existe = atual === '' || empresasAtivas().some(e => String(e.id) === String(atual));
   if (!existe) { try { localStorage.removeItem(EMPRESA_KEY); } catch(e) {} }
   sel.value = existe ? atual : '';
+  popularFiltrosEmpresaTela();
   pintarSeletorEmpresa();
   atualizarTagsEmpresa();
+}
+
+// Filtro "Empresa" das telas Lançamentos a Pagar / Contas a Pagar / Contas
+// Pagas: filtro simples sobre os lançamentos da tela, igual aos demais filtros.
+function popularFiltrosEmpresaTela() {
+  document.querySelectorAll('select.sel-empresa-filtro').forEach(f => {
+    const v = f.value;
+    f.innerHTML = '<option value="">Todas as empresas</option>' +
+      (db.empresas || []).map(e => `<option value="${e.id}">${e.apelido || e.nome}</option>`).join('') +
+      '<option value="__sem__">(Sem empresa)</option>';
+    f.value = [...f.options].some(o => o.value === v) ? v : '';
+    pintarFiltroEmpresa(f);
+  });
+}
+function pintarFiltroEmpresa(f) { if (f) f.classList.toggle('ativa', !!f.value); }
+function filtroEmpresaOk(empresaId, filtro) {
+  if (!filtro) return true;
+  if (filtro === '__sem__') return !empresaId;
+  return String(empresaId == null ? '' : empresaId) === String(filtro);
+}
+// Selo da empresa nas tabelas
+function empresaChipHtml(id) {
+  if (!id) return '<span style="color:#d6d3d1;font-size:12px">—</span>';
+  return `<span class="emp-chip">${esc(empresaNome(id))}</span>`;
 }
 
 // Etiqueta que aparece ao lado do título das telas de análise (DRE, DFC,
@@ -6584,7 +6788,7 @@ async function saveEmpresa() {
 }
 
 function editEmpresa(id) {
-  const e = db.empresas.find(x => x.id === id);
+  const e = db.empresas.find(x => String(x.id) === String(id));
   if (!e) return;
   document.getElementById('edit-emp-id').value = e.id;
   document.getElementById('edit-emp-nome').value = e.nome || '';
@@ -6596,7 +6800,7 @@ function editEmpresa(id) {
 
 async function updateEmpresa() {
   const id = document.getElementById('edit-emp-id').value;
-  const e = db.empresas.find(x => x.id === id);
+  const e = db.empresas.find(x => String(x.id) === String(id));
   if (!e) return;
   const nome = document.getElementById('edit-emp-nome').value.trim();
   if (!nome) { alert('Informe o nome da empresa.'); return; }
@@ -6621,7 +6825,7 @@ function contarRegistrosEmpresa(id) {
     db.faturamento, db.recebimentos, db.pedidos_cancelados, db.reposicoes
   ];
   return listas.reduce((tot, lista) =>
-    tot + (lista || []).filter(x => (x.empresa_id || '') === id).length, 0);
+    tot + (lista || []).filter(x => String(x.empresa_id || '') === String(id)).length, 0);
 }
 
 async function deleteEmpresa(id) {
@@ -6634,7 +6838,7 @@ async function deleteEmpresa(id) {
   }
   if (!confirm('Excluir esta empresa?')) return;
   await sbFetch('empresas', 'DELETE', null, `?id=eq.${id}`);
-  db.empresas = db.empresas.filter(x => x.id !== id);
+  db.empresas = db.empresas.filter(x => String(x.id) !== String(id));
   if (empresaAtual() === id) { try { localStorage.removeItem(EMPRESA_KEY); } catch(e) {} }
   popularSeletorEmpresa();
   populateEmpresaSelects();
@@ -6711,6 +6915,8 @@ async function saveLancamento() {
     alert('Você marcou este lançamento como Custo Fixo, mas nenhuma vigência foi incluída.\n\nPreencha o início da vigência e clique em "+ Incluir vigência".');
     return;
   }
+  const _fpResL = fpResultado('l-tipo-pag-split');
+  if (!_fpResL.ok) return;
   const empresa_id = empresaDoForm('l-empresa');
   if (empresa_id === null) return;
   const parcelas = parseInt(document.getElementById('l-parcelas').value)||1;
@@ -6724,7 +6930,7 @@ async function saveLancamento() {
     parcelas,
     financeiro: document.getElementById('l-financeiro').value,
     pago,
-    tipo_pag: document.getElementById('l-tipo-pag').value,
+    tipo_pag: _fpResL.lista ? FORMA_MISTA : (_fpResL.unica || document.getElementById('l-tipo-pag').value),
     banco,
     cat_dre: document.getElementById('l-catdre') ? document.getElementById('l-catdre').value : '',
     obs: document.getElementById('l-obs').value,
@@ -6738,6 +6944,7 @@ async function saveLancamento() {
   }
   const rL = await sbFetch('lancamentos', 'POST', lanc);
   if(!rL) { alert('❌ Erro ao salvar lançamento. Verifique sua conexão e tente novamente.'); return; }
+  if (_fpResL.lista && !(await fpSalvar('pagar', lanc.id, '*', _fpResL.lista))) alert('⚠️ O lançamento foi salvo, mas não foi possível gravar a divisão entre as formas de pagamento.' + sbErroMsg());
   if (ehCustoFixo) {
     const okCf = await cfSalvarNoBanco(lanc.id, true, _vigTemp.l);
     if (!okCf) alert('⚠ O lançamento foi salvo, mas as vigências do custo fixo não puderam ser gravadas.' + sbErroMsg());
@@ -6759,6 +6966,7 @@ function clearLancamento() {
   set('l-prod','');
   set('l-catdre','');
   set('l-tipo-pag','');
+  fpPreparar('l-tipo-pag-split', null);
   set('l-banco','');
   set('l-parcelas','1');
   set('l-financeiro','nao');
@@ -6790,9 +6998,11 @@ function renderLancamentos() {
   const valorMin = document.getElementById('lf-valor-min') ? parseFloat(document.getElementById('lf-valor-min').value) : NaN;
   const valorMax = document.getElementById('lf-valor-max') ? parseFloat(document.getElementById('lf-valor-max').value) : NaN;
   const nfL = document.getElementById('lf-nf') ? document.getElementById('lf-nf').value.trim().toLowerCase() : '';
+  const empLF = document.getElementById('lf-empresa') ? document.getElementById('lf-empresa').value : '';
   const tb = document.getElementById('tb-lancamentos');
 
   let list = db.lancamentos.filter(l => {
+    if (!filtroEmpresaOk(l.empresa_id, empLF)) return false;
     const parts = l.dtcompra.split('-');
     const ly = parseInt(parts[0]), lm = parseInt(parts[1]);
     if(mes && lm !== parseInt(mes)) return false;
@@ -6820,6 +7030,7 @@ function renderLancamentos() {
 
   const _catDeLanc = l => l.cat_dre || (l.prod ? ((db.produtos.find(x=>x.id===l.prod)||{}).cat) : null);
   const colsLanc = [
+    { key:'empresa', label:'Empresa', get:l=>l.empresa_id?empresaNome(l.empresa_id):null },
     { key:'dtcompra', label:'Data Competência', get:l=>l.dtcompra, display:l=>fmtDate(l.dtcompra) },
     { key:'forn', label:'Despesas/Fornecedor', get:l=>l.forn?getFornNome(l.forn):null },
     { key:'prod', label:'Item', get:l=>l.prod?getProdNome(l.prod):null },
@@ -6835,9 +7046,9 @@ function renderLancamentos() {
   ];
   list = efMount('lancamentos','th-lancamentos-row',colsLanc,list,renderLancamentos);
 
-  if(!list.length) { tb.innerHTML='<tr><td colspan="12" class="empty-state">Nenhum lançamento encontrado.</td></tr>'; return; }
+  if(!list.length) { tb.innerHTML='<tr><td colspan="13" class="empty-state">Nenhum lançamento encontrado.</td></tr>'; return; }
 
-  const _c = _cortarLista(list, 12);
+  const _c = _cortarLista(list, 13);
   tb.innerHTML = _c.aviso + _c.itens.map(l => {
     const refDate = l.dtprev || today();
     const lt = diffDias(l.dtcompra, refDate);
@@ -6848,6 +7059,7 @@ function renderLancamentos() {
     const catId = l.cat_dre || (prodObj ? prodObj.cat : null);
     const catCell = catId ? `<span class="badge badge-blue">${getDreCatNome(catId)}</span>` : '<span style="color:#d6d3d1;font-size:12px">—</span>';
     return `<tr>
+      <td>${empresaChipHtml(l.empresa_id)}</td>
       <td>${fmtDate(l.dtcompra)}</td>
       <td>${getFornNome(l.forn)}</td>
       <td>${l.cartao_fatura ? ccRotuloFatura(l.cartao_fatura) : (l.prod ? getProdNome(l.prod) : '—')}</td>
@@ -6868,7 +7080,7 @@ function renderLancamentos() {
 }
 
 function clearLancamentoFiltros() {
-  ['lf-mes','lf-ano','lf-forn','lf-grupo','lf-cat','lf-prod','lf-pago','lf-data','lf-data-de','lf-data-ate','lf-valor-min','lf-valor-max','lf-nf'].forEach(id=>{
+  ['lf-empresa','lf-mes','lf-ano','lf-forn','lf-grupo','lf-cat','lf-prod','lf-pago','lf-data','lf-data-de','lf-data-ate','lf-valor-min','lf-valor-max','lf-nf'].forEach(id=>{
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -6906,7 +7118,7 @@ function editLancamento(id) {
   ep.value = l.prod||'';
   populateDreCatSelects();
   const ecd = document.getElementById('edit-catdre');
-  if (ecd) ecd.value = l.cat_dre || '';
+  if (ecd) { ecd.innerHTML = _optsCatPorTipo('saida', l.cat_dre || ''); ecd.value = l.cat_dre || ''; }
   // Data do pagamento (só aparece quando o lançamento está como Pago)
   const edtp = document.getElementById('edit-dtpago');
   if (edtp) edtp.value = l.dtpago || '';
@@ -7060,6 +7272,7 @@ function _buildParcelas(lista) {
       const valParc = (manualValores[i-1] != null) ? manualValores[i-1] : (l.valor / n);
       const prodObjCat = l.prod ? db.produtos.find(x => x.id === l.prod) : null;
       const catId = l.cat_dre || (prodObjCat ? prodObjCat.cat : null) || '';
+      const _fpSp = fpDaParcela('pagar', l, i, valParc);
       parcelas.push({
         lancId: l.id,
         forn: l.forn,
@@ -7071,7 +7284,9 @@ function _buildParcelas(lista) {
         nf: l.nf,
         financeiro: l.financeiro,
         banco: l.banco || '',
-        tipoPag: l.tipo_pag || '',
+        tipoPag: _fpSp ? FORMA_MISTA : (l.tipo_pag || ''),
+        formasSplit: _fpSp,
+        empresaId: l.empresa_id || '',
         juros: l.juros ?? null,
         catId,
         parcIdx: i,
@@ -7639,7 +7854,8 @@ function renderApagar() {
   const grupoA = document.getElementById('af-grupo') ? document.getElementById('af-grupo').value : '';
   const catA = document.getElementById('af-categoria') ? document.getElementById('af-categoria').value : '';
   const tb = document.getElementById('tb-apagar');
-  let list = getParcelas(false);
+  const empAF = document.getElementById('af-empresa') ? document.getElementById('af-empresa').value : '';
+  let list = getParcelas(false).filter(p => filtroEmpresaOk(p.empresaId, empAF));
 
   const dataEspA = document.getElementById('af-data').value;
   const dataDeA = document.getElementById('af-data-de') ? document.getElementById('af-data-de').value : '';
@@ -7684,6 +7900,7 @@ function renderApagar() {
 
   // Colunas para o filtro/ordenação estilo Excel no cabeçalho da tabela
   const colsApagar = [
+    { key:'empresa', label:'Empresa', get:p=>p.empresaId?empresaNome(p.empresaId):null },
     { key:'forn', label:'Despesas/Fornecedor', get:p=>p.forn?getFornNome(p.forn):null },
     { key:'prod', label:'Item', get:p=>p.prod?getProdNome(p.prod):null },
     { key:'cat', label:'Categoria', get:p=>p.catId?getDreCatNome(p.catId):null },
@@ -7709,10 +7926,10 @@ function renderApagar() {
     <div class="card kpi"><div class="kpi-val" style="color:#dc2626">${vencidas}</div><div class="kpi-lbl">Vencidas</div></div>
     <div class="card kpi"><div class="kpi-val" style="color:#d97706">${semana}</div><div class="kpi-lbl">Vencem em 7 dias</div></div>`;
 
-  if(!list.length) { tb.innerHTML='<tr><td colspan="11" class="empty-state">Nenhuma parcela em aberto.</td></tr>'; return; }
+  if(!list.length) { tb.innerHTML='<tr><td colspan="12" class="empty-state">Nenhuma parcela em aberto.</td></tr>'; return; }
   if(!_efState('apagar').sortKey) list.sort((a,b)=>(a.venc||'9999-99-99').localeCompare(b.venc||'9999-99-99'));
   window._pdfLists = window._pdfLists || {}; window._pdfLists.apagar = list.slice();
-  const _c = _cortarLista(list, 10);
+  const _c = _cortarLista(list, 12);
   tb.innerHTML = _c.aviso + _c.itens.map(p => {
     const sit = situacaoParcela(p.venc);
     const finBadge = p.financeiro === 'sim' ? '<span class="badge badge-green">Sim</span>' : '<span class="badge badge-red">Não</span>';
@@ -7721,6 +7938,7 @@ function renderApagar() {
       ? `<span class="badge badge-blue" style="cursor:pointer" onclick="abrirEditarCategoriaPago('${p.lancId}','${p.catId}')" title="Clique para editar a categoria">${catNome} ✎</span>`
       : `<span class="badge badge-gray" style="cursor:pointer" onclick="abrirEditarCategoriaPago('${p.lancId}','')" title="Clique para definir a categoria">Sem categoria ✎</span>`;
     return `<tr>
+      <td>${empresaChipHtml(p.empresaId)}</td>
       <td>${getFornNome(p.forn)}</td>
       <td>${p.cartaoFatura ? ccRotuloFatura(p.cartaoFatura) : (p.prod ? getProdNome(p.prod) : '—')}</td>
       <td>${p.cartaoFatura ? '<span class="badge badge-cc">💳 Cartão de Crédito</span>' : catCell}</td>
@@ -7749,9 +7967,12 @@ function marcarPago(id, parcIdx) {
   document.getElementById('modal-pago-data').value = today();
   const selPagForma = document.getElementById('modal-pago-tipo-pag');
   const _tipoIniOk = ccEhFormaCartao(l.tipo_pag) ? '' : (l.tipo_pag || '');
-  selPagForma.innerHTML = _montarOptsFormas(getFormasPagamento().filter(f => !ccEhFormaCartao(f)), _tipoIniOk, '+ Cadastrar nova forma de pagamento...');
-  selPagForma.value = _tipoIniOk;
+  const _tipoIniPag = _tipoIniOk === FORMA_MISTA ? '' : _tipoIniOk;
+  selPagForma.innerHTML = _montarOptsFormas(getFormasPagamento().filter(f => !ccEhFormaCartao(f)), _tipoIniPag, '+ Cadastrar nova forma de pagamento...');
+  selPagForma.disabled = false;
+  selPagForma.value = _tipoIniPag;
   document.getElementById('modal-pago-banco').value = l.banco || '';
+  fpPreparar('modal-pago-split', fpGet('pagar', id, parcIdx || 1));
   openModal('modal-pago');
 }
 
@@ -7774,9 +7995,11 @@ async function confirmarPago() {
   const parcIdx = parseInt(document.getElementById('modal-pago-parc').value) || 1;
   const dtpago = document.getElementById('modal-pago-data').value;
   const banco = document.getElementById('modal-pago-banco').value;
-  const tipoPag = document.getElementById('modal-pago-tipo-pag').value;
+  const _fpRes = fpResultado('modal-pago-split');
+  if (!_fpRes.ok) return;
+  const tipoPag = _fpRes.lista ? FORMA_MISTA : (_fpRes.unica || document.getElementById('modal-pago-tipo-pag').value);
   if(!dtpago) { alert('Informe a data do pagamento.'); return; }
-  if (ccEhFormaCartao(tipoPag)) { ccPagarContaComCartao(); return; }
+  if (!_fpRes.lista && ccEhFormaCartao(tipoPag)) { ccPagarContaComCartao(); return; }
   if(!banco) { alert('Selecione o banco/conta de onde o valor foi pago.'); return; }
   const l = db.lancamentos.find(x=>x.id===id);
   if(!l) return;
@@ -7810,6 +8033,7 @@ async function confirmarPago() {
     alert('❌ Não foi possível salvar o pagamento no banco de dados.' + sbErroMsg());
     return;
   }
+  if (!(await fpSalvar('pagar', id, parcIdx, _fpRes.lista))) alert('⚠️ O pagamento foi salvo, mas não foi possível gravar a divisão entre as formas de pagamento.' + sbErroMsg());
 
   closeModal('modal-pago'); renderApagar(); renderPagas();
 }
@@ -8454,6 +8678,7 @@ async function estornarPago(id, parcIdx) {
     alert('❌ Não foi possível desfazer o pagamento no banco de dados.' + sbErroMsg());
     return;
   }
+  if (fpGet('pagar', id, parcIdx)) await fpSalvar('pagar', id, parcIdx, null);
 
   renderPagas(); renderApagar();
 }
@@ -8568,7 +8793,7 @@ async function migrarRecebimentosAntigos() {
 }
 
 function clearApagarFiltros() {
-  ['af-mes','af-ano','af-forn','af-prod','af-grupo','af-categoria','af-data','af-data-de','af-data-ate','af-valor-min','af-valor-max','af-situacao','af-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['af-empresa','af-mes','af-ano','af-forn','af-prod','af-grupo','af-categoria','af-data','af-data-de','af-data-ate','af-valor-min','af-valor-max','af-situacao','af-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   renderApagar();
 }
 
@@ -8590,7 +8815,8 @@ function renderPagas() {
   const nfPG = document.getElementById('pgf-nf') ? document.getElementById('pgf-nf').value.trim().toLowerCase() : '';
   const tb = document.getElementById('tb-pagas');
   const _ccOrig = ccOrigensSet();
-  let list = getParcelas(true).filter(p => !_ccOrig.has(`${p.lancId}|${p.parcIdx}`));
+  const empPG = document.getElementById('pgf-empresa') ? document.getElementById('pgf-empresa').value : '';
+  let list = getParcelas(true).filter(p => !_ccOrig.has(`${p.lancId}|${p.parcIdx}`) && filtroEmpresaOk(p.empresaId, empPG));
 
   list = list.filter(p => {
     if(forn && p.forn !== forn) return false;
@@ -8606,7 +8832,7 @@ function renderPagas() {
     if(dataCompra && p.dtcompra !== dataCompra) return false;
     if(tipoPagF) {
       if (tipoPagF === '__sem_forma__') { if (p.tipoPag) return false; }
-      else if (p.tipoPag !== tipoPagF) return false;
+      else if (!fpCasaForma(p, tipoPagF)) return false;
     }
     if(!dataVenc && !dataPago && !dataCompra) {
       const dateRef = p.venc || p.dtcompra;
@@ -8622,6 +8848,7 @@ function renderPagas() {
 
   // Colunas para o filtro/ordenação estilo Excel no cabeçalho da tabela
   const colsPagas = [
+    { key:'empresa', label:'Empresa', get:p=>p.empresaId?empresaNome(p.empresaId):null },
     { key:'forn', label:'Despesas/Fornecedor', get:p=>p.forn?getFornNome(p.forn):null },
     { key:'prod', label:'Item', get:p=>p.prod?getProdNome(p.prod):null },
     { key:'cat', label:'Categoria', get:p=>p.catId?getDreCatNome(p.catId):null },
@@ -8650,10 +8877,10 @@ function renderPagas() {
     <div class="card kpi"><div class="kpi-val">${totalQuitados}</div><div class="kpi-lbl">Lançamentos quitados</div></div>
     <div class="card kpi"><div class="kpi-val">${totalEmAberto}</div><div class="kpi-lbl">Lançamentos em aberto</div></div>`;
 
-  if(!list.length) { tb.innerHTML='<tr><td colspan="13" class="empty-state">Nenhuma parcela paga.</td></tr>'; return; }
+  if(!list.length) { tb.innerHTML='<tr><td colspan="14" class="empty-state">Nenhuma parcela paga.</td></tr>'; return; }
   if(!_efState('pagas').sortKey) list.sort((a,b)=>(b.venc||'').localeCompare(a.venc||''));
   window._pdfLists = window._pdfLists || {}; window._pdfLists.pagas = list.slice();
-  const _c = _cortarLista(list, 13);
+  const _c = _cortarLista(list, 14);
   tb.innerHTML = _c.aviso + _c.itens.map(p=>{
     const finBadge = p.financeiro==='sim' ? '<span class="badge badge-green">Sim</span>' : '<span class="badge badge-red">Não</span>';
     const dtpagoCell = p.dtpago
@@ -8664,6 +8891,7 @@ function renderPagas() {
       ? `<span class="badge badge-blue" style="cursor:pointer" onclick="abrirEditarCategoriaPago('${p.lancId}','${p.catId}')" title="Clique para editar a categoria">${catNome} ✎</span>`
       : `<span class="badge badge-gray" style="cursor:pointer" onclick="abrirEditarCategoriaPago('${p.lancId}','')" title="Clique para definir a categoria">Sem categoria ✎</span>`;
     return `<tr>
+      <td>${empresaChipHtml(p.empresaId)}</td>
       <td>${getFornNome(p.forn)}</td>
       <td>${p.cartaoFatura ? ccRotuloFatura(p.cartaoFatura) : (p.prod ? getProdNome(p.prod) : '—')}</td>
       <td>${p.cartaoFatura ? '<span class="badge badge-cc">💳 Cartão de Crédito</span>' : catCell}</td>
@@ -8672,7 +8900,7 @@ function renderPagas() {
       <td>${fmtDate(p.venc)}</td>
       <td>${fmtDate(p.dtcompra)}</td>
       <td>${dtpagoCell}</td>
-      <td>${p.tipoPag ? `<span class="badge badge-blue">${p.tipoPag}</span>` : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
+      <td>${fpBadgeHtml(p)}</td>
       <td>${p.banco ? getBancoNome(p.banco) : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
       <td style="font-family:DM Mono,monospace;font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
@@ -8682,7 +8910,7 @@ function renderPagas() {
 }
 
 function clearPagasFiltros() {
-  ['pgf-mes','pgf-ano','pgf-forn','pgf-prod','pgf-grupo','pgf-categoria','pgf-data-venc','pgf-data-pago','pgf-data-compra','pgf-tipo-pag','pgf-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['pgf-empresa','pgf-mes','pgf-ano','pgf-forn','pgf-prod','pgf-grupo','pgf-categoria','pgf-data-venc','pgf-data-pago','pgf-data-compra','pgf-tipo-pag','pgf-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   renderPagas();
 }
 
@@ -8707,7 +8935,7 @@ async function saveFaturamento() {
   if(!mes || !val) { alert('Informe o mês e o valor.'); return; }
   const empresa_id = exigirEmpresaAtiva('o faturamento');
   if (!empresa_id) return;
-  const exist = db.faturamento.find(x=>x.mes===mes && (x.empresa_id||'')===empresa_id);
+  const exist = db.faturamento.find(x=>x.mes===mes && String(x.empresa_id||'')===String(empresa_id));
   if(exist) {
     exist.val = val;
     await sbFetch('faturamento', 'PATCH', {valor:val}, `?mes=eq.${mes}&empresa_id=eq.${encodeURIComponent(empresa_id)}`);
@@ -8726,7 +8954,7 @@ async function saveRecebimento() {
   if(!mes || !val) { alert('Informe o mês e o valor.'); return; }
   const empresa_id = exigirEmpresaAtiva('o recebimento');
   if (!empresa_id) return;
-  const exist = db.recebimentos.find(x=>x.mes===mes && (x.empresa_id||'')===empresa_id);
+  const exist = db.recebimentos.find(x=>x.mes===mes && String(x.empresa_id||'')===String(empresa_id));
   if(exist) {
     exist.val = val;
     await sbFetch('recebimentos', 'PATCH', {valor:val}, `?mes=eq.${mes}&empresa_id=eq.${encodeURIComponent(empresa_id)}`);
@@ -10284,6 +10512,11 @@ function _agruparPorForma(parcelas, campoData, ano, mesFiltro) {
     const partes = d.split('-');
     if (parseInt(partes[0]) !== ano) return;
     if (mesFiltro && parseInt(partes[1]) !== mesFiltro) return;
+    // Parcela paga com várias formas: cada forma recebe a sua parte
+    if (p.formasSplit && p.formasSplit.length) {
+      p.formasSplit.forEach(x => mapa.set(x.forma, (mapa.get(x.forma) || 0) + (Number(x.valor) || 0)));
+      return;
+    }
     const forma = p.tipoPag || '(Sem forma informada)';
     mapa.set(forma, (mapa.get(forma) || 0) + (p.valParc || 0));
   });
@@ -11087,10 +11320,12 @@ function _buildParcelasReceber(lista) {
       // Pagar): evita que marcar 1 parcela como recebida afete as demais.
       const isRecebido = n > 1 ? (pagos[i-1] === true) : (l.recebido === 'sim');
       const dtrecebido = n > 1 ? (dtpagos[i-1] || '') : (l.dtrecebido || '');
+      const _fpSp = fpDaParcela('receber', l, i, valParc);
       parcelas.push({
         lancId:l.id, cliente:l.cliente, prod:l.prod, valParc, venc,
         dtvenda:l.dtvenda, dtrecebido, catId,
-        nf:l.nf, financeiro:l.financeiro, banco: l.banco || '', tipoPag: l.tipo_pag || '',
+        nf:l.nf, financeiro:l.financeiro, banco: l.banco || '', tipoPag: _fpSp ? FORMA_MISTA : (l.tipo_pag || ''),
+        formasSplit: _fpSp, empresaId: l.empresa_id || '',
         parcIdx:i, totalParc:n,
         isRecebido
       });
@@ -11275,6 +11510,8 @@ async function saveLancReceber() {
   if (!validarBancoObrigatorio(recebido, banco)) return;
   const dtrecebidoNovo = campoValor('lr-dtrecebido');
   if (!validarDataRecebimentoObrigatoria(recebido, dtrecebidoNovo, 'lr-dtrecebido')) return;
+  const _fpResLR = fpResultado('lr-tipo-pag-split');
+  if (!_fpResLR.ok) return;
   const empresa_id = empresaDoForm('lr-empresa');
   if (empresa_id === null) return;
   const parcelas=parseInt(document.getElementById('lr-parcelas').value)||1;
@@ -11285,7 +11522,7 @@ async function saveLancReceber() {
     valor, parcelas,
     financeiro:document.getElementById('lr-financeiro').value,
     recebido,
-    tipo_pag:document.getElementById('lr-tipo-pag').value,
+    tipo_pag: _fpResLR.lista ? FORMA_MISTA : (_fpResLR.unica || document.getElementById('lr-tipo-pag').value),
     banco,
     cat_dre: document.getElementById('lr-catdre') ? document.getElementById('lr-catdre').value : '',
     juros:parseFloat(document.getElementById('lr-juros').value)||null,
@@ -11298,6 +11535,7 @@ async function saveLancReceber() {
   }
   const rLR = await sbFetch('lancreceber','POST',lanc);
   if(!rLR) { alert('❌ Erro ao salvar lançamento. Verifique sua conexão e tente novamente.'); return; }
+  if (_fpResLR.lista && !(await fpSalvar('receber', lanc.id, '*', _fpResLR.lista))) alert('⚠️ O lançamento foi salvo, mas não foi possível gravar a divisão entre as formas de recebimento.' + sbErroMsg());
   const pertence = pertenceEmpresaAtiva(lanc.empresa_id);
   if (pertence) db.lancreceber.push(lanc);
   clearLancReceber(); closeModal('modal-novo-lr'); renderLancReceber(); renderAReceber(); renderRecebido();
@@ -11314,6 +11552,7 @@ function clearLancReceber() {
   set('lr-financeiro','nao');
   set('lr-recebido','nao');
   set('lr-tipo-pag','');
+  fpPreparar('lr-tipo-pag-split', null);
   set('lr-banco','');
   try { set('lr-empresa', empresaAtual() || ''); } catch(e) { set('lr-empresa',''); }
   set('lr-dtrecebido','');
@@ -11335,8 +11574,10 @@ function renderLancReceber() {
   const valorMax = document.getElementById('lrf-valor-max') ? parseFloat(document.getElementById('lrf-valor-max').value) : NaN;
   const nfLR = document.getElementById('lrf-nf') ? document.getElementById('lrf-nf').value.trim().toLowerCase() : '';
   const tipoDocLR = document.getElementById('lrf-tipodoc') ? document.getElementById('lrf-tipodoc').value : '';
+  const empLRF = document.getElementById('lrf-empresa') ? document.getElementById('lrf-empresa').value : '';
   const tb=document.getElementById('tb-lancreceber');
   let list=db.lancreceber.filter(l=>{
+    if (!filtroEmpresaOk(l.empresa_id, empLRF)) return false;
     // Os campos de data (Específica/De/Até) filtram pela Data da Venda ou pelo
     // Vencimento (Prev. Receb.), conforme o seletor "Filtrar Data Por".
     const dataRef = tipoDataLR==='vencimento' ? (l.dtprev||'') : (l.dtvenda||l.dtcompra||'');
@@ -11360,6 +11601,7 @@ function renderLancReceber() {
   });
   const _catDeVenda = l => l.cat_dre || (l.prod ? ((db.prodvenda.find(x=>x.id===l.prod)||{}).cat) : null);
   const colsLR = [
+    { key:'empresa', label:'Empresa', get:l=>l.empresa_id?empresaNome(l.empresa_id):null },
     { key:'dtvenda', label:'Data da Competência', get:l=>l.dtvenda||l.dtcompra, display:l=>fmtDate(l.dtvenda||l.dtcompra) },
     { key:'cliente', label:'Cliente', get:l=>getClienteNome(l.cliente) },
     { key:'prod', label:'Produto', get:l=>l.prod?getProdVendaNome(l.prod):null },
@@ -11374,8 +11616,8 @@ function renderLancReceber() {
   ];
   list = efMount('lancreceber','th-lancreceber-row',colsLR,list,renderLancReceber);
   window._pdfLists = window._pdfLists || {}; window._pdfLists.lancreceber = list.slice();
-  if(!list.length){ tb.innerHTML='<tr><td colspan="11" class="empty-state">Nenhum lançamento encontrado.</td></tr>'; return; }
-  const _c = _cortarLista(list, 11);
+  if(!list.length){ tb.innerHTML='<tr><td colspan="12" class="empty-state">Nenhum lançamento encontrado.</td></tr>'; return; }
+  const _c = _cortarLista(list, 12);
   tb.innerHTML = _c.aviso + _c.itens.map(l=>{
     const finBadge=l.financeiro==='sim'?'<span class="badge badge-green">Sim</span>':'<span class="badge badge-red">Não</span>';
     const recBadge=l.recebido==='sim'?'<span class="badge badge-green">Recebido</span>':'<span class="badge badge-yellow">Pendente</span>';
@@ -11383,6 +11625,7 @@ function renderLancReceber() {
     const catId = l.cat_dre || (prodObj ? prodObj.cat : null);
     const catCell = catId ? `<span class="badge badge-blue">${getDreCatNome(catId)}</span>` : '<span style="color:#d6d3d1;font-size:12px">—</span>';
     return `<tr>
+      <td>${empresaChipHtml(l.empresa_id)}</td>
       <td>${fmtDate(l.dtvenda||l.dtcompra)}</td>
       <td>${getClienteNome(l.cliente)}</td>
       <td>${l.prod?getProdVendaNome(l.prod):'—'}</td>
@@ -11401,7 +11644,7 @@ function renderLancReceber() {
   }).join('');
 }
 function clearLancReceberFiltros() {
-  ['lrf-mes','lrf-ano','lrf-cliente','lrf-recebido','lrf-categoria','lrf-data','lrf-data-de','lrf-data-ate','lrf-valor-min','lrf-valor-max','lrf-nf','lrf-tipodoc'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['lrf-empresa','lrf-mes','lrf-ano','lrf-cliente','lrf-recebido','lrf-categoria','lrf-data','lrf-data-de','lrf-data-ate','lrf-valor-min','lrf-valor-max','lrf-nf','lrf-tipodoc'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   const tipoDataEl = document.getElementById('lrf-tipo-data'); if (tipoDataEl) tipoDataEl.value = 'venda';
   renderLancReceber();
 }
@@ -11430,7 +11673,7 @@ function editLancReceber(id) {
   ep.value=l.prod||'';
   populateDreCatSelects();
   const ecd = document.getElementById('elr-catdre');
-  if (ecd) ecd.value = l.cat_dre || '';
+  if (ecd) { ecd.innerHTML = _optsCatPorTipo('entrada', l.cat_dre || ''); ecd.value = l.cat_dre || ''; }
   // Populate manual parcela dates if present
   if (l.parcelas > 1) {
     toggleParcelaDates('elr-parcelas', 'elr-parcela-dates');
@@ -11580,7 +11823,8 @@ function renderAReceber() {
   const tipoRecF=document.getElementById('arf-tipo-pag') ? document.getElementById('arf-tipo-pag').value : '';
   const nfAR=document.getElementById('arf-nf') ? document.getElementById('arf-nf').value.trim().toLowerCase() : '';
   const tb=document.getElementById('tb-areceber');
-  let list=getParcelasReceber(false);
+  const empARF = document.getElementById('arf-empresa') ? document.getElementById('arf-empresa').value : '';
+  let list=getParcelasReceber(false).filter(p => filtroEmpresaOk(p.empresaId, empARF));
   list=list.filter(p=>{
     if(cliente && p.cliente!==cliente) return false;
     if(catFiltroR){ if(catFiltroR==='__sem_categoria__'){ if(p.catId) return false; } else if(p.catId!==catFiltroR) return false; }
@@ -11605,13 +11849,14 @@ function renderAReceber() {
     }
     if(tipoRecF) {
       if (tipoRecF === '__sem_forma__') { if (p.tipoPag) return false; }
-      else if (p.tipoPag !== tipoRecF) return false;
+      else if (!fpCasaForma(p, tipoRecF)) return false;
     }
     if(nfAR && !String(p.nf||'').toLowerCase().includes(nfAR)) return false;
     return true;
   });
   // Colunas para o filtro/ordenação estilo Excel no cabeçalho da tabela
   const colsAReceber = [
+    { key:'empresa', label:'Empresa', get:p=>p.empresaId?empresaNome(p.empresaId):null },
     { key:'cliente', label:'Cliente', get:p=>getClienteNome(p.cliente) },
     { key:'prod', label:'Produto', get:p=>p.prod?getProdVendaNome(p.prod):null },
     { key:'categoria', label:'Categoria', get:p=>p.catId?getDfcCatNome(p.catId):null },
@@ -11640,10 +11885,10 @@ function renderAReceber() {
     <div class="card kpi"><div class="kpi-val" style="color:#16a34a">${fmtBRL(total)}</div><div class="kpi-lbl">Total a receber</div></div>
     <div class="card kpi"><div class="kpi-val" style="color:#dc2626">${fmtBRL(totalComJuros)}</div><div class="kpi-lbl">Total c/ Juros</div></div>
     <div class="card kpi"><div class="kpi-val" style="color:#d97706">${vencidas}</div><div class="kpi-lbl">Vencidas</div></div>`;
-  if(!list.length){ tb.innerHTML='<tr><td colspan="14" class="empty-state">Nenhuma parcela em aberto.</td></tr>'; return; }
+  if(!list.length){ tb.innerHTML='<tr><td colspan="15" class="empty-state">Nenhuma parcela em aberto.</td></tr>'; return; }
   if(!_efState('areceber').sortKey) list.sort((a,b)=>(a.venc||'9999').localeCompare(b.venc||'9999'));
   window._pdfLists = window._pdfLists || {}; window._pdfLists.areceber = list.slice();
-  const _c = _cortarLista(list, 14);
+  const _c = _cortarLista(list, 15);
   tb.innerHTML = _c.aviso + _c.itens.map(p=>{
     const sit=situacaoParcela(p.venc);
     const finBadge=p.financeiro==='sim'?'<span class="badge badge-green">Sim</span>':'<span class="badge badge-red">Não</span>';
@@ -11657,6 +11902,7 @@ function renderAReceber() {
       ? `<strong style="color:#dc2626;font-family:DM Mono,monospace">${fmtBRL(totalComJuros)}</strong>`
       : `<span style="font-family:DM Mono,monospace">${fmtBRL(p.valParc)}</span>`;
     return `<tr>
+      <td>${empresaChipHtml(p.empresaId)}</td>
       <td>${getClienteNome(p.cliente)}</td>
       <td>${p.prod?getProdVendaNome(p.prod):'—'}</td>
       <td>${p.catId?'<span class="badge badge-blue">'+getDfcCatNome(p.catId)+'</span>':'<span style="color:#a8a29e">—</span>'}</td>
@@ -11667,7 +11913,7 @@ function renderAReceber() {
       <td style="font-size:12px;color:#57534e">${fmtDate(p.dtvenda)}</td>
       <td>${fmtDate(p.venc)}</td>
       <td><span class="badge ${sit.cls}">${sit.label}</span></td>
-      <td>${p.tipoPag ? `<span class="badge badge-blue">${p.tipoPag}</span>` : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
+      <td>${fpBadgeHtml(p)}</td>
       <td style="font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
       <td class="actions">
@@ -11687,7 +11933,7 @@ function _parcialAReceber(p) {
   return `<br><small style="color:#16a34a;font-size:11px">recebido ${fmtBRL(pago)} · saldo ${fmtBRL(saldo)}</small>`;
 }
 function clearAReceberFiltros() {
-  ['arf-mes','arf-ano','arf-cliente','arf-categoria','arf-data','arf-data-de','arf-data-ate','arf-valor-min','arf-valor-max','arf-situacao','arf-tipo-pag','arf-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['arf-empresa','arf-mes','arf-ano','arf-cliente','arf-categoria','arf-data','arf-data-de','arf-data-ate','arf-valor-min','arf-valor-max','arf-situacao','arf-tipo-pag','arf-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   renderAReceber();
 }
 function marcarRecebido(id, parcIdx) {
@@ -11696,9 +11942,12 @@ function marcarRecebido(id, parcIdx) {
   document.getElementById('modal-recebido-parc').value=parcIdx || 1;
   document.getElementById('modal-recebido-data').value=today();
   const selRecForma = document.getElementById('modal-recebido-tipo-pag');
-  selRecForma.innerHTML = _montarOptsFormas(getFormasRecebimento(), l.tipo_pag || '', '+ Cadastrar nova forma de recebimento...');
-  selRecForma.value = l.tipo_pag || '';
+  const _tipoIniRec = (l.tipo_pag || '') === FORMA_MISTA ? '' : (l.tipo_pag || '');
+  selRecForma.innerHTML = _montarOptsFormas(getFormasRecebimento(), _tipoIniRec, '+ Cadastrar nova forma de recebimento...');
+  selRecForma.disabled = false;
+  selRecForma.value = _tipoIniRec;
   document.getElementById('modal-recebido-banco').value=l.banco || '';
+  fpPreparar('modal-recebido-split', fpGet('receber', id, parcIdx || 1));
   openModal('modal-recebido');
 }
 function usarVencimentoReceber() {
@@ -11711,7 +11960,9 @@ async function confirmarRecebido() {
   const parcIdx = parseInt(document.getElementById('modal-recebido-parc').value) || 1;
   const dtrecebido=document.getElementById('modal-recebido-data').value;
   const banco=document.getElementById('modal-recebido-banco').value;
-  const tipoPag=document.getElementById('modal-recebido-tipo-pag').value;
+  const _fpRes = fpResultado('modal-recebido-split');
+  if (!_fpRes.ok) return;
+  const tipoPag = _fpRes.lista ? FORMA_MISTA : (_fpRes.unica || document.getElementById('modal-recebido-tipo-pag').value);
   if(!dtrecebido){ alert('Informe a data do recebimento.'); return; }
   if(!banco){ alert('Selecione o banco/conta em que o valor foi recebido.'); return; }
   const l=db.lancreceber.find(x=>x.id===id); if(!l) return;
@@ -11741,6 +11992,7 @@ async function confirmarRecebido() {
     alert('❌ Não foi possível salvar o recebimento no banco de dados.' + sbErroMsg());
     return;
   }
+  if (!(await fpSalvar('receber', id, parcIdx, _fpRes.lista))) alert('⚠️ O recebimento foi salvo, mas não foi possível gravar a divisão entre as formas de recebimento.' + sbErroMsg());
 
   closeModal('modal-recebido'); renderAReceber(); renderCobranca(); renderRecebido(); renderDashboard();
 }
@@ -11766,6 +12018,7 @@ async function estornarRecebido(id, parcIdx) {
     alert('❌ Não foi possível desfazer o recebimento no banco de dados.' + sbErroMsg());
     return;
   }
+  if (fpGet('receber', id, parcIdx)) await fpSalvar('receber', id, parcIdx, null);
 
   renderRecebido(); renderAReceber(); renderCobranca(); renderDashboard();
 }
@@ -11785,7 +12038,8 @@ function renderRecebido() {
   const tipoRecFR=document.getElementById('recf-tipo-pag') ? document.getElementById('recf-tipo-pag').value : '';
   const nfREC=document.getElementById('recf-nf') ? document.getElementById('recf-nf').value.trim().toLowerCase() : '';
   const tb=document.getElementById('tb-recebido');
-  let list=getParcelasReceber(true);
+  const empRECF = document.getElementById('recf-empresa') ? document.getElementById('recf-empresa').value : '';
+  let list=getParcelasReceber(true).filter(p => filtroEmpresaOk(p.empresaId, empRECF));
   list=list.filter(p=>{
     if(cliente && p.cliente!==cliente) return false;
     if(catFiltroREC){ if(catFiltroREC==='__sem_categoria__'){ if(p.catId) return false; } else if(p.catId!==catFiltroREC) return false; }
@@ -11794,7 +12048,7 @@ function renderRecebido() {
     if(dataVenda && p.dtvenda !== dataVenda) return false;
     if(tipoRecFR) {
       if (tipoRecFR === '__sem_forma__') { if (p.tipoPag) return false; }
-      else if (p.tipoPag !== tipoRecFR) return false;
+      else if (!fpCasaForma(p, tipoRecFR)) return false;
     }
     if(nfREC && !String(p.nf||'').toLowerCase().includes(nfREC)) return false;
     if(!dataVenc && !dataRec && !dataVenda) {
@@ -11816,6 +12070,7 @@ function renderRecebido() {
     <div class="card kpi"><div class="kpi-val">${totalRecRecebidos}</div><div class="kpi-lbl">Lançamentos quitados</div></div>
     <div class="card kpi"><div class="kpi-val">${totalEmAberto}</div><div class="kpi-lbl">Lançamentos em aberto</div></div>`;
   const colsRec = [
+    { key:'empresa', label:'Empresa', get:p=>p.empresaId?empresaNome(p.empresaId):null },
     { key:'cliente', label:'Cliente', get:p=>getClienteNome(p.cliente) },
     { key:'prod', label:'Produto', get:p=>p.prod?getProdVendaNome(p.prod):null },
     { key:'categoria', label:'Categoria', get:p=>p.catId?getDfcCatNome(p.catId):null },
@@ -11830,16 +12085,17 @@ function renderRecebido() {
     { key:'acoes', label:'Ações', get:()=>'', noFilter:true }
   ];
   list = efMount('recebido','th-recebido-row',colsRec,list,renderRecebido);
-  if(!list.length){ tb.innerHTML='<tr><td colspan="12" class="empty-state">Nenhum recebimento registrado.</td></tr>'; return; }
+  if(!list.length){ tb.innerHTML='<tr><td colspan="13" class="empty-state">Nenhum recebimento registrado.</td></tr>'; return; }
   if(!_efState('recebido').sortKey) list.sort((a,b)=>(b.venc||'').localeCompare(a.venc||''));
   window._pdfLists = window._pdfLists || {}; window._pdfLists.recebido = list.slice();
-  const _c = _cortarLista(list, 12);
+  const _c = _cortarLista(list, 13);
   tb.innerHTML = _c.aviso + _c.itens.map(p=>{
     const finBadge=p.financeiro==='sim'?'<span class="badge badge-green">Sim</span>':'<span class="badge badge-red">Não</span>';
     const dtrecCell=p.dtrecebido
       ?`<span style="font-family:DM Mono,monospace;font-size:12px;color:#16a34a;font-weight:600">${fmtDate(p.dtrecebido)}</span>`
       :'<span style="color:#a8a29e;font-size:12px">—</span>';
     return `<tr>
+      <td>${empresaChipHtml(p.empresaId)}</td>
       <td>${getClienteNome(p.cliente)}</td>
       <td>${p.prod?getProdVendaNome(p.prod):'—'}</td>
       <td>${p.catId?'<span class="badge badge-blue">'+getDfcCatNome(p.catId)+'</span>':'<span style="color:#a8a29e">—</span>'}</td>
@@ -11848,7 +12104,7 @@ function renderRecebido() {
       <td>${fmtDate(p.venc)}</td>
       <td>${fmtDate(p.dtvenda)}</td>
       <td>${dtrecCell}</td>
-      <td>${p.tipoPag ? `<span class="badge badge-blue">${p.tipoPag}</span>` : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
+      <td>${fpBadgeHtml(p)}</td>
       <td style="font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
       <td class="actions"><button class="btn btn-danger btn-sm" onclick="estornarRecebido('${p.lancId}', ${p.parcIdx})" title="Desfazer recebimento">↩ Estornar</button>${p.totalParc>1?`<button class="btn btn-danger btn-sm" onclick="excluirParcela('receber','${p.lancId}',${p.parcIdx})" title="Excluir somente esta parcela">✕ Parcela</button>`:''}</td>
@@ -11856,7 +12112,7 @@ function renderRecebido() {
   }).join('');
 }
 function clearRecebidoFiltros() {
-  ['recf-mes','recf-ano','recf-cliente','recf-categoria','recf-data-venc','recf-data-rec','recf-data-venda','recf-tipo-pag','recf-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['recf-empresa','recf-mes','recf-ano','recf-cliente','recf-categoria','recf-data-venc','recf-data-rec','recf-data-venda','recf-tipo-pag','recf-nf'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   renderRecebido();
 }
 
@@ -12731,14 +12987,26 @@ function dreSinalCat(catId, grupoId) {
 
 // Popula o select "Categoria" nos lançamentos a pagar/receber com as
 // Categorias já cadastradas em DFC → Categorias (mesma lista, sem duplicidade)
+// Lançamentos a Pagar só mostram categorias de DESPESA (saída) e
+// Lançamentos a Receber só de RECEITA (entrada). A categoria já gravada num
+// lançamento antigo continua aparecendo para não sumir da edição.
+function catTipoLanc(c) {
+  if (!c) return '';
+  if (c.tipo === 'entrada' || c.tipo === 'saida') return c.tipo;
+  return getDfcGrupoTipo(c.grupo);
+}
+function _optsCatPorTipo(tipo, atual, rotuloVazio) {
+  return `<option value="">${rotuloVazio || 'Nenhuma'}</option>` +
+    db.dfc_cats.filter(c => catTipoLanc(c) === tipo || c.id === atual)
+      .slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || ''))
+      .map(cat => `<option value="${cat.id}">${cat.nome} (${getDreGrupoNome(cat.grupo)})</option>`).join('');
+}
 function populateDreCatSelects() {
-  const opts = '<option value="">Nenhuma</option>' +
-    db.dfc_cats.map(cat => `<option value="${cat.id}">${cat.nome} (${getDreGrupoNome(cat.grupo)})</option>`).join('');
-  ['l-catdre','edit-catdre','lr-catdre','elr-catdre'].forEach(id => {
+  [['l-catdre','saida'],['edit-catdre','saida'],['lr-catdre','entrada'],['elr-catdre','entrada']].forEach(([id, tipo]) => {
     const el = document.getElementById(id);
     if (!el) return;
     const val = el.value;
-    el.innerHTML = opts;
+    el.innerHTML = _optsCatPorTipo(tipo, val);
     if (val) el.value = val;
   });
   // Filtros de Grupo/Categoria em Lançamentos, Contas a Pagar e Contas Pagas
@@ -12747,23 +13015,23 @@ function populateDreCatSelects() {
 
 // ── Filtros de Grupo/Categoria (Lançamentos, Contas a Pagar, Contas Pagas) ──
 // Popula um <select> de "Grupo" com os grupos Entrada/Saída cadastrados no DRE.
-function popularSelectGrupoFiltro(id) {
+function popularSelectGrupoFiltro(id, tipo) {
   const el = document.getElementById(id);
   if (!el) return;
   const val = el.value;
-  const grupos = [...db.dre_grupos].filter(g => g.tipo === 'entrada' || g.tipo === 'saida').sort((a,b)=>(a.ordem||0)-(b.ordem||0));
+  const grupos = [...db.dre_grupos].filter(g => tipo ? g.tipo === tipo : (g.tipo === 'entrada' || g.tipo === 'saida')).sort((a,b)=>(a.ordem||0)-(b.ordem||0));
   el.innerHTML = '<option value="">Todos</option>' + grupos.map(g => `<option value="${g.id}">${g.nome}</option>`).join('');
   if (val) el.value = val;
 }
 // Popula um <select> de "Categoria", restrito ao Grupo selecionado (se houver),
 // para cascatear os dois filtros — igual à Análise por Categoria.
-function popularSelectCategoriaFiltro(catSelId, grupoSelId) {
+function popularSelectCategoriaFiltro(catSelId, grupoSelId, tipo) {
   const catEl = document.getElementById(catSelId);
   if (!catEl) return;
   const grupoEl = grupoSelId ? document.getElementById(grupoSelId) : null;
   const grupoSel = grupoEl ? grupoEl.value : '';
   const val = catEl.value;
-  const cats = [...db.dfc_cats].filter(c => !grupoSel || c.grupo === grupoSel).sort((a,b) => a.nome.localeCompare(b.nome));
+  const cats = [...db.dfc_cats].filter(c => (!grupoSel || c.grupo === grupoSel) && (!tipo || catTipoLanc(c) === tipo)).sort((a,b) => a.nome.localeCompare(b.nome));
   // "Sem categoria" só faz sentido quando nenhum Grupo específico está
   // selecionado (um lançamento sem categoria também não tem grupo).
   let opts = '<option value="">Todos</option>';
@@ -12779,12 +13047,12 @@ function popularFiltrosGrupoCategoriaTodos() {
   popularSelectCategoriaFiltro('af-categoria', 'af-grupo');
   popularSelectGrupoFiltro('pgf-grupo');
   popularSelectCategoriaFiltro('pgf-categoria', 'pgf-grupo');
-  popularSelectGrupoFiltro('lf-grupo');
-  popularSelectCategoriaFiltro('lf-cat', 'lf-grupo');
+  popularSelectGrupoFiltro('lf-grupo', 'saida');
+  popularSelectCategoriaFiltro('lf-cat', 'lf-grupo', 'saida');
   // Lado Receber: filtro de Categoria (lista completa + "Sem categoria")
   popularSelectCategoriaFiltro('arf-categoria', null);
   popularSelectCategoriaFiltro('recf-categoria', null);
-  popularSelectCategoriaFiltro('lrf-categoria', null);
+  popularSelectCategoriaFiltro('lrf-categoria', null, 'entrada');
 }
 
 // ── DIAGNÓSTICO: para onde vão as vendas no DRE ───────────────────
@@ -14098,6 +14366,192 @@ function _montarOptsFormas(lista, valorAtual, rotuloNovo) {
     `<option value="${FORMA_NOVA}">${rotuloNovo}</option>`;
 }
 
+// ══════════════════════════════════════════════════════════════════
+// VÁRIAS FORMAS DE PAGAMENTO / RECEBIMENTO NO MESMO LANÇAMENTO
+// Ex.: pagar uma parcela com parte em Dinheiro e parte em Cheque.
+// O lançamento continua gravando "tipo_pag" (fica "Misto") e a divisão
+// é guardada na tabela "config" já existente — sem tabela nova:
+//   key = "fpsplit:<pagar|receber>:<id do lançamento>"
+//   value = { "<parcela>": [{forma, valor}], "*": [...] }
+// "*" = divisão informada no cadastro do lançamento (vale para todas as
+// parcelas, proporcional ao valor de cada uma).
+// ══════════════════════════════════════════════════════════════════
+const FORMA_MISTA = 'Misto';
+var fpSplits = {};
+var _fpEstado = {};
+const FP_CFG = {
+  'modal-pago-split':     { tab: 'pagar',   sel: 'modal-pago-tipo-pag',     total: () => _fpTotalModal('pagar') },
+  'modal-recebido-split': { tab: 'receber', sel: 'modal-recebido-tipo-pag', total: () => _fpTotalModal('receber') },
+  'l-tipo-pag-split':     { tab: 'pagar',   sel: 'l-tipo-pag',  total: () => parseFloat((document.getElementById('l-valor') || {}).value) || 0 },
+  'lr-tipo-pag-split':    { tab: 'receber', sel: 'lr-tipo-pag', total: () => parseFloat((document.getElementById('lr-valor') || {}).value) || 0 }
+};
+function _fpTotalModal(tab) {
+  const pre = tab === 'pagar' ? 'modal-pago' : 'modal-recebido';
+  const id = (document.getElementById(pre + '-id') || {}).value;
+  const parc = parseInt((document.getElementById(pre + '-parc') || {}).value) || 1;
+  const lista = tab === 'pagar' ? getParcelas(false) : getParcelasReceber(false);
+  const p = lista.find(x => x.lancId === id && x.parcIdx === parc);
+  return p ? Math.round((p.valParc || 0) * 100) / 100 : 0;
+}
+function fpGet(tab, lancId, parc) {
+  const o = fpSplits[`${tab}:${lancId}`];
+  return (o && o[String(parc)]) || null;
+}
+// Divisão a exibir para uma parcela (a da própria parcela ou a do cadastro, proporcional)
+function fpDaParcela(tab, l, parcIdx, valParc) {
+  const o = fpSplits[`${tab}:${l.id}`];
+  if (!o) return null;
+  if (o[String(parcIdx)]) return o[String(parcIdx)];
+  if (o['*'] && l.tipo_pag === FORMA_MISTA) {
+    const tot = o['*'].reduce((s, x) => s + (Number(x.valor) || 0), 0);
+    const f = tot ? (valParc || 0) / tot : 0;
+    return o['*'].map(x => ({ forma: x.forma, valor: Math.round((Number(x.valor) || 0) * f * 100) / 100 }));
+  }
+  return null;
+}
+async function fpSalvar(tab, lancId, parc, lista) {
+  const k = `${tab}:${lancId}`;
+  const obj = Object.assign({}, fpSplits[k] || {});
+  if (lista && lista.length > 1) obj[String(parc)] = lista; else delete obj[String(parc)];
+  const key = 'fpsplit:' + k;
+  if (!fpSplits[k] && !Object.keys(obj).length) return true;
+  await sbFetch('config', 'DELETE', null, `?key=eq.${encodeURIComponent(key)}`);
+  let ok = true;
+  if (Object.keys(obj).length) ok = await sbFetch('config', 'POST', { id: uid(), key, value: JSON.stringify(obj) });
+  if (ok) { if (Object.keys(obj).length) fpSplits[k] = obj; else delete fpSplits[k]; }
+  bumpDbVer();
+  return !!ok;
+}
+function fpTexto(lista) {
+  return (lista || []).map(x => `${x.forma} ${fmtBRL(x.valor)}`).join(' + ');
+}
+function fpCasaForma(p, forma) {
+  return p.tipoPag === forma || (p.formasSplit || []).some(x => x.forma === forma);
+}
+function fpBadgeHtml(p) {
+  if (!p.tipoPag) return '<span style="color:#a8a29e;font-size:12px">—</span>';
+  if (p.formasSplit && p.formasSplit.length) {
+    const t = fpTexto(p.formasSplit);
+    return `<span class="badge badge-blue" title="${esc(t)}">${FORMA_MISTA}</span><div class="fp-det">${esc(t)}</div>`;
+  }
+  return `<span class="badge badge-blue">${p.tipoPag}</span>`;
+}
+function _fpFormasLista(tab) {
+  return tab === 'pagar' ? getFormasPagamento().filter(f => !ccEhFormaCartao(f)) : getFormasRecebimento();
+}
+// Prepara a caixa: sem divisão mostra só o link; com divisão abre as linhas
+function fpPreparar(boxId, inicial) {
+  _fpEstado[boxId] = { ativo: !!(inicial && inicial.length > 1), linhas: (inicial || []).map(x => ({ forma: x.forma, valor: Number(x.valor) || 0 })) };
+  const cfg = FP_CFG[boxId];
+  const sel = cfg && document.getElementById(cfg.sel);
+  if (sel) {
+    if (_fpEstado[boxId].ativo) {
+      if (![...sel.options].some(o => o.value === FORMA_MISTA)) sel.insertAdjacentHTML('beforeend', `<option value="${FORMA_MISTA}">${FORMA_MISTA}</option>`);
+      sel.value = FORMA_MISTA; sel.disabled = true;
+    } else {
+      sel.disabled = false;
+      if (sel.value === FORMA_MISTA) sel.value = '';
+    }
+  }
+  fpRender(boxId);
+}
+function fpAtivar(boxId) {
+  const cfg = FP_CFG[boxId]; if (!cfg) return;
+  const sel = document.getElementById(cfg.sel);
+  const atual = sel && sel.value && sel.value !== FORMA_MISTA && sel.value !== FORMA_NOVA ? sel.value : '';
+  const total = Math.round((cfg.total() || 0) * 100) / 100;
+  const formas = _fpFormasLista(cfg.tab);
+  const primeira = atual || formas[0] || '';
+  const segunda = formas.find(f => f !== primeira) || '';
+  fpPreparar(boxId, [{ forma: primeira, valor: total }, { forma: segunda, valor: 0 }]);
+}
+function fpDesativar(boxId) {
+  const st = _fpEstado[boxId];
+  const cfg = FP_CFG[boxId];
+  const sel = cfg && document.getElementById(cfg.sel);
+  const primeira = st && st.linhas.find(x => x.forma);
+  fpPreparar(boxId, null);
+  if (sel && primeira && [...sel.options].some(o => o.value === primeira.forma)) sel.value = primeira.forma;
+}
+function fpAddLinha(boxId) {
+  const st = _fpEstado[boxId]; const cfg = FP_CFG[boxId]; if (!st || !cfg) return;
+  const soma = st.linhas.reduce((s, x) => s + (Number(x.valor) || 0), 0);
+  const resto = Math.max(0, Math.round(((cfg.total() || 0) - soma) * 100) / 100);
+  const usadas = st.linhas.map(x => x.forma);
+  st.linhas.push({ forma: _fpFormasLista(cfg.tab).find(f => !usadas.includes(f)) || '', valor: resto });
+  fpRender(boxId);
+}
+function fpRemLinha(boxId, i) {
+  const st = _fpEstado[boxId]; if (!st) return;
+  st.linhas.splice(i, 1);
+  if (st.linhas.length < 2) { fpDesativar(boxId); return; }
+  fpRender(boxId);
+}
+function fpSet(boxId, i, campo, v) {
+  const st = _fpEstado[boxId]; if (!st || !st.linhas[i]) return;
+  st.linhas[i][campo] = campo === 'valor' ? (parseFloat(v) || 0) : v;
+  _fpRenderTotal(boxId);
+}
+function _fpRenderTotal(boxId) {
+  const el = document.getElementById(boxId + '-tot'); if (!el) return;
+  const st = _fpEstado[boxId]; const cfg = FP_CFG[boxId];
+  const total = Math.round((cfg.total() || 0) * 100) / 100;
+  const soma = Math.round(st.linhas.reduce((s, x) => s + (Number(x.valor) || 0), 0) * 100) / 100;
+  const dif = Math.round((total - soma) * 100) / 100;
+  const sit = !total ? '<b class="err">Informe o valor do lançamento</b>'
+    : Math.abs(dif) < 0.01 ? '<b class="ok">✓ Confere</b>'
+    : dif > 0 ? `<b class="err">Falta ${fmtBRL(dif)}</b>` : `<b class="err">Excede ${fmtBRL(-dif)}</b>`;
+  el.innerHTML = `<span>Informado: <b>${fmtBRL(soma)}</b> de <b>${fmtBRL(total)}</b></span> &nbsp;${sit}`;
+}
+function fpRender(boxId) {
+  const box = document.getElementById(boxId); if (!box) return;
+  const st = _fpEstado[boxId] || { ativo: false, linhas: [] };
+  const cfg = FP_CFG[boxId];
+  if (!st.ativo) {
+    box.innerHTML = `<button type="button" class="fp-link" onclick="fpAtivar('${boxId}')">➕ Usar várias formas de ${cfg.tab === 'pagar' ? 'pagamento' : 'recebimento'} (ex.: dinheiro + cheque)</button>`;
+    return;
+  }
+  const formas = _fpFormasLista(cfg.tab);
+  const linhas = st.linhas.map((x, i) => {
+    const opts = formas.concat(x.forma && !formas.includes(x.forma) ? [x.forma] : [])
+      .map(f => `<option value="${esc(f)}" ${f === x.forma ? 'selected' : ''}>${esc(f)}</option>`).join('');
+    return `<div class="fp-row">
+      <select onchange="fpSet('${boxId}',${i},'forma',this.value)"><option value="">Selecione...</option>${opts}</select>
+      <input type="number" step="0.01" min="0" value="${x.valor ? x.valor : ''}" placeholder="0,00" oninput="fpSet('${boxId}',${i},'valor',this.value)" />
+      <button type="button" title="Remover" onclick="fpRemLinha('${boxId}',${i})">✕</button>
+    </div>`;
+  }).join('');
+  box.innerHTML = `<div class="fp-box">
+    <div class="fp-box-tit"><span>Formas de ${cfg.tab === 'pagar' ? 'pagamento' : 'recebimento'} deste lançamento</span>
+      <button type="button" class="fp-link" style="margin:0;font-weight:500" onclick="fpDesativar('${boxId}')">Usar uma só forma</button></div>
+    ${linhas}
+    <div class="fp-tot"><button type="button" class="fp-link" style="margin:0" onclick="fpAddLinha('${boxId}')">+ Adicionar forma</button><span id="${boxId}-tot"></span></div>
+  </div>`;
+  _fpRenderTotal(boxId);
+}
+// Lê a caixa na hora de salvar. Retorna { ok, lista } (lista = null quando é uma forma só)
+function fpResultado(boxId) {
+  const st = _fpEstado[boxId]; const cfg = FP_CFG[boxId];
+  if (!st || !st.ativo) return { ok: true, lista: null };
+  const lista = st.linhas.filter(x => x.forma && (Number(x.valor) || 0) > 0)
+    .map(x => ({ forma: x.forma, valor: Math.round(Number(x.valor) * 100) / 100 }));
+  if (st.linhas.some(x => (Number(x.valor) || 0) > 0 && !x.forma)) { alert('Escolha a forma de cada valor informado.'); return { ok: false }; }
+  if (!lista.length) { alert('Informe os valores de cada forma ou clique em "Usar uma só forma".'); return { ok: false }; }
+  // junta formas repetidas
+  const m = new Map(); lista.forEach(x => m.set(x.forma, Math.round(((m.get(x.forma) || 0) + x.valor) * 100) / 100));
+  const final = [...m.entries()].map(([forma, valor]) => ({ forma, valor }));
+  const total = Math.round((cfg.total() || 0) * 100) / 100;
+  const soma = Math.round(final.reduce((s, x) => s + x.valor, 0) * 100) / 100;
+  if (total > 0 && Math.abs(total - soma) >= 0.01) {
+    alert(`A soma das formas (${fmtBRL(soma)}) precisa ser igual ao valor ${cfg.sel.startsWith('modal') ? 'da parcela' : 'do lançamento'} (${fmtBRL(total)}).`);
+    return { ok: false };
+  }
+  if (final.length === 1) return { ok: true, lista: null, unica: final[0].forma };
+  return { ok: true, lista: final };
+}
+function _fpInitCaixas() { Object.keys(FP_CFG).forEach(id => { if (!_fpEstado[id]) fpPreparar(id, null); }); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _fpInitCaixas); else setTimeout(_fpInitCaixas, 0);
+
 function populateFormasPagSelects() {
   ['l-tipo-pag','edit-tipo-pag','modal-pago-tipo-pag'].forEach(id => {
     const el = document.getElementById(id);
@@ -14123,7 +14577,7 @@ function populateFormasRecebSelects() {
 // lançamentos antigos que ficaram sem preencher esse campo.
 function populateFormasFiltroSelects() {
   const montar = (lista, rotuloTodas) => `<option value="">${rotuloTodas}</option>` +
-    lista.map(f => `<option value="${f}">${f}</option>`).join('') +
+    lista.concat(lista.includes(FORMA_MISTA) ? [] : [FORMA_MISTA]).map(f => `<option value="${f}">${f === FORMA_MISTA ? 'Misto (várias formas)' : f}</option>`).join('') +
     '<option value="__sem_forma__">(Sem forma informada)</option>';
   const elPag = document.getElementById('pgf-tipo-pag');
   if (elPag) { const v = elPag.value; elPag.innerHTML = montar(getFormasPagamento(), 'Todas'); elPag.value = v; }
@@ -14741,94 +15195,398 @@ function calcJuros(valParc, venc, taxaMes) {
 
 // ══════════════════════════════════════════════════════════
 // FLUXO DE CAIXA FUTURO (projeção por vencimento, com saldo opcional)
+// • Filtro de empresa próprio (Consolidado ou uma empresa) — independente
+//   do seletor do topo, pois usa todos os lançamentos carregados.
+// • Período: 7 dias a 24 meses, ou personalizado (de/até).
+// • Ver por dia, semana, quinzena, mês ou trimestre.
+// • Cenário manual: escolha os meses de receitas e de despesas que entram
+//   na projeção (ex.: despesas só de nov–dez/26 e receitas de nov/26 a jul/27).
 // ══════════════════════════════════════════════════════════
+var _ffExcl = { rec: new Set(), des: new Set() };
+var _ffEmpIniciada = false;
+var _ffCtx = null;
+var _ffChart = null;
+
+function _ffAdd(iso, n) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d + n));
+  return t.toISOString().slice(0, 10);
+}
+function _ffDow(iso) { const [y, m, d] = iso.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d)).getUTCDay(); }
+function _ffMesLbl(ym) { const [y, m] = ym.split('-').map(Number); return `${mesesAbr[m]}/${String(y).slice(2)}`; }
+
+function ffOnHorizonte() {
+  const v = (document.getElementById('ff-horizonte') || {}).value;
+  const w = document.getElementById('ff-custom-wrap');
+  if (w) w.style.display = v === 'custom' ? 'inline-flex' : 'none';
+  if (v === 'custom') {
+    const de = document.getElementById('ff-de'), ate = document.getElementById('ff-ate');
+    if (de && !de.value) de.value = today();
+    if (ate && !ate.value) ate.value = _ffAdd(today(), 89);
+  }
+  renderFluxoFuturo();
+}
+function ffToggleMes(tipo, ym, marcado) {
+  if (marcado) _ffExcl[tipo].delete(ym); else _ffExcl[tipo].add(ym);
+  renderFluxoFuturo();
+}
+function ffMesesTodos(tipo, marcar) {
+  const ctx = _ffCtx; if (!ctx) return;
+  if (marcar) _ffExcl[tipo].clear(); else ctx.mesesPeriodo.forEach(ym => _ffExcl[tipo].add(ym));
+  renderFluxoFuturo();
+}
+function ffLimparCenario() { _ffExcl.rec.clear(); _ffExcl.des.clear(); renderFluxoFuturo(); }
+
+function _ffPeriodo() {
+  const hoje = today();
+  const v = (document.getElementById('ff-horizonte') || {}).value || '30';
+  if (v === 'custom') {
+    let ini = (document.getElementById('ff-de') || {}).value || hoje;
+    let fim = (document.getElementById('ff-ate') || {}).value || _ffAdd(ini, 29);
+    if (fim < ini) [ini, fim] = [fim, ini];
+    return { ini, fim, rotulo: `${fmtDate(ini)} a ${fmtDate(fim)}` };
+  }
+  const n = parseInt(v) || 30;
+  return { ini: hoje, fim: _ffAdd(hoje, n - 1), rotulo: (document.getElementById('ff-horizonte').selectedOptions[0] || {}).textContent || '' };
+}
+
+// Chave/rótulo do agrupamento para uma data
+function _ffBucket(iso, modo) {
+  const [y, m, d] = iso.split('-').map(Number);
+  if (modo === 'semana') {
+    const dow = _ffDow(iso); const seg = _ffAdd(iso, -((dow + 6) % 7));
+    return { k: seg, ini: seg, fim: _ffAdd(seg, 6) };
+  }
+  if (modo === 'quinzena') {
+    const ym = iso.slice(0, 7); const q = d <= 15 ? 1 : 2;
+    const ult = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    return { k: `${ym}-q${q}`, ini: `${ym}-${q === 1 ? '01' : '16'}`, fim: `${ym}-${q === 1 ? '15' : String(ult).padStart(2, '0')}`, q };
+  }
+  if (modo === 'mes') {
+    const ym = iso.slice(0, 7); const ult = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    return { k: ym, ini: `${ym}-01`, fim: `${ym}-${String(ult).padStart(2, '0')}` };
+  }
+  if (modo === 'trimestre') {
+    const t = Math.floor((m - 1) / 3); const mi = t * 3 + 1, mf = mi + 2;
+    const ult = new Date(Date.UTC(y, mf, 0)).getUTCDate();
+    return { k: `${y}-T${t + 1}`, ini: `${y}-${String(mi).padStart(2, '0')}-01`, fim: `${y}-${String(mf).padStart(2, '0')}-${String(ult).padStart(2, '0')}`, t: t + 1 };
+  }
+  return { k: iso, ini: iso, fim: iso };
+}
+function _ffRotulo(b, modo) {
+  if (modo === 'semana') return `${fmtDate(b.ini).slice(0, 5)} – ${fmtDate(b.fim).slice(0, 5)}`;
+  if (modo === 'quinzena') return `${b.q}ª quinz. ${_ffMesLbl(b.ini.slice(0, 7))}`;
+  if (modo === 'mes') { const [y, m] = b.ini.split('-').map(Number); return `${meses[m]}/${y}`; }
+  if (modo === 'trimestre') return `${b.t}º tri/${b.ini.slice(0, 4)}`;
+  return fmtDate(b.ini);
+}
+
+// Parcelas em aberto que entram na projeção (respeita empresa, período e cenário)
+function _ffParcelas(ctx, tipo, ini, fim) {
+  const lista = tipo === 'rec' ? getParcelasReceberBanco(false) : getParcelasBanco(false);
+  const out = [];
+  lista.forEach(p => {
+    const d = tipo === 'rec' ? (p.venc || p.dtvenda) : (p.venc || p.dtcompra);
+    if (!d || d < ini || d > fim) return;
+    if (ctx.emp && String(p.empresaId) !== String(ctx.emp)) return;
+    if (_ffExcl[tipo].has(d.slice(0, 7))) return;
+    out.push({ p, d });
+  });
+  return out;
+}
+
+function _ffRenderChips(tipo, mesesPeriodo) {
+  const el = document.getElementById('ff-chips-' + tipo);
+  if (!el) return;
+  el.innerHTML = mesesPeriodo.map(ym => `<label class="dre-seg-m" title="${tipo === 'rec' ? 'Receitas' : 'Despesas'} de ${_ffMesLbl(ym)}"><input type="checkbox" ${_ffExcl[tipo].has(ym) ? '' : 'checked'} onchange="ffToggleMes('${tipo}','${ym}',this.checked)" /><span>${_ffMesLbl(ym)}</span></label>`).join('');
+}
+
 function renderFluxoFuturo() {
   const wrap = document.getElementById('fluxo-futuro-wrap');
   if (!wrap) return;
-  const horEl = document.getElementById('ff-horizonte');
-  const usarSaldoEl = document.getElementById('ff-usar-saldo');
-  const horizonte = horEl ? (parseInt(horEl.value) || 30) : 30;
-  const usarSaldo = usarSaldoEl ? usarSaldoEl.checked : true;
 
+  // Empresas no filtro (na 1ª vez segue a empresa ativa no topo)
+  const selEmp = document.getElementById('ff-empresa');
+  if (selEmp) {
+    const atual = _ffEmpIniciada ? selEmp.value : empresaAtual();
+    selEmp.innerHTML = '<option value="">🏢 Consolidado (todas)</option>' +
+      (db.empresas || []).map(e => `<option value="${esc(e.id)}">${esc(e.apelido || e.nome)}</option>`).join('');
+    selEmp.value = (db.empresas || []).some(e => String(e.id) === String(atual)) ? String(atual) : '';
+    _ffEmpIniciada = true;
+  }
+  const emp = selEmp ? selEmp.value : '';
+  const usarSaldo = (document.getElementById('ff-usar-saldo') || {}).checked !== false;
+  const ocultarZero = !!(document.getElementById('ff-ocultar-zero') || {}).checked;
+  const modo = (document.querySelector('input[name="ff-agrup"]:checked') || {}).value || 'dia';
+  const per = _ffPeriodo();
   const hoje = today();
+
+  // Meses do período (para os chips do cenário)
+  const mesesPeriodo = [];
+  for (let ym = per.ini.slice(0, 7); ym <= per.fim.slice(0, 7); ym = ccAddMes(ym, 1)) mesesPeriodo.push(ym);
+  const ctx = _ffCtx = { emp, ini: per.ini, fim: per.fim, modo, mesesPeriodo };
+  _ffRenderChips('rec', mesesPeriodo);
+  _ffRenderChips('des', mesesPeriodo);
+
   const saldoBase = usarSaldo ? db.bancos.reduce((s, b) => s + getBancoSaldo(b), 0) : 0;
 
-  // Monta a lista de datas do horizonte (hoje + N-1 dias)
-  const datas = [];
-  for (let i = 0; i < horizonte; i++) {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    datas.push(d.toISOString().slice(0, 10));
+  // Buckets em ordem
+  const buckets = new Map();
+  for (let d = per.ini; d <= per.fim; d = _ffAdd(d, 1)) {
+    const b = _ffBucket(d, modo);
+    if (!buckets.has(b.k)) buckets.set(b.k, { ...b, ini: d > b.ini ? d : b.ini, fim: b.fim > per.fim ? per.fim : b.fim, rec: 0, des: 0, qRec: 0, qDes: 0 });
   }
-  const datasSet = new Set(datas);
-
-  // Agrupa por dia de VENCIMENTO apenas o que ainda está pendente
-  const porDia = {};
-  datas.forEach(d => porDia[d] = { receber: 0, pagar: 0 });
-
-  getParcelas(false).forEach(p => {
-    const d = p.venc || p.dtcompra;
-    if (d && datasSet.has(d)) porDia[d].pagar += (p.valParc || 0);
+  const somar = (tipo, campo, qtd) => _ffParcelas(ctx, tipo, per.ini, per.fim).forEach(({ p, d }) => {
+    const b = buckets.get(_ffBucket(d, modo).k);
+    if (b) { b[campo] += (p.valParc || 0); b[qtd]++; }
   });
-  getParcelasReceber(false).forEach(p => {
-    const d = p.venc || p.dtvenda;
-    if (d && datasSet.has(d)) porDia[d].receber += (p.valParc || 0);
+  somar('rec', 'rec', 'qRec');
+  somar('des', 'des', 'qDes');
+
+  let saldo = saldoBase, totRec = 0, totDes = 0, qRec = 0, qDes = 0;
+  let menor = saldoBase, menorRot = 'início', negativos = 0;
+  const linhas = [], labels = [], serieRec = [], serieDes = [], serieSaldo = [];
+  const lista = [...buckets.values()];
+  const pdfRows = [];
+  const maxMov = Math.max(1, ...lista.map(b => Math.max(b.rec, b.des)));
+  lista.forEach(b => {
+    saldo += b.rec - b.des;
+    totRec += b.rec; totDes += b.des; qRec += b.qRec; qDes += b.qDes;
+    const rot = _ffRotulo(b, modo);
+    if (saldo < menor) { menor = saldo; menorRot = rot; }
+    if (saldo < -0.005) negativos++;
+    labels.push(rot); serieRec.push(Math.round(b.rec * 100) / 100); serieDes.push(Math.round(b.des * 100) / 100); serieSaldo.push(Math.round(saldo * 100) / 100);
+    const temMov = b.rec > 0.005 || b.des > 0.005;
+    if (ocultarZero && !temMov) return;
+    const res = b.rec - b.des;
+    pdfRows.push({ rot, dsem: modo === 'dia' ? ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][_ffDow(b.ini)] : '', rec: b.rec, des: b.des, res, saldo, temMov });
+    const ehHoje = hoje >= b.ini && hoje <= b.fim;
+    const cls = [saldo < -0.005 ? 'ff-neg' : '', ehHoje ? 'ff-hoje' : ''].filter(Boolean).join(' ');
+    const cel = (v, tipo, sinal, cor) => v > 0.005
+      ? `<td><span class="ff-click ${cor}" title="Ver lançamentos" onclick="abrirDetalheFluxoFuturo('${b.ini}','${b.fim}','${tipo}')">${sinal} ${fmtBRL(v)}</span></td>`
+      : '<td><span class="ff-zero">—</span></td>';
+    linhas.push(`<tr class="${cls}">
+      <td>${rot}${ehHoje && modo === 'dia' ? ' <span style="font-size:9px;color:#ea580c;font-weight:700">HOJE</span>' : ''}</td>
+      ${modo === 'dia' ? `<td class="ff-dsem">${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][_ffDow(b.ini)]}</td>` : ''}
+      ${cel(b.rec, 'receber', '+', 'ff-pos')}
+      ${cel(b.des, 'pagar', '−', 'ff-negc')}
+      <td>${temMov ? `<span class="ff-click ${res >= 0 ? 'ff-pos' : 'ff-negc'}" onclick="abrirDetalheFluxoFuturo('${b.ini}','${b.fim}','ambos')">${fmtDreVal(res)}</span>` : '<span class="ff-zero">—</span>'}</td>
+      <td style="font-weight:700" class="${saldo >= 0 ? '' : 'ff-negc'}">${fmtBRL(saldo)}${saldo < -0.005 ? ' ⚠️' : ''}</td>
+    </tr>`);
   });
+  const resultado = totRec - totDes;
 
-  const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  let saldoAcum = saldoBase;
-  let totalReceber = 0, totalPagar = 0;
-  let menorSaldo = saldoAcum, menorSaldoData = datas[0];
-  let diasNegativos = 0;
+  const nomeEmp = emp ? empresaNome(emp) : 'Consolidado';
+  const exclRec = mesesPeriodo.filter(ym => _ffExcl.rec.has(ym));
+  const exclDes = mesesPeriodo.filter(ym => _ffExcl.des.has(ym));
+  const faixa = (excl) => {
+    const inc = mesesPeriodo.filter(ym => !excl.includes(ym));
+    if (!inc.length) return 'nenhum mês';
+    if (!excl.length) return 'todos os meses';
+    return inc.length <= 4 ? inc.map(_ffMesLbl).join(', ') : `${inc.length} de ${mesesPeriodo.length} meses`;
+  };
+  const tags = [`🏢 ${esc(nomeEmp)}`, `📅 ${esc(per.rotulo)} (${fmtDate(per.ini)} a ${fmtDate(per.fim)})`];
+  if (exclRec.length) tags.push(`▲ Receitas: ${faixa(exclRec)}`);
+  if (exclDes.length) tags.push(`▼ Despesas: ${faixa(exclDes)}`);
 
-  const linhas = datas.map(d => {
-    const { receber, pagar } = porDia[d];
-    saldoAcum += (receber - pagar);
-    totalReceber += receber; totalPagar += pagar;
-    if (saldoAcum < menorSaldo) { menorSaldo = saldoAcum; menorSaldoData = d; }
-    if (saldoAcum < -0.005) diasNegativos++;
-    const dt = new Date(d + 'T00:00:00');
-    const isHoje = d === hoje;
-    const isRisco = saldoAcum < -0.005;
-    const saldoCls = saldoAcum >= 0 ? 'dfc-val-pos' : 'dfc-val-neg';
-    const rowCls = [isRisco ? 'fluxo-risco' : '', isHoje ? 'fb-dia-hoje' : ''].filter(Boolean).join(' ');
-    return `<tr class="${rowCls}">
-      <td style="font-weight:700;white-space:nowrap">${fmtDate(d)}${isHoje ? ' <span style="font-size:9px;color:#ea580c">HOJE</span>' : ''}</td>
-      <td>${diasSemana[dt.getDay()]}</td>
-      <td class="${receber > 0.005 ? 'num-click' : ''}" ${receber > 0.005 ? `title="Ver lançamentos" onclick="abrirDetalheFluxoFuturo('${d}','receber')"` : ''}>${receber > 0.005 ? `<span class="dfc-val-pos">+ ${fmtBRL(receber)}</span>` : '<span class="dfc-val-zero">—</span>'}</td>
-      <td class="${pagar > 0.005 ? 'num-click' : ''}" ${pagar > 0.005 ? `title="Ver lançamentos" onclick="abrirDetalheFluxoFuturo('${d}','pagar')"` : ''}>${pagar > 0.005 ? `<span class="dfc-val-neg">− ${fmtBRL(pagar)}</span>` : '<span class="dfc-val-zero">—</span>'}</td>
-      <td class="${Math.abs(receber - pagar) > 0.005 ? 'num-click' : ''}" ${Math.abs(receber - pagar) > 0.005 ? `title="Ver lançamentos" onclick="abrirDetalheFluxoFuturo('${d}','ambos')"` : ''}>${Math.abs(receber - pagar) > 0.005 ? fmtDreVal(receber - pagar) : '<span class="dfc-val-zero">—</span>'}</td>
-      <td class="${saldoCls} num-click" style="font-weight:700" title="Ver os lançamentos deste dia" onclick="abrirDetalheFluxoFuturo('${d}','ambos')">${fmtBRL(saldoAcum)}${isRisco ? ' ⚠️' : ''}</td>
-    </tr>`;
-  }).join('');
-
-  const alertaHtml = diasNegativos > 0
-    ? `<div style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;">
-        ⚠️ <b>Atenção:</b> o saldo projetado fica negativo em ${diasNegativos} dia(s) dentro deste período. Menor saldo previsto: <b>${fmtBRL(menorSaldo)}</b>, em ${fmtDate(menorSaldoData)}.
-        ${!usarSaldo ? ' Este cálculo <b>não</b> está considerando o saldo atual das contas — marque a opção acima para incluí-lo.' : ''}
-      </div>`
-    : `<div style="background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;">
-        ✓ O saldo projetado permanece positivo em todo o período selecionado.
-      </div>`;
+  const kpi = (lbl, val, cor, sub) => `<div class="ff-kpi" style="border-left-color:${cor}"><div class="ff-kpi-lbl">${lbl}</div><div class="ff-kpi-val" style="color:${cor}" title="${val}">${val}</div>${sub ? `<div class="ff-kpi-sub">${sub}</div>` : ''}</div>`;
+  const alerta = negativos > 0
+    ? `<div class="ff-alerta neg">⚠️ Saldo projetado fica negativo em <b>${negativos}</b> ${modo === 'dia' ? 'dia(s)' : 'período(s)'}. Menor saldo: <b>${fmtBRL(menor)}</b> em ${esc(menorRot)}.${!usarSaldo ? ' (sem considerar o saldo atual das contas)' : ''}</div>`
+    : `<div class="ff-alerta pos">✓ O saldo projetado permanece positivo em todo o período.</div>`;
+  const colDia = modo === 'dia';
+  ctx.pdf = {
+    tags, colDia, modo, labels, serieRec, serieDes, serieSaldo, rows: pdfRows,
+    tot: { rec: totRec, des: totDes, res: resultado, saldo },
+    kpis: [
+      [usarSaldo ? 'Saldo inicial (contas)' : 'Ponto de partida', fmtBRL(saldoBase), '#ea580c'],
+      ['Entradas previstas', '+ ' + fmtBRL(totRec), '#166534', `${qRec} parcela(s)`],
+      ['Saídas previstas', '− ' + fmtBRL(totDes), '#dc2626', `${qDes} parcela(s)`],
+      ['Resultado do período', fmtBRL(resultado), resultado >= 0 ? '#166534' : '#dc2626'],
+      ['Saldo final projetado', fmtBRL(saldo), saldo >= 0 ? '#1d4ed8' : '#dc2626', 'em ' + fmtDate(per.fim)],
+      ['Menor saldo', fmtBRL(menor), menor >= 0 ? '#57534e' : '#dc2626', menorRot]
+    ],
+    alerta: negativos > 0 ? `Saldo projetado negativo em ${negativos} ${modo === 'dia' ? 'dia(s)' : 'período(s)'} — menor saldo ${fmtBRL(menor)} em ${menorRot}.` : 'O saldo projetado permanece positivo em todo o período.',
+    negativo: negativos > 0
+  };
 
   wrap.innerHTML = `
-    <div class="grid4" style="margin-bottom:16px;">
-      <div class="card kpi"><div class="kpi-val" style="color:#ea580c">${fmtBRL(saldoBase)}</div><div class="kpi-lbl">${usarSaldo ? 'Saldo atual das contas' : 'Ponto de partida (sem saldo)'}</div></div>
-      <div class="card kpi"><div class="kpi-val" style="color:#166534">+ ${fmtBRL(totalReceber)}</div><div class="kpi-lbl">A receber no período</div></div>
-      <div class="card kpi"><div class="kpi-val" style="color:#dc2626">− ${fmtBRL(totalPagar)}</div><div class="kpi-lbl">A pagar no período</div></div>
-      <div class="card kpi"><div class="kpi-val" style="color:${saldoAcum >= 0 ? '#166534' : '#dc2626'}">${fmtBRL(saldoAcum)}</div><div class="kpi-lbl">Saldo projetado final</div></div>
+    <div class="ff-cenario">${tags.map(t => `<span class="ff-tag">${t}</span>`).join('')}</div>
+    <div class="ff-kpis">
+      ${kpi(usarSaldo ? 'Saldo inicial (contas)' : 'Ponto de partida', fmtBRL(saldoBase), '#ea580c', usarSaldo ? 'todas as contas' : 'sem saldo')}
+      ${kpi('Entradas previstas', '+ ' + fmtBRL(totRec), '#166534', `${qRec} parcela(s)`)}
+      ${kpi('Saídas previstas', '− ' + fmtBRL(totDes), '#dc2626', `${qDes} parcela(s)`)}
+      ${kpi('Resultado do período', fmtBRL(resultado), resultado >= 0 ? '#166534' : '#dc2626', 'entradas − saídas')}
+      ${kpi('Saldo final projetado', fmtBRL(saldo), saldo >= 0 ? '#1d4ed8' : '#dc2626', 'em ' + fmtDate(per.fim))}
+      ${kpi('Menor saldo', fmtBRL(menor), menor >= 0 ? '#57534e' : '#dc2626', esc(menorRot))}
     </div>
-    ${alertaHtml}
-    <div class="card">
-      <div style="max-height:560px;overflow-y:auto">
-        <table class="dfc-table" style="width:100%">
-          <thead><tr><th style="text-align:left">Data</th><th>Dia</th><th>A Receber</th><th>A Pagar</th><th>Saldo do Dia</th><th>Saldo Projetado</th></tr></thead>
-          <tbody>${linhas}</tbody>
-        </table>
+    ${alerta}
+    <div class="ff-grid">
+      ${typeof Chart !== 'undefined' && labels.length > 1 ? '<div class="card ff-chart-card" style="margin:0"><div class="ff-chart-box"><canvas id="ff-chart"></canvas></div></div>' : ''}
+      <div class="card ff-table-card" style="margin:0">
+        <div style="max-height:560px;overflow:auto">
+          <table class="ff-table">
+            <thead><tr><th>${{ dia: 'Data', semana: 'Semana', quinzena: 'Quinzena', mes: 'Mês', trimestre: 'Trimestre' }[modo]}</th>${colDia ? '<th style="text-align:left">Dia</th>' : ''}<th>Entradas</th><th>Saídas</th><th>Resultado</th><th>Saldo projetado</th></tr></thead>
+            <tbody>${linhas.join('') || `<tr><td colspan="${colDia ? 6 : 5}" style="text-align:center;color:#a8a29e;padding:18px">Nenhum movimento previsto com os filtros escolhidos.</td></tr>`}</tbody>
+            <tfoot><tr><td>Total</td>${colDia ? '<td></td>' : ''}<td class="ff-pos">+ ${fmtBRL(totRec)}</td><td class="ff-negc">− ${fmtBRL(totDes)}</td><td class="${resultado >= 0 ? 'ff-pos' : 'ff-negc'}">${fmtDreVal(resultado)}</td><td class="${saldo >= 0 ? '' : 'ff-negc'}">${fmtBRL(saldo)}</td></tr></tfoot>
+          </table>
+        </div>
       </div>
     </div>`;
+
+  // Gráfico: barras de entradas/saídas (eixo esquerdo) + linha do saldo projetado (eixo direito)
+  try {
+    if (_ffChart) { _ffChart.destroy(); _ffChart = null; }
+    const cv = document.getElementById('ff-chart');
+    if (cv && typeof Chart !== 'undefined') _ffChart = new Chart(cv.getContext('2d'), _ffChartConfig(ctx.pdf, false));
+  } catch (e) { console.warn('Fluxo futuro: gráfico', e); }
 }
 
+// Configuração do gráfico (tela e PDF usam a mesma): somente a linha do
+// saldo acumulado projetado, com rótulos.
+function _ffChartConfig(d, impressao) {
+  const n = d.labels.length;
+  const passo = Math.max(1, Math.ceil(n / (impressao ? 14 : 12)));
+  const iMin = d.serieSaldo.reduce((m, v, i, a) => v < a[m] ? i : m, 0);
+  const iMax = d.serieSaldo.reduce((m, v, i, a) => v > a[m] ? i : m, 0);
+  const marca = i => i === 0 || i === n - 1 || i === iMin || i === iMax || (i % passo === 0 && n - 1 - i >= passo / 2);
+  const azul = '#1d4ed8', verm = '#dc2626';
+  return {
+    plugins: _pdPlugins(),
+    data: {
+      labels: d.labels,
+      datasets: [
+        { type: 'line', label: 'Saldo acumulado projetado', data: d.serieSaldo,
+          borderColor: azul, borderWidth: 2.5, tension: 0, fill: true,
+          backgroundColor: c => {
+            const { chart } = c; const { ctx: g, chartArea } = chart;
+            if (!chartArea) return 'rgba(29,78,216,.08)';
+            const gr = g.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gr.addColorStop(0, 'rgba(29,78,216,.20)'); gr.addColorStop(1, 'rgba(29,78,216,0)');
+            return gr;
+          },
+          segment: { borderColor: c => (c.p1.parsed.y < 0 || c.p0.parsed.y < 0) ? verm : azul },
+          pointRadius: c => marca(c.dataIndex) ? 3.5 : (n <= 45 ? 2 : 0),
+          pointHoverRadius: 5,
+          pointBackgroundColor: c => (d.serieSaldo[c.dataIndex] < 0 ? verm : azul), pointBorderColor: '#fff', pointBorderWidth: 1.5,
+          datalabels: {
+            display: c => marca(c.dataIndex),
+            align: c => c.dataIndex === iMin ? 'bottom' : 'top', anchor: 'center', offset: 8, clip: false, color: '#fff',
+            backgroundColor: c => (d.serieSaldo[c.dataIndex] < 0 ? verm : (c.dataIndex === iMin ? '#b45309' : azul)), borderRadius: 4,
+            padding: { top: 2, bottom: 2, left: 6, right: 6 },
+            font: { size: impressao ? 9.5 : 10.5, weight: '700', family: 'DM Mono, monospace' }, formatter: v => _pdK(v)
+          } }
+      ]
+    },
+    options: {
+      responsive: !impressao, maintainAspectRatio: false, animation: false, devicePixelRatio: impressao ? 2 : undefined,
+      layout: { padding: { top: 28, right: 24, left: 8, bottom: 0 } },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1f2937', padding: 10, titleFont: { weight: '700' }, bodyFont: { family: 'DM Mono, monospace' },
+          callbacks: {
+            label: c => ` Saldo acumulado: ${fmtBRL(c.raw)}`,
+            afterLabel: c => { const r = d.serieRec[c.dataIndex] || 0, x = d.serieDes[c.dataIndex] || 0; return (r || x) ? ` Entradas: ${fmtBRL(r)}  ·  Saídas: ${fmtBRL(x)}` : ''; }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, border: { color: '#e7e5e4' }, ticks: { color: '#78716c', font: { size: impressao ? 9 : 10 }, maxRotation: 0, autoSkip: true, maxTicksLimit: impressao ? 16 : 14 } },
+        y: { position: 'left', grace: '12%', border: { display: false },
+             grid: { color: c => c.tick.value === 0 ? '#a8a29e' : '#f1efed', lineWidth: c => c.tick.value === 0 ? 1.2 : 1 },
+             title: { display: true, text: 'Saldo acumulado', color: '#78716c', font: { size: 10, weight: '600' } },
+             ticks: { color: '#78716c', font: { size: 10 }, callback: v => _pdK(v) } }
+      }
+    }
+  };
+}
+
+// ── PDF do Fluxo de Caixa Futuro (retrato ou paisagem) ──
+function ffImprimir(orientacao) {
+  const d = _ffCtx && _ffCtx.pdf;
+  if (!d) { alert('Abra o Fluxo de Caixa Futuro antes de gerar o PDF.'); return; }
+  const paisagem = orientacao === 'paisagem';
+  const e = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Gráfico desenhado em alta resolução só para o PDF
+  let imgChart = '';
+  try {
+    if (typeof Chart !== 'undefined' && d.labels.length > 1) {
+      const cv = document.createElement('canvas');
+      cv.width = paisagem ? 1500 : 1050; cv.height = paisagem ? 430 : 420;
+      cv.style.cssText = `position:fixed;left:-99999px;top:0;width:${cv.width}px;height:${cv.height}px`;
+      document.body.appendChild(cv);
+      const ch = new Chart(cv.getContext('2d'), _ffChartConfig(d, true));
+      imgChart = ch.toBase64Image('image/png', 1);
+      ch.destroy(); cv.remove();
+    }
+  } catch (err) { console.warn('PDF fluxo futuro: gráfico', err); }
+  const nomeTit = { dia: 'Data', semana: 'Semana', quinzena: 'Quinzena', mes: 'Mês', trimestre: 'Trimestre' }[d.modo];
+  const linhas = d.rows.map(r => `<tr class="${r.saldo < -0.005 ? 'neg' : ''}">
+    <td>${e(r.rot)}</td>${d.colDia ? `<td class="ds">${r.dsem}</td>` : ''}
+    <td class="num pos">${r.rec > 0.005 ? '+ ' + fmtBRL(r.rec) : '—'}</td>
+    <td class="num negc">${r.des > 0.005 ? '− ' + fmtBRL(r.des) : '—'}</td>
+    <td class="num ${r.res >= 0 ? 'pos' : 'negc'}">${r.temMov ? fmtDreVal(r.res).replace(/<[^>]+>/g, '') : '—'}</td>
+    <td class="num b ${r.saldo < 0 ? 'negc' : ''}">${fmtBRL(r.saldo)}</td></tr>`).join('');
+  const css = `
+    @page { size: A4 ${paisagem ? 'landscape' : 'portrait'}; margin: 11mm; }
+    * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    body { font-family:'Segoe UI', Arial, sans-serif; color:#1f2937; margin:0; font-size:10.5px; }
+    .top { display:flex; align-items:center; justify-content:space-between; gap:16px; padding-bottom:10px; border-bottom:3px solid #ea580c; }
+    .emp { display:flex; align-items:center; gap:12px; } .emp img { width:50px; height:50px; border-radius:12px; }
+    .emp-nome { font-size:16px; font-weight:800; } .emp-sub { font-size:10px; color:#78716c; margin-top:2px; }
+    .tit { text-align:right; } .tit h1 { margin:0; font-size:18px; letter-spacing:.8px; color:#ea580c; } .tit div { font-size:9.5px; color:#78716c; margin-top:3px; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+    .tag { font-size:9.5px; padding:3px 9px; border-radius:20px; background:#fff1e6; color:#9a3412; border:1px solid #fed7aa; }
+    .kpis { display:grid; grid-template-columns:repeat(${paisagem ? 6 : 3},1fr); gap:7px; margin-bottom:8px; }
+    .kpi { border:1px solid #e7e5e4; border-left:3px solid #a8a29e; border-radius:8px; padding:6px 9px; }
+    .kpi span { display:block; font-size:8px; text-transform:uppercase; letter-spacing:.5px; color:#78716c; font-weight:700; }
+    .kpi b { display:block; font-size:13px; font-family:Consolas,'Courier New',monospace; margin-top:2px; }
+    .kpi i { display:block; font-style:normal; font-size:8.5px; color:#a8a29e; margin-top:1px; }
+    .alerta { padding:6px 10px; border-radius:7px; font-size:10px; margin-bottom:8px; }
+    .alerta.pos { background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; } .alerta.neg { background:#fef2f2; border:1px solid #fecaca; color:#991b1b; }
+    .chart { border:1px solid #e7e5e4; border-radius:10px; padding:8px; margin-bottom:10px; text-align:center; page-break-inside:avoid; }
+    .chart img { width:100%; height:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th { background:#1f2937; color:#fff; text-align:right; font-size:9px; text-transform:uppercase; letter-spacing:.4px; padding:6px 8px; }
+    th:first-child, td:first-child { text-align:left; }
+    td { padding:4px 8px; border-bottom:1px solid #eeecea; }
+    tbody tr:nth-child(even) td { background:#faf9f8; }
+    tr.neg td { background:#fef2f2 !important; }
+    td.ds { color:#a8a29e; text-align:left; } th.ds { text-align:left; }
+    .num { text-align:right; white-space:nowrap; font-family:Consolas,'Courier New',monospace; }
+    .b { font-weight:700; } .pos { color:#166534; } .negc { color:#dc2626; }
+    tfoot td { background:#f5f4f2; font-weight:800; border-top:2px solid #1f2937; padding:6px 8px; }
+    thead { display:table-header-group; } tr { page-break-inside:avoid; }
+    .rod { margin-top:12px; padding-top:6px; border-top:1px solid #e7e5e4; font-size:8.5px; color:#a8a29e; display:flex; justify-content:space-between; }`;
+  const agora = new Date();
+  const emitido = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const empNome = _ffCtx.emp ? empresaNome(_ffCtx.emp) : ((db.empresas || []).map(x => x.apelido || x.nome).join(' / ') || 'Consolidado');
+  const html = `<!doctype html><html><head><meta charset="utf-8"><title>Fluxo de Caixa Futuro</title><style>${css}</style></head><body>
+    <div class="top">
+      <div class="emp"><img src="${LOGO_EMPRESA_CAIXA}" alt=""><div><div class="emp-nome">${e(empNome)}</div><div class="emp-sub">${_ffCtx.emp ? 'Empresa' : 'Consolidado (todas as empresas)'}</div></div></div>
+      <div class="tit"><h1>FLUXO DE CAIXA FUTURO</h1><div>Projeção pelo vencimento · emitido em ${emitido}</div></div>
+    </div>
+    <div class="tags">${d.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    <div class="kpis">${d.kpis.map(k => `<div class="kpi" style="border-left-color:${k[2]}"><span>${e(k[0])}</span><b style="color:${k[2]}">${e(k[1])}</b>${k[3] ? `<i>${e(k[3])}</i>` : ''}</div>`).join('')}</div>
+    <div class="alerta ${d.negativo ? 'neg' : 'pos'}">${d.negativo ? '⚠️ ' : '✓ '}${e(d.alerta)}</div>
+    ${imgChart ? `<div class="chart"><img src="${imgChart}" alt="Gráfico"></div>` : ''}
+    <table>
+      <thead><tr><th>${nomeTit}</th>${d.colDia ? '<th class="ds">Dia</th>' : ''}<th>Entradas</th><th>Saídas</th><th>Resultado</th><th>Saldo projetado</th></tr></thead>
+      <tbody>${linhas || `<tr><td colspan="${d.colDia ? 6 : 5}" style="text-align:center;color:#888;padding:14px">Nenhum movimento previsto.</td></tr>`}</tbody>
+      <tfoot><tr><td>Total</td>${d.colDia ? '<td></td>' : ''}<td class="num pos">+ ${fmtBRL(d.tot.rec)}</td><td class="num negc">− ${fmtBRL(d.tot.des)}</td><td class="num ${d.tot.res >= 0 ? 'pos' : 'negc'}">${fmtBRL(d.tot.res)}</td><td class="num ${d.tot.saldo < 0 ? 'negc' : ''}">${fmtBRL(d.tot.saldo)}</td></tr></tfoot>
+    </table>
+    <div class="rod"><span>Parcelas em aberto de Contas a Pagar e a Receber, pelo vencimento. Saldo inicial = saldo atual das contas bancárias (consolidado).</span><span>${d.rows.length} linha(s)</span></div>
+  </body></html>`;
+  const win = window.open('', '_blank');
+  if (!win) { alert('O navegador bloqueou a janela de impressão. Libere os pop-ups para este site e tente de novo.'); return; }
+  win.document.write(html);
+  win.document.close();
+  let impresso = false;
+  const imprimir = () => { if (impresso) return; impresso = true; try { win.focus(); win.print(); } catch (err) {} };
+  win.onload = () => setTimeout(imprimir, 300);
+  setTimeout(imprimir, 1200);
+}
 
 // ══════════════════════════════════════════════════════════════════
 // ANÁLISE DE FLUXO — MELHORES DIAS
@@ -17471,7 +18229,8 @@ function ccRotuloFatura(chave) {
 }
 function ccLancFatura(cid, mes) {
   const k = ccChave(cid, mes);
-  return db.lancamentos.find(l => l.cartao_fatura === k);
+  // Cartões são consolidados: a fatura pode estar fora da empresa ativa
+  return db.lancamentos.find(l => l.cartao_fatura === k) || (db._lancOutras || []).find(l => l.cartao_fatura === k);
 }
 function ccFaturaPaga(cid, mes) {
   const l = ccLancFatura(cid, mes);
@@ -17514,6 +18273,7 @@ async function ccSincronizarFatura(cid, mes) {
       const ok = await sbFetch('lancamentos', 'DELETE', null, `?id=eq.${l.id}`);
       if (!ok) return false;
       db.lancamentos = db.lancamentos.filter(x => x.id !== l.id);
+      db._lancOutras = (db._lancOutras || []).filter(x => x.id !== l.id);
     } else {
       const ok = await sbFetch('lancamentos', 'PATCH', dados, `?id=eq.${l.id}`);
       if (!ok) return false;
@@ -17521,14 +18281,15 @@ async function ccSincronizarFatura(cid, mes) {
     }
   } else if (total > 0) {
     const rec = {
-      id: uid(), empresa_id: c.empresa_id || empresaAtual() || null, ...dados,
+      id: uid(), empresa_id: c.empresa_id || null, ...dados,
       nf: '', prod: '', parcelas: 1, financeiro: 'nao',
       pago: 'nao', dtpago: '', tipo_pag: CC_FORMA_PAG, banco: '',
       cat_dre: '', subcat: '', cartao_fatura: ccChave(cid, mes)
     };
     const ok = await sbFetch('lancamentos', 'POST', rec);
     if (!ok) return false;
-    db.lancamentos.push(rec);
+    if (pertenceEmpresaAtiva(rec.empresa_id)) db.lancamentos.push(rec);
+    else (db._lancOutras = db._lancOutras || []).push(rec);
   }
   bumpDbVer();
   return true;
@@ -17722,9 +18483,8 @@ async function ccSalvarCartao() {
   if (!bandeira) { alert('Escolha a bandeira do cartão (Mastercard, Visa, Elo...).'); return; }
   if (!(fech >= 1 && fech <= 31)) { alert('Informe o dia do fechamento (1 a 31).'); return; }
   if (!(venc >= 1 && venc <= 31)) { alert('Informe o dia do vencimento (1 a 31).'); return; }
-  const _empCC = id ? ((ccCartao(id) || {}).empresa_id || empresaAtual()) : exigirEmpresaAtiva('um cartão de crédito');
-  if (!id && !_empCC) return;
-  if ((db.cartoes || []).some(c => c.id !== id && (c.empresa_id || '') === (_empCC || '') && (c.nome || '').toLowerCase() === nome.toLowerCase())) { alert('Já existe um cartão com esse nome nesta empresa.'); return; }
+  // Cartão não é vinculado a nenhuma empresa: é sempre consolidado
+  if ((db.cartoes || []).some(c => c.id !== id && (c.nome || '').toLowerCase() === nome.toLowerCase())) { alert('Já existe um cartão com esse nome.'); return; }
   const dados = { nome, dia_fechamento: fech, dia_vencimento: venc, limite, bandeira, banco_id };
   if (id) {
     const c = ccCartao(id);
@@ -17737,7 +18497,7 @@ async function ccSalvarCartao() {
     for (const m of mesesC) await ccSincronizarFatura(id, m);
     if (mudouDias) alert('Dias atualizados. As despesas já lançadas continuam nas faturas em que estavam; as novas seguirão os novos dias.');
   } else {
-    const rec = { id: uid(), empresa_id: _empCC, ...dados };
+    const rec = { id: uid(), empresa_id: null, ...dados };
     const ok = await sbFetch('cartoes', 'POST', rec);
     if (!ok) { alert('❌ Erro ao salvar o cartão.' + sbErroDetalhe() + '\n\nSe for o primeiro uso, execute antes o script cartoes_credito.sql no Supabase.'); return; }
     db.cartoes.push(rec);
@@ -17801,9 +18561,7 @@ function ccAbrirDespesa(cid, mes, grupo, orig) {
   selC.innerHTML = (db.cartoes || []).slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || ''))
     .map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
   const selCat = document.getElementById('cc-d-cat');
-  selCat.innerHTML = '<option value="">Nenhuma</option>' + (db.dfc_cats || []).slice()
-    .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''))
-    .map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+  ccPopularGrupos();
   const selP = document.getElementById('cc-d-parcelas');
   selP.innerHTML = Array.from({ length: 47 }, (_, i) => `<option value="${i + 2}">${i + 2}x</option>`).join('');
 
@@ -17813,7 +18571,7 @@ function ccAbrirDespesa(cid, mes, grupo, orig) {
   selC.value = p1 ? p1.cartao_id : (cid || ccSel.cartao || selC.options[0].value);
   document.getElementById('cc-d-data').value = p1 ? p1.data : today();
   document.getElementById('cc-d-desc').value = p1 ? p1.descricao : '';
-  selCat.value = p1 ? (p1.cat_dre || '') : '';
+  ccDefinirCategoria(p1 ? (p1.cat_dre || '') : '');
   const n = linhas.length || 1;
   // despesa importada da fatura (ex.: parcela 4/10 sozinha): mantém a marcação
   document.getElementById('cc-d-parc-fixa').value = (linhas.length === 1 && (p1.total_parcelas || 1) > 1) ? `${p1.parcela}/${p1.total_parcelas}` : '';
@@ -17832,7 +18590,7 @@ function ccAbrirDespesa(cid, mes, grupo, orig) {
     document.getElementById('cc-d-titulo').textContent = 'Pagar Conta com Cartão de Crédito';
     document.getElementById('cc-d-desc').value = orig.desc || '';
     document.getElementById('cc-d-valor').value = orig.valor || '';
-    selCat.value = orig.cat || '';
+    ccDefinirCategoria(orig.cat || '');
     if (orig.data) document.getElementById('cc-d-data').value = orig.data;
   }
   const infoO = document.getElementById('cc-d-orig-info');
@@ -17844,6 +18602,37 @@ function ccAbrirDespesa(cid, mes, grupo, orig) {
   if (typeof enhanceSearchableSelect === 'function') { try { enhanceSearchableSelect(selCat); } catch (e) {} }
   openModal('modal-cc-despesa');
 }
+// ── Grupo e Categoria separados na despesa do cartão (só despesas) ──
+function ccPopularGrupos() {
+  const el = document.getElementById('cc-d-grp');
+  if (!el) return;
+  const grupos = [...(db.dre_grupos || [])].filter(g => g.tipo === 'saida').sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+  el.innerHTML = '<option value="">Todos os grupos</option>' + grupos.map(g => `<option value="${g.id}">${esc(g.nome)}</option>`).join('');
+  el.value = '';
+}
+function ccPopularCategorias(manter) {
+  const el = document.getElementById('cc-d-cat');
+  if (!el) return;
+  const grp = (document.getElementById('cc-d-grp') || {}).value || '';
+  const atual = manter !== undefined ? manter : el.value;
+  const cats = (db.dfc_cats || []).filter(c => (catTipoLanc(c) === 'saida' || c.id === atual) && (!grp || c.grupo === grp))
+    .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+  el.innerHTML = '<option value="">Nenhuma</option>' + cats.map(c => `<option value="${c.id}">${esc(c.nome)}${grp ? '' : ' (' + esc(getDreGrupoNome(c.grupo)) + ')'}</option>`).join('');
+  el.value = cats.some(c => c.id === atual) ? atual : '';
+  if (typeof enhanceSearchableSelect === 'function') { try { enhanceSearchableSelect(el); } catch (e) {} }
+}
+function ccDefinirCategoria(catId) {
+  const g = document.getElementById('cc-d-grp');
+  if (g) g.value = catId ? (getDreCatGrupo(catId) || '') : '';
+  if (g && catId && g.value !== getDreCatGrupo(catId)) g.value = '';
+  ccPopularCategorias(catId);
+}
+function ccCategoriaEscolhida() {
+  const cat = (document.getElementById('cc-d-cat') || {}).value;
+  const g = document.getElementById('cc-d-grp');
+  if (cat && g && !g.value) { const gid = getDreCatGrupo(cat); if ([...g.options].some(o => o.value === gid)) { g.value = gid; ccPopularCategorias(cat); } }
+}
+
 // Monta a lista de faturas possíveis (a padrão pela data da compra + vizinhas)
 function ccAtualizarFaturas(recalcular, mesForcado) {
   const c = ccCartao(document.getElementById('cc-d-cartao').value);
@@ -17926,7 +18715,7 @@ async function ccSalvarDespesa() {
   const origem_lanc = document.getElementById('cc-d-orig-lanc').value || null;
   const origem_parc = origem_lanc ? (parseInt(document.getElementById('cc-d-orig-parc').value, 10) || 1) : null;
   const recs = ps.map(p => ({
-    id: uid() + p.parcela, empresa_id: (ccCartao(cid) || {}).empresa_id || empresaAtual() || null, cartao_id: cid, grupo,
+    id: uid() + p.parcela, empresa_id: (ccCartao(cid) || {}).empresa_id || null, cartao_id: cid, grupo,
     data, descricao, cat_dre, obs, origem_lanc, origem_parc, ...p
   }));
   const ok = await sbFetch('cartao_despesas', 'POST', recs);
@@ -17964,7 +18753,7 @@ function ccEnviarParcelaParaCartao(id, parc, data) {
   });
 }
 async function ccMarcarParcelaViaCartao(id, parcIdx, data) {
-  const l = db.lancamentos.find(x => x.id === id);
+  const l = db.lancamentos.find(x => x.id === id) || (db._lancOutras || []).find(x => x.id === id);
   if (!l) return true;
   const n = l.parcelas || 1;
   const ehMulti = _parseParcelas(l.parcela_datas).multi;
@@ -17984,7 +18773,7 @@ async function ccMarcarParcelaViaCartao(id, parcIdx, data) {
   return !!ok;
 }
 async function ccDesfazerParcelaViaCartao(id, parcIdx) {
-  const l = db.lancamentos.find(x => x.id === id);
+  const l = db.lancamentos.find(x => x.id === id) || (db._lancOutras || []).find(x => x.id === id);
   if (!l) return;
   const n = l.parcelas || 1;
   if (n > 1 || _parseParcelas(l.parcela_datas).multi) {
@@ -18314,7 +19103,7 @@ async function ccImpConfirmar() {
   if (ccFaturaPaga(cid, mes)) { alert(`A fatura de ${ccMesLabel(mes)} já foi paga. Desfaça o pagamento para importar nela.`); return; }
   const c = ccCartao(cid);
   if (!confirm(`Importar ${sel.length} lançamento(s) na fatura de ${ccMesLabel(mes)} do cartão ${c.nome}?`)) return;
-  const emp = c.empresa_id || empresaAtual() || null;
+  const emp = c.empresa_id || null;
   const recs = sel.map((l, k) => ({
     id: uid() + 'i' + k, empresa_id: emp, cartao_id: cid, grupo: uid() + 'g' + k,
     data: l.data, descricao: l.desc, cat_dre: l.cat || '', obs: 'Importado da fatura',
@@ -19986,23 +20775,16 @@ function _atualizarTelasAposExcluir(tabela) {
 // ── Fluxo de Caixa Futuro ─────────────────────────────────────────────
 // Mostra o que vence naquele dia e ainda está em aberto — exatamente o
 // que a tela soma na linha.
-function abrirDetalheFluxoFuturo(data, tipo) {
+function abrirDetalheFluxoFuturo(ini, fim, tipo) {
+  if (tipo === undefined) { tipo = fim; fim = ini; } // compatibilidade: (data, tipo)
   const rotulo = tipo === 'receber' ? 'A receber' : (tipo === 'pagar' ? 'A pagar' : 'Lançamentos');
+  const ctx = _ffCtx || { emp: '' };
   abrirListaLancamentos('', () => {
-    const rec = [], des = [];
-    if (tipo === 'receber' || tipo === 'ambos') {
-      getParcelasReceber(false).forEach(p => {
-        if ((p.venc || p.dtvenda) === data) rec.push(p);
-      });
-    }
-    if (tipo === 'pagar' || tipo === 'ambos') {
-      getParcelas(false).forEach(p => {
-        if ((p.venc || p.dtcompra) === data) des.push(p);
-      });
-    }
+    const rec = (tipo === 'receber' || tipo === 'ambos') ? _ffParcelas(ctx, 'rec', ini, fim).map(x => x.p) : [];
+    const des = (tipo === 'pagar' || tipo === 'ambos') ? _ffParcelas(ctx, 'des', ini, fim).map(x => x.p) : [];
     return {
-      titulo: `${rotulo} — ${fmtDate(data)}`,
-      subtitulo: 'Somente o que vence neste dia e ainda está em aberto',
+      titulo: `${rotulo} — ${ini === fim ? fmtDate(ini) : fmtDate(ini) + ' a ' + fmtDate(fim)}`,
+      subtitulo: `Em aberto, pelo vencimento · ${ctx.emp ? empresaNome(ctx.emp) : 'Consolidado'}`,
       rec, des
     };
   });
