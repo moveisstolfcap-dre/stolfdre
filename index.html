@@ -1114,6 +1114,20 @@ tr.cob-dia-vazio > td {
 }
 .cob-bx-barra { height:9px; background:#e7e5e4; border-radius:6px; overflow:hidden; margin-bottom:18px; }
 .cob-bx-barra > div { height:100%; background:linear-gradient(90deg,#16a34a,#4ade80); }
+.aviso-cartao-modal { border-top:6px solid #d97706; }
+.aviso-cc-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border-bottom:1px solid #f5f4f2; font-size:13px; }
+.aviso-cc-item:last-child { border-bottom:none; }
+.aviso-cc-item .cc-band { width:44px; height:29px; flex-basis:44px; font-size:8.5px; }
+.aviso-cc-item .info { flex:1; min-width:0; }
+.aviso-cc-item .info div { font-size:11.5px; color:#a8a29e; margin-top:1px; }
+.aviso-cc-item .tag { font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:999px; background:#fef3c7; color:#92400e; margin-left:6px; }
+.aviso-cc-item .tag.hoje { background:#fee2e2; color:#b91c1c; }
+.aviso-cc-item .v { font-family:'DM Mono',monospace; font-weight:700; color:#b91c1c; white-space:nowrap; }
+.aviso-cc-item .btn { padding:5px 10px; font-size:12px; }
+.cc-banner { display:flex; align-items:center; gap:12px; background:#fffbeb; border:1px solid #fcd34d; border-left:5px solid #d97706; border-radius:12px; padding:12px 16px; margin-bottom:16px; color:#78350f; font-size:13.5px; flex-wrap:wrap; }
+.cc-banner.hoje { background:#fef2f2; border-color:#fecaca; border-left-color:#dc2626; color:#7f1d1d; }
+.cc-banner .ic { font-size:20px; }
+.cc-banner .tx { flex:1; min-width:200px; }
 .aviso-atraso-modal { border-top:6px solid #dc2626; }
 .aviso-atraso-cli {
   display:flex; justify-content:space-between; align-items:center; gap:10px;
@@ -4164,6 +4178,24 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
   </div>
 </div>
 
+<!-- ══ MODAL: AVISO DE FATURA DE CARTÃO A VENCER ══ -->
+<div class="modal-overlay" id="modal-aviso-cartao" data-nao-fechar="1">
+  <div class="modal aviso-cartao-modal" style="width:520px;">
+    <div class="modal-title" style="color:#b45309;display:flex;align-items:center;gap:9px;">
+      <span style="font-size:22px">🔔</span> Fatura de cartão vence amanhã
+    </div>
+    <p style="font-size:13px;color:#57534e;margin-bottom:16px;" id="aviso-cartao-texto">
+      As faturas abaixo vencem amanhã e ainda não foram pagas.
+    </p>
+    <div id="aviso-cartao-lista" style="border:1px solid #e7e5e4;border-radius:12px;max-height:320px;overflow-y:auto;margin-bottom:8px;"></div>
+    <div id="aviso-cartao-resumo" style="font-size:12px;color:#92400e;font-weight:700;text-align:right;"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="ccFecharAvisoVenc(); showPage('cartoes');">Ver cartões</button>
+      <button class="btn btn-primary" style="background:#d97706" onclick="ccFecharAvisoVenc()">✓ Ciente</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL: AVISO DE CLIENTE EM DÉBITO (bloqueante) ══ -->
 <div class="modal-overlay" id="modal-aviso-atraso" data-nao-fechar="1">
   <div class="modal aviso-atraso-modal" style="width:560px;">
@@ -5687,6 +5719,7 @@ async function loadAllData() {
     alert('Erro ao conectar ao banco de dados. Verifique a conexão.');
   }
   showLoading(false);
+  setTimeout(() => { try { ccAvisoVencimento(false); } catch (e) { console.warn(e); } }, 900);
 }
 
 function showLoading(on) {
@@ -18395,7 +18428,7 @@ const CC_FACE_BG = {
   outro:      'linear-gradient(135deg,#ea580c 0%,#7c2d12 100%)'
 };
 function ccDiasAte(iso) {
-  const a = new Date(today() + 'T12:00:00'), b = new Date(iso + 'T12:00:00');
+  const a = new Date(ccHojeLocal(0) + 'T12:00:00'), b = new Date(iso + 'T12:00:00');
   return Math.round((b - a) / 86400000);
 }
 function ccTxtDias(n) {
@@ -18404,6 +18437,74 @@ function ccTxtDias(n) {
   if (n > 1) return `em ${n} dias`;
   if (n === -1) return 'ontem';
   return `há ${-n} dias`;
+}
+// ── Aviso de fatura que vence amanhã (e lembrete no dia) ──
+const CC_AVISO_KEY = 'stolf_aviso_cartao_visto';
+function ccHojeLocal(off = 0) {
+  const d = new Date(); d.setDate(d.getDate() + off);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+// Faturas não pagas com valor que vencem amanhã (quando = 'amanha') ou hoje ('hoje')
+function ccFaturasAVencer() {
+  const hoje = ccHojeLocal(0), amanha = ccHojeLocal(1);
+  const res = [];
+  (db.cartoes || []).forEach(c => {
+    const base = ccMesAtualCartao(c);
+    [-1, 0, 1].forEach(n => {
+      const mes = ccAddMes(base, n);
+      const venc = ccDataVencimento(c, mes);
+      if (venc !== hoje && venc !== amanha) return;
+      if (ccFaturaPaga(c.id, mes)) return;
+      const val = ccTotalFatura(c.id, mes);
+      if (val <= 0) return;
+      res.push({ c, mes, venc, val, quando: venc === hoje ? 'hoje' : 'amanha', chave: ccChave(c.id, mes) });
+    });
+  });
+  return res.sort((a, b) => a.venc.localeCompare(b.venc) || b.val - a.val);
+}
+function ccAvisoVencimento(forcar) {
+  const lista = ccFaturasAVencer();
+  if (!lista.length) { if (forcar) alert('Nenhuma fatura de cartão vence hoje ou amanhã.'); return; }
+  const hoje = ccHojeLocal(0);
+  let visto = null;
+  try { visto = JSON.parse(localStorage.getItem(CC_AVISO_KEY) || 'null'); } catch (e) {}
+  const jaVistas = (visto && visto.data === hoje) ? (visto.chaves || []) : [];
+  if (!forcar && lista.every(f => jaVistas.includes(f.chave + '|' + f.quando))) return;
+  const modal = document.getElementById('modal-aviso-cartao');
+  if (!modal || modal.classList.contains('open')) return;
+  if (document.querySelector('.modal-overlay.open')) { setTimeout(() => ccAvisoVencimento(forcar), 1500); return; }
+  const soHoje = lista.every(f => f.quando === 'hoje');
+  modal.querySelector('.modal-title').innerHTML = `<span style="font-size:22px">🔔</span> ${soHoje ? 'Fatura de cartão vence hoje' : 'Fatura de cartão vence amanhã'}`;
+  document.getElementById('aviso-cartao-texto').textContent = lista.length > 1
+    ? 'As faturas abaixo estão próximas do vencimento e ainda não foram pagas.'
+    : 'A fatura abaixo está próxima do vencimento e ainda não foi paga.';
+  document.getElementById('aviso-cartao-lista').innerHTML = lista.map(f => `
+    <div class="aviso-cc-item">
+      ${ccBandeiraHtml(f.c.bandeira)}
+      <div class="info"><strong>${f.c.nome}</strong><span class="tag ${f.quando === 'hoje' ? 'hoje' : ''}">${f.quando === 'hoje' ? 'vence hoje' : 'vence amanhã'}</span>
+        <div>Fatura ${ccMesLabel(f.mes)} · vencimento ${fmtDate(f.venc)}${f.c.banco_id ? ' · ' + getBancoNome(f.c.banco_id) : ''}</div></div>
+      <span class="v">${fmtBRL(f.val)}</span>
+      <button class="btn btn-secondary" onclick="ccFecharAvisoVenc(); ccIrParaFatura('${f.chave}')">Abrir</button>
+    </div>`).join('');
+  const total = lista.reduce((s, f) => s + f.val, 0);
+  document.getElementById('aviso-cartao-resumo').textContent = `${lista.length} fatura(s) · total ${fmtBRL(total)}`;
+  modal._lista = lista;
+  openModal('modal-aviso-cartao');
+}
+function ccFecharAvisoVenc() {
+  const modal = document.getElementById('modal-aviso-cartao');
+  const lista = (modal && modal._lista) || [];
+  try { localStorage.setItem(CC_AVISO_KEY, JSON.stringify({ data: ccHojeLocal(0), chaves: lista.map(f => f.chave + '|' + f.quando) })); } catch (e) {}
+  closeModal('modal-aviso-cartao');
+}
+function ccBannerVencimento() {
+  const lista = ccFaturasAVencer();
+  if (!lista.length) return '';
+  const temHoje = lista.some(f => f.quando === 'hoje');
+  const nomes = lista.map(f => `<b>${f.c.nome}</b> (${fmtBRL(f.val)}, ${f.quando === 'hoje' ? 'hoje' : 'amanhã'})`).join(', ');
+  return `<div class="cc-banner ${temHoje ? 'hoje' : ''}"><span class="ic">🔔</span>
+    <div class="tx">${lista.length > 1 ? 'Faturas próximas do vencimento' : 'Fatura próxima do vencimento'}: ${nomes}</div>
+    ${lista.length === 1 ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${lista[0].chave}')">Pagar fatura</button>` : ''}</div>`;
 }
 // Faturas não pagas (todas, inclusive futuras/parcelas) — usado no limite
 function ccMesesNaoPagos(cid) {
@@ -18432,9 +18533,20 @@ function ccRenderLista() {
     totalAtual += val;
     const abertas = [...new Set((db.cartao_despesas || []).filter(d => d.cartao_id === c.id && d.fatura < mes).map(d => d.fatura))]
       .filter(m => !ccFaturaPaga(c.id, m) && ccTotalFatura(c.id, m) > 0);
-    const atrasado = abertas.reduce((s, m) => s + ccTotalFatura(c.id, m), 0);
+    // separa faturas anteriores já vencidas das fechadas que ainda vão vencer
+    const hojeL = ccHojeLocal(0);
+    let atrasado = 0; const fechadas = [];
+    abertas.forEach(m => {
+      const v = ccDataVencimento(c, m), t = ccTotalFatura(c.id, m);
+      if (v < hojeL) atrasado += t; else fechadas.push({ m, v, t });
+    });
     totalAtraso += atrasado;
+    fechadas.forEach(f => { if (!proximo || f.v < proximo.dt) proximo = { dt: f.v, nome: c.nome, val: f.t }; });
     if (sit.txt !== 'Paga' && val > 0 && dVenc >= 0 && (!proximo || dtVenc < proximo.dt)) proximo = { dt: dtVenc, nome: c.nome, val };
+    const fechHtml = fechadas.map(f => {
+      const d = ccDiasAte(f.v);
+      return `<div class="cc-alerta ${d <= 1 ? '' : 'warn'}">🧾 Fatura ${ccMesLabel(f.m)} fechada: <b>${fmtBRL(f.t)}</b> · vence ${fmtDate(f.v)} (${ccTxtDias(d)})</div>`;
+    }).join('');
 
     // limite
     let limHtml = '';
@@ -18470,7 +18582,8 @@ function ccRenderLista() {
           <div><div class="lbl">Vencimento</div><div class="val">${fmtDate(dtVenc)}</div><div class="hint ${sit.txt !== 'Paga' && val > 0 && dVenc <= 3 ? 'urg' : ''}">${vencHint}</div></div>
         </div>
         ${limHtml}
-        ${atrasado > 0 ? `<div class="cc-alerta">⚠ Faturas anteriores em aberto: <b>${fmtBRL(atrasado)}</b></div>` : ''}
+        ${fechHtml}
+        ${atrasado > 0 ? `<div class="cc-alerta">⚠ Faturas vencidas em aberto: <b>${fmtBRL(atrasado)}</b></div>` : ''}
         ${banco}
       </div>
       <div class="cc-foot" onclick="event.stopPropagation()">
@@ -18485,11 +18598,11 @@ function ccRenderLista() {
   const dispTotal = Math.max(0, limiteTotal - usadoComLimite);
   const resumo = `<div class="cc-resumo">
     <div class="cc-kpi"><div class="k-lbl">Faturas atuais</div><div class="k-val">${fmtBRL(totalAtual)}</div><div class="k-sub">${cartoes.length} ${cartoes.length === 1 ? 'cartão' : 'cartões'}</div></div>
-    <div class="cc-kpi ${totalAtraso > 0 ? 'alerta' : 'ok'}"><div class="k-lbl">Em atraso</div><div class="k-val">${fmtBRL(totalAtraso)}</div><div class="k-sub">${totalAtraso > 0 ? 'faturas anteriores' : 'tudo em dia'}</div></div>
+    <div class="cc-kpi ${totalAtraso > 0 ? 'alerta' : 'ok'}"><div class="k-lbl">Em atraso</div><div class="k-val">${fmtBRL(totalAtraso)}</div><div class="k-sub">${totalAtraso > 0 ? 'faturas vencidas' : 'tudo em dia'}</div></div>
     <div class="cc-kpi"><div class="k-lbl">Próximo vencimento</div><div class="k-val">${proximo ? fmtDate(proximo.dt) : '—'}</div><div class="k-sub">${proximo ? proximo.nome + ' · ' + ccTxtDias(ccDiasAte(proximo.dt)) : 'nenhuma fatura a vencer'}</div></div>
     <div class="cc-kpi"><div class="k-lbl">Limite disponível</div><div class="k-val">${temLimite ? fmtBRL(dispTotal) : '—'}</div><div class="k-sub">${temLimite ? 'de ' + fmtBRL(limiteTotal) : 'informe o limite no cadastro'}</div></div>
   </div>`;
-  lw.innerHTML = `${resumo}<div class="cc-grid">${cards}
+  lw.innerHTML = `${ccBannerVencimento()}${resumo}<div class="cc-grid">${cards}
     <button class="cc-novo" onclick="ccAbrirCadastro()"><span class="mais">+</span>Adicionar cartão</button></div>`;
 }
 
