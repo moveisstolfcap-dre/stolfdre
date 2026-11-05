@@ -673,6 +673,56 @@ th.ef-th { padding:8px 8px 8px 12px; }
 .dre-det-nota { font-size:11px; color:#a8a29e; margin-top:8px; min-height:0; }
 .dre-det-nota:empty { display:none; }
 .dre-det-foot { display:flex; justify-content:flex-end; margin-top:12px; }
+
+/* ── Detalhe do DRE: visual novo ── */
+.dre-det-modal { width:1180px; border-radius:16px; padding:22px 24px 18px; }
+.dre-det-title { font-size:18px; }
+.dre-det-kpis { border:none; gap:10px; overflow:visible; margin-bottom:10px; }
+.dre-det-kpi { border:1px solid #ece9e6 !important; border-radius:12px; padding:11px 14px; background:#fff; }
+.dre-det-kpi-lbl { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.45px; color:#a8a29e; }
+.dre-det-kpi-val { font-size:18px; font-weight:700; margin-top:4px; }
+.dre-det-kpi-sub { font-size:11.5px; color:#78716c; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dre-det-prog { flex:none; height:6px; border-radius:999px; background:#f1efed; overflow:hidden; margin-bottom:12px; display:flex; }
+.dre-det-prog > div { height:100%; }
+.dre-det-formas { flex:none; display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.dre-det-formas:empty { display:none; }
+.dre-fp-chip { display:inline-flex; align-items:center; gap:6px; border:1px solid #e7e5e4; background:#fff; border-radius:999px; padding:4px 11px; font-size:12px; color:#44403c; cursor:pointer; }
+.dre-fp-chip b { font-family:'DM Mono',monospace; font-weight:600; color:#1f2937; }
+.dre-fp-chip:hover { border-color:#d6d3d1; background:#faf9f7; }
+.dre-fp-chip.sel { border-color:var(--accent); background:#fff7ed; color:#9a3412; }
+.dre-det-tools { gap:10px; flex-wrap:wrap; }
+.dre-det-seg { display:inline-flex; background:#f5f4f2; border-radius:9px; padding:3px; gap:2px; }
+.dre-det-seg button { border:none; background:none; padding:5px 11px; border-radius:7px; font-size:12px; font-weight:600; color:#78716c; cursor:pointer; white-space:nowrap; }
+.dre-det-seg button.sel { background:#fff; color:#1f2937; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+.dre-det-seg button .n { font-weight:500; color:#a8a29e; margin-left:3px; }
+.dre-det-tools input { border-radius:9px; padding:7px 12px; }
+.dre-det-scroll { border-radius:12px; }
+.dre-det-table th { font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#78716c; padding:9px 12px; }
+.dre-det-table td { padding:8px 12px; }
+.dre-det-table .c-data { width:100px; }
+.dre-det-table .c-nf { width:80px; }
+.dre-det-table .c-forma { width:190px; }
+.dre-det-table .c-sit { width:200px; }
+.dre-det-table .c-val { width:124px; font-weight:600; }
+.dre-det-table .c-nome .n1 { font-weight:600; color:#1f2937; overflow:hidden; text-overflow:ellipsis; }
+.dre-det-table .c-nome .n2 { font-size:11.5px; color:#a8a29e; overflow:hidden; text-overflow:ellipsis; }
+.dre-fp { display:inline-flex; align-items:center; gap:7px; max-width:100%; }
+.dre-fp-ic { width:24px; height:24px; flex:0 0 24px; border-radius:7px; background:#f5f4f2; display:inline-flex; align-items:center; justify-content:center; font-size:12.5px; }
+.dre-fp-tx { min-width:0; }
+.dre-fp-tx div { overflow:hidden; text-overflow:ellipsis; }
+.dre-fp-tx .s { font-size:11px; color:#a8a29e; }
+.dre-fp.vazio { color:#d6d3d1; }
+.dre-det-sit { padding:2px 9px; font-size:11px; }
+.dre-det-sit.parc { background:#fef3c7; color:#92400e; }
+.dre-det-sit.venc { background:#fee2e2; color:#b91c1c; }
+.dre-det-sit.pag { background:#fff7ed; color:#c2410c; }
+.dre-det-sit.cc { background:#ede9fe; color:#5b21b6; }
+.dre-sit-det { font-size:11px; color:#a8a29e; margin-top:2px; overflow:hidden; text-overflow:ellipsis; }
+.dre-det-table tfoot td { font-size:12.5px; }
+@media (max-width:760px) {
+  .dre-det-table .c-forma, .dre-det-table .c-nf { display:none; }
+  .dre-det-table .c-sit { width:130px; }
+}
 .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 @media (max-width:760px) {
   .dre-det-kpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -4178,6 +4228,24 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
   </div>
 </div>
 
+<!-- ══ MODAL: EMPRESA DA FATURA DO CARTÃO ══ -->
+<div class="modal-overlay" id="modal-cc-empresa">
+  <div class="modal" style="width:440px;">
+    <div class="modal-title">🏢 Empresa da fatura</div>
+    <p style="font-size:13px;color:#57534e;margin:-4px 0 14px" id="cc-emp-info"></p>
+    <input type="hidden" id="cc-emp-lanc" />
+    <div class="form-group"><label>Empresa *</label><select id="cc-emp-sel"></select></div>
+    <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#44403c;margin:10px 0 6px;cursor:pointer">
+      <input type="checkbox" id="cc-emp-desp" checked style="margin-top:2px;width:auto;flex:0 0 auto" /> <span>Aplicar também às compras desta fatura <span style="color:#a8a29e">(usado no DRE e na Análise por Categoria)</span></span></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#44403c;margin:6px 0 4px;cursor:pointer">
+      <input type="checkbox" id="cc-emp-padrao" checked style="margin-top:2px;width:auto;flex:0 0 auto" /> <span>Usar esta empresa nas próximas faturas deste cartão</span></label>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-cc-empresa')">Cancelar</button>
+      <button class="btn btn-primary" id="cc-emp-salvar" onclick="ccSalvarEmpresaFatura()">Salvar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL: AVISO DE FATURA DE CARTÃO A VENCER ══ -->
 <div class="modal-overlay" id="modal-aviso-cartao" data-nao-fechar="1">
   <div class="modal aviso-cartao-modal" style="width:520px;">
@@ -4847,18 +4915,21 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
       <button type="button" class="dre-det-x" onclick="closeModal('modal-dre-detalhe')" aria-label="Fechar" title="Fechar (Esc)">&times;</button>
     </div>
     <div class="dre-det-kpis" id="dre-detalhe-kpis"></div>
+    <div class="dre-det-prog" id="dre-detalhe-prog"></div>
+    <div class="dre-det-formas" id="dre-detalhe-formas"></div>
     <div class="dre-det-tools">
-      <input type="search" id="dre-detalhe-busca" placeholder="Buscar por cliente, fornecedor, produto ou NF" oninput="_dreDetFiltrar()" autocomplete="off" />
+      <div class="dre-det-seg" id="dre-detalhe-seg"></div>
+      <input type="search" id="dre-detalhe-busca" placeholder="Buscar fornecedor, produto, NF ou forma de pagamento" oninput="_dreDetFiltrar()" autocomplete="off" />
       <span class="dre-det-cont" id="dre-detalhe-cont"></span>
     </div>
     <div class="dre-det-scroll">
       <table class="dre-det-table">
         <thead><tr>
           <th class="c-data">Data</th>
-          <th class="c-nome">Cliente / Fornecedor</th>
-          <th class="c-prod">Produto</th>
+          <th class="c-nome">Fornecedor / Cliente</th>
           <th class="c-nf">NF</th>
-          <th class="c-sit">Situação</th>
+          <th class="c-forma">Forma de pagamento</th>
+          <th class="c-sit">Pagamento</th>
           <th class="c-val">Valor</th>
           <th class="c-acao"><span class="sr-only">Ações</span></th>
         </tr></thead>
@@ -4975,6 +5046,7 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
         <div id="cc-d-previa" class="lanc-note" style="display:none;margin-bottom:14px"></div>
       </div>
       <div class="el-sec">
+        <div class="form-group"><label>Empresa</label><select id="cc-d-empresa"></select></div>
         <div class="form-group"><label>Observação</label><input id="cc-d-obs" type="text" placeholder="Opcional" /></div>
       </div>
     </div>
@@ -7168,7 +7240,7 @@ function renderLancamentos() {
       <td>${finBadge}</td>
       <td>${pagBadge}</td>
       <td class="actions">
-        ${l.cartao_fatura ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${l.cartao_fatura}')">💳 Ver no Cartão</button>` : `<button class="btn btn-secondary btn-sm" onclick="editLancamento('${l.id}')">Editar</button>
+        ${l.cartao_fatura ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${l.cartao_fatura}')">💳 Ver no Cartão</button><button class="btn btn-secondary btn-sm" onclick="ccAbrirEmpresaFatura('${l.id}')" title="Alterar a empresa desta fatura">🏢 Empresa</button>` : `<button class="btn btn-secondary btn-sm" onclick="editLancamento('${l.id}')">Editar</button>
         <button class="btn btn-danger btn-sm" onclick="deleteLancamento('${l.id}')">Excluir</button>`}
       </td>
     </tr>`;
@@ -8046,7 +8118,7 @@ function renderApagar() {
       <td style="font-family:DM Mono,monospace;font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
       <td class="actions">
-        ${p.cartaoFatura ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${p.cartaoFatura}')" title="A fatura do cartão só pode ser paga pela tela do cartão">💳 Pagar no Cartão</button>` : `<button class="btn btn-secondary btn-sm" onclick="editLancamento('${p.lancId}')">Editar</button>
+        ${p.cartaoFatura ? `<button class="btn btn-primary btn-sm" onclick="ccIrParaFatura('${p.cartaoFatura}')" title="A fatura do cartão só pode ser paga pela tela do cartão">💳 Pagar no Cartão</button><button class="btn btn-secondary btn-sm" onclick="ccAbrirEmpresaFatura('${p.lancId}')" title="Alterar a empresa desta fatura">🏢 Empresa</button>` : `<button class="btn btn-secondary btn-sm" onclick="editLancamento('${p.lancId}')">Editar</button>
         <button class="btn btn-primary btn-sm" onclick="marcarPago('${p.lancId}', ${p.parcIdx})">Marcar Pago</button>`}
         ${p.totalParc>1?`<button class="btn btn-danger btn-sm" onclick="excluirParcela('pagar','${p.lancId}',${p.parcIdx})" title="Excluir somente esta parcela">✕ Parcela</button>`:''}
       </td>
@@ -9000,7 +9072,7 @@ function renderPagas() {
       <td>${p.banco ? getBancoNome(p.banco) : '<span style="color:#a8a29e;font-size:12px">—</span>'}</td>
       <td style="font-family:DM Mono,monospace;font-size:12px">${p.nf||'—'}</td>
       <td>${finBadge}</td>
-      <td class="actions"><button class="btn btn-danger btn-sm" onclick="estornarPago('${p.lancId}', ${p.parcIdx})" title="Desfazer pagamento">↩ Estornar</button>${p.totalParc>1?`<button class="btn btn-danger btn-sm" onclick="excluirParcela('pagar','${p.lancId}',${p.parcIdx})" title="Excluir somente esta parcela">✕ Parcela</button>`:''}</td>
+      <td class="actions">${p.cartaoFatura ? `<button class="btn btn-secondary btn-sm" onclick="ccAbrirEmpresaFatura('${p.lancId}')" title="Alterar a empresa desta fatura">🏢 Empresa</button>` : ''}<button class="btn btn-danger btn-sm" onclick="estornarPago('${p.lancId}', ${p.parcIdx})" title="Desfazer pagamento">↩ Estornar</button>${p.totalParc>1?`<button class="btn btn-danger btn-sm" onclick="excluirParcela('pagar','${p.lancId}',${p.parcIdx})" title="Excluir somente esta parcela">✕ Parcela</button>`:''}</td>
     </tr>`;
   }).join('');
 }
@@ -13527,7 +13599,7 @@ function renderDre() {
       const item = {
         tipo: 'receber', id: l.id, nf: l.nf || '', data: o.data, nome: getClienteNome(l.cliente),
         prod: (l.prod ? getProdVendaNome(l.prod) : '') + (o.parcela ? ` (parc. ${o.parcela})` : ''),
-        valor: o.valor,
+        valor: o.valor, parc: o.parcela ? parseInt(o.parcela) : null,
         status: o.quitado ? 'Recebido' : 'A Receber'
       };
       const sinalCat = dreSinalCat(catId, grupoId);
@@ -13559,7 +13631,7 @@ function renderDre() {
       const item = {
         tipo: 'pagar', id: l.id, nf: l.nf || '', data: o.data, nome: getFornNome(l.forn),
         prod: (l.prod ? getProdNome(l.prod) : '') + (o.parcela ? ` (parc. ${o.parcela})` : ''),
-        valor: o.valor,
+        valor: o.valor, parc: o.parcela ? parseInt(o.parcela) : null,
         status: o.quitado ? 'Pago' : 'A Pagar'
       };
       const sinalCat = dreSinalCat(catId, grupoId);
@@ -13570,6 +13642,24 @@ function renderDre() {
         (itensMesCat[m][catId] = itensMesCat[m][catId] || []).push(item);
       }
     });
+  });
+
+  // 3. Despesas lançadas direto no cartão de crédito. A fatura em Contas a Pagar
+  //    não tem categoria (não entra no DRE); quem entra é cada compra do cartão,
+  //    com a categoria dela. Contas a Pagar pagas com cartão já entram pelo
+  //    lançamento original, então ficam de fora aqui (sem contar em dobro).
+  ccItensParaDre(ano, gid => baseDoGrupo(gid)).forEach(r => {
+    const catId = r.catId;
+    if (!catId) return;
+    const grupoId = getDreCatGrupo(catId);
+    if (!grupoId) return;
+    const m = r.mes;
+    if (valoresMes[m][grupoId] === undefined) return;
+    const sinalCat = dreSinalCat(catId, grupoId);
+    valoresMes[m][grupoId] += r.item.valor * sinalCat;
+    itensMes[m][grupoId].push(r.item);
+    valoresMesCat[m][catId] = (valoresMesCat[m][catId] || 0) + r.item.valor * sinalCat;
+    (itensMesCat[m][catId] = itensMesCat[m][catId] || []).push(r.item);
   });
 
   // Injeta a Variação de Estoque digitada manualmente (não vem de lançamentos).
@@ -13980,6 +14070,13 @@ function renderAnaliseCategoria() {
     });
   });
 
+  // Despesas do cartão de crédito (por categoria, data da compra)
+  ccItensParaDre(ano, () => 'competencia').forEach(r => {
+    if (!r.catId || !valoresMes[r.catId]) return;
+    valoresMes[r.catId][r.mes] += r.item.valor;
+    itensMes[r.mes][r.catId].push(r.item);
+  });
+
   // Guarda para o drill-down (abrirDetalheAcCategoria), acessível após o render
   _acItensCache = itensMes;
   _acAnoCache = ano;
@@ -14233,28 +14330,118 @@ let _dreDetVoltarAposEditar = false;
 const _DRE_ICO_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
 const _DRE_ICO_DEL  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>';
 
+let _dreDetSeg = 'todos', _dreDetForma = '', _dreDetParc = null;
+const _DRE_FP_ICO = [
+  [/cart[aã]o.*cr[eé]d|cr[eé]dito/i, '💳'], [/d[eé]bito/i, '💳'], [/pix/i, '⚡'], [/boleto/i, '🧾'],
+  [/dinheiro|esp[eé]cie|caixa/i, '💵'], [/transf|ted|doc/i, '🏦'], [/cheque/i, '✍️'], [/dep[oó]sito/i, '🏦'], [/misto|\+/i, '🔀']
+];
+function _dreFpIcone(f) { const r = _DRE_FP_ICO.find(([re]) => re.test(f || '')); return r ? r[1] : '•'; }
+function _dreDetMapas() {
+  if (_dreDetParc && _dreDetParc.ver === _dbVer) return _dreDetParc;
+  const mk = arr => { const m = new Map(); arr.forEach(p => { if (!m.has(p.lancId)) m.set(p.lancId, []); m.get(p.lancId).push(p); }); return m; };
+  _dreDetParc = {
+    ver: _dbVer,
+    pagar: mk(getParcelas(false).concat(getParcelas(true))),
+    receber: mk(getParcelasReceber(false).concat(getParcelasReceber(true))),
+    ccOri: (typeof ccOrigensSet === 'function') ? ccOrigensSet() : new Set()
+  };
+  return _dreDetParc;
+}
+// Forma de pagamento e situação real do pagamento de um item do detalhe
+function _dreDetPag(it) {
+  if (it._pag) return it._pag;
+  const hoje = today();
+  let r;
+  if (it.tipo === 'cartao') {
+    const cc = it.cc || {};
+    const l = cc.lanc;
+    const todasPagas = cc.pagas === cc.qtd;
+    r = {
+      formas: ['Cartão de Crédito'], formaSub: cc.nomeCartao || '',
+      ok: todasPagas,
+      sit: todasPagas ? 'Pago' : (cc.pagas ? 'Parcial' : 'Na fatura'),
+      cls: todasPagas ? 'ok' : (cc.pagas ? 'parc' : 'cc'),
+      det: todasPagas && l ? `fatura paga em ${fmtDate(l.dtpago)}${l.banco ? ' · ' + getBancoNome(l.banco) : ''}`
+         : cc.qtd > 1 ? `${cc.pagas} de ${cc.qtd} faturas pagas` : `fatura vence ${fmtDate(cc.venc)}`
+    };
+  } else {
+    const rec = it.tipo === 'receber';
+    const mp = _dreDetMapas();
+    let ps = (rec ? mp.receber : mp.pagar).get(it.id) || [];
+    if (it.parc) ps = ps.filter(p => p.parcIdx === it.parc);
+    const pago = p => rec ? p.isRecebido : p.isPago;
+    const dtq = p => rec ? p.dtrecebido : p.dtpago;
+    const viaCC = p => !rec && mp.ccOri.has(`${p.lancId}|${p.parcIdx}`);
+    const formas = [];
+    ps.forEach(p => {
+      const lst = viaCC(p) ? ['Cartão de Crédito']
+        : (p.formasSplit && p.formasSplit.length ? p.formasSplit.map(x => x.forma) : [p.tipoPag]);
+      lst.forEach(f => { if (f && !formas.includes(f)) formas.push(f); });
+    });
+    const pagas = ps.filter(pago);
+    const n = ps.length;
+    const lblOk = rec ? 'Recebido' : 'Pago', lblAb = rec ? 'A Receber' : 'A Pagar';
+    if (!n) {
+      const ok = it.status === 'Pago' || it.status === 'Recebido';
+      r = { formas, ok, sit: it.status, cls: ok ? 'ok' : (rec ? 'rec' : 'pag'), det: '' };
+    } else if (pagas.length === n) {
+      const ult = pagas.map(dtq).filter(Boolean).sort().pop();
+      const bancos = [...new Set(pagas.map(p => viaCC(p) ? '' : p.banco).filter(Boolean))];
+      const temCC = pagas.some(viaCC);
+      r = { formas, ok: true, sit: lblOk, cls: 'ok',
+        det: (ult ? `em ${fmtDate(ult)}` : 'sem data') + (bancos.length ? ' · ' + bancos.map(getBancoNome).join(', ') : (temCC ? ' · via cartão' : '')) };
+    } else {
+      const abertas = ps.filter(p => !pago(p)).sort((a, b) => (a.venc || '').localeCompare(b.venc || ''));
+      const prox = abertas[0] && abertas[0].venc;
+      const vencida = abertas.some(p => p.venc && p.venc < hoje);
+      if (pagas.length) r = { formas, ok: false, sit: 'Parcial', cls: 'parc', det: `${pagas.length} de ${n} parcelas ${rec ? 'recebidas' : 'pagas'}`,
+        valPago: Math.min(it.valor, pagas.reduce((a, p) => a + (p.valParc || 0), 0)) };
+      else r = { formas, ok: false, sit: vencida ? 'Vencido' : lblAb, cls: vencida ? 'venc' : (rec ? 'rec' : 'pag'),
+        det: prox ? `${vencida ? 'venceu' : 'vence'} ${fmtDate(prox)}` : '' };
+      r.vencida = vencida;
+    }
+  }
+  r.formaTxt = r.formas.length ? r.formas.join(' + ') : '';
+  it._pag = r;
+  return r;
+}
+
 function _dreDetalheRender(nome, periodoTxt, itens, ctx) {
   _dreDetItens = itens;
   _dreDetCtx = ctx || null;
+  itens.forEach(it => { delete it._pag; });
+  if (!(ctx && ctx._manterBusca)) { _dreDetSeg = 'todos'; _dreDetForma = ''; }
   const titleEl = document.getElementById('dre-detalhe-title');
   if (titleEl) titleEl.textContent = nome;
   const subEl = document.getElementById('dre-detalhe-sub');
   if (subEl) subEl.textContent = periodoTxt;
 
+  const soReceber = itens.length && itens.every(it => it.tipo === 'receber');
   const total = itens.reduce((s, it) => s + it.valor, 0);
-  const conf  = itens.filter(it => it.status === 'Recebido' || it.status === 'Pago').reduce((s, it) => s + it.valor, 0);
-  const kpi = (lbl, val, cor) => `<div class="dre-det-kpi"><div class="dre-det-kpi-lbl">${lbl}</div><div class="dre-det-kpi-val"${cor ? ` style="color:${cor}"` : ''} title="${val}">${val}</div></div>`;
+  const conf  = itens.reduce((s, it) => { const g = _dreDetPag(it); return s + (g.ok ? it.valor : (g.valPago || 0)); }, 0);
+  const venc  = itens.filter(it => _dreDetPag(it).vencida).reduce((s, it) => s + it.valor, 0);
+  const pct = total ? Math.max(0, Math.min(100, conf / total * 100)) : 0;
+  const kpi = (lbl, val, cor, sub) => `<div class="dre-det-kpi"><div class="dre-det-kpi-lbl">${lbl}</div><div class="dre-det-kpi-val"${cor ? ` style="color:${cor}"` : ''} title="${val}">${val}</div>${sub ? `<div class="dre-det-kpi-sub">${sub}</div>` : ''}</div>`;
   const kpisEl = document.getElementById('dre-detalhe-kpis');
   if (kpisEl) kpisEl.innerHTML =
-      kpi('Lançamentos', itens.length)
-    + kpi('Total do período', fmtBRL(total))
-    + kpi('Já confirmado', fmtBRL(conf), '#166534')
-    + kpi('Ainda pendente', fmtBRL(total - conf), '#b45309');
+      kpi('Lançamentos', itens.length, '', periodoTxt)
+    + kpi('Total do período', fmtBRL(total), '', total && itens.length ? `média ${fmtBRL(total / itens.length)}` : '')
+    + kpi(soReceber ? 'Recebido' : 'Pago', fmtBRL(conf), '#166534', `${pct.toFixed(0)}% do total`)
+    + kpi('Em aberto', fmtBRL(total - conf), '#c2410c', venc > 0.005 ? `<span style="color:#b91c1c;font-weight:600">${fmtBRL(venc)} vencido</span>` : 'nada vencido');
+  const prog = document.getElementById('dre-detalhe-prog');
+  if (prog) {
+    const pv = total ? Math.min(100 - pct, venc / total * 100) : 0;
+    prog.innerHTML = `<div style="width:${pct}%;background:#16a34a"></div><div style="width:${pv}%;background:#ef4444"></div>`;
+  }
+  _dreDetRenderFormas();
 
   const nota = document.getElementById('dre-detalhe-nota');
-  if (nota) nota.textContent = itens.some(it => /\(parc\./.test(it.prod || ''))
-    ? 'Alguns itens são parcelas. Editar ou excluir age sobre o lançamento inteiro, com todas as parcelas.'
-    : '';
+  if (nota) {
+    const msgs = [];
+    if (itens.some(it => /\(parc\./.test(it.prod || ''))) msgs.push('Alguns itens são parcelas. Editar ou excluir age sobre o lançamento inteiro, com todas as parcelas.');
+    if (itens.some(it => it.tipo === 'cartao')) msgs.push('💳 Compras feitas no cartão de crédito aparecem pela data da compra; o pagamento acontece quando a fatura é paga.');
+    nota.textContent = msgs.join(' ');
+  }
 
   const busca = document.getElementById('dre-detalhe-busca');
   if (busca && !(ctx && ctx._manterBusca)) busca.value = '';
@@ -14262,42 +14449,71 @@ function _dreDetalheRender(nome, periodoTxt, itens, ctx) {
   openModal('modal-dre-detalhe');
 }
 
+function _dreDetRenderFormas() {
+  const el = document.getElementById('dre-detalhe-formas');
+  if (!el) return;
+  const tot = {};
+  _dreDetItens.forEach(it => { const f = _dreDetPag(it).formaTxt || 'Não informada'; tot[f] = (tot[f] || 0) + it.valor; });
+  const lista = Object.entries(tot).sort((a, b) => b[1] - a[1]);
+  el.innerHTML = lista.length > 0 ? lista.map(([f, v]) =>
+    `<span class="dre-fp-chip ${_dreDetForma === f ? 'sel' : ''}" onclick="_dreDetSetForma(this.dataset.f)" data-f="${esc(f)}" title="Filtrar por ${esc(f)}">${_dreFpIcone(f)} ${esc(f)} <b>${fmtBRL(v)}</b></span>`).join('') : '';
+}
+function _dreDetSetForma(f) { _dreDetForma = _dreDetForma === f ? '' : f; _dreDetRenderFormas(); _dreDetFiltrar(); }
+function _dreDetSetSeg(seg) { _dreDetSeg = seg; _dreDetFiltrar(); }
+
 function _dreDetFiltrar() {
-  const q = ((document.getElementById('dre-detalhe-busca') || {}).value || '').trim().toLowerCase();
-  const lista = q
-    ? _dreDetItens.filter(it => [it.nome, it.prod, it.nf, it.status].join(' ').toLowerCase().includes(q))
-    : _dreDetItens;
+  const q = normText(((document.getElementById('dre-detalhe-busca') || {}).value || '').trim());
+  const passaSeg = it => {
+    const g = _dreDetPag(it);
+    if (_dreDetSeg === 'pagos') return g.ok;
+    if (_dreDetSeg === 'abertos') return !g.ok;
+    if (_dreDetSeg === 'vencidos') return !!g.vencida;
+    return true;
+  };
+  const base = _dreDetItens.filter(it => !_dreDetForma || (_dreDetPag(it).formaTxt || 'Não informada') === _dreDetForma);
+  const lista = base.filter(it => passaSeg(it) && (!q || normText([it.nome, it.prod, it.nf, it.status, _dreDetPag(it).formaTxt, _dreDetPag(it).sit, _dreDetPag(it).formaSub].join(' ')).includes(q)));
+
+  const seg = document.getElementById('dre-detalhe-seg');
+  if (seg) {
+    const cnt = f => base.filter(it => { const g = _dreDetPag(it); return f === 'todos' || (f === 'pagos' ? g.ok : f === 'abertos' ? !g.ok : !!g.vencida); }).length;
+    const opts = [['todos', 'Todos'], ['pagos', 'Pagos'], ['abertos', 'Em aberto'], ['vencidos', 'Vencidos']];
+    seg.innerHTML = opts.map(([k, l]) => `<button type="button" class="${_dreDetSeg === k ? 'sel' : ''}" onclick="_dreDetSetSeg('${k}')">${l}<span class="n">${cnt(k)}</span></button>`).join('');
+  }
   const tbody = document.getElementById('dre-detalhe-tbody');
   const tfoot = document.getElementById('dre-detalhe-tfoot');
   const cont  = document.getElementById('dre-detalhe-cont');
-  if (cont) cont.textContent = q ? `${lista.length} de ${_dreDetItens.length}` : '';
+  const filtrado = lista.length !== _dreDetItens.length;
+  if (cont) cont.textContent = filtrado ? `${lista.length} de ${_dreDetItens.length}` : '';
   if (!tbody) return;
 
   if (!lista.length) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:28px;color:#a8a29e;white-space:normal">${_dreDetItens.length ? 'Nenhum lançamento corresponde à busca.' : 'Nenhum lançamento neste período.'}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:28px;color:#a8a29e;white-space:normal">${_dreDetItens.length ? 'Nenhum lançamento corresponde ao filtro.' : 'Nenhum lançamento neste período.'}</td></tr>`;
     if (tfoot) tfoot.innerHTML = '';
     return;
   }
   tbody.innerHTML = lista.map(it => {
-    const ok = it.status === 'Recebido' || it.status === 'Pago';
-    const sitCls = ok ? 'ok' : (it.status === 'A Receber' ? 'rec' : 'pag');
+    const g = _dreDetPag(it);
     const nomeTxt = esc(it.nome || '—');
-    const prodTxt = esc(it.prod || '—');
+    const prodTxt = esc(it.prod || '');
     const pode = !!it.id;
-    const acoes = `<button type="button" class="dre-det-btn" ${pode ? `onclick="editarDoDetalheDre('${it.tipo}','${it.id}')"` : 'disabled'} title="Editar lançamento" aria-label="Editar lançamento de ${nomeTxt}">${_DRE_ICO_EDIT}</button>`
-                + `<button type="button" class="dre-det-btn del" ${pode ? `onclick="excluirDoDetalheDre('${it.tipo}','${it.id}')"` : 'disabled'} title="Excluir lançamento" aria-label="Excluir lançamento de ${nomeTxt}">${_DRE_ICO_DEL}</button>`;
+    const idArg = String(it.id || '').replace(/'/g, "\\'");
+    const acoes = `<button type="button" class="dre-det-btn" ${pode ? `onclick="editarDoDetalheDre('${it.tipo}','${idArg}')"` : 'disabled'} title="Editar lançamento" aria-label="Editar lançamento de ${nomeTxt}">${_DRE_ICO_EDIT}</button>`
+                + `<button type="button" class="dre-det-btn del" ${pode ? `onclick="excluirDoDetalheDre('${it.tipo}','${idArg}')"` : 'disabled'} title="Excluir lançamento" aria-label="Excluir lançamento de ${nomeTxt}">${_DRE_ICO_DEL}</button>`;
+    const forma = g.formaTxt
+      ? `<span class="dre-fp" title="${esc(g.formaTxt)}"><span class="dre-fp-ic">${_dreFpIcone(g.formaTxt)}</span><span class="dre-fp-tx"><div>${esc(g.formaTxt)}</div>${g.formaSub ? `<div class="s">${esc(g.formaSub)}</div>` : ''}</span></span>`
+      : `<span class="dre-fp vazio">Não informada</span>`;
     return `<tr>
       <td class="c-data">${fmtDate(it.data)}</td>
-      <td class="c-nome" title="${nomeTxt}">${nomeTxt}</td>
-      <td class="c-prod" title="${prodTxt}">${prodTxt}</td>
+      <td class="c-nome" title="${nomeTxt}${prodTxt ? ' — ' + prodTxt : ''}"><div class="n1">${nomeTxt}</div>${prodTxt ? `<div class="n2">${prodTxt}</div>` : ''}</td>
       <td class="c-nf">${esc(it.nf || '—')}</td>
-      <td class="c-sit"><span class="dre-det-sit ${sitCls}">${it.status}</span></td>
+      <td class="c-forma">${forma}</td>
+      <td class="c-sit" title="${esc(g.sit + (g.det ? ' · ' + g.det : ''))}"><span class="dre-det-sit ${g.cls}">${g.sit}</span>${g.det ? `<div class="dre-sit-det">${esc(g.det)}</div>` : ''}</td>
       <td class="c-val">${fmtBRL(it.valor)}</td>
       <td class="c-acao">${acoes}</td>
     </tr>`;
   }).join('');
   const soma = lista.reduce((s, it) => s + it.valor, 0);
-  if (tfoot) tfoot.innerHTML = `<tr><td colspan="2">${q ? 'Total filtrado' : 'Total'} · ${lista.length} lançamento${lista.length === 1 ? '' : 's'}</td><td class="c-prod"></td><td class="c-nf"></td><td class="c-sit"></td><td class="c-val">${fmtBRL(soma)}</td><td class="c-acao"></td></tr>`;
+  if (tfoot) tfoot.innerHTML = `<tr><td colspan="2">${filtrado ? 'Total filtrado' : 'Total'} · ${lista.length} lançamento${lista.length === 1 ? '' : 's'}</td><td class="c-nf"></td><td class="c-forma"></td><td class="c-sit"></td><td class="c-val">${fmtBRL(soma)}</td><td class="c-acao"></td></tr>`;
 }
 
 // Reconstrói a tela de origem (DRE ou Análise por Categoria) e reabre o detalhe
@@ -14316,6 +14532,15 @@ function _dreDetReabrir() {
 }
 
 function editarDoDetalheDre(tipo, id) {
+  if (tipo === 'cartao') {
+    const d = (db.cartao_despesas || []).find(x => (x.grupo || x.id) === id);
+    if (!d) { alert('Despesa do cartão não encontrada. Ela pode ter sido excluída.'); return; }
+    if (ccFaturaPaga(d.cartao_id, d.fatura)) { alert('Esta compra está em uma fatura já paga e não pode ser alterada.\nDesfaça o pagamento da fatura na tela Cartões de Crédito para editar.'); return; }
+    closeModal('modal-dre-detalhe');
+    _dreDetVoltarAposEditar = true;
+    ccAbrirDespesa(d.cartao_id, d.fatura, d.grupo);
+    return;
+  }
   const existe = tipo === 'receber' ? db.lancreceber.some(x => x.id === id) : db.lancamentos.some(x => x.id === id);
   if (!existe) { alert('Lançamento não encontrado. Ele pode ter sido excluído.'); return; }
   closeModal('modal-dre-detalhe');
@@ -14326,12 +14551,19 @@ function editarDoDetalheDre(tipo, id) {
 // Chamado ao fechar o modal de edição (salvando ou cancelando): volta ao detalhe.
 function _dreDetAposEditar(modalId) {
   if (!_dreDetVoltarAposEditar) return;
-  if (modalId !== 'modal-lanc' && modalId !== 'modal-lancreceber') return;
+  if (modalId !== 'modal-lanc' && modalId !== 'modal-lancreceber' && modalId !== 'modal-cc-despesa') return;
   _dreDetVoltarAposEditar = false;
   setTimeout(_dreDetReabrir, 0);
 }
 
 async function excluirDoDetalheDre(tipo, id) {
+  if (tipo === 'cartao') {
+    const d = (db.cartao_despesas || []).find(x => (x.grupo || x.id) === id);
+    if (!d) { alert('Despesa do cartão não encontrada.'); return; }
+    await ccExcluirDespesa(d.grupo);
+    _dreDetReabrir();
+    return;
+  }
   const reg = tipo === 'receber' ? db.lancreceber.find(x => x.id === id) : db.lancamentos.find(x => x.id === id);
   if (!reg) { alert('Lançamento não encontrado. Ele pode ter sido excluído.'); return; }
   const quem = tipo === 'receber' ? getClienteNome(reg.cliente) : getFornNome(reg.forn);
@@ -18283,6 +18515,57 @@ function ccOrigensSet() {
   return new Set((db.cartao_despesas || []).filter(d => d.origem_lanc).map(d => `${d.origem_lanc}|${d.origem_parc || 1}`));
 }
 
+// Empresa efetiva de uma despesa do cartão: a da própria despesa, senão a da
+// fatura em Contas a Pagar, senão a do cartão.
+function ccEmpresaDespesa(d) {
+  if (d.empresa_id) return d.empresa_id;
+  const l = ccLancFatura(d.cartao_id, d.fatura);
+  if (l && l.empresa_id) return l.empresa_id;
+  const c = ccCartao(d.cartao_id);
+  return (c && c.empresa_id) || '';
+}
+// Itens das despesas do cartão para o DRE / Análise por Categoria.
+// baseFn(grupoId) => 'competencia' (data da compra) ou 'vencimento' (vencimento da fatura).
+function ccItensParaDre(ano, baseFn) {
+  const out = [];
+  const grupos = {};
+  (db.cartao_despesas || []).forEach(d => {
+    if (d.origem_lanc) return;                       // já está no lançamento original
+    if (!pertenceEmpresaAtiva(ccEmpresaDespesa(d))) return;
+    const c = ccCartao(d.cartao_id);
+    if (!c) return;
+    const catId = d.cat_dre || '';
+    const grupoId = catId ? getDreCatGrupo(catId) : null;
+    const base = baseFn(grupoId);
+    const venc = ccDataVencimento(c, d.fatura);
+    const dt = base === 'vencimento' ? venc : d.data;
+    if (!dt || parseInt(dt.slice(0, 4)) !== ano) return;
+    const lf = ccLancFatura(c.id, d.fatura);
+    const paga = !!(lf && lf.pago === 'sim');
+    const tp = d.total_parcelas || 1;
+    // por competência, as parcelas da mesma compra viram um item só
+    const k = base === 'vencimento' ? d.id : (d.grupo || d.id);
+    if (grupos[k]) {
+      const it = grupos[k].item;
+      it.valor = Math.round((it.valor + (Number(d.valor) || 0)) * 100) / 100;
+      it.cc.qtd++; if (paga) it.cc.pagas++;
+      it.status = it.cc.pagas === it.cc.qtd ? 'Pago' : 'A Pagar';
+      return;
+    }
+    const item = {
+      tipo: 'cartao', id: d.grupo || d.id, nf: '', data: dt,
+      nome: `Cartão ${c.nome}`,
+      prod: (d.descricao || '') + (base === 'vencimento' && tp > 1 ? ` (parc. ${d.parcela}/${tp})` : (tp > 1 ? ` (${tp}x)` : '')),
+      valor: Number(d.valor) || 0,
+      status: paga ? 'Pago' : 'A Pagar',
+      cc: { cid: c.id, fatura: d.fatura, venc, qtd: 1, pagas: paga ? 1 : 0, lanc: lf || null, nomeCartao: c.nome }
+    };
+    grupos[k] = { item };
+    out.push({ mes: parseInt(dt.slice(5, 7)), catId, item });
+  });
+  return out;
+}
+
 function ccAddMes(ym, n) {
   const [y, m] = ym.split('-').map(Number);
   const t = y * 12 + (m - 1) + n;
@@ -18489,6 +18772,62 @@ function ccTxtDias(n) {
   if (n === -1) return 'ontem';
   return `há ${-n} dias`;
 }
+// ── Empresa da fatura do cartão (Contas a Pagar / Lançamentos / Pagas) ──
+function ccAcharLanc(id) {
+  return (db.lancamentos || []).find(x => x.id === id) || (db._lancOutras || []).find(x => x.id === id);
+}
+function ccAbrirEmpresaFatura(lancId) {
+  const l = ccAcharLanc(lancId);
+  if (!l || !l.cartao_fatura) return;
+  const [cid, mes] = l.cartao_fatura.split('|');
+  const c = ccCartao(cid);
+  document.getElementById('cc-emp-lanc').value = lancId;
+  document.getElementById('cc-emp-info').innerHTML = `Fatura <b>${ccMesLabel(mes)}</b> do cartão <b>${esc(c ? c.nome : '')}</b> · ${fmtBRL(l.valor)}`;
+  const sel = document.getElementById('cc-emp-sel');
+  sel.innerHTML = '<option value="">Selecione...</option>' +
+    (typeof empresasAtivas === 'function' ? empresasAtivas() : (db.empresas || [])).map(e => `<option value="${e.id}">${esc(e.apelido || e.nome)}</option>`).join('');
+  sel.value = l.empresa_id || (c && c.empresa_id) || '';
+  document.getElementById('cc-emp-desp').checked = true;
+  document.getElementById('cc-emp-padrao').checked = !(c && c.empresa_id && String(c.empresa_id) !== String(sel.value));
+  openModal('modal-cc-empresa');
+}
+async function ccSalvarEmpresaFatura() {
+  const btn = document.getElementById('cc-emp-salvar');
+  if (btn.disabled) return;
+  const l = ccAcharLanc(document.getElementById('cc-emp-lanc').value);
+  const emp = document.getElementById('cc-emp-sel').value;
+  if (!l) return;
+  if (!emp) { alert('Selecione a empresa.'); return; }
+  const [cid, mes] = l.cartao_fatura.split('|');
+  btn.disabled = true;
+  try {
+    const ok = await sbFetch('lancamentos', 'PATCH', { empresa_id: emp }, `?id=eq.${l.id}`);
+    if (!ok) { alert('❌ Erro ao alterar a empresa.' + sbErroDetalhe()); return; }
+    l.empresa_id = emp;
+    // move para a lista certa (empresa ativa x outras)
+    db.lancamentos = db.lancamentos.filter(x => x.id !== l.id);
+    db._lancOutras = (db._lancOutras || []).filter(x => x.id !== l.id);
+    if (pertenceEmpresaAtiva(emp)) db.lancamentos.push(l); else db._lancOutras.push(l);
+    if (document.getElementById('cc-emp-desp').checked) {
+      const desps = (db.cartao_despesas || []).filter(d => d.cartao_id === cid && d.fatura === mes);
+      if (desps.length) {
+        const ok2 = await sbFetch('cartao_despesas', 'PATCH', { empresa_id: emp }, `?cartao_id=eq.${encodeURIComponent(cid)}&fatura=eq.${encodeURIComponent(mes)}`);
+        if (ok2) desps.forEach(d => d.empresa_id = emp);
+        else alert('⚠️ A fatura mudou de empresa, mas houve erro ao atualizar as compras dela.' + sbErroDetalhe());
+      }
+    }
+    if (document.getElementById('cc-emp-padrao').checked) {
+      const c = ccCartao(cid);
+      if (c && String(c.empresa_id || '') !== String(emp)) {
+        const ok3 = await sbFetch('cartoes', 'PATCH', { empresa_id: emp }, `?id=eq.${cid}`);
+        if (ok3) c.empresa_id = emp;
+      }
+    }
+    closeModal('modal-cc-empresa');
+    ccAtualizarTelas();
+  } finally { btn.disabled = false; }
+}
+
 // ── Aviso de fatura que vence amanhã (e lembrete no dia) ──
 const CC_AVISO_KEY = 'stolf_aviso_cartao_visto';
 function ccHojeLocal(off = 0) {
@@ -18878,6 +19217,13 @@ function ccAbrirDespesa(cid, mes, grupo, orig) {
   selP.value = String(n > 1 ? n : 2);
   document.getElementById('cc-d-tipoval').value = 'total';
   document.getElementById('cc-d-obs').value = p1 ? (p1.obs || '') : '';
+  const selEmpD = document.getElementById('cc-d-empresa');
+  if (selEmpD) {
+    selEmpD.innerHTML = '<option value="">Seguir a empresa da fatura</option>' +
+      (typeof empresasAtivas === 'function' ? empresasAtivas() : (db.empresas || [])).map(e => `<option value="${e.id}">${esc(e.apelido || e.nome)}</option>`).join('');
+    const cSel = ccCartao(p1 ? p1.cartao_id : (cid || ccSel.cartao));
+    selEmpD.value = p1 ? (p1.empresa_id || '') : ((cSel && cSel.empresa_id) || empresaAtual() || '');
+  }
   document.getElementById('cc-d-excluir').style.display = p1 ? '' : 'none';
   const oLanc = p1 ? (p1.origem_lanc || '') : (orig ? orig.lanc : '');
   const oParc = p1 ? (p1.origem_parc || '') : (orig ? orig.parc : '');
@@ -19018,7 +19364,7 @@ async function _ccSalvarDespesa() {
   const origem_lanc = document.getElementById('cc-d-orig-lanc').value || null;
   const origem_parc = origem_lanc ? (parseInt(document.getElementById('cc-d-orig-parc').value, 10) || 1) : null;
   const recs = ps.map(p => ({
-    id: uid() + p.parcela, empresa_id: (ccCartao(cid) || {}).empresa_id || null, cartao_id: cid, grupo,
+    id: uid() + p.parcela, empresa_id: ((document.getElementById('cc-d-empresa') || {}).value) || null, cartao_id: cid, grupo,
     data, descricao, cat_dre, obs, origem_lanc, origem_parc, ...p
   }));
   const ok = await sbFetch('cartao_despesas', 'POST', recs);
@@ -20811,12 +21157,15 @@ function renderFluxoDiario(repopular) {
     if (porDia[d]) porDia[d][campo] += (valor || 0);
   };
 
+  // Contas pagas com cartão saem do caixa só quando a fatura é paga
+  const _fdCcOri = (typeof ccOrigensSet === 'function') ? ccOrigensSet() : new Set();
   if (base === 'realizado') {
     getParcelasReceber(true).forEach(p => {
       if (banco && p.banco !== banco) return;
       somar(p.dtrecebido, 'receita', p.valParc);
     });
     getParcelas(true).forEach(p => {
+      if (_fdCcOri.has(`${p.lancId}|${p.parcIdx}`)) return;
       if (banco && p.banco !== banco) return;
       somar(p.dtpago, 'despesa', p.valParc);
     });
@@ -20826,6 +21175,7 @@ function renderFluxoDiario(repopular) {
       somar(p.venc, 'receita', p.valParc);
     });
     getParcelas(false).concat(getParcelas(true)).forEach(p => {
+      if (_fdCcOri.has(`${p.lancId}|${p.parcIdx}`)) return;
       if (banco && p.banco !== banco) return;
       somar(p.venc, 'despesa', p.valParc);
     });
