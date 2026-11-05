@@ -5719,6 +5719,12 @@ async function loadAllData() {
     alert('Erro ao conectar ao banco de dados. Verifique a conexão.');
   }
   showLoading(false);
+  try {
+    if (await ccRemoverFaturasDuplicadas()) {
+      if (typeof renderApagar === 'function') { try { renderApagar(); renderPagas(); renderLancamentos(); } catch (e) {} }
+      try { ccRender(); } catch (e) {}
+    }
+  } catch (e) { console.warn(e); }
   setTimeout(() => { try { ccAvisoVencimento(false); } catch (e) { console.warn(e); } }, 900);
 }
 
@@ -18344,12 +18350,57 @@ function ccSituacao(cid, mes) {
   return { txt: 'Aberta', cor: '#2563eb' };
 }
 
+// Fila por fatura: impede que duas gravações simultâneas (duplo clique,
+// importação + despesa) criem dois lançamentos para a mesma fatura.
+const _ccFilaSync = {};
+function ccSincronizarFatura(cid, mes) {
+  const k = ccChave(cid, mes);
+  const ant = _ccFilaSync[k] || Promise.resolve();
+  const prox = ant.catch(() => {}).then(() => _ccSincronizarFatura(cid, mes));
+  _ccFilaSync[k] = prox;
+  return prox;
+}
+// Remove lançamentos repetidos da mesma fatura (mantém o pago, ou o primeiro)
+async function ccRemoverFaturasDuplicadas() {
+  const todos = [...(db.lancamentos || []), ...(db._lancOutras || [])].filter(l => l.cartao_fatura);
+  const grupos = {};
+  todos.forEach(l => (grupos[l.cartao_fatura] = grupos[l.cartao_fatura] || []).push(l));
+  let removidos = 0;
+  for (const [k, ls] of Object.entries(grupos)) {
+    if (ls.length < 2) continue;
+    const manter = ls.find(l => l.pago === 'sim') || ls[0];
+    for (const l of ls) {
+      if (l === manter || l.pago === 'sim') continue;
+      const ok = await sbFetch('lancamentos', 'DELETE', null, `?id=eq.${l.id}`);
+      if (!ok) continue;
+      db.lancamentos = db.lancamentos.filter(x => x.id !== l.id);
+      db._lancOutras = (db._lancOutras || []).filter(x => x.id !== l.id);
+      removidos++;
+    }
+    const [cid, mes] = k.split('|');
+    if (ccCartao(cid)) await ccSincronizarFatura(cid, mes); // corrige o valor
+  }
+  if (removidos) { bumpDbVer(); console.info(`Cartões: ${removidos} fatura(s) duplicada(s) removida(s).`); }
+  return removidos;
+}
 // Cria/atualiza/remove o lançamento da fatura em Contas a Pagar
-async function ccSincronizarFatura(cid, mes) {
+async function _ccSincronizarFatura(cid, mes) {
   const c = ccCartao(cid);
   if (!c) return true;
   const total = ccTotalFatura(cid, mes);
-  const l = ccLancFatura(cid, mes);
+  let l = ccLancFatura(cid, mes);
+  if (!l) {
+    // Confere direto no banco antes de criar: a lista local pode estar
+    // desatualizada (recarregada enquanto outra gravação estava em andamento).
+    try {
+      const r = await sbFetch('lancamentos', 'GET', null, `?cartao_fatura=eq.${encodeURIComponent(ccChave(cid, mes))}&limit=1`);
+      if (Array.isArray(r) && r.length) {
+        l = r[0];
+        if (pertenceEmpresaAtiva(l.empresa_id)) db.lancamentos.push(l);
+        else (db._lancOutras = db._lancOutras || []).push(l);
+      }
+    } catch (e) { console.warn(e); }
+  }
   if (l && l.pago === 'sim') return true; // fatura paga não é alterada
   const dados = {
     dtcompra: ccDataFechamento(c, mes),
@@ -18709,7 +18760,14 @@ function ccRenderChipsBandeira() {
   document.getElementById('cc-c-bandeiras').innerHTML = CC_BANDEIRAS.map(b =>
     `<div class="cc-chip ${b.id === atual ? 'sel' : ''}" onclick="document.getElementById('cc-c-bandeira').value='${b.id}';ccRenderChipsBandeira()">${ccBandeiraHtml(b.id)}${b.nome}</div>`).join('');
 }
+let _ccSalvandoCartao = false;
+function ccNomeNorm(t) { return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); }
 async function ccSalvarCartao() {
+  if (_ccSalvandoCartao) return;
+  _ccSalvandoCartao = true;
+  try { await _ccSalvarCartao(); } finally { _ccSalvandoCartao = false; }
+}
+async function _ccSalvarCartao() {
   const id = document.getElementById('cc-c-id').value;
   const nome = document.getElementById('cc-c-nome').value.trim();
   const fech = parseInt(document.getElementById('cc-c-fech').value, 10);
@@ -18723,7 +18781,7 @@ async function ccSalvarCartao() {
   if (!(fech >= 1 && fech <= 31)) { alert('Informe o dia do fechamento (1 a 31).'); return; }
   if (!(venc >= 1 && venc <= 31)) { alert('Informe o dia do vencimento (1 a 31).'); return; }
   // Cartão não é vinculado a nenhuma empresa: é sempre consolidado
-  if ((db.cartoes || []).some(c => c.id !== id && (c.nome || '').toLowerCase() === nome.toLowerCase())) { alert('Já existe um cartão com esse nome.'); return; }
+  if ((db.cartoes || []).some(c => c.id !== id && ccNomeNorm(c.nome) === ccNomeNorm(nome))) { alert('Já existe um cartão com esse nome.'); return; }
   const dados = { nome, dia_fechamento: fech, dia_vencimento: venc, limite, bandeira, banco_id };
   if (id) {
     const c = ccCartao(id);
@@ -18925,7 +18983,13 @@ function ccPreviaParcelas() {
   box.style.display = '';
   box.innerHTML = `<b>${ps.length}x</b> — total ${fmtBRL(total)} · 1ª parcela ${fmtBRL(ps[0].valor)} na fatura de ${ccMesCurto(ps[0].fatura)}, última na fatura de ${ccMesCurto(ps[ps.length - 1].fatura)}.`;
 }
+let _ccSalvandoDesp = false;
 async function ccSalvarDespesa() {
+  if (_ccSalvandoDesp) return;
+  _ccSalvandoDesp = true;
+  try { await _ccSalvarDespesa(); } finally { _ccSalvandoDesp = false; }
+}
+async function _ccSalvarDespesa() {
   const grupoAnt = document.getElementById('cc-d-grupo').value;
   const cid = document.getElementById('cc-d-cartao').value;
   const data = document.getElementById('cc-d-data').value;
