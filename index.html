@@ -1291,6 +1291,63 @@ tr.cob-dia-vazio > td {
 .badge-cc { background:#fff1e6; color:#c2410c; border:1px solid #fed7aa; }
 @media (max-width:640px) { .cc-det-info { grid-template-columns:1fr; } }
 
+/* ── Cartões: visual em grade ── */
+.cc-wrap { max-width:1180px; }
+.cc-resumo { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:20px; }
+.cc-kpi { background:#fff; border:1px solid var(--border); border-radius:14px; padding:14px 16px; box-shadow:0 1px 3px rgba(26,62,122,.05); min-width:0; }
+.cc-kpi .k-lbl { font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.4px; color:#a8a29e; }
+.cc-kpi .k-val { font-family:'DM Mono',monospace; font-size:20px; font-weight:700; color:#1f2937; margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cc-kpi .k-sub { font-size:12px; color:#78716c; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cc-kpi.alerta .k-val { color:#dc2626; }
+.cc-kpi.ok .k-val { color:#16a34a; }
+.cc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; }
+.cc-card { background:#fff; border:1px solid var(--border); border-radius:18px; overflow:hidden; box-shadow:0 1px 4px rgba(26,62,122,.06); display:flex; flex-direction:column; transition:box-shadow .15s, transform .15s; cursor:pointer; }
+.cc-card:hover { box-shadow:0 8px 24px rgba(26,62,122,.12); transform:translateY(-2px); }
+.cc-face { position:relative; margin:14px 14px 0; border-radius:14px; padding:16px 18px; color:#fff; min-height:150px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.18); }
+.cc-face::before { content:''; position:absolute; right:-40px; top:-60px; width:190px; height:190px; border-radius:50%; background:rgba(255,255,255,.08); }
+.cc-face::after { content:''; position:absolute; right:40px; bottom:-90px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,.06); }
+.cc-face > * { position:relative; z-index:1; }
+.cc-face-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.cc-face-nome { font-size:16px; font-weight:700; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cc-face-band { font-size:11px; font-weight:800; letter-spacing:.8px; opacity:.9; text-transform:uppercase; white-space:nowrap; }
+.cc-face-band img { height:22px; }
+.cc-face-chip { width:36px; height:27px; border-radius:6px; background:linear-gradient(135deg,#fde68a,#d4a514); margin:10px 0 6px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.12); }
+.cc-face-lbl { font-size:10.5px; text-transform:uppercase; letter-spacing:.8px; opacity:.75; }
+.cc-face-val { font-family:'DM Mono',monospace; font-size:24px; font-weight:700; line-height:1.15; }
+.cc-face-bot { display:flex; justify-content:space-between; align-items:flex-end; gap:8px; }
+.cc-status { display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:999px; background:#fff; white-space:nowrap; }
+.cc-status::before { content:''; width:7px; height:7px; border-radius:50%; background:currentColor; }
+.cc-body { padding:14px 18px 6px; flex:1; }
+.cc-datas { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.cc-datas .lbl { font-size:11px; color:#a8a29e; text-transform:uppercase; letter-spacing:.4px; font-weight:600; }
+.cc-datas .val { font-size:14px; font-weight:700; color:#1f2937; margin-top:2px; }
+.cc-datas .hint { font-size:11.5px; color:#78716c; margin-top:1px; }
+.cc-datas .hint.urg { color:#dc2626; font-weight:600; }
+.cc-limite { margin-top:14px; }
+.cc-limite-top { display:flex; justify-content:space-between; font-size:12px; color:#78716c; margin-bottom:6px; gap:8px; }
+.cc-limite-top b { color:#1f2937; font-family:'DM Mono',monospace; }
+.cc-barra { height:7px; border-radius:999px; background:#f1efed; overflow:hidden; }
+.cc-barra > div { height:100%; border-radius:999px; background:#16a34a; }
+.cc-alerta { margin-top:12px; font-size:12px; border-radius:9px; padding:8px 10px; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; }
+.cc-alerta.warn { background:#fffbeb; border-color:#fde68a; color:#92400e; }
+.cc-banco { display:flex; align-items:center; gap:8px; margin-top:12px; font-size:12.5px; color:#57534e; min-width:0; }
+.cc-banco span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cc-foot { display:flex; align-items:center; gap:6px; padding:12px 14px 14px; border-top:1px solid #f3f1ef; margin-top:10px; }
+.cc-foot .cc-btn-main { flex:1; border:none; background:var(--accent); color:#fff; border-radius:10px; padding:9px 12px; font-weight:700; font-size:13px; cursor:pointer; }
+.cc-foot .cc-btn-main:hover { filter:brightness(.95); }
+.cc-foot .cc-mini { border-radius:10px; width:36px; height:36px; }
+.cc-novo { border:2px dashed #e2ded9; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-height:300px; color:#a8a29e; font-weight:600; font-size:14px; cursor:pointer; background:transparent; }
+.cc-novo:hover { border-color:var(--accent); color:var(--accent); background:#fffaf5; }
+.cc-novo .mais { width:48px; height:48px; border-radius:50%; background:#f5f4f2; display:flex; align-items:center; justify-content:center; font-size:26px; }
+.cc-novo:hover .mais { background:#fff1e6; }
+.cc-vazio { background:#fff; border:1px solid var(--border); border-radius:18px; padding:48px 24px; text-align:center; }
+.cc-vazio .ilu { width:120px; height:76px; border-radius:12px; margin:0 auto 18px; background:linear-gradient(135deg,#ea580c,#7c2d12); position:relative; box-shadow:0 10px 24px rgba(234,88,12,.25); }
+.cc-vazio .ilu::after { content:''; position:absolute; left:14px; top:22px; width:22px; height:17px; border-radius:4px; background:#fde68a; }
+.cc-vazio h3 { font-size:18px; color:#1f2937; margin:0 0 6px; }
+.cc-vazio p { color:#78716c; font-size:13.5px; margin:0 0 18px; }
+@media (max-width:900px) { .cc-resumo { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .cc-grid { grid-template-columns:1fr; } .cc-novo { min-height:96px; flex-direction:row; } .cc-kpi .k-val { font-size:17px; } .cc-resumo { gap:10px; } }
+
 
 /* ══ MENU LATERAL — visual profissional ══ */
 .sidebar { width:248px; background:#ffffff; border-right:1px solid #ece9e6; box-shadow:none; }
@@ -18284,7 +18341,7 @@ async function ccSincronizarFatura(cid, mes) {
       id: uid(), empresa_id: c.empresa_id || null, ...dados,
       nf: '', prod: '', parcelas: 1, financeiro: 'nao',
       pago: 'nao', dtpago: '', tipo_pag: CC_FORMA_PAG, banco: '',
-      cat_dre: '', subcat: '', cartao_fatura: ccChave(cid, mes)
+      cat_dre: '', cartao_fatura: ccChave(cid, mes)
     };
     const ok = await sbFetch('lancamentos', 'POST', rec);
     if (!ok) return false;
@@ -18329,42 +18386,111 @@ function ccRender() {
 }
 function ccVoltarLista() { ccSel.cartao = null; ccRender(); }
 
+const CC_FACE_BG = {
+  mastercard: 'linear-gradient(135deg,#2b2b2b 0%,#141414 100%)',
+  visa:       'linear-gradient(135deg,#1a1f71 0%,#2b4fb3 100%)',
+  elo:        'linear-gradient(135deg,#1c1c1c 0%,#3a3a3a 100%)',
+  amex:       'linear-gradient(135deg,#2e77bb 0%,#5fa8e0 100%)',
+  hipercard:  'linear-gradient(135deg,#b3131b 0%,#e2393f 100%)',
+  outro:      'linear-gradient(135deg,#ea580c 0%,#7c2d12 100%)'
+};
+function ccDiasAte(iso) {
+  const a = new Date(today() + 'T12:00:00'), b = new Date(iso + 'T12:00:00');
+  return Math.round((b - a) / 86400000);
+}
+function ccTxtDias(n) {
+  if (n === 0) return 'hoje';
+  if (n === 1) return 'amanhã';
+  if (n > 1) return `em ${n} dias`;
+  if (n === -1) return 'ontem';
+  return `há ${-n} dias`;
+}
+// Faturas não pagas (todas, inclusive futuras/parcelas) — usado no limite
+function ccMesesNaoPagos(cid) {
+  return [...new Set((db.cartao_despesas || []).filter(d => d.cartao_id === cid).map(d => d.fatura))]
+    .filter(m => m && !ccFaturaPaga(cid, m));
+}
 function ccRenderLista() {
   const lw = document.getElementById('cc-lista-wrap');
   const cartoes = (db.cartoes || []).slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
   if (!cartoes.length) {
-    lw.innerHTML = `<div class="cc-lista" style="padding:36px 24px;text-align:center;color:#78716c">
-      Nenhum cartão cadastrado ainda.<br><br>
+    lw.innerHTML = `<div class="cc-vazio">
+      <div class="ilu"></div>
+      <h3>Nenhum cartão cadastrado</h3>
+      <p>Cadastre seus cartões de crédito para lançar despesas, acompanhar faturas e controlar o limite.</p>
       <button class="btn btn-primary" onclick="ccAbrirCadastro()">💳 Cadastrar primeiro cartão</button></div>`;
     return;
   }
-  let totalGeral = 0;
-  const itens = cartoes.map(c => {
+  let totalAtual = 0, totalAtraso = 0, limiteTotal = 0, usadoComLimite = 0, temLimite = false;
+  let proximo = null;
+  const cards = cartoes.map(c => {
     const mes = ccMesAtualCartao(c);
     const val = ccTotalFatura(c.id, mes);
-    totalGeral += val;
-    // faturas anteriores ainda não pagas
+    const sit = ccSituacao(c.id, mes);
+    const dtFech = ccDataFechamento(c, mes), dtVenc = ccDataVencimento(c, mes);
+    const dVenc = ccDiasAte(dtVenc), dFech = ccDiasAte(dtFech);
+    totalAtual += val;
     const abertas = [...new Set((db.cartao_despesas || []).filter(d => d.cartao_id === c.id && d.fatura < mes).map(d => d.fatura))]
       .filter(m => !ccFaturaPaga(c.id, m) && ccTotalFatura(c.id, m) > 0);
     const atrasado = abertas.reduce((s, m) => s + ccTotalFatura(c.id, m), 0);
-    const sit = ccSituacao(c.id, mes);
-    return `<div class="cc-item" onclick="ccAbrirDetalhe('${c.id}')">
-      ${ccBandeiraHtml(c.bandeira)}
-      <div class="cc-info">
-        <div class="cc-nome">${c.nome} <span>· Fecha em ${fmtDate(ccDataFechamento(c, mes)).slice(0, 5)} · Vence ${fmtDate(ccDataVencimento(c, mes)).slice(0, 5)}</span></div>
-        <div class="cc-val">${fmtBRL(val)} <span style="font-size:12px;font-weight:600;color:${sit.cor};font-family:inherit">${sit.txt}</span></div>
-        ${atrasado > 0 ? `<div class="cc-sub">Faturas anteriores em aberto: <b>${fmtBRL(atrasado)}</b></div>` : ''}
-        <div class="cc-sub">🏦 ${c.banco_id ? 'Pago pela conta ' + getBancoNome(c.banco_id) : '<span style="color:#d97706">Sem banco vinculado — clique em ✎ para vincular</span>'}${c.limite ? ' · Limite ' + fmtBRL(c.limite) : ''}</div>
+    totalAtraso += atrasado;
+    if (sit.txt !== 'Paga' && val > 0 && dVenc >= 0 && (!proximo || dtVenc < proximo.dt)) proximo = { dt: dtVenc, nome: c.nome, val };
+
+    // limite
+    let limHtml = '';
+    const lim = Number(c.limite) || 0;
+    if (lim > 0) {
+      const usado = ccMesesNaoPagos(c.id).reduce((s, m) => s + ccTotalFatura(c.id, m), 0);
+      temLimite = true; limiteTotal += lim; usadoComLimite += usado;
+      const pct = Math.min(100, Math.max(0, usado / lim * 100));
+      const cor = pct >= 90 ? '#dc2626' : pct >= 70 ? '#d97706' : '#16a34a';
+      limHtml = `<div class="cc-limite">
+        <div class="cc-limite-top"><span>Limite disponível <b>${fmtBRL(Math.max(0, lim - usado))}</b></span><span>${pct.toFixed(0)}% de ${fmtBRL(lim)}</span></div>
+        <div class="cc-barra"><div style="width:${pct}%;background:${cor}"></div></div></div>`;
+    }
+    const b = ccBandeira(c.bandeira);
+    const bandTxt = b.img ? `<img src="${b.img}" alt="${b.nome}">` : (b.id === 'outro' ? '' : b.nome);
+    const fechHint = dFech >= 0 ? `fecha ${ccTxtDias(dFech)}` : 'fatura fechada';
+    const vencHint = sit.txt === 'Paga' ? 'paga' : ccTxtDias(dVenc);
+    const banco = c.banco_id
+      ? `<div class="cc-banco">${typeof bancoIconeHtml === 'function' ? bancoIconeHtml((db.bancos || []).find(x => x.id === c.banco_id), 22) : '🏦'}<span>Débito em <b>${getBancoNome(c.banco_id)}</b></span></div>`
+      : `<div class="cc-alerta warn">Sem conta vinculada para pagar a fatura. <a href="#" onclick="event.stopPropagation();event.preventDefault();ccAbrirCadastro('${c.id}')" style="color:inherit;font-weight:700">Vincular</a></div>`;
+    return `<div class="cc-card" onclick="ccAbrirDetalhe('${c.id}')">
+      <div class="cc-face" style="background:${CC_FACE_BG[b.id] || CC_FACE_BG.outro}">
+        <div class="cc-face-top"><div class="cc-face-nome">${c.nome}</div><div class="cc-face-band">${bandTxt}</div></div>
+        <div class="cc-face-chip"></div>
+        <div class="cc-face-bot">
+          <div><div class="cc-face-lbl">Fatura ${ccMesLabel(mes)}</div><div class="cc-face-val">${fmtBRL(val)}</div></div>
+          <span class="cc-status" style="color:${sit.cor}">${sit.txt}</span>
+        </div>
       </div>
-      <div class="cc-acts" onclick="event.stopPropagation()">
+      <div class="cc-body">
+        <div class="cc-datas">
+          <div><div class="lbl">Fechamento</div><div class="val">${fmtDate(dtFech)}</div><div class="hint">${fechHint}</div></div>
+          <div><div class="lbl">Vencimento</div><div class="val">${fmtDate(dtVenc)}</div><div class="hint ${sit.txt !== 'Paga' && val > 0 && dVenc <= 3 ? 'urg' : ''}">${vencHint}</div></div>
+        </div>
+        ${limHtml}
+        ${atrasado > 0 ? `<div class="cc-alerta">⚠ Faturas anteriores em aberto: <b>${fmtBRL(atrasado)}</b></div>` : ''}
+        ${banco}
+      </div>
+      <div class="cc-foot" onclick="event.stopPropagation()">
+        <button class="cc-btn-main" onclick="ccAbrirDetalhe('${c.id}')">Ver fatura</button>
+        <button class="cc-mini" title="Nova despesa" onclick="ccAbrirDespesa('${c.id}')">＋</button>
+        <button class="cc-mini" title="Importar fatura" onclick="ccAbrirImportacao('${c.id}','${mes}')">📥</button>
         <button class="cc-mini" title="Editar cartão" onclick="ccAbrirCadastro('${c.id}')">✎</button>
         <button class="cc-mini del" title="Excluir cartão" onclick="ccExcluirCartao('${c.id}')">🗑</button>
-        <button class="cc-add" title="Nova despesa neste cartão" onclick="ccAbrirDespesa('${c.id}')">+</button>
       </div>
     </div>`;
   }).join('');
-  lw.innerHTML = `<div class="cc-lista">${itens}
-    <div class="cc-total"><span>Total (faturas atuais)</span><span>${fmtBRL(totalGeral)}</span></div></div>`;
+  const dispTotal = Math.max(0, limiteTotal - usadoComLimite);
+  const resumo = `<div class="cc-resumo">
+    <div class="cc-kpi"><div class="k-lbl">Faturas atuais</div><div class="k-val">${fmtBRL(totalAtual)}</div><div class="k-sub">${cartoes.length} ${cartoes.length === 1 ? 'cartão' : 'cartões'}</div></div>
+    <div class="cc-kpi ${totalAtraso > 0 ? 'alerta' : 'ok'}"><div class="k-lbl">Em atraso</div><div class="k-val">${fmtBRL(totalAtraso)}</div><div class="k-sub">${totalAtraso > 0 ? 'faturas anteriores' : 'tudo em dia'}</div></div>
+    <div class="cc-kpi"><div class="k-lbl">Próximo vencimento</div><div class="k-val">${proximo ? fmtDate(proximo.dt) : '—'}</div><div class="k-sub">${proximo ? proximo.nome + ' · ' + ccTxtDias(ccDiasAte(proximo.dt)) : 'nenhuma fatura a vencer'}</div></div>
+    <div class="cc-kpi"><div class="k-lbl">Limite disponível</div><div class="k-val">${temLimite ? fmtBRL(dispTotal) : '—'}</div><div class="k-sub">${temLimite ? 'de ' + fmtBRL(limiteTotal) : 'informe o limite no cadastro'}</div></div>
+  </div>`;
+  lw.innerHTML = `${resumo}<div class="cc-grid">${cards}
+    <button class="cc-novo" onclick="ccAbrirCadastro()"><span class="mais">+</span>Adicionar cartão</button></div>`;
 }
 
 function ccAbrirDetalhe(cid) {
