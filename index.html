@@ -3654,6 +3654,19 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
             <div class="form-group" style="margin:0"><label>Fim da vigência</label><input type="date" id="l-vig-fim" /></div>
             <div class="form-group" style="margin:0"><label>Valor no período (R$)</label><input type="number" step="0.01" id="l-vig-valor" placeholder="usa o valor da parcela" /></div>
             <div class="form-group" style="margin:0"><label>Observação</label><input type="text" id="l-vig-obs" placeholder="Ex.: reajuste IGPM" /></div>
+            <div class="form-group" style="margin:0"><label>Nº de meses (x)</label>
+              <select id="l-vig-nx" onchange="cfProjToggle('l')"></select>
+            </div>
+          </div>
+          <div id="l-vig-proj" style="display:none;margin-top:12px;">
+            <div style="font-size:12px;font-weight:600;color:#ea580c;margin-bottom:10px;padding:8px 12px;background:#fff1e6;border-radius:6px;border-left:3px solid #ea580c;">
+              📅 Meses projetados — datas e valores preenchidos automaticamente, edite se precisar
+            </div>
+            <div id="l-vig-proj-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;"></div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;">
+              <span id="l-vig-proj-sum" style="font-size:12px;font-weight:600;color:#ea580c;padding:6px 12px;background:#fff1e6;border-radius:6px;"></span>
+              <button type="button" class="parc-acao" onclick="cfProjRecalcular('l')" title="Refazer datas e valores a partir do início e do valor">&#128260; Recalcular automático</button>
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;margin-bottom:12px;">
             <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#57534e;cursor:pointer;margin:0;">
@@ -17943,6 +17956,152 @@ function toggleVigIndeterminado(prefix) {
   if (ind.checked) fim.value = '';
 }
 
+// ── Nº de meses (x) + grade de meses projetados do custo fixo ──────────
+// Ao escolher N meses, o fim da vigência é calculado e abre-se uma grade
+// com o vencimento e o valor de cada mês (editáveis). Os ajustes ficam
+// gravados na vigência em `proj` ({ 'AAAA-MM': { d, v } }) e são usados
+// por _cfGerarSerie ao criar os lançamentos mensais.
+function cfProjPopularSelect(prefix) {
+  const sel = document.getElementById(prefix + '-vig-nx');
+  if (!sel || sel.options.length) return;
+  let h = '<option value="">— (usar fim da vigência)</option>';
+  for (let i = 2; i <= 60; i++) h += `<option value="${i}">${i}x</option>`;
+  sel.innerHTML = h;
+}
+
+function _cfProjBase(prefix) {
+  return campoValor(prefix + '-dtprev') || campoValor(prefix + '-dtcompra') || campoValor(prefix + '-vig-inicio') || '';
+}
+
+function _cfProjValorPadrao(prefix) {
+  const vv = campoValor(prefix + '-vig-valor');
+  return vv !== '' ? (parseFloat(vv) || 0) : (parseFloat(campoValor(prefix + '-valor')) || 0);
+}
+
+// Datas/valores automáticos: mesma regra de _cfGerarSerie (dia do vencimento do lançamento)
+function _cfProjAuto(prefix, n) {
+  const inicio = campoValor(prefix + '-vig-inicio');
+  if (!inicio || n < 2) return [];
+  const base = _cfProjBase(prefix) || inicio;
+  const ymBase = base.slice(0, 7), ymIni = inicio.slice(0, 7);
+  const vPad = _cfProjValorPadrao(prefix), vLanc = parseFloat(campoValor(prefix + '-valor')) || 0;
+  const rows = [];
+  for (let i = 0; i < n; i++) {
+    const ym = _ymAdd(ymIni, i);
+    const orig = (ym === ymBase);
+    rows.push({ ym, orig, d: orig ? base : _deslocarData(base, _ymDiff(ymBase, ym)), v: orig ? vLanc : vPad });
+  }
+  return rows;
+}
+
+function cfProjToggle(prefix, proj) {
+  const sel  = document.getElementById(prefix + '-vig-nx');
+  const box  = document.getElementById(prefix + '-vig-proj');
+  const grid = document.getElementById(prefix + '-vig-proj-grid');
+  const fim  = document.getElementById(prefix + '-vig-fim');
+  const ind  = document.getElementById(prefix + '-vig-indeterminado');
+  if (!sel || !box || !grid) return;
+  const n = parseInt(sel.value) || 0;
+  if (n < 2) {
+    box.style.display = 'none'; grid.innerHTML = '';
+    if (ind) ind.disabled = false;
+    if (fim) fim.disabled = !!(ind && ind.checked);
+    return;
+  }
+  if (!campoValor(prefix + '-vig-inicio')) { alert('Informe primeiro o início da vigência.'); sel.value = ''; return; }
+  const rows = _cfProjAuto(prefix, n);
+  // Fim da vigência = último mês projetado; trava fim/indeterminado
+  if (ind) { ind.checked = false; ind.disabled = true; }
+  if (fim) { fim.value = rows[rows.length - 1].d; fim.disabled = true; }
+  box.style.display = '';
+  grid.innerHTML = rows.map((r, i) => {
+    const aj = proj && proj[r.ym];
+    const d = (!r.orig && aj && aj.d) ? aj.d : r.d;
+    const v = (!r.orig && aj && aj.v != null) ? aj.v : r.v;
+    const man = (!r.orig && aj) ? '' : '1';
+    return `<div style="background:${r.orig ? '#f5f5f4' : '#faf9f8'};border:1.5px solid #e7e5e4;border-radius:8px;padding:10px 12px;" data-ym="${r.ym}" data-orig="${r.orig ? 1 : ''}">
+      <div style="font-size:11px;font-weight:700;color:#ea580c;margin-bottom:8px;">Mês ${i + 1}/${n}${r.orig ? ' <span style="color:#a8a29e;font-weight:600">· este lançamento</span>' : ''}</div>
+      <div style="margin-bottom:6px;">
+        <label style="font-size:10px;font-weight:600;color:#57534e;margin-bottom:3px;display:block;">Vencimento</label>
+        <input type="date" id="${prefix}-vig-proj-d${i}" data-auto="${man}" value="${d || ''}" ${r.orig ? 'disabled' : ''}
+               onchange="marcarParcelaEditada(this)" style="font-size:12px;padding:6px 9px;width:100%" />
+      </div>
+      <div>
+        <label style="font-size:10px;font-weight:600;color:#57534e;margin-bottom:3px;display:block;">Valor (R$)</label>
+        <input type="number" step="0.01" min="0" id="${prefix}-vig-proj-v${i}" data-auto="${man}" placeholder="0,00"
+               value="${v ? Number(v).toFixed(2) : ''}" ${r.orig ? 'disabled' : ''}
+               oninput="marcarParcelaEditada(this); cfProjSoma('${prefix}')" style="font-size:12px;padding:6px 9px;width:100%" />
+      </div>
+    </div>`;
+  }).join('');
+  cfProjSoma(prefix);
+}
+
+// Recalcula só os campos ainda não editados à mão (ou todos, se forcar)
+function cfProjAtualizarAuto(prefix, forcar) {
+  const sel = document.getElementById(prefix + '-vig-nx');
+  const n = sel ? (parseInt(sel.value) || 0) : 0;
+  const grid = document.getElementById(prefix + '-vig-proj-grid');
+  if (n < 2 || !grid || !grid.innerHTML) return;
+  const rows = _cfProjAuto(prefix, n);
+  // Se o mês inicial mudou, a grade inteira é refeita
+  const cards = grid.children;
+  if (!rows.length || !cards.length || cards[0].dataset.ym !== rows[0].ym || cards.length !== rows.length) {
+    if (forcar) return cfProjToggle(prefix);
+    return cfProjToggle(prefix, cfProjLer(prefix));
+  }
+  rows.forEach((r, i) => {
+    const d = document.getElementById(`${prefix}-vig-proj-d${i}`);
+    const v = document.getElementById(`${prefix}-vig-proj-v${i}`);
+    if (d && (r.orig || forcar || d.dataset.auto === '1')) { d.value = r.d || ''; if (!r.orig) d.dataset.auto = '1'; }
+    if (v && (r.orig || forcar || v.dataset.auto === '1')) { v.value = r.v ? Number(r.v).toFixed(2) : ''; if (!r.orig) v.dataset.auto = '1'; }
+  });
+  const fim = document.getElementById(prefix + '-vig-fim');
+  if (fim) fim.value = rows[rows.length - 1].d;
+  cfProjSoma(prefix);
+}
+
+function cfProjRecalcular(prefix) { cfProjAtualizarAuto(prefix, true); }
+
+function cfProjSoma(prefix) {
+  const grid = document.getElementById(prefix + '-vig-proj-grid');
+  const el = document.getElementById(prefix + '-vig-proj-sum');
+  if (!grid || !el) return;
+  let tot = 0;
+  for (let i = 0; i < grid.children.length; i++) tot += parseFloat(campoValor(`${prefix}-vig-proj-v${i}`)) || 0;
+  el.textContent = `∑ Total dos ${grid.children.length} meses: ${fmtBRL(tot)}`;
+}
+
+// Lê a grade → { 'AAAA-MM': { d, v } } (só os meses gerados, não o próprio lançamento)
+function cfProjLer(prefix) {
+  const grid = document.getElementById(prefix + '-vig-proj-grid');
+  if (!grid || !grid.children.length) return null;
+  const proj = {};
+  Array.from(grid.children).forEach((c, i) => {
+    if (c.dataset.orig) return;
+    const d = campoValor(`${prefix}-vig-proj-d${i}`);
+    const vs = campoValor(`${prefix}-vig-proj-v${i}`);
+    proj[c.dataset.ym] = { d: d || '', v: vs === '' ? null : (parseFloat(vs) || 0) };
+  });
+  return proj;
+}
+
+// Liga início/valor/datas do lançamento ao recálculo da grade
+(function ligarRecalculoProjCF() {
+  const ligar = () => {
+    ['l'].forEach(p => {
+      cfProjPopularSelect(p);
+      [p + '-vig-inicio', p + '-vig-valor', p + '-valor', p + '-dtprev', p + '-dtcompra'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const h = () => cfProjAtualizarAuto(p, false);
+        el.addEventListener('input', h); el.addEventListener('change', h);
+      });
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ligar); else ligar();
+})();
+
 function limparCamposVigencia(prefix) {
   ['-vig-inicio','-vig-fim','-vig-valor','-vig-obs'].forEach(s => {
     const el = document.getElementById(prefix + s); if (el) el.value = '';
@@ -17951,6 +18110,8 @@ function limparCamposVigencia(prefix) {
   if (ind) ind.checked = false;
   const fim = document.getElementById(prefix + '-vig-fim');
   if (fim) fim.disabled = false;
+  const nx = document.getElementById(prefix + '-vig-nx');
+  if (nx) { nx.value = ''; cfProjToggle(prefix); }
   _vigEditIdx[prefix] = -1;
   const btn = document.getElementById(prefix + '-vig-btn');
   if (btn) btn.textContent = '+ Incluir vigência';
@@ -17971,6 +18132,16 @@ function incluirVigencia(prefix) {
   const lista   = _vigTemp[prefix] || (_vigTemp[prefix] = []);
   const idxEdit = _vigEditIdx[prefix];
   const nova    = { inicio, fim, valor: (valorS === '' ? null : (parseFloat(valorS) || 0)), obs };
+  // Nº de meses (x) + ajustes da grade projetada
+  const nxEl = document.getElementById(prefix + '-vig-nx');
+  if (nxEl) {
+    const nx = parseInt(nxEl.value) || 0;
+    nova.nx = nx >= 2 ? nx : null;
+    nova.proj = nx >= 2 ? cfProjLer(prefix) : null;
+  } else if (idxEdit >= 0 && lista[idxEdit] && (lista[idxEdit].inicio !== inicio || (lista[idxEdit].fim || '') !== fim)) {
+    // Telas sem a grade: se o período mudou, a projeção antiga deixa de valer
+    nova.nx = null; nova.proj = null;
+  }
 
   if (lista.some((v, i) => i !== idxEdit && vigSobrepoe(v, nova))) {
     alert('Já existe uma vigência cobrindo esse período.\n\nEncerre a vigência anterior (preenchendo o Fim) antes de criar a nova, ou edite a existente.');
@@ -18006,6 +18177,8 @@ function editarVigencia(prefix, idx) {
   const ind = document.getElementById(prefix + '-vig-indeterminado');
   if (ind) ind.checked = !v.fim;
   toggleVigIndeterminado(prefix);
+  const nxEl = document.getElementById(prefix + '-vig-nx');
+  if (nxEl) { nxEl.value = v.nx ? String(v.nx) : ''; cfProjToggle(prefix, v.proj || null); }
   _vigEditIdx[prefix] = idx;
   const btn = document.getElementById(prefix + '-vig-btn');
   if (btn) btn.textContent = '💾 Salvar alteração';
@@ -18050,6 +18223,7 @@ function renderVigencias(prefix) {
     return `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;border:1px solid ${editando ? '#ea580c' : '#e7e5e4'};background:${editando ? '#fff8f3' : '#fff'};border-radius:6px;margin-bottom:6px;">
       <span style="font-family:DM Mono,monospace;font-size:12px;color:#44403c;min-width:190px">${vigTextoPeriodo(v)}</span>
       <span style="font-family:DM Mono,monospace;font-size:12px;font-weight:600;min-width:110px">${valorTxt}</span>
+      ${v.nx ? `<span class="badge badge-blue">${v.nx}x</span>` : ''}
       ${badge}
       ${v.obs ? `<span style="font-size:11px;color:#78716c;flex:1">${v.obs}</span>` : '<span style="flex:1"></span>'}
       <button type="button" class="btn btn-secondary btn-sm" onclick="editarVigencia('${prefix}',${i})">Editar</button>
@@ -18339,6 +18513,9 @@ async function _cfGerarSerie(L, cf) {
   const mesAtual = today().slice(0, 7);
   const horizonte = _ymAdd(mesAtual, CF_HORIZONTE_MESES);
   const valorBase = Number(L.valor) || 0;
+  // Ajustes por mês feitos na grade "Nº de meses (x)" (vencimento/valor)
+  const ajustes = {};
+  (cf.vigencias || []).forEach(v => { if (v && v.proj) Object.assign(ajustes, v.proj); });
   // Meses cobertos pelas vigências → valor esperado
   const cobertos = {};
   (cf.vigencias || []).forEach(v => {
@@ -18347,7 +18524,7 @@ async function _cfGerarSerie(L, cf) {
     let fim = v.fim ? v.fim.slice(0, 7) : horizonte; if (fim > horizonte) fim = horizonte;
     for (let ym = ini; ym <= fim; ym = _ymAdd(ym, 1)) {
       if (ym === mesOrig) continue;
-      cobertos[ym] = Number(v.valor) || valorBase;
+      cobertos[ym] = (ajustes[ym] && ajustes[ym].v != null) ? Number(ajustes[ym].v) : (Number(v.valor) || valorBase);
     }
   });
   cf.geradas = cf.geradas || {};
@@ -18371,7 +18548,7 @@ async function _cfGerarSerie(L, cf) {
     novos.push({ ym, rec: {
       id, empresa_id: L.empresa_id || null,
       dtcompra: _deslocarData(L.dtcompra || base, off),
-      dtprev: _deslocarData(base, off),
+      dtprev: (ajustes[ym] && ajustes[ym].d) || _deslocarData(base, off),
       nf: '', forn: L.forn || '', prod: L.prod || '', valor: cobertos[ym], parcelas: 1,
       financeiro: L.financeiro || 'nao', pago: 'nao', dtpago: '', tipo_pag: '', banco: '',
       cat_dre: L.cat_dre || '', obs: 'Custo fixo (mensal) gerado de ' + fmtDate(L.dtcompra || base),
