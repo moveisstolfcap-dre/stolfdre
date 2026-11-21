@@ -1363,6 +1363,47 @@ tr.cob-dia-vazio > td {
 .cc-kpi .k-val { font-family:'DM Mono',monospace; font-size:20px; font-weight:700; color:#1f2937; margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .cc-kpi .k-sub { font-size:12px; color:#78716c; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .cc-kpi.alerta .k-val { color:#dc2626; }
+/* Cartões: detalhe com gráficos ao lado */
+.cc-wrap.cc-wrap-det { max-width:none; }
+.cc-det-layout { display:grid; grid-template-columns:minmax(0,1180px) minmax(400px,1fr); gap:20px; align-items:start; }
+.cc-graf-col { display:flex; flex-direction:column; gap:16px; position:sticky; top:16px; min-width:0; }
+.cc-an { background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:0 1px 3px rgba(26,62,122,.05); overflow:hidden; }
+.cc-an-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:16px 20px 14px; border-bottom:1px solid #f0eeec; }
+.cc-an-tit { font-size:11.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:#78716c; }
+.cc-an-sub { font-size:12.5px; color:#a8a29e; margin-top:3px; }
+.cc-an-tag { font-size:11.5px; font-weight:600; color:#57534e; background:#f5f5f4; border:1px solid #e7e5e4; border-radius:20px; padding:3px 10px; white-space:nowrap; }
+.cc-an-body { padding:18px 20px 20px; }
+.cc-an-vazio { padding:36px 10px; text-align:center; color:#a8a29e; font-size:13px; }
+/* composição */
+.cc-comp { display:flex; flex-wrap:wrap; gap:22px; align-items:center; }
+.cc-donut { position:relative; width:190px; height:190px; flex:0 0 190px; margin:0 auto; }
+.cc-donut-c { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; text-align:center; }
+.cc-donut-c .l { font-size:10.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:#a8a29e; }
+.cc-donut-c .v { font-family:'DM Mono',monospace; font-size:17px; font-weight:700; color:#1f2937; margin-top:3px; }
+.cc-donut-c .s { font-size:11.5px; color:#78716c; margin-top:2px; }
+.cc-cat-lista { flex:1 1 230px; min-width:0; display:flex; flex-direction:column; gap:10px; }
+.cc-cat { display:grid; grid-template-columns:10px minmax(0,1fr) auto 48px; gap:4px 10px; align-items:center; padding:3px 6px; margin:0 -6px; border-radius:8px; cursor:default; transition:background .12s; }
+.cc-cat.hl { background:#faf9f7; }
+.cc-cat .dot { width:10px; height:10px; border-radius:3px; }
+.cc-cat .nm { font-size:13px; color:#1f2937; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cc-cat .vl { font-family:'DM Mono',monospace; font-size:12.5px; color:#1f2937; font-weight:600; text-align:right; }
+.cc-cat .pc { font-size:12px; color:#78716c; text-align:right; font-variant-numeric:tabular-nums; }
+.cc-cat .br { grid-column:2 / 5; height:4px; background:#f5f4f2; border-radius:4px; overflow:hidden; }
+.cc-cat .br i { display:block; height:100%; border-radius:4px; }
+/* evolução */
+.cc-kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:#f0eeec; border-bottom:1px solid #f0eeec; }
+.cc-kpis > div { background:#fff; padding:12px 14px; min-width:0; }
+.cc-kpis .l { font-size:10.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:#a8a29e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cc-kpis .v { font-family:'DM Mono',monospace; font-size:15px; font-weight:700; color:#1f2937; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cc-kpis .s { font-size:11.5px; color:#78716c; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cc-kpis .up { color:#b91c1c; } .cc-kpis .down { color:#15803d; }
+.cc-evo-box { position:relative; height:260px; }
+.cc-evo-leg { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:11.5px; color:#78716c; margin-top:12px; }
+.cc-evo-leg span { display:inline-flex; align-items:center; gap:6px; }
+.cc-evo-leg i { display:inline-block; width:10px; height:10px; border-radius:3px; }
+.cc-evo-leg i.linha { width:16px; height:0; border-top:2px dashed #78716c; border-radius:0; }
+@media (max-width:1600px) { .cc-kpis { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:1250px) { .cc-det-layout { grid-template-columns:minmax(0,1fr); } .cc-graf-col { position:static; } }
 .cc-kpi.ok .k-val { color:#16a34a; }
 .cc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; }
 .cc-card { background:#fff; border:1px solid var(--border); border-radius:18px; overflow:hidden; box-shadow:0 1px 4px rgba(26,62,122,.06); display:flex; flex-direction:column; transition:box-shadow .15s, transform .15s; cursor:pointer; }
@@ -1474,6 +1515,200 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 .cc-imp-tag.cr { background:#dcfce7; color:#166534; }
 
 
+
+/* ══ Compatibilidade de layout das telas/janelas do módulo Projetos ══ */
+.form-compacto { gap:14px 16px; }
+.form-compacto .form-group { margin-bottom:0; }
+.form-compacto input, .form-compacto select, .form-compacto textarea { padding:8px 11px; }
+.est-aviso { padding:12px 14px; border-radius:10px; background:#fef2f2; border:1px solid #fecaca; color:#991b1b; font-size:13px; margin-bottom:14px; white-space:pre-line; }
+.lanc-note { font-size:12px; color:#7c2d12; padding:9px 12px; background:#fff4ec; border-radius:9px; border:1px solid rgba(234,88,12,.14); line-height:1.45; }
+.modal.lanc-modal.prjm { width:780px; padding:0; overflow:hidden; display:flex; flex-direction:column; border:none; border-radius:18px; max-height:92vh;
+  box-shadow:0 30px 80px rgba(15,30,58,.28), 0 0 0 1px rgba(15,30,58,.06); --lm:#ea580c; --lm-soft:#fff4ec; --lm-ring:rgba(234,88,12,.14); }
+.prjm .lanc-head { position:relative; display:flex; align-items:center; gap:14px; padding:22px 26px 20px; background:linear-gradient(135deg,#fff 0%,var(--lm-soft) 100%); border-bottom:1px solid #f0eeec; }
+.prjm .lanc-head::before { content:''; position:absolute; left:0; top:0; right:0; height:3px; background:var(--lm); }
+.prjm .lanc-head-ico { width:44px; height:44px; flex:0 0 44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:21px; background:#fff; box-shadow:0 2px 8px rgba(15,30,58,.08), inset 0 0 0 1px var(--lm-ring); }
+.prjm .lanc-head-txt { flex:1; min-width:0; }
+.prjm .lanc-head .modal-title { margin:0; font-size:17px; font-weight:700; letter-spacing:-.2px; color:#111827; }
+.prjm .lanc-head-sub { font-size:12px; color:#78716c; margin-top:3px; }
+.prjm .lanc-close { width:34px; height:34px; border-radius:10px; border:1px solid #e7e5e4; background:#fff; color:#78716c; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.15s; }
+.prjm .lanc-close:hover { background:#fef2f2; border-color:#fecaca; color:#dc2626; }
+.prjm .lanc-body { padding:20px 26px 6px; overflow-y:auto; flex:1; background:#fbfaf9; }
+.prjm .lanc-sec, .page .lanc-sec { background:#fff; border:1px solid #efedeb; border-radius:14px; padding:16px 18px 18px; margin-bottom:14px; box-shadow:0 1px 2px rgba(15,30,58,.03); }
+.lanc-sec-title { display:flex; align-items:center; gap:9px; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; color:#57534e; margin-bottom:14px; }
+.lanc-sec-title .n { min-width:20px; height:20px; padding:0 4px; border-radius:6px; background:#fff4ec; color:#ea580c; font-size:11px; display:inline-flex; align-items:center; justify-content:center; letter-spacing:0; }
+.lanc-sec-title .hint { margin-left:auto; text-transform:none; letter-spacing:0; font-weight:500; color:#a8a29e; font-size:11.5px; }
+.prjm label { font-size:11.5px; font-weight:600; color:#57534e; }
+.prjm input, .prjm select, .prjm textarea { background:#fff; border:1.5px solid #e7e5e4; border-radius:10px; padding:9px 12px; }
+.prjm input:focus, .prjm select:focus, .prjm textarea:focus { border-color:var(--lm); box-shadow:0 0 0 3px var(--lm-ring); outline:none; }
+.prjm .lanc-note { color:#7c2d12; background:var(--lm-soft); border-color:var(--lm-ring); }
+.prjm .modal-footer.lanc-foot { margin:0; padding:14px 26px; background:#fff; border-top:1px solid #f0eeec; align-items:center; }
+.lanc-foot .lanc-foot-info { margin-right:auto; font-size:11.5px; color:#a8a29e; }
+.prjm .lanc-foot .btn { border-radius:10px; padding:10px 18px; }
+@media (max-width:700px){ .prjm .lanc-body { padding:16px 14px 4px; } .prjm .lanc-head { padding:18px 16px; } .prjm .modal-footer.lanc-foot { padding:12px 16px; } .lanc-foot .lanc-foot-info { display:none; } }
+
+/* ══ PROJETOS (móveis sob medida) ══ */
+.prj-filtros { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:14px; }
+.prj-filtros .form-group { margin-bottom:0; min-width:170px; }
+.prj-filtros label.prj-chk { display:flex; align-items:center; gap:6px; font-size:12.5px; color:#57534e; padding-bottom:9px; cursor:pointer; }
+.prj-board { display:flex; gap:12px; overflow-x:auto; padding-bottom:14px; align-items:flex-start; }
+.prj-col { flex:0 0 262px; background:#f7f6f4; border:1px solid #ece9e6; border-radius:14px; display:flex; flex-direction:column; max-height:calc(100vh - 250px); border-top:4px solid var(--c,#94a3b8); }
+.prj-col-head { padding:10px 12px 9px; border-bottom:1px solid #ece9e6; }
+.prj-col-tit { display:flex; align-items:center; gap:8px; font-weight:700; font-size:12.5px; color:#1f2937; }
+.prj-col-tit .prj-cnt { margin-left:auto; background:#fff; border:1px solid #e7e5e4; border-radius:10px; padding:1px 8px; font-size:11px; color:#57534e; }
+.prj-col-sub { font-size:11px; color:#a8a29e; margin-top:3px; }
+.prj-col-body { padding:10px; overflow-y:auto; flex:1; min-height:90px; }
+.prj-col.prj-drop { background:#eff6ff; border-color:#93c5fd; }
+.prj-card { background:#fff; border:1px solid #e7e5e4; border-left:4px solid var(--s,#d6d3d1); border-radius:10px; padding:10px 11px; margin-bottom:9px; cursor:grab; box-shadow:0 1px 2px rgba(15,30,58,.05); transition:box-shadow .15s; }
+.prj-card:hover { box-shadow:0 4px 12px rgba(15,30,58,.10); }
+.prj-card.prj-arrastando { opacity:.45; }
+.prj-card-top { display:flex; align-items:center; gap:6px; font-size:11px; color:#a8a29e; font-family:'DM Mono',monospace; }
+.prj-card-top .prj-pri { margin-left:auto; }
+.prj-card-tit { font-weight:700; font-size:13px; color:#1f2937; margin:3px 0 2px; line-height:1.3; }
+.prj-card-cli { font-size:12px; color:#57534e; }
+.prj-card-inf { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; font-size:11px; }
+.prj-tag { display:inline-flex; align-items:center; gap:4px; padding:2px 7px; border-radius:8px; background:#f5f5f4; color:#57534e; font-weight:600; }
+.prj-tag.verde { background:#dcfce7; color:#166534; }
+.prj-tag.amarelo { background:#fef3c7; color:#92400e; }
+.prj-tag.vermelho { background:#fee2e2; color:#991b1b; }
+.prj-card-nav { display:flex; justify-content:space-between; margin-top:8px; }
+.prj-card-nav button { border:1px solid #e7e5e4; background:#fff; border-radius:6px; font-size:11px; padding:2px 8px; cursor:pointer; color:#57534e; }
+.prj-card-nav button:hover { background:#f5f5f4; }
+.prj-card-nav button:disabled { opacity:.35; cursor:default; }
+.prj-vazio { font-size:12px; color:#a8a29e; text-align:center; padding:14px 4px; }
+.prj-dot { width:10px; height:10px; border-radius:50%; display:inline-block; flex:0 0 10px; }
+.prj-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:18px; }
+.prj-kpi { background:#fff; border:1px solid var(--border,#e7e5e4); border-radius:12px; padding:14px 16px; border-left:4px solid var(--k,#2563eb); }
+.prj-kpi .v { font-size:24px; font-weight:700; font-family:'DM Mono',monospace; color:#1f2937; }
+.prj-kpi .l { font-size:11px; color:#a8a29e; text-transform:uppercase; letter-spacing:.5px; margin-top:2px; }
+.prj-kpi .s { font-size:11.5px; color:#57534e; margin-top:4px; }
+.prj-bar-row { display:grid; grid-template-columns:190px 1fr 120px; gap:10px; align-items:center; font-size:12.5px; padding:5px 0; }
+.prj-bar-row .nm { display:flex; align-items:center; gap:7px; color:#44403c; font-weight:600; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.prj-bar { background:#f5f5f4; border-radius:6px; height:16px; overflow:hidden; position:relative; }
+.prj-bar > span { display:block; height:100%; border-radius:6px; }
+.prj-bar-row .vl { text-align:right; font-family:'DM Mono',monospace; font-size:12px; color:#57534e; }
+.prj-grid2 { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; }
+@media (max-width:900px){ .prj-grid2 { grid-template-columns:1fr; } .prj-bar-row { grid-template-columns:120px 1fr 90px; } }
+.prj-steps { display:flex; gap:4px; overflow-x:auto; padding:4px 0 10px; }
+.prj-step { flex:1 0 92px; text-align:center; font-size:10.5px; color:#a8a29e; position:relative; }
+.prj-step .b { height:6px; border-radius:4px; background:#e7e5e4; margin-bottom:6px; }
+.prj-step.feito .b { background:#16a34a; }
+.prj-step.atual .b { background:var(--c,#2563eb); }
+.prj-step.atual { color:#1f2937; font-weight:700; }
+.prj-step.feito { color:#57534e; }
+.prj-step .d { font-size:10px; color:#a8a29e; font-weight:400; margin-top:2px; }
+.prj-ficha-info { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px 16px; font-size:13px; }
+.prj-ficha-info .k { font-size:10.5px; color:#a8a29e; text-transform:uppercase; letter-spacing:.5px; }
+.prj-ficha-info .x { color:#1f2937; font-weight:600; margin-top:1px; }
+@media (max-width:700px){ .prj-ficha-info { grid-template-columns:1fr 1fr; } }
+.prj-chk-item { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid #f5f4f2; font-size:13px; cursor:pointer; }
+.prj-chk-item input { width:16px; height:16px; }
+.prj-chk-item.ok span { color:#a8a29e; text-decoration:line-through; }
+.prj-acoes-etapa { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+/* Funil de conversão */
+.prj-funil { display:flex; flex-direction:column; gap:6px; }
+.prj-funil-row { display:grid; grid-template-columns:200px 1fr 150px; gap:12px; align-items:center; font-size:12.5px; }
+.prj-funil-row .nm { display:flex; align-items:center; gap:7px; font-weight:600; color:#44403c; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.prj-funil-track { display:flex; justify-content:center; }
+.prj-funil-bar { height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; font-family:'DM Mono',monospace; min-width:34px; transition:width .3s; }
+.prj-funil-row .pc { font-size:11.5px; color:#57534e; text-align:right; line-height:1.3; }
+.prj-funil-row .pc b { color:#1f2937; font-family:'DM Mono',monospace; }
+.prj-funil-row .pc .queda { color:#dc2626; }
+.prj-funil-resumo { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.prj-funil-resumo div { background:#faf9f7; border:1px solid #efedeb; border-radius:10px; padding:8px 12px; font-size:12px; color:#57534e; }
+.prj-funil-resumo b { font-family:'DM Mono',monospace; font-size:15px; color:#1f2937; display:block; }
+@media (max-width:900px){ .prj-funil-row { grid-template-columns:110px 1fr 100px; } }
+/* Gantt */
+.gt-wrap { border:1px solid #ece9e6; border-radius:14px; background:#fff; overflow:hidden; }
+.gt-scroll { overflow:auto; max-height:calc(100vh - 260px); position:relative; }
+.gt-grid { display:grid; grid-template-columns:320px auto; min-width:max-content; }
+.gt-left-h, .gt-left { position:sticky; left:0; z-index:3; background:#fff; border-right:1px solid #ece9e6; }
+.gt-left-h { z-index:5; top:0; position:sticky; display:flex; align-items:flex-end; padding:0 14px 8px; font-size:10.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#a8a29e; height:56px; border-bottom:1px solid #ece9e6; box-sizing:border-box; }
+.gt-head { position:sticky; top:0; z-index:4; background:#fff; border-bottom:1px solid #ece9e6; height:56px; box-sizing:border-box; }
+.gt-head-r1, .gt-head-r2 { position:relative; height:28px; }
+.gt-head-r1 > div, .gt-head-r2 > div { position:absolute; top:0; bottom:0; border-left:1px solid #f1efed; font-size:11px; color:#57534e; display:flex; align-items:center; padding-left:6px; box-sizing:border-box; white-space:nowrap; overflow:hidden; }
+.gt-head-r1 > div { font-weight:700; color:#1f2937; text-transform:capitalize; border-left-color:#e7e5e4; }
+.gt-head-r2 > div { font-size:10.5px; color:#a8a29e; justify-content:center; padding-left:0; }
+.gt-head-r2 > div.hj { background:#2563eb; color:#fff; font-weight:700; border-radius:4px; }
+.gt-left { height:50px; padding:6px 14px; box-sizing:border-box; border-bottom:1px solid #f5f4f2; cursor:pointer; display:flex; flex-direction:column; justify-content:center; }
+.gt-left:hover, .gt-row:hover { background:#fafaf9; }
+.gt-left .t1 { display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:#1f2937; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.gt-left .t1 .cd { font-family:'DM Mono',monospace; font-size:11px; color:#a8a29e; font-weight:500; }
+.gt-left .t2 { display:flex; align-items:center; gap:6px; font-size:11px; color:#78716c; margin-top:3px; white-space:nowrap; overflow:hidden; }
+.gt-row { position:relative; height:50px; border-bottom:1px solid #f5f4f2; box-sizing:border-box; cursor:pointer; }
+.gt-bg { position:absolute; top:0; bottom:0; pointer-events:none; }
+.gt-bg.fds { background:rgba(120,113,108,.05); }
+.gt-bg.mes { border-left:1px solid #efedeb; }
+.gt-hoje { position:absolute; top:0; bottom:0; width:2px; background:#2563eb; z-index:2; pointer-events:none; }
+.gt-bar { position:absolute; top:15px; height:20px; display:flex; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(15,30,58,.18); }
+.gt-seg { height:100%; position:relative; }
+.gt-seg + .gt-seg { border-left:1px solid rgba(255,255,255,.6); }
+.gt-seg.prev { opacity:.32; background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 4px, transparent 4px 8px); }
+.gt-estouro { position:absolute; top:15px; height:20px; border-radius:0 6px 6px 0; background:repeating-linear-gradient(45deg, rgba(220,38,38,.28) 0 5px, rgba(220,38,38,.10) 5px 10px); border:1px dashed #dc2626; border-left:none; box-sizing:border-box; }
+.gt-entrega { position:absolute; top:17px; width:14px; height:14px; transform:translateX(-7px) rotate(45deg); border-radius:2px; background:#1f2937; border:2px solid #fff; box-shadow:0 0 0 1px #1f2937; z-index:2; }
+.gt-entrega.atr { background:#dc2626; box-shadow:0 0 0 1px #dc2626; }
+.gt-entrega.ok { background:#16a34a; box-shadow:0 0 0 1px #16a34a; }
+.gt-lbl { position:absolute; top:17px; font-size:11px; font-weight:600; color:#57534e; white-space:nowrap; pointer-events:none; }
+.gt-legenda { display:flex; flex-wrap:wrap; gap:14px; padding:10px 14px; border-top:1px solid #ece9e6; font-size:11.5px; color:#57534e; align-items:center; }
+.gt-legenda span.sw { display:inline-block; width:18px; height:10px; border-radius:3px; vertical-align:middle; margin-right:5px; }
+.gt-tip { position:fixed; z-index:500; background:#1f2937; color:#fff; font-size:12px; border-radius:10px; padding:10px 12px; pointer-events:none; box-shadow:0 8px 24px rgba(0,0,0,.25); max-width:320px; line-height:1.5; display:none; }
+.gt-tip b { color:#fff; } .gt-tip .mu { color:#cbd5e1; }
+.gt-zoom { display:inline-flex; border:1px solid #e7e5e4; border-radius:9px; overflow:hidden; }
+.gt-zoom button { border:none; background:#fff; padding:8px 13px; font-size:12.5px; cursor:pointer; color:#57534e; font-weight:600; }
+.gt-zoom button.on { background:#1f2937; color:#fff; }
+/* Parcelas do projeto */
+.prj-parc-grid { display:grid; grid-template-columns:60px 1fr 1fr; gap:8px; align-items:center; font-size:12.5px; }
+.prj-parc-grid input { padding:7px 9px; }
+.prj-dif { font-size:12px; margin-top:8px; font-weight:600; }
+/* Equipes */
+.prj-eq-box { margin-top:14px; background:#faf9f7; border:1px solid #efedeb; border-radius:10px; padding:10px 12px; }
+.prj-eq-row { display:grid; grid-template-columns:12px 1fr 220px; gap:8px; align-items:center; padding:4px 0; font-size:13px; }
+.prj-eq-row select { padding:6px 9px; }
+.gt-seg { overflow:hidden; display:flex; align-items:center; }
+.gt-seg-eq { font-size:10px; font-weight:800; color:#fff; padding:0 5px; white-space:nowrap; text-shadow:0 1px 2px rgba(0,0,0,.35); }
+/* ── Gantt v2 ── */
+.gt2-toolbar { background:#fff; border:1px solid #ece9e6; border-radius:14px; padding:12px 14px; margin:14px 0 14px; box-shadow:0 1px 3px rgba(15,30,58,.04); }
+.gt2-tb-row { display:flex; flex-wrap:wrap; align-items:flex-end; gap:10px; }
+.gt2-tb-row + .gt2-tb-row { margin-top:12px; padding-top:12px; border-top:1px solid #f1efed; align-items:center; }
+.gt2-search { flex:1 1 220px; min-width:200px; }
+.gt2-search input { width:100%; }
+.gt2-field { display:flex; flex-direction:column; gap:3px; }
+.gt2-field label { font-size:10.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:#a8a29e; }
+.gt2-field select { padding:7px 10px; min-width:130px; }
+.gt2-sp { flex:1 1 auto; }
+.gt2-btn { border:1px solid #e7e5e4; background:#fff; border-radius:9px; padding:8px 13px; font-size:12.5px; font-weight:600; color:#44403c; cursor:pointer; }
+.gt2-btn:hover { background:#f5f5f4; }
+.gt2-lbl { font-size:10.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#a8a29e; margin-right:2px; }
+.gt2-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.gt2-chip { display:inline-flex; align-items:center; gap:6px; border:1px solid #e7e5e4; background:#fff; color:#a8a29e; border-radius:20px; padding:4px 11px 4px 8px; font-size:12px; font-weight:600; cursor:pointer; transition:all .12s; user-select:none; }
+.gt2-chip .d { width:10px; height:10px; border-radius:50%; background:#d6d3d1; }
+.gt2-chip.on { color:#1f2937; border-color:var(--c); background:color-mix(in srgb, var(--c) 10%, #fff); }
+.gt2-chip.on .d { background:var(--c); }
+.gt2-chip:hover { border-color:var(--c); }
+.gt2-link { border:none; background:none; color:#2563eb; font-size:12px; font-weight:600; cursor:pointer; padding:4px 6px; }
+.gt2-link:hover { text-decoration:underline; }
+.gt2 .gt-left, .gt2 .gt-row { height:58px; }
+.gt2 .gt-row.z, .gt2 .gt-left.z { background:#fcfcfb; }
+.gt2 .gt-left .t1 .cd { background:#f5f5f4; border-radius:5px; padding:1px 6px; color:#78716c; }
+.gt2-track { position:absolute; top:28px; height:2px; background:#e7e5e4; border-radius:2px; }
+.gt2-track.atr { background:repeating-linear-gradient(90deg,#dc2626 0 5px,transparent 5px 9px); height:2px; }
+.gt2-blk { position:absolute; top:16px; height:26px; border-radius:7px; display:flex; overflow:hidden; box-shadow:0 1px 2px rgba(15,30,58,.18), 0 3px 8px rgba(15,30,58,.07); cursor:pointer; }
+.gt2-blk:hover { box-shadow:0 0 0 2px rgba(37,99,235,.35), 0 4px 12px rgba(15,30,58,.15); z-index:3; }
+.gt2-blk .re { height:100%; }
+.gt2-blk .pv { height:100%; background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.5) 0 5px, transparent 5px 10px); opacity:.55; }
+.gt2-blk .tx { position:absolute; inset:0; display:flex; align-items:center; padding:0 8px; gap:5px; font-size:11px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-shadow:0 1px 2px rgba(0,0,0,.35); pointer-events:none; }
+.gt2-blk.atual { outline:2px solid #1f2937; outline-offset:1px; }
+.gt2 .gt-entrega { top:22px; }
+.gt2 .gt-lbl { top:21px; font-size:11px; color:#78716c; font-weight:500; }
+.gt2 .gt-lbl b { color:#1f2937; }
+.gt2-grp-l, .gt2-grp-r { height:34px; background:#f7f6f4; border-bottom:1px solid #ece9e6; border-top:1px solid #ece9e6; box-sizing:border-box; }
+.gt2-grp-l { position:sticky; left:0; z-index:3; display:flex; align-items:center; gap:8px; padding:0 14px; font-size:12px; font-weight:800; color:#1f2937; text-transform:uppercase; letter-spacing:.4px; border-right:1px solid #ece9e6; }
+.gt2-grp-l .q { font-weight:600; color:#a8a29e; text-transform:none; letter-spacing:0; margin-left:auto; font-size:11.5px; }
+.gt2-pill { display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:700; padding:1px 8px; border-radius:10px; white-space:nowrap; }
+.gt2-hoje-tag { position:absolute; top:0; transform:translateX(-50%); background:#2563eb; color:#fff; font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:0 0 6px 6px; z-index:3; letter-spacing:.4px; }
+.gt2-blk .pv { opacity:.72; }
+.gt2-track.atr { background:repeating-linear-gradient(90deg,rgba(220,38,38,.55) 0 5px,transparent 5px 9px); }
+.gt2-grp-l { white-space:nowrap; overflow:hidden; }
+.gt2-grp-l .q { overflow:hidden; text-overflow:ellipsis; }
 </style>
 </head>
 <body>
@@ -1666,6 +1901,40 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
           Análise por Categoria
         </div>
       </div>
+
+
+      <!-- GRUPO: Projetos (móveis sob medida) -->
+      <div class="nav-group-header open" onclick="toggleNavGroup('grp-projetos',this)" style="margin-top:4px;">
+        <span>Projetos</span>
+        <span class="nav-group-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="nav-group-items" id="grp-projetos" style="max-height:400px">
+        <div class="nav-sub-item" onclick="showPage('proj-quadro')" id="nav-proj-quadro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="12" rx="1"/><rect x="17" y="3" width="4" height="8" rx="1"/></svg>
+          Quadro de Fases
+        </div>
+        <div class="nav-sub-item" onclick="showPage('proj-lista')" id="nav-proj-lista">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Projetos
+        </div>
+        <div class="nav-sub-item" onclick="showPage('proj-gantt')" id="nav-proj-gantt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="4" x2="3" y2="20"/><rect x="5" y="5" width="9" height="3" rx="1"/><rect x="9" y="10.5" width="10" height="3" rx="1"/><rect x="13" y="16" width="8" height="3" rx="1"/></svg>
+          Cronograma (Gantt)
+        </div>
+        <div class="nav-sub-item" onclick="showPage('proj-painel')" id="nav-proj-painel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Painel de Projetos
+        </div>
+        <div class="nav-sub-item" onclick="showPage('proj-cancelados')" id="nav-proj-cancelados">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Projetos Cancelados
+        </div>
+        <div class="nav-sub-item" onclick="showPage('proj-etapas')" id="nav-proj-etapas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          Etapas
+        </div>
+      </div>
+
 
       <!-- Admin -->
       <div class="nav-label" id="nav-label-admin" style="display:none;margin-top:8px;">Administração</div>
@@ -2787,6 +3056,182 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
         </tr></thead><tbody id="tb-dfc-cats">
           <tr><td colspan="5" class="empty-state">Nenhuma categoria cadastrada.</td></tr>
         </tbody></table></div>
+      </div>
+    </div>
+
+
+    <!-- ══ PROJETOS — QUADRO DE FASES ══ -->
+    <div class="page" id="page-proj-quadro">
+      <div class="page-header">
+        <div><div class="page-title">Quadro de Fases</div><div class="page-sub" style="margin-bottom:0">Arraste o cartão para mudar o projeto de etapa · clique para abrir a ficha</div></div>
+        <button class="btn-novo" onclick="prjAbrirProjeto()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Novo Projeto
+        </button>
+      </div>
+      <div class="est-aviso prj-aviso" style="display:none"></div>
+      <div class="prj-filtros">
+        <div class="form-group"><label>Buscar</label><input type="text" id="prj-q-busca" placeholder="🔍 Código, projeto ou cliente" oninput="prjRenderQuadro()" /></div>
+        <div class="form-group"><label>Responsável</label><select id="prj-q-resp" onchange="prjRenderQuadro()"><option value="">Todos</option></select></div>
+        <label class="prj-chk"><input type="checkbox" id="prj-q-concl" onchange="prjRenderQuadro()" /> Mostrar concluídos</label>
+      </div>
+      <div class="prj-board" id="prj-board"></div>
+    </div>
+
+    <!-- ══ PROJETOS — LISTA ══ -->
+    <div class="page" id="page-proj-lista">
+      <div class="page-header">
+        <div><div class="page-title">Projetos</div><div class="page-sub" style="margin-bottom:0">Todos os projetos, com etapa atual, prazos e status</div></div>
+        <button class="btn-novo" onclick="prjAbrirProjeto()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Novo Projeto
+        </button>
+      </div>
+      <div class="est-aviso prj-aviso" style="display:none"></div>
+      <div class="card" style="margin-top:16px">
+        <div class="prj-filtros">
+          <div class="form-group"><label>Buscar</label><input type="text" id="prj-l-busca" placeholder="🔍 Código, projeto ou cliente" oninput="prjRenderLista()" /></div>
+          <div class="form-group"><label>Status</label><select id="prj-l-status" onchange="prjRenderLista()"><option value="">Todos</option><option value="ativo" selected>Em andamento</option><option value="pausado">Pausado</option><option value="concluido">Concluído</option><option value="cancelado">Cancelado</option></select></div>
+          <div class="form-group"><label>Etapa</label><select id="prj-l-etapa" onchange="prjRenderLista()"><option value="">Todas</option></select></div>
+          <div class="form-group"><label>Responsável</label><select id="prj-l-resp" onchange="prjRenderLista()"><option value="">Todos</option></select></div>
+        </div>
+        <div class="table-scroll" style="overflow:auto"><table><thead><tr>
+          <th>Código</th><th>Projeto</th><th>Cliente</th><th>Responsável</th><th>Etapa</th><th style="text-align:center">Dias na etapa</th>
+          <th>Entrega prevista</th><th class="num">Valor</th><th>Status</th><th>Ações</th>
+        </tr></thead><tbody id="prj-tb-lista"><tr><td colspan="10" class="empty-state">Carregando...</td></tr></tbody>
+        <tfoot id="prj-tf-lista"></tfoot></table></div>
+      </div>
+    </div>
+
+    <!-- ══ PROJETOS — PAINEL ══ -->
+    <div class="page" id="page-proj-painel">
+      <div class="page-header">
+        <div><div class="page-title">Painel de Projetos</div><div class="page-sub" style="margin-bottom:0">Visão geral da carteira, gargalos por etapa e próximas entregas</div></div>
+      </div>
+      <div class="est-aviso prj-aviso" style="display:none"></div>
+      <div class="prj-kpis" id="prj-kpis" style="margin-top:16px"></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+          <div class="card-title" style="margin:0">Funil de conversão por etapa</div>
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center;font-size:12px;color:#78716c">Projetos vendidos/criados em
+            <select id="prj-funil-ano" onchange="prjRenderFunil()" style="width:auto;padding:6px 10px"></select>
+          </div>
+        </div>
+        <div id="prj-funil"></div>
+      </div>
+      <div class="prj-grid2">
+        <div class="card"><div class="card-title">Projetos em andamento por etapa</div><div id="prj-p-etapas"></div></div>
+        <div class="card"><div class="card-title">Tempo médio em cada etapa (dias) × prazo padrão</div><div id="prj-p-tempo"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Entregas atrasadas e próximos 30 dias</div>
+        <div class="table-scroll" style="overflow:auto"><table><thead><tr>
+          <th>Entrega prevista</th><th>Código</th><th>Projeto</th><th>Cliente</th><th>Etapa atual</th><th class="num">Valor</th><th>Situação</th>
+        </tr></thead><tbody id="prj-tb-entregas"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ══ PROJETOS — ETAPAS ══ -->
+    <div class="page" id="page-proj-etapas">
+      <div class="page-header">
+        <div><div class="page-title">Etapas dos Projetos</div><div class="page-sub" style="margin-bottom:0">Fases que formam as colunas do quadro, na ordem em que o projeto anda</div></div>
+        <button class="btn-novo" onclick="prjAbrirEtapa()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nova Etapa
+        </button>
+      </div>
+      <div class="est-aviso prj-aviso" style="display:none"></div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">Etapas cadastradas</div>
+        <div class="table-scroll" style="overflow:auto"><table><thead><tr>
+          <th style="width:90px">Ordem</th><th>Etapa</th><th style="text-align:center">Prazo padrão</th><th style="text-align:center">Itens de checklist</th>
+          <th style="text-align:center">Projetos nela</th><th style="text-align:center">Tem equipe</th><th style="text-align:center">Encerra o projeto</th><th>Ações</th>
+        </tr></thead><tbody id="prj-tb-etapas"></tbody></table></div>
+        <div class="lanc-note" style="margin-top:12px">O prazo padrão é usado no semáforo dos cartões: verde até 70% do prazo, amarelo até 100%, vermelho quando passa. Ao entrar numa etapa que "encerra o projeto", ele é marcado como concluído.</div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+          <div class="card-title" style="margin:0">👥 Equipes</div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <input type="text" id="prj-eq-novo" placeholder="Nova equipe (ex.: Equipe 04)" style="width:260px" onkeydown="if(event.key==='Enter')prjAddEquipe('prj-eq-novo')" />
+            <button class="btn btn-primary" onclick="prjAddEquipe('prj-eq-novo')">+ Adicionar</button>
+          </div>
+        </div>
+        <div class="table-scroll" style="overflow:auto"><table><thead><tr><th>Equipe</th><th style="text-align:center">Projetos em aberto</th><th>Ações</th></tr></thead><tbody id="prj-eq-cad"></tbody></table></div>
+        <div class="lanc-note" style="margin-top:12px">A equipe é escolhida na ficha do projeto, nas etapas marcadas como "tem equipe" (ex.: Produção).</div>
+      </div>
+    </div>
+
+
+    <!-- ══ PROJETOS — GANTT ══ -->
+    <div class="page" id="page-proj-gantt">
+      <div class="page-header">
+        <div><div class="page-title">Cronograma de Projetos</div><div class="page-sub" style="margin-bottom:0">Planejamento por etapa e equipe · realizado, previsto e entrega prometida</div></div>
+        <button class="btn-novo" onclick="prjAbrirProjeto()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Novo Projeto
+        </button>
+      </div>
+      <div class="est-aviso prj-aviso" style="display:none"></div>
+
+      <div class="gt2-toolbar">
+        <div class="gt2-tb-row">
+          <div class="gt2-search"><input type="text" id="gt-busca" placeholder="🔍 Buscar código, projeto ou cliente" oninput="prjRenderGantt()" /></div>
+          <div class="gt2-field"><label>Equipe</label><select id="gt-equipe" onchange="prjRenderGantt()"><option value="">Todas</option></select></div>
+          <div class="gt2-field"><label>Responsável</label><select id="gt-resp" onchange="prjRenderGantt()"><option value="">Todos</option></select></div>
+          <div class="gt2-field"><label>Projetos</label><select id="gt-escopo" onchange="prjRenderGantt()"><option value="afazer">Com as etapas exibidas a fazer</option><option value="ativos">Todos em andamento</option><option value="todos">Inclui concluídos</option></select></div>
+          <div class="gt2-field"><label>Agrupar</label><select id="gt-agrupar" onchange="prjRenderGantt()"><option value="equipe">Por equipe</option><option value="etapa">Por etapa atual</option><option value="">Sem agrupar</option></select></div>
+          <div class="gt2-field"><label>Ordenar</label><select id="gt-ordem" onchange="prjRenderGantt()"><option value="etapa">Início da etapa</option><option value="entrega">Entrega prometida</option><option value="risco">Risco de atraso</option><option value="codigo">Código</option></select></div>
+          <div class="gt2-sp"></div>
+          <div class="gt-zoom" id="gt-zoom"><button data-z="dia" onclick="prjGanttZoom('dia')">Dias</button><button data-z="semana" onclick="prjGanttZoom('semana')" class="on">Semanas</button><button data-z="mes" onclick="prjGanttZoom('mes')">Meses</button></div>
+          <button class="gt2-btn" onclick="prjGanttHoje()">📍 Hoje</button>
+        </div>
+        <div class="gt2-tb-row gt2-etapas">
+          <span class="gt2-lbl">Etapas exibidas</span>
+          <div id="gt-chips" class="gt2-chips"></div>
+          <div class="gt2-sp"></div>
+          <button class="gt2-link" onclick="prjGanttEtapasPreset('equipe')">Só etapas com equipe</button>
+          <button class="gt2-link" onclick="prjGanttEtapasPreset('todas')">Todas</button>
+        </div>
+      </div>
+
+      <div class="prj-kpis" id="gt-kpis"></div>
+      <div class="gt-wrap gt2">
+        <div class="gt-scroll" id="gt-scroll"><div id="gt-grid"></div></div>
+        <div class="gt-legenda" id="gt-legenda"></div>
+      </div>
+      <div class="gt-tip" id="gt-tip"></div>
+    </div>
+
+    <!-- ══ PROJETOS — CANCELADOS ══ -->
+    <div class="page" id="page-proj-cancelados">
+      <div class="page-header">
+        <div><div class="page-title">Projetos Cancelados</div><div class="page-sub" style="margin-bottom:0">Quais projetos foram perdidos, em que etapa e por quê</div></div>
+      </div>
+      <div class="est-aviso prj-aviso" style="display:none"></div>
+      <div class="prj-filtros" style="margin-top:12px">
+        <div class="form-group"><label>Cancelados de</label><input type="date" id="pc-de" onchange="prjRenderCancelados()" /></div>
+        <div class="form-group"><label>até</label><input type="date" id="pc-ate" onchange="prjRenderCancelados()" /></div>
+        <div class="form-group"><label>Motivo</label><select id="pc-motivo" onchange="prjRenderCancelados()"><option value="">Todos</option></select></div>
+        <div class="form-group"><label>Responsável</label><select id="pc-resp" onchange="prjRenderCancelados()"><option value="">Todos</option></select></div>
+        <button class="btn btn-secondary" style="margin-bottom:1px" onclick="['pc-de','pc-ate','pc-motivo','pc-resp'].forEach(i=>document.getElementById(i).value='');prjRenderCancelados()">Limpar</button>
+      </div>
+      <div class="prj-kpis" id="pc-kpis"></div>
+      <div class="prj-grid2">
+        <div class="card"><div class="card-title">Cancelamentos por motivo</div><div id="pc-g-motivo"></div></div>
+        <div class="card"><div class="card-title">Em que etapa o projeto foi cancelado</div><div id="pc-g-etapa"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Lista de cancelados</div>
+        <div class="table-scroll" style="overflow:auto"><table><thead><tr>
+          <th>Cancelado em</th><th>Código</th><th>Projeto</th><th>Cliente</th><th>Etapa</th><th>Motivo</th><th>Detalhe</th><th class="num">Valor</th><th>Ações</th>
+        </tr></thead><tbody id="pc-tb"></tbody></table></div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+          <div class="card-title" style="margin:0">Motivos de cancelamento</div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <input type="text" id="pc-novo-motivo" placeholder="Novo motivo..." style="width:260px" onkeydown="if(event.key==='Enter')prjAddMotivo('pc-novo-motivo')" />
+            <button class="btn btn-primary" onclick="prjAddMotivo('pc-novo-motivo')">+ Adicionar</button>
+          </div>
+        </div>
+        <div class="table-scroll" style="overflow:auto"><table><thead><tr><th>Motivo</th><th style="text-align:center">Projetos</th><th>Ações</th></tr></thead><tbody id="pc-tb-motivos"></tbody></table></div>
       </div>
     </div>
 
@@ -3933,6 +4378,177 @@ body.menu-oculto .sidebar { transform:translateX(-248px); }
 </div>
 
 <!-- ══ MODAL DATA RECEBIMENTO ══ -->
+
+<!-- ══ MODAL PROJETOS — CADASTRO ══ -->
+<div class="modal-overlay" id="modal-prj-projeto" style="z-index:250;">
+  <div class="modal lanc-modal prjm">
+    <div class="lanc-head">
+      <div class="lanc-head-ico">🪚</div>
+      <div class="lanc-head-txt">
+        <div class="modal-title" id="prj-f-titulo">Novo Projeto</div>
+        <div class="lanc-head-sub">Projetos · campos com * são obrigatórios</div>
+      </div>
+      <button type="button" class="lanc-close" onclick="closeModal('modal-prj-projeto')" title="Fechar">✕</button>
+    </div>
+    <div class="lanc-body">
+      <input type="hidden" id="prj-f-id" />
+      <div class="lanc-sec">
+        <div class="lanc-sec-title"><span class="n">1</span>Projeto e cliente</div>
+        <div class="grid3 form-compacto">
+          <div class="form-group"><label>Código</label><input id="prj-f-codigo" type="text" placeholder="Automático" /></div>
+          <div class="form-group" style="grid-column:span 2"><label>Projeto / Ambientes *</label><input id="prj-f-nome" type="text" placeholder="Ex.: Cozinha + Dormitório casal" /></div>
+          <div class="form-group" style="grid-column:span 2"><label class="label-add">Cliente *<button type="button" class="btn-add-inline" title="Cadastrar novo cliente" onclick="abrirCadastroRapido('cliente','prj-f-cliente')">+</button></label><select id="prj-f-cliente"><option value="">Selecione...</option></select></div>
+          <div class="form-group"><label>Responsável (projetista)</label><input id="prj-f-resp" type="text" list="prj-dl-resp" placeholder="Nome" /><datalist id="prj-dl-resp"></datalist></div>
+          <div class="form-group" style="grid-column:span 3"><label>Endereço da obra / montagem</label><input id="prj-f-end" type="text" placeholder="Rua, número, bairro, cidade" /></div>
+        </div>
+      </div>
+      <div class="lanc-sec">
+        <div class="lanc-sec-title"><span class="n">2</span>Valores, prazos e etapa</div>
+        <div class="grid3 form-compacto">
+          <div class="form-group"><label>Valor do contrato (R$)</label><input id="prj-f-valor" type="number" step="any" placeholder="0,00" /></div>
+          <div class="form-group"><label>Data da venda</label><input id="prj-f-dtvenda" type="date" /></div>
+          <div class="form-group"><label>Entrega prometida</label><input id="prj-f-dtentrega" type="date" /></div>
+          <div class="form-group"><label>Prioridade</label><select id="prj-f-pri"><option value="normal">Normal</option><option value="alta">Alta</option><option value="urgente">Urgente</option></select></div>
+          <div class="form-group" id="prj-f-etapa-wrap"><label>Etapa inicial *</label><select id="prj-f-etapa"></select></div>
+          <div class="form-group"><label>Status</label><select id="prj-f-status"><option value="ativo">Em andamento</option><option value="pausado">Pausado</option><option value="concluido">Concluído</option></select></div>
+        </div>
+      </div>
+      <div class="lanc-sec">
+        <div class="lanc-sec-title"><span class="n">3</span>Observações</div>
+        <div class="form-group"><textarea id="prj-f-obs" rows="3" placeholder="Detalhes do projeto, materiais, cores, ferragens..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer lanc-foot">
+      <span class="lanc-foot-info">A tela só fecha pelo ✕ ou por Cancelar</span>
+      <button class="btn btn-secondary" onclick="closeModal('modal-prj-projeto')">Cancelar</button>
+      <button class="btn btn-primary" onclick="prjSalvarProjeto()">Salvar Projeto</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL PROJETOS — FICHA ══ -->
+<div class="modal-overlay" id="modal-prj-ficha">
+  <div class="modal lanc-modal prjm" style="width:900px;max-width:96vw">
+    <div class="lanc-head">
+      <div class="lanc-head-ico">📋</div>
+      <div class="lanc-head-txt">
+        <div class="modal-title" id="prj-fc-titulo">Projeto</div>
+        <div class="lanc-head-sub" id="prj-fc-sub"></div>
+      </div>
+      <button type="button" class="lanc-close" onclick="closeModal('modal-prj-ficha')" title="Fechar">✕</button>
+    </div>
+    <div class="lanc-body" id="prj-fc-body"></div>
+    <div class="modal-footer lanc-foot" id="prj-fc-foot"></div>
+  </div>
+</div>
+
+<!-- ══ MODAL PROJETOS — ETAPA ══ -->
+<div class="modal-overlay" id="modal-prj-etapa">
+  <div class="modal lanc-modal prjm" style="width:520px">
+    <div class="lanc-head">
+      <div class="lanc-head-ico">🧩</div>
+      <div class="lanc-head-txt">
+        <div class="modal-title" id="prj-e-titulo">Nova Etapa</div>
+        <div class="lanc-head-sub">Projetos · etapas do quadro</div>
+      </div>
+      <button type="button" class="lanc-close" onclick="closeModal('modal-prj-etapa')" title="Fechar">✕</button>
+    </div>
+    <div class="lanc-body">
+      <input type="hidden" id="prj-e-id" />
+      <div class="lanc-sec">
+        <div class="grid2 form-compacto">
+          <div class="form-group" style="grid-column:span 2"><label>Nome da etapa *</label><input id="prj-e-nome" type="text" placeholder="Ex.: Produção" /></div>
+          <div class="form-group"><label>Prazo padrão (dias)</label><input id="prj-e-prazo" type="number" min="0" step="1" placeholder="0 = sem prazo" /></div>
+          <div class="form-group"><label>Cor</label><input id="prj-e-cor" type="color" value="#2563eb" style="height:38px;padding:3px" /></div>
+          <div class="form-group" style="grid-column:span 2"><label class="prj-chk" style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="prj-e-final" style="width:auto" /> Esta etapa encerra o projeto (marca como concluído)</label></div>
+          <div class="form-group" style="grid-column:span 2"><label class="prj-chk" style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="prj-e-equipe" style="width:auto" /> Esta etapa tem equipe responsável (ex.: Equipe 01, 02, 03)</label></div>
+          <div class="form-group" style="grid-column:span 2"><label>Checklist da etapa (um item por linha)</label><textarea id="prj-e-check" rows="5" placeholder="Ex.:&#10;Plano de corte conferido&#10;Ferragens separadas"></textarea></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer lanc-foot">
+      <span class="lanc-foot-info"></span>
+      <button class="btn btn-secondary" onclick="closeModal('modal-prj-etapa')">Cancelar</button>
+      <button class="btn btn-primary" onclick="prjSalvarEtapa()">Salvar Etapa</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ MODAL PROJETOS — CANCELAR ══ -->
+<div class="modal-overlay" id="modal-prj-cancelar" style="z-index:260;">
+  <div class="modal lanc-modal prjm" style="width:520px">
+    <div class="lanc-head">
+      <div class="lanc-head-ico">🚫</div>
+      <div class="lanc-head-txt">
+        <div class="modal-title">Cancelar projeto</div>
+        <div class="lanc-head-sub" id="prj-c-sub"></div>
+      </div>
+      <button type="button" class="lanc-close" onclick="closeModal('modal-prj-cancelar')" title="Fechar">✕</button>
+    </div>
+    <div class="lanc-body">
+      <input type="hidden" id="prj-c-id" />
+      <div class="lanc-sec">
+        <div class="form-group"><label class="label-add">Motivo do cancelamento *<button type="button" class="btn-add-inline" title="Cadastrar novo motivo" onclick="var w=document.getElementById('prj-c-novo-wrap');w.style.display=w.style.display==='none'?'flex':'none';document.getElementById('prj-c-novo').focus()">+</button></label>
+          <select id="prj-c-motivo"><option value="">Selecione...</option></select></div>
+        <div id="prj-c-novo-wrap" style="display:none;gap:8px;margin:-6px 0 14px">
+          <input type="text" id="prj-c-novo" placeholder="Novo motivo" onkeydown="if(event.key==='Enter')prjAddMotivo('prj-c-novo','prj-c-motivo')" />
+          <button type="button" class="btn btn-secondary" onclick="prjAddMotivo('prj-c-novo','prj-c-motivo')">Adicionar</button>
+        </div>
+        <div class="form-group"><label>Detalhes</label><textarea id="prj-c-obs" rows="3" placeholder="Ex.: fechou com concorrente por R$ 2 mil a menos"></textarea></div>
+        <div class="lanc-note" id="prj-c-aviso" style="display:none"></div>
+      </div>
+    </div>
+    <div class="modal-footer lanc-foot">
+      <span class="lanc-foot-info"></span>
+      <button class="btn btn-secondary" onclick="closeModal('modal-prj-cancelar')">Voltar</button>
+      <button class="btn btn-danger" onclick="prjConfirmarCancelamento()">Confirmar cancelamento</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL PROJETOS — FORMA DE PAGAMENTO ══ -->
+<div class="modal-overlay" id="modal-prj-pag" style="z-index:260;">
+  <div class="modal lanc-modal prjm" style="width:640px">
+    <div class="lanc-head">
+      <div class="lanc-head-ico">💳</div>
+      <div class="lanc-head-txt">
+        <div class="modal-title">Forma de pagamento do projeto</div>
+        <div class="lanc-head-sub" id="prj-pg-sub">Gera o lançamento em Contas a Receber</div>
+      </div>
+      <button type="button" class="lanc-close" onclick="closeModal('modal-prj-pag')" title="Fechar">✕</button>
+    </div>
+    <div class="lanc-body">
+      <input type="hidden" id="prj-pg-id" />
+      <div class="lanc-sec">
+        <div class="lanc-sec-title"><span class="n">1</span>Condição</div>
+        <div class="grid3 form-compacto">
+          <div class="form-group"><label>Valor total (R$) *</label><input id="prj-pg-total" type="number" step="any" oninput="prjPagGerar()" /></div>
+          <div class="form-group"><label>Entrada (R$)</label><input id="prj-pg-entrada" type="number" step="any" placeholder="0,00" oninput="prjPagGerar()" /></div>
+          <div class="form-group"><label>Data da entrada</label><input id="prj-pg-dtentrada" type="date" onchange="prjPagGerar()" /></div>
+          <div class="form-group"><label>Nº de parcelas *</label><input id="prj-pg-n" type="number" min="0" max="60" step="1" value="1" oninput="prjPagGerar()" /></div>
+          <div class="form-group"><label>1º vencimento *</label><input id="prj-pg-dt1" type="date" onchange="prjPagGerar()" /></div>
+          <div class="form-group"><label>Intervalo</label><select id="prj-pg-int" onchange="prjPagGerar()"><option value="m">Mensal</option><option value="15">15 dias</option><option value="7">Semanal</option><option value="30">30 dias</option></select></div>
+          <div class="form-group"><label>Forma de pagamento</label><select id="prj-pg-forma"></select></div>
+          <div class="form-group"><label>Categoria (DRE)</label><select id="prj-pg-cat"></select></div>
+          <div class="form-group"><label>Nº NF / Pedido</label><input id="prj-pg-nf" type="text" /></div>
+          <div class="form-group" id="prj-pg-empresa-wrap" style="display:none"><label>Empresa *</label><select id="prj-pg-empresa"></select></div>
+        </div>
+      </div>
+      <div class="lanc-sec">
+        <div class="lanc-sec-title"><span class="n">2</span>Parcelas<span class="hint">datas e valores podem ser ajustados</span></div>
+        <div class="prj-parc-grid" id="prj-pg-grid"></div>
+        <div class="prj-dif" id="prj-pg-dif"></div>
+      </div>
+    </div>
+    <div class="modal-footer lanc-foot">
+      <span class="lanc-foot-info">Recebimento: pela ficha do projeto ou em Contas a Receber</span>
+      <button class="btn btn-secondary" onclick="closeModal('modal-prj-pag')">Cancelar</button>
+      <button class="btn btn-primary" onclick="prjPagSalvar()">Gerar no Contas a Receber</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-recebido">
   <div class="modal" style="width:400px;">
     <div class="modal-title">Confirmar Recebimento</div>
@@ -5189,6 +5805,12 @@ const PAGES_CONFIG = [
   { id:'dre-grupos',        label:'DRE Grupos',          grupo:'dre'     },
   { id:'dre-demonstrativo', label:'DRE Demonstrativo',   grupo:'dre'     },
   { id:'dre-analise-cat',   label:'DRE Análise por Categoria', grupo:'dre' },
+  { id:'proj-quadro',       label:'Projetos — Quadro de Fases', grupo:'projetos' },
+  { id:'proj-lista',        label:'Projetos — Lista',        grupo:'projetos' },
+  { id:'proj-painel',       label:'Projetos — Painel',       grupo:'projetos' },
+  { id:'proj-gantt',        label:'Projetos — Cronograma (Gantt)', grupo:'projetos' },
+  { id:'proj-cancelados',   label:'Projetos — Cancelados',   grupo:'projetos' },
+  { id:'proj-etapas',       label:'Projetos — Etapas',       grupo:'projetos' },
 ];
 
 // ══════════════════════════════════════════
@@ -6044,6 +6666,7 @@ function showPage(p) {
   if (p === 'usuarios')          renderUsuariosAdmin();
   if (p === 'empresas')          renderEmpresas();
   if (p === 'backup')            renderBackup();
+  if (p.startsWith('proj-'))     prjAbrirPagina(p);
 }
 
 // Redesenha a tela em que o usuário está — usado depois de trocar de empresa,
@@ -6085,6 +6708,7 @@ function renderPaginaAtual() {
   if (p === 'usuarios')          renderUsuariosAdmin();
   if (p === 'empresas')          renderEmpresas();
   if (p === 'backup')            renderBackup();
+  if (p.startsWith('proj-'))     prjAbrirPagina(p);
 }
 
 // ══════════════════════════════════════════════════════════
@@ -6794,7 +7418,7 @@ async function salvarCadastroRapido() {
   // Recarrega os selects e as listas afetadas
   if (tipo === 'fornecedor') { populateFornSelects(); renderFornecedores(); }
   if (tipo === 'produto')    { populateProdSelects(); renderProdutos(); }
-  if (tipo === 'cliente')    { populateClienteSelects(); renderClientes(); }
+  if (tipo === 'cliente')    { populateClienteSelects(); renderClientes(); if (typeof prjPopularClientes === 'function') prjPopularClientes(); }
   if (tipo === 'prodvenda')  { populateProdVendaSelects(); renderProdVenda(); }
   if (tipo === 'categoria')  {
     populateDreCatSelects();
@@ -8551,7 +9175,8 @@ async function verificarBackupAutomatico() {
 const BKP_TABELAS = ['empresas','fornecedores','produtos','lancamentos','faturamento','recebimentos',
   'metas','clientes','prodvenda','lancreceber','dfc_categorias','dfc_lancamentos',
   'bancos','dre_grupos','transferencias','pedidos_cancelados','reposicoes',
-  'cartoes','cartao_despesas','config'];
+  'cartoes','cartao_despesas','config',
+  'proj_etapas','proj_projetos','proj_historico','proj_motivos'];
 const BKP_CONFIG_PADRAO = { ativo: 'sim', freq: 'diario', dias: [1,2,3,4,5], diaMes: 1, hora: '18:00', manter: 30 };
 let bkpConfig = Object.assign({}, BKP_CONFIG_PADRAO);
 let _bkpTimer = null, _bkpRodando = false, _bkpPastaHandle = null, _bkpPastaStatus = 'nenhuma';
@@ -11254,7 +11879,7 @@ function applyNavPermissions() {
     item.style.display = allowed.includes(pg) ? '' : 'none';
   });
   // Ocultar cabeçalho do grupo se todos os itens estiverem ocultos
-  ['grp-pagar','grp-receber','grp-dfc','grp-dre'].forEach(grpId => {
+  ['grp-pagar','grp-receber','grp-dfc','grp-dre','grp-projetos'].forEach(grpId => {
     const grp = document.getElementById(grpId);
     if(!grp) return;
     const visivel = grp.querySelectorAll('.nav-sub-item:not([style*="none"])').length > 0;
@@ -11283,6 +11908,7 @@ async function renderUsuariosAdmin() {
     const pagReceber = pagsVisiveis.filter(pg=>pg.grupo==='receber');
     const pagDfc     = pagsVisiveis.filter(pg=>pg.grupo==='dfc');
     const pagDre     = pagsVisiveis.filter(pg=>pg.grupo==='dre');
+    const pagProjetos = pagsVisiveis.filter(pg=>pg.grupo==='projetos');
     const buildPerms = (pgs) => pgs.map(pg => {
       const checked = (u.pages || []).includes(pg.id);
       const disabled = isAdmin ? ' disabled-perm' : '';
@@ -11304,7 +11930,9 @@ async function renderUsuariosAdmin() {
       <div style="font-size:10px;color:#a8a29e;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">📊 DFC</div>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">${buildPerms(pagDfc)}</div>
       <div style="font-size:10px;color:#a8a29e;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">📈 DRE</div>
-      <div style="display:flex;flex-wrap:wrap;gap:4px">${buildPerms(pagDre)}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">${buildPerms(pagDre)}</div>
+      <div style="font-size:10px;color:#a8a29e;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">🪚 Projetos</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">${buildPerms(pagProjetos)}</div>
     </div>`;
 
     // Último login deste usuário
@@ -12176,6 +12804,7 @@ async function confirmarRecebido() {
   if (!(await fpSalvar('receber', id, parcIdx, _fpRes.lista))) alert('⚠️ O recebimento foi salvo, mas não foi possível gravar a divisão entre as formas de recebimento.' + sbErroMsg());
 
   closeModal('modal-recebido'); renderAReceber(); renderCobranca(); renderRecebido(); renderDashboard();
+  if (typeof prjAposFinanceiro === 'function') prjAposFinanceiro();
 }
 async function estornarRecebido(id, parcIdx) {
   if(!confirm('Desfazer o recebimento desta parcela?')) return;
@@ -12202,6 +12831,7 @@ async function estornarRecebido(id, parcIdx) {
   if (fpGet('receber', id, parcIdx)) await fpSalvar('receber', id, parcIdx, null);
 
   renderRecebido(); renderAReceber(); renderCobranca(); renderDashboard();
+  if (typeof prjAposFinanceiro === 'function') prjAposFinanceiro();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -18921,10 +19551,12 @@ function ccRender() {
   if (!lw || !dw) return;
   if (ccSel.cartao && ccCartao(ccSel.cartao)) {
     lw.style.display = 'none'; dw.style.display = '';
+    dw.parentElement.classList.add('cc-wrap-det');
     ccRenderDetalhe();
   } else {
     ccSel.cartao = null;
     dw.style.display = 'none'; lw.style.display = '';
+    dw.parentElement.classList.remove('cc-wrap-det');
     ccRenderLista();
   }
 }
@@ -19192,6 +19824,7 @@ function ccRenderDetalhe() {
   const pagoInfo = paga ? `<div><div class="lbl">Pago em</div><div class="val">${fmtDate(l.dtpago)} · ${getBancoNome(l.banco)}</div></div>` : '';
   dw.innerHTML = `
     <div style="margin-bottom:10px"><button class="btn btn-secondary btn-sm" onclick="ccVoltarLista()">← Todos os cartões</button></div>
+    <div class="cc-det-layout"><div class="cc-det-main">
     <div class="cc-nav">
       <button onclick="ccNavMes(-1)" title="Fatura anterior">‹</button>
       <div>${ccMesLabel(mes)}</div>
@@ -19218,8 +19851,185 @@ function ccRenderDetalhe() {
       </div>
       <input class="cc-busca" id="cc-busca" type="text" placeholder="Busca" value="${(ccSel.busca || '').replace(/"/g, '&quot;')}" oninput="ccSel.busca=this.value;ccRenderDetalheLista()" />
       <div id="cc-det-lista"></div>
+    </div>
+    </div>
+    <div class="cc-graf-col">
+      <div class="cc-an">
+        <div class="cc-an-head"><div><div class="cc-an-tit">Composição da fatura</div><div class="cc-an-sub">Gastos por categoria · ${ccMesLabel(mes)}</div></div><span class="cc-an-tag">${c.nome}</span></div>
+        <div class="cc-an-body" id="cc-comp-body"></div>
+      </div>
+      <div class="cc-an">
+        <div class="cc-an-head"><div><div class="cc-an-tit">Evolução mensal</div><div class="cc-an-sub">Total por fatura · jan a dez de ${mes.slice(0, 4)}</div></div><span class="cc-an-tag">${c.nome}</span></div>
+        <div class="cc-kpis" id="cc-evo-kpis"></div>
+        <div class="cc-an-body">
+          <div class="cc-evo-box"><canvas id="cc-graf-barras"></canvas></div>
+          <div class="cc-evo-leg"><span><i style="background:#ea580c"></i>Fatura selecionada</span><span><i style="background:#cbd5e1"></i>Demais meses</span><span id="cc-evo-leg-fut" style="display:none"><i style="background:#e2e8f0;outline:1px dashed #94a3b8;outline-offset:-1px"></i>Faturas futuras (parcelas)</span><span><i class="linha"></i>Média mensal</span></div>
+        </div>
+      </div>
+    </div>
     </div>`;
   ccRenderDetalheLista();
+  ccRenderGraficos();
+}
+
+// ── Painel analítico do detalhe do cartão (composição por categoria + evolução jan–dez) ──
+const CC_GRAF_CORES = ['#ea580c','#2a78d6','#1baf7a','#eda100','#e87ba4','#6250d6','#008300'];
+const CC_GRAF_OUTRAS = '#a8a29e';
+let _ccGrafPizza = null, _ccGrafBarras = null;
+function ccFmtCompacto(v) {
+  const a = Math.abs(v);
+  if (a >= 1e6) return 'R$ ' + (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' mi';
+  if (a >= 1e3) return 'R$ ' + (v / 1e3).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' mil';
+  return 'R$ ' + v.toLocaleString('pt-BR', { maximumFractionDigits: 0 });
+}
+function ccPct(v, t) { return t > 0 ? (v / t * 100).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%' : '—'; }
+function ccCatHl(i) {
+  document.querySelectorAll('#cc-comp-body .cc-cat').forEach((el, k) => el.classList.toggle('hl', k === i));
+  if (!_ccGrafPizza) return;
+  _ccGrafPizza.setActiveElements(i == null ? [] : [{ datasetIndex: 0, index: i }]);
+  _ccGrafPizza.update('none');
+}
+function ccRenderGraficos() {
+  if (_ccGrafPizza) { _ccGrafPizza.destroy(); _ccGrafPizza = null; }
+  if (_ccGrafBarras) { _ccGrafBarras.destroy(); _ccGrafBarras = null; }
+  const c = ccCartao(ccSel.cartao);
+  if (!c) return;
+  const mes = ccSel.mes;
+  const temChart = typeof Chart !== 'undefined';
+  const fonte = (getComputedStyle(document.body).fontFamily) || 'sans-serif';
+  const tooltipBase = { backgroundColor: '#1f2937', titleColor: '#fff', bodyColor: '#e7e5e4', padding: 10, cornerRadius: 8, displayColors: false,
+    titleFont: { family: fonte, size: 12, weight: '700' }, bodyFont: { family: fonte, size: 12 } };
+
+  // ── Composição por categoria ──
+  const desp = ccDespesasFatura(c.id, mes);
+  const porCat = {};
+  desp.forEach(d => {
+    const nome = d.cat_dre ? getDreCatNome(d.cat_dre) : 'Sem categoria';
+    porCat[nome] = (porCat[nome] || 0) + (Number(d.valor) || 0);
+  });
+  let itens = Object.entries(porCat).map(([n, v]) => ({ n, v: Math.round(v * 100) / 100 })).filter(x => x.v > 0).sort((a, b) => b.v - a.v);
+  if (itens.length > CC_GRAF_CORES.length) {
+    const resto = itens.slice(CC_GRAF_CORES.length - 1);
+    itens = itens.slice(0, CC_GRAF_CORES.length - 1).concat([{ n: `Outras (${resto.length})`, v: Math.round(resto.reduce((s, x) => s + x.v, 0) * 100) / 100, outras: true }]);
+  }
+  itens.forEach((x, i) => { x.cor = x.outras ? CC_GRAF_OUTRAS : CC_GRAF_CORES[i]; });
+  const totP = itens.reduce((s, x) => s + x.v, 0);
+  const comp = document.getElementById('cc-comp-body');
+  if (comp) {
+    if (!itens.length) {
+      comp.innerHTML = '<div class="cc-an-vazio">Nenhuma despesa nesta fatura.</div>';
+    } else {
+      comp.innerHTML = `<div class="cc-comp">
+        <div class="cc-donut"><canvas id="cc-graf-pizza"></canvas>
+          <div class="cc-donut-c"><div class="l">Total</div><div class="v">${fmtBRL(totP)}</div><div class="s">${itens.length} ${itens.length === 1 ? 'categoria' : 'categorias'}</div></div></div>
+        <div class="cc-cat-lista" onmouseleave="ccCatHl(null)">${itens.map((x, i) => `
+          <div class="cc-cat" onmouseenter="ccCatHl(${i})" title="${x.n}: ${fmtBRL(x.v)}">
+            <span class="dot" style="background:${x.cor}"></span><span class="nm">${x.n}</span>
+            <span class="vl">${fmtBRL(x.v)}</span><span class="pc">${ccPct(x.v, totP)}</span>
+            <span class="br"><i style="width:${(x.v / itens[0].v * 100).toFixed(1)}%;background:${x.cor}"></i></span>
+          </div>`).join('')}</div></div>`;
+      const cvP = document.getElementById('cc-graf-pizza');
+      if (cvP && temChart) {
+        _ccGrafPizza = new Chart(cvP.getContext('2d'), {
+          type: 'doughnut',
+          data: { labels: itens.map(x => x.n), datasets: [{ data: itens.map(x => x.v), backgroundColor: itens.map(x => x.cor), borderColor: '#fff', borderWidth: 2, hoverOffset: 6, borderRadius: 3 }] },
+          options: {
+            responsive: true, maintainAspectRatio: false, cutout: '72%', layout: { padding: 6 },
+            onHover: (e, els) => document.querySelectorAll('#cc-comp-body .cc-cat').forEach((el, k) => el.classList.toggle('hl', !!els.length && els[0].index === k)),
+            plugins: { legend: { display: false }, datalabels: { display: false },
+              tooltip: Object.assign({}, tooltipBase, { callbacks: { title: t => t[0].label, label: t => `${fmtBRL(t.raw)} · ${ccPct(t.raw, totP)} da fatura` } }) }
+          }
+        });
+      }
+    }
+  }
+
+  // ── Evolução mensal ──
+  const ano = mes.slice(0, 4);
+  const mesesAno = Array.from({ length: 12 }, (_, i) => `${ano}-${String(i + 1).padStart(2, '0')}`);
+  const valores = mesesAno.map(m => ccTotalFatura(c.id, m));
+  const mesHoje = ccMesAtualCartao(c);
+  const futuro = mesesAno.map(m => m > mesHoje);
+  const comGasto = valores.filter(v => v > 0);
+  const totAno = valores.reduce((s, v) => s + v, 0);
+  const media = comGasto.length ? totAno / comGasto.length : 0;
+  let iMax = -1; valores.forEach((v, i) => { if (v > 0 && (iMax < 0 || v > valores[iMax])) iMax = i; });
+  const vSel = ccTotalFatura(c.id, mes), vAnt = ccTotalFatura(c.id, ccAddMes(mes, -1));
+  let varHtml = '<div class="v">—</div><div class="s">sem fatura anterior</div>';
+  if (vAnt > 0) {
+    const pv = (vSel - vAnt) / vAnt * 100;
+    const cls = pv > 0.05 ? 'up' : pv < -0.05 ? 'down' : '';
+    varHtml = `<div class="v ${cls}">${pv > 0 ? '▲ ' : pv < 0 ? '▼ ' : ''}${Math.abs(pv).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%</div><div class="s">vs ${ccMesCurto(ccAddMes(mes, -1))} (${ccFmtCompacto(vAnt)})</div>`;
+  }
+  const kp = document.getElementById('cc-evo-kpis');
+  if (kp) kp.innerHTML = `
+    <div><div class="l">Total no ano</div><div class="v">${fmtBRL(totAno)}</div><div class="s">${comGasto.length} ${comGasto.length === 1 ? 'fatura' : 'faturas'} com gasto</div></div>
+    <div><div class="l">Média mensal</div><div class="v">${fmtBRL(media)}</div><div class="s">meses com gasto</div></div>
+    <div><div class="l">Maior fatura</div><div class="v">${iMax >= 0 ? fmtBRL(valores[iMax]) : '—'}</div><div class="s">${iMax >= 0 ? meses[iMax + 1] : 'sem gastos no ano'}</div></div>
+    <div><div class="l">Variação ${ccMesCurto(mes)}</div>${varHtml}</div>`;
+  const legFut = document.getElementById('cc-evo-leg-fut');
+  if (legFut) legFut.style.display = futuro.some((f, i) => f && mesesAno[i] !== mes) ? '' : 'none';
+  const cvB = document.getElementById('cc-graf-barras');
+  if (cvB && temChart) {
+    const cores = mesesAno.map((m, i) => m === mes ? '#ea580c' : futuro[i] ? '#e2e8f0' : '#cbd5e1');
+    const coresHover = mesesAno.map((m, i) => m === mes ? '#c2410c' : futuro[i] ? '#cbd5e1' : '#94a3b8');
+    const linhaMedia = {
+      id: 'ccLinhaMedia',
+      afterDatasetsDraw(ch) {
+        if (!(media > 0)) return;
+        const { ctx, chartArea: a, scales: { y } } = ch;
+        const py = y.getPixelForValue(media);
+        ctx.save(); ctx.setLineDash([5, 4]); ctx.strokeStyle = '#78716c'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(a.left, py); ctx.lineTo(a.right, py); ctx.stroke(); ctx.setLineDash([]);
+        const txt = 'Média ' + ccFmtCompacto(media);
+        ctx.font = `600 11px ${fonte}`; const w = ctx.measureText(txt).width + 10;
+        ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.fillRect(a.left + 2, py - 17, w, 15);
+        ctx.fillStyle = '#57534e'; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillText(txt, a.left + 7, py - 3);
+        ctx.restore();
+      }
+    };
+    const rotuloSel = {
+      id: 'ccRotuloSel',
+      afterDatasetsDraw(ch) {
+        const i = mesesAno.indexOf(mes); const v = valores[i];
+        if (i < 0 || !(v > 0)) return;
+        const bar = ch.getDatasetMeta(0).data[i]; if (!bar) return;
+        const { ctx, chartArea: a } = ch; ctx.save();
+        ctx.font = `700 11.5px 'DM Mono', monospace`; ctx.fillStyle = '#c2410c'; ctx.textBaseline = 'bottom';
+        const txt = ccFmtCompacto(v), w = ctx.measureText(txt).width;
+        const x = Math.min(Math.max(bar.x, a.left + w / 2), ch.width - w / 2 - 2);
+        ctx.textAlign = 'center'; ctx.fillText(txt, x, bar.y - 5); ctx.restore();
+      }
+    };
+    _ccGrafBarras = new Chart(cvB.getContext('2d'), {
+      type: 'bar',
+      plugins: [linhaMedia, rotuloSel],
+      data: { labels: mesesAbr.slice(1), datasets: [{ data: valores, backgroundColor: cores, hoverBackgroundColor: coresHover,
+        borderColor: mesesAno.map((m, i) => futuro[i] && m !== mes ? '#94a3b8' : 'transparent'), borderWidth: mesesAno.map((m, i) => futuro[i] && m !== mes ? { top: 1, left: 1, right: 1, bottom: 0 } : 0),
+        borderDash: [3, 3], borderRadius: { topLeft: 4, topRight: 4 }, borderSkipped: 'bottom', categoryPercentage: 0.72, barPercentage: 0.9, maxBarThickness: 46 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 22 } },
+        onClick: (e, els) => { if (els.length) { ccSel.mes = mesesAno[els[0].index]; ccRenderDetalhe(); } },
+        onHover: (e, els) => { e.native && (e.native.target.style.cursor = els.length ? 'pointer' : 'default'); },
+        plugins: {
+          legend: { display: false }, datalabels: { display: false },
+          tooltip: Object.assign({}, tooltipBase, { callbacks: {
+            title: t => `Fatura ${meses[t[0].dataIndex + 1]} ${ano}${futuro[t[0].dataIndex] ? ' · futura' : ''}`,
+            label: t => {
+              const v = t.raw; const linhas = [fmtBRL(v)];
+              if (media > 0 && v > 0) { const d = (v - media) / media * 100; linhas.push(`${d >= 0 ? '+' : '−'}${Math.abs(d).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}% vs média`); }
+              if (mesesAno[t.dataIndex] !== mes) linhas.push('Clique para abrir esta fatura');
+              return linhas;
+            } } })
+        },
+        scales: {
+          x: { ticks: { color: '#78716c', font: { size: 11, family: fonte }, autoSkip: false, maxRotation: 0 }, grid: { display: false }, border: { color: '#e7e5e4' } },
+          y: { beginAtZero: true, grace: '8%', ticks: { color: '#a8a29e', font: { size: 11, family: fonte }, maxTicksLimit: 5, callback: v => ccFmtCompacto(v) }, grid: { color: '#f5f4f2' }, border: { display: false } }
+        }
+      }
+    });
+  }
 }
 
 function ccRenderDetalheLista() {
@@ -21730,6 +22540,1565 @@ function imprimirFluxoDiario() {
 
 // Janelas (modais) só fecham pelo X/botão Fechar — clicar ou soltar o mouse
 // fora da janela não fecha mais, para não perder o que estava sendo digitado.
+
+// Valor compacto (R$ 12,5 mil) — usado pelo módulo Projetos
+function fmtBRLCompacto(v) {
+  v = Number(v) || 0; const a = Math.abs(v);
+  if (a >= 1e6) return 'R$ ' + (v / 1e6).toFixed(1).replace('.', ',') + ' mi';
+  if (a >= 1e3) return 'R$ ' + (v / 1e3).toFixed(1).replace('.', ',').replace(',0', '') + ' mil';
+  return fmtBRL(v);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PROJETOS — acompanhamento de projetos de móveis sob medida por fase
+// Tabelas no Supabase: proj_etapas, proj_projetos, proj_historico
+// (SQL de criação entregue junto com esta versão).
+//   • Cada projeto está em UMA etapa por vez (proj_projetos.etapa_id).
+//   • Toda mudança de etapa grava uma linha em proj_historico
+//     (entrada/saída + usuário) → tempo em cada fase e gargalos.
+//   • Checklist: itens definidos na etapa; marcações ficam no projeto.
+//   • Financeiro: só LEITURA dos lançamentos a receber do cliente.
+// ══════════════════════════════════════════════════════════════════
+let prjDb = { etapas: [], projetos: [], hist: [], motivos: [] };
+let prjCarregado = false, prjErro = '';
+let _prjArrastando = null;
+
+const PRJ_ETAPAS_PADRAO = [
+  { nome:'Medição inicial',               prazo:3,  cor:'#64748b', check:['Visita agendada','Medidas e fotos do ambiente'] },
+  { nome:'Projeto 3D / Orçamento',        prazo:5,  cor:'#8b5cf6', check:['Projeto 3D enviado','Orçamento enviado'] },
+  { nome:'Aprovação / Contrato',          prazo:7,  cor:'#a855f7', check:['Projeto aprovado','Contrato assinado','Entrada recebida'] },
+  { nome:'Medição fina',                  prazo:3,  cor:'#0ea5e9', check:['Medidas conferidas na obra','Pontos elétricos/hidráulicos conferidos'] },
+  { nome:'Projeto executivo / Plano de corte', prazo:4, cor:'#06b6d4', check:['Projeto executivo revisado','Plano de corte gerado'] },
+  { nome:'Compra de materiais',           prazo:7,  cor:'#f59e0b', check:['Chapas compradas','Ferragens compradas','Materiais recebidos'] },
+  { nome:'Produção',                      prazo:10, cor:'#ea580c', check:['Corte','Fita de borda','Usinagem / furação'] },
+  { nome:'Pré-montagem / Acabamento',     prazo:3,  cor:'#d97706', check:['Pré-montagem conferida','Peças embaladas e identificadas'] },
+  { nome:'Entrega',                       prazo:2,  cor:'#2563eb', check:['Entrega agendada','Material entregue'] },
+  { nome:'Montagem no cliente',           prazo:4,  cor:'#1d4ed8', check:['Montagem concluída','Limpeza do local'] },
+  { nome:'Vistoria / Assistência',        prazo:5,  cor:'#0d9488', check:['Vistoria com o cliente','Termo de entrega assinado'] },
+  { nome:'Concluído',                     prazo:0,  cor:'#16a34a', check:[], final:true }
+];
+const PRJ_STATUS = { ativo:'Em andamento', pausado:'Pausado', concluido:'Concluído', cancelado:'Cancelado' };
+const PRJ_STATUS_COR = { ativo:'badge-blue', pausado:'badge-yellow', concluido:'badge-green', cancelado:'badge-gray' };
+const PRJ_PRI = { normal:'', alta:'🟠 Alta', urgente:'🔴 Urgente' };
+
+function prjEsc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function prjNum(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+function prjDias(desde, ate) {
+  if (!desde) return 0;
+  const a = new Date(desde), b = ate ? new Date(ate) : new Date();
+  return Math.max(0, Math.floor((b - a) / 86400000));
+}
+function prjDataLocal(ts) { // timestamp → 'AAAA-MM-DD' no fuso local
+  if (!ts) return '';
+  const d = new Date(ts); if (isNaN(d)) return String(ts).slice(0,10);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function prjHoje() { return prjDataLocal(new Date().toISOString()); }
+
+async function prjCarregar(forcar) {
+  if (prjCarregado && !forcar) return;
+  prjErro = '';
+  const teste = await sbFetch('proj_etapas', 'GET', null, '?limit=1');
+  if (teste === null) {
+    prjErro = '⚠️ Não foi possível acessar as tabelas do módulo de Projetos.' + sbErroDetalhe() +
+      '\n\nRode o SQL de criação das tabelas (proj_etapas, proj_projetos, proj_historico) no SQL Editor do Supabase.';
+    prjDb = { etapas: [], projetos: [], hist: [], motivos: [] };
+    return;
+  }
+  const [e, p, h] = await Promise.all([
+    fetchAll('proj_etapas', 'ordem'),
+    fetchAll('proj_projetos', 'created_at'),
+    fetchAll('proj_historico', 'dt_entrada')
+  ]);
+  prjDb.etapas = e || []; prjDb.projetos = p || []; prjDb.hist = h || [];
+  if (!prjDb.etapas.length) await prjSemearEtapas();
+  await prjCarregarEquipes();
+  // Motivos de cancelamento (tabela da versão 2 do módulo)
+  const tm = await sbFetch('proj_motivos', 'GET', null, '?limit=1');
+  if (tm === null) {
+    prjErro = '⚠️ Falta a tabela de motivos de cancelamento (proj_motivos).' + sbErroDetalhe() +
+      '\n\nRode o SQL "projetos_v2" no SQL Editor do Supabase.';
+  } else {
+    prjDb.motivos = (await fetchAll('proj_motivos', 'nome')) || [];
+    if (!prjDb.motivos.length) await prjSemearMotivos();
+  }
+  prjCarregado = true;
+}
+
+// Primeira vez: cria as etapas padrão de marcenaria sob medida.
+async function prjSemearEtapas() {
+  const recs = PRJ_ETAPAS_PADRAO.map((x, i) => ({
+    id: uid() + i, nome: x.nome, ordem: i + 1, cor: x.cor, prazo_dias: x.prazo,
+    final: !!x.final, checklist: x.check
+  }));
+  const ok = await sbFetch('proj_etapas', 'POST', recs);
+  if (ok) prjDb.etapas = recs;
+}
+
+const PRJ_MOTIVOS_PADRAO = ['Preço acima do esperado','Fechou com concorrente','Desistiu / adiou a obra','Prazo de entrega',
+  'Não aprovou o projeto','Problemas financeiros / crédito','Sem retorno do cliente','Outro'];
+async function prjSemearMotivos() {
+  const recs = PRJ_MOTIVOS_PADRAO.map((nome, i) => ({ id: uid() + i, nome }));
+  const ok = await sbFetch('proj_motivos', 'POST', recs);
+  if (ok) prjDb.motivos = recs;
+}
+
+function prjMostrarErro() {
+  document.querySelectorAll('.prj-aviso').forEach(el => {
+    el.textContent = prjErro; el.style.display = prjErro ? 'block' : 'none';
+  });
+}
+
+async function prjAbrirPagina(p) {
+  await prjCarregar();
+  if (typeof acaoCarregar === 'function') await acaoCarregar(false, true);
+  prjMostrarErro();
+  if (p === 'proj-quadro')  prjRenderQuadro();
+  if (p === 'proj-lista')   prjRenderLista();
+  if (p === 'proj-painel')  prjRenderPainel();
+  if (p === 'proj-etapas')  prjRenderEtapas();
+  if (p === 'proj-gantt')   { prjRenderGantt(); setTimeout(prjGanttHoje, 30); }
+  if (p === 'proj-cancelados') prjRenderCancelados();
+}
+function prjRedesenhar() {
+  const p = _paginaAtual;
+  if (p === 'proj-quadro')  prjRenderQuadro();
+  if (p === 'proj-lista')   prjRenderLista();
+  if (p === 'proj-painel')  prjRenderPainel();
+  if (p === 'proj-etapas')  prjRenderEtapas();
+  if (p === 'proj-gantt')   prjRenderGantt();
+  if (p === 'proj-cancelados') prjRenderCancelados();
+}
+
+// ── Auxiliares ──
+function prjEtapas() { return [...prjDb.etapas].sort((a,b) => (a.ordem||0) - (b.ordem||0)); }
+function prjEtapa(id) { return prjDb.etapas.find(e => e.id === id) || null; }
+function prjProjeto(id) { return prjDb.projetos.find(p => p.id === id) || null; }
+function prjClienteNome(p) {
+  const c = (db.clientes || []).find(x => x.id === p.cliente_id);
+  return c ? c.nome : (p.cliente_nome || '—');
+}
+function prjResponsaveis() {
+  return [...new Set(prjDb.projetos.map(p => (p.responsavel || '').trim()).filter(Boolean))].sort((a,b) => a.localeCompare(b,'pt-BR'));
+}
+function prjPopularResp(selId) {
+  const sel = document.getElementById(selId); if (!sel) return;
+  const v = sel.value;
+  sel.innerHTML = '<option value="">Todos</option>' + prjResponsaveis().map(r => `<option value="${prjEsc(r)}">${prjEsc(r)}</option>`).join('');
+  sel.value = v;
+}
+function prjPopularClientes(valor) {
+  const sel = document.getElementById('prj-f-cliente'); if (!sel) return;
+  const v = valor !== undefined ? valor : sel.value;
+  sel.innerHTML = '<option value="">Selecione...</option>' + [...(db.clientes || [])]
+    .sort((a,b) => String(a.nome||'').localeCompare(String(b.nome||''), 'pt-BR'))
+    .map(c => `<option value="${c.id}">${prjEsc(c.nome)}</option>`).join('');
+  sel.value = v || '';
+}
+function prjFiltroTexto(p, termo) {
+  if (!termo) return true;
+  return normText([p.codigo, p.nome, prjClienteNome(p), p.responsavel].join(' ')).includes(termo);
+}
+// Semáforo do tempo na etapa atual (prazo padrão da etapa)
+function prjSemaforo(p) {
+  const et = prjEtapa(p.etapa_id);
+  const dias = prjDias(p.dt_etapa);
+  const prazo = et ? prjNum(et.prazo_dias) : 0;
+  if (!prazo || p.status !== 'ativo') return { dias, prazo, cls:'', cor:'#d6d3d1' };
+  const r = dias / prazo;
+  if (r > 1)    return { dias, prazo, cls:'vermelho', cor:'#dc2626' };
+  if (r >= 0.7) return { dias, prazo, cls:'amarelo',  cor:'#f59e0b' };
+  return { dias, prazo, cls:'verde', cor:'#16a34a' };
+}
+// Situação da entrega prometida
+function prjEntrega(p) {
+  if (!p.dt_entrega_prev) return null;
+  if (p.status === 'concluido' || p.status === 'cancelado') return { cls:'', txt:'Entrega ' + fmtDate(p.dt_entrega_prev) };
+  const hoje = prjHoje();
+  if (p.dt_entrega_prev < hoje) return { cls:'vermelho', txt:'Atrasado ' + prjDias(p.dt_entrega_prev, hoje) + 'd', atrasado:true };
+  if (prjDias(hoje, p.dt_entrega_prev) <= 7) return { cls:'amarelo', txt:'Entrega ' + fmtDate(p.dt_entrega_prev) };
+  return { cls:'', txt:'Entrega ' + fmtDate(p.dt_entrega_prev) };
+}
+function prjProximoCodigo() {
+  let max = 0;
+  prjDb.projetos.forEach(p => { const m = String(p.codigo || '').match(/(\d+)\s*$/); if (m) max = Math.max(max, parseInt(m[1], 10)); });
+  return 'P' + String(max + 1).padStart(4, '0');
+}
+
+// ══ QUADRO (KANBAN) ══
+function prjRenderQuadro() {
+  const board = document.getElementById('prj-board'); if (!board) return;
+  prjPopularResp('prj-q-resp');
+  const termo = normText((document.getElementById('prj-q-busca') || {}).value || '');
+  const resp = (document.getElementById('prj-q-resp') || {}).value || '';
+  const verConcl = !!(document.getElementById('prj-q-concl') || {}).checked;
+  const etapas = prjEtapas();
+  if (!etapas.length) { board.innerHTML = '<div class="prj-vazio">Nenhuma etapa cadastrada. Cadastre em Projetos → Etapas.</div>'; return; }
+  const visiveis = prjDb.projetos.filter(p => p.status !== 'cancelado'
+    && (verConcl || p.status !== 'concluido')
+    && (!resp || (p.responsavel || '') === resp)
+    && prjFiltroTexto(p, termo));
+  const ordemPri = { urgente:0, alta:1, normal:2 };
+  board.innerHTML = etapas.map((et, idx) => {
+    const lista = visiveis.filter(p => p.etapa_id === et.id)
+      .sort((a,b) => (ordemPri[a.prioridade||'normal'] - ordemPri[b.prioridade||'normal']) || String(a.dt_entrega_prev||'9999').localeCompare(String(b.dt_entrega_prev||'9999')));
+    const total = lista.reduce((s,p) => s + prjNum(p.valor), 0);
+    const cards = lista.map(p => prjCardHtml(p, idx, etapas.length)).join('') || '<div class="prj-vazio">—</div>';
+    return `<div class="prj-col" style="--c:${prjEsc(et.cor||'#94a3b8')}" data-etapa="${et.id}"
+        ondragover="prjDragOver(event)" ondragleave="prjDragLeave(event)" ondrop="prjDrop(event,'${et.id}')">
+      <div class="prj-col-head">
+        <div class="prj-col-tit"><span class="prj-dot" style="background:${prjEsc(et.cor||'#94a3b8')}"></span>${prjEsc(et.nome)}<span class="prj-cnt">${lista.length}</span></div>
+        <div class="prj-col-sub">${total ? fmtBRL(total) : '&nbsp;'}${et.prazo_dias ? ' · prazo ' + et.prazo_dias + 'd' : ''}</div>
+      </div>
+      <div class="prj-col-body">${cards}</div>
+    </div>`;
+  }).join('');
+}
+
+function prjCardHtml(p, idx, nEtapas) {
+  const s = prjSemaforo(p);
+  const ent = prjEntrega(p);
+  const tags = [];
+  tags.push(`<span class="prj-tag ${s.cls}" title="Dias nesta etapa${s.prazo ? ' (prazo ' + s.prazo + 'd)' : ''}">⏱ ${s.dias}d${s.prazo ? '/' + s.prazo + 'd' : ''}</span>`);
+  if (ent) tags.push(`<span class="prj-tag ${ent.cls}">📅 ${ent.txt}</span>`);
+  if (p.status === 'pausado') tags.push('<span class="prj-tag amarelo">⏸ Pausado</span>');
+  if (p.status === 'concluido') tags.push('<span class="prj-tag verde">✔ Concluído</span>');
+  if (p.responsavel) tags.push(`<span class="prj-tag">👤 ${prjEsc(p.responsavel)}</span>`);
+  const chk = prjChecklistResumo(p);
+  if (chk.total) tags.push(`<span class="prj-tag ${chk.feitos === chk.total ? 'verde' : ''}">☑ ${chk.feitos}/${chk.total}</span>`);
+  return `<div class="prj-card" style="--s:${s.cor}" draggable="true"
+      ondragstart="prjDragStart(event,'${p.id}')" ondragend="prjDragEnd(event)" onclick="prjAbrirFicha('${p.id}')">
+    <div class="prj-card-top"><span>${prjEsc(p.codigo || '')}</span>${PRJ_PRI[p.prioridade] ? `<span class="prj-pri">${PRJ_PRI[p.prioridade]}</span>` : ''}</div>
+    <div class="prj-card-tit">${prjEsc(p.nome)}</div>
+    <div class="prj-card-cli">${prjEsc(prjClienteNome(p))}${p.valor ? ' · ' + fmtBRL(prjNum(p.valor)) : ''}</div>
+    <div class="prj-card-inf">${tags.join('')}</div>
+    <div class="prj-card-nav">
+      <button type="button" title="Voltar etapa" ${idx === 0 ? 'disabled' : ''} onclick="event.stopPropagation();prjPasso('${p.id}',-1)">◀</button>
+      <button type="button" title="Avançar etapa" ${idx === nEtapas - 1 ? 'disabled' : ''} onclick="event.stopPropagation();prjPasso('${p.id}',1)">▶</button>
+    </div>
+  </div>`;
+}
+
+function prjDragStart(ev, id) {
+  _prjArrastando = id;
+  try { ev.dataTransfer.setData('text/plain', id); ev.dataTransfer.effectAllowed = 'move'; } catch(e) {}
+  ev.currentTarget.classList.add('prj-arrastando');
+}
+function prjDragEnd(ev) {
+  ev.currentTarget.classList.remove('prj-arrastando');
+  document.querySelectorAll('.prj-col.prj-drop').forEach(c => c.classList.remove('prj-drop'));
+}
+function prjDragOver(ev) { ev.preventDefault(); ev.currentTarget.classList.add('prj-drop'); }
+function prjDragLeave(ev) { if (!ev.currentTarget.contains(ev.relatedTarget)) ev.currentTarget.classList.remove('prj-drop'); }
+async function prjDrop(ev, etapaId) {
+  ev.preventDefault();
+  ev.currentTarget.classList.remove('prj-drop');
+  let id = _prjArrastando;
+  try { id = ev.dataTransfer.getData('text/plain') || id; } catch(e) {}
+  _prjArrastando = null;
+  if (id) await prjMover(id, etapaId);
+}
+async function prjPasso(id, dir) {
+  const p = prjProjeto(id); if (!p) return;
+  const etapas = prjEtapas();
+  const i = etapas.findIndex(e => e.id === p.etapa_id);
+  const alvo = etapas[i + dir];
+  if (alvo) await prjMover(id, alvo.id);
+}
+
+// Muda o projeto de etapa e registra no histórico.
+async function prjMover(id, novaEtapaId) {
+  const p = prjProjeto(id);
+  const et = prjEtapa(novaEtapaId);
+  if (!p || !et || p.etapa_id === novaEtapaId) return false;
+  if (p.status === 'cancelado') { alert('Projeto cancelado. Reative-o na ficha para movimentar.'); return false; }
+  const agora = new Date().toISOString();
+  const rec = { etapa_id: novaEtapaId, dt_etapa: agora };
+  if (et.final) { rec.status = 'concluido'; rec.dt_conclusao = prjHoje(); }
+  else if (p.status === 'concluido') { rec.status = 'ativo'; rec.dt_conclusao = null; }
+  const ok = await sbFetch('proj_projetos', 'PATCH', rec, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao mover o projeto.' + sbErroDetalhe()); return false; }
+  Object.assign(p, rec);
+  const abertos = prjDb.hist.filter(h => h.projeto_id === id && !h.dt_saida);
+  if (abertos.length) {
+    await sbFetch('proj_historico', 'PATCH', { dt_saida: agora }, `?projeto_id=eq.${id}&dt_saida=is.null`);
+    abertos.forEach(h => h.dt_saida = agora);
+  }
+  await prjRegistrarHist(id, et, agora);
+  prjRedesenhar();
+  if (document.getElementById('modal-prj-ficha').classList.contains('open')) prjAbrirFicha(id);
+  return true;
+}
+async function prjRegistrarHist(projetoId, et, quando) {
+  const h = { id: uid(), projeto_id: projetoId, etapa_id: et.id, etapa_nome: et.nome,
+    dt_entrada: quando, dt_saida: null, usuario: (typeof currentUser !== 'undefined' && currentUser) ? (currentUser.nome || currentUser.user || '') : '' };
+  const ok = await sbFetch('proj_historico', 'POST', h);
+  if (ok) prjDb.hist.push(h);
+}
+
+// ══ CADASTRO ══
+function prjAbrirProjeto(id) {
+  const p = id ? prjProjeto(id) : null;
+  if (!p && !prjEtapas().length) { alert('Cadastre as etapas antes (Projetos → Etapas).' + (prjErro ? '\n\n' + prjErro : '')); return; }
+  document.getElementById('prj-f-titulo').textContent = p ? 'Editar Projeto' : 'Novo Projeto';
+  document.getElementById('prj-f-id').value = p ? p.id : '';
+  document.getElementById('prj-f-codigo').value = p ? (p.codigo || '') : prjProximoCodigo();
+  document.getElementById('prj-f-nome').value = p ? (p.nome || '') : '';
+  prjPopularClientes(p ? (p.cliente_id || '') : '');
+  document.getElementById('prj-f-resp').value = p ? (p.responsavel || '') : '';
+  document.getElementById('prj-dl-resp').innerHTML = prjResponsaveis().map(r => `<option value="${prjEsc(r)}"></option>`).join('');
+  document.getElementById('prj-f-end').value = p ? (p.endereco || '') : '';
+  document.getElementById('prj-f-valor').value = p ? (p.valor ?? '') : '';
+  document.getElementById('prj-f-dtvenda').value = p ? (p.dt_venda || '') : prjHoje();
+  document.getElementById('prj-f-dtentrega').value = p ? (p.dt_entrega_prev || '') : '';
+  document.getElementById('prj-f-pri').value = p ? (p.prioridade || 'normal') : 'normal';
+  document.getElementById('prj-f-status').value = p ? (p.status === 'cancelado' ? 'ativo' : (p.status || 'ativo')) : 'ativo';
+  document.getElementById('prj-f-obs').value = p ? (p.obs || '') : '';
+  // A etapa só é escolhida no cadastro; depois ela muda pelo quadro/ficha (fica no histórico).
+  const selEt = document.getElementById('prj-f-etapa');
+  selEt.innerHTML = prjEtapas().map(e => `<option value="${e.id}">${prjEsc(e.nome)}</option>`).join('');
+  document.getElementById('prj-f-etapa-wrap').style.display = p ? 'none' : '';
+  const stWrap = document.getElementById('prj-f-status').closest('.form-group');
+  // Cancelamento só pela ficha (exige motivo); projeto cancelado é reativado por lá.
+  if (stWrap) stWrap.style.display = (p && p.status !== 'cancelado') ? '' : 'none';
+  openModal('modal-prj-projeto');
+  setTimeout(() => document.getElementById('prj-f-nome').focus(), 50);
+}
+
+async function prjSalvarProjeto() {
+  const id = document.getElementById('prj-f-id').value;
+  const nome = document.getElementById('prj-f-nome').value.trim();
+  const cliente_id = document.getElementById('prj-f-cliente').value;
+  if (!nome) { alert('Informe o projeto / ambientes.'); return; }
+  if (!cliente_id) { alert('Selecione o cliente.'); return; }
+  let codigo = document.getElementById('prj-f-codigo').value.trim() || prjProximoCodigo();
+  if (prjDb.projetos.some(p => p.id !== id && String(p.codigo||'').trim().toLowerCase() === codigo.toLowerCase())) {
+    alert('Já existe um projeto com o código ' + codigo + '.'); return;
+  }
+  const cli = (db.clientes || []).find(c => c.id === cliente_id);
+  const rec = {
+    codigo, nome, cliente_id, cliente_nome: cli ? cli.nome : '',
+    responsavel: document.getElementById('prj-f-resp').value.trim(),
+    endereco: document.getElementById('prj-f-end').value.trim(),
+    valor: prjNum(document.getElementById('prj-f-valor').value),
+    dt_venda: document.getElementById('prj-f-dtvenda').value || null,
+    dt_entrega_prev: document.getElementById('prj-f-dtentrega').value || null,
+    prioridade: document.getElementById('prj-f-pri').value,
+    obs: document.getElementById('prj-f-obs').value.trim()
+  };
+  if (id) {
+    const p = prjProjeto(id);
+    if (p.status !== 'cancelado') {
+      const st = document.getElementById('prj-f-status').value;
+      rec.status = st;
+      if (st === 'concluido' && p.status !== 'concluido') rec.dt_conclusao = prjHoje();
+      if (st !== 'concluido') rec.dt_conclusao = null;
+    }
+    const ok = await sbFetch('proj_projetos', 'PATCH', rec, `?id=eq.${id}`);
+    if (!ok) { alert('❌ Erro ao salvar o projeto.' + sbErroDetalhe()); return; }
+    Object.assign(p, rec);
+  } else {
+    const etapa_id = document.getElementById('prj-f-etapa').value;
+    const et = prjEtapa(etapa_id);
+    if (!et) { alert('Selecione a etapa inicial.'); return; }
+    const agora = new Date().toISOString();
+    const novo = { id: uid(), ...rec, etapa_id, dt_etapa: agora,
+      status: et.final ? 'concluido' : 'ativo', dt_conclusao: et.final ? prjHoje() : null,
+      checklist: {}, created_at: agora };
+    const ok = await sbFetch('proj_projetos', 'POST', novo);
+    if (!ok) { alert('❌ Erro ao salvar o projeto.' + sbErroDetalhe()); return; }
+    prjDb.projetos.push(novo);
+    await prjRegistrarHist(novo.id, et, agora);
+  }
+  closeModal('modal-prj-projeto');
+  prjRedesenhar();
+  if (id && document.getElementById('modal-prj-ficha').classList.contains('open')) prjAbrirFicha(id);
+}
+
+async function prjExcluirProjeto(id) {
+  const p = prjProjeto(id); if (!p) return;
+  const lancs = prjLancsDoProjeto(id);
+  if (lancs.length) {
+    alert(`Este projeto tem ${lancs.length} lançamento(s) no Contas a Receber.\n\nExclua a cobrança na ficha do projeto (só é possível se nada foi recebido) ou use "Cancelar projeto".`);
+    return;
+  }
+  if (!confirm(`Excluir o projeto "${p.codigo} — ${p.nome}"?\n\nO histórico de etapas dele também será apagado. Essa ação não pode ser desfeita.`)) return;
+  const okH = await sbFetch('proj_historico', 'DELETE', null, `?projeto_id=eq.${id}`);
+  if (!okH) { alert('❌ Erro ao excluir o histórico do projeto.' + sbErroDetalhe()); return; }
+  const ok = await sbFetch('proj_projetos', 'DELETE', null, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao excluir o projeto.' + sbErroDetalhe()); return; }
+  prjDb.hist = prjDb.hist.filter(h => h.projeto_id !== id);
+  prjDb.projetos = prjDb.projetos.filter(x => x.id !== id);
+  closeModal('modal-prj-ficha');
+  prjRedesenhar();
+}
+
+async function prjMudarStatus(id, status) {
+  const p = prjProjeto(id); if (!p) return;
+  if (status === 'cancelado') { prjAbrirCancelar(id); return; }
+  const reativando = p.status === 'cancelado';
+  if (reativando && !confirm(`Reativar o projeto "${p.codigo} — ${p.nome}"?\n\nEle volta para a etapa em que estava e sai da lista de cancelados.`)) return;
+  const rec = { status };
+  if (status === 'ativo') { const et = prjEtapa(p.etapa_id); if (et && et.final) rec.status = 'concluido'; }
+  const agora = new Date().toISOString();
+  if (reativando) Object.assign(rec, { motivo_id: null, motivo_nome: null, cancel_obs: null, dt_cancelamento: null, cancel_etapa_id: null, dt_etapa: agora });
+  const ok = await sbFetch('proj_projetos', 'PATCH', rec, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao alterar o status.' + sbErroDetalhe()); return; }
+  Object.assign(p, rec);
+  if (reativando) { const et = prjEtapa(p.etapa_id); if (et) await prjRegistrarHist(id, et, agora); }
+  prjRedesenhar();
+  prjAbrirFicha(id);
+}
+
+// ── Checklist ──
+function prjChecklistResumo(p) {
+  const et = prjEtapa(p.etapa_id);
+  const itens = (et && Array.isArray(et.checklist)) ? et.checklist : [];
+  const marc = ((p.checklist || {})[p.etapa_id]) || {};
+  return { total: itens.length, feitos: itens.filter(i => marc[i]).length };
+}
+async function prjMarcarItem(id, etapaId, idx, valor) {
+  const p = prjProjeto(id); const et = prjEtapa(etapaId);
+  if (!p || !et) return;
+  const item = (et.checklist || [])[idx]; if (item == null) return;
+  const chk = JSON.parse(JSON.stringify(p.checklist || {}));
+  chk[etapaId] = chk[etapaId] || {};
+  if (valor) chk[etapaId][item] = true; else delete chk[etapaId][item];
+  const ok = await sbFetch('proj_projetos', 'PATCH', { checklist: chk }, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao salvar o checklist.' + sbErroDetalhe()); prjAbrirFicha(id); return; }
+  p.checklist = chk;
+  prjRedesenhar();
+  prjAbrirFicha(id);
+}
+
+// ══ FICHA DO PROJETO ══
+function prjAbrirFicha(id) {
+  const p = prjProjeto(id); if (!p) return;
+  _prjFichaId = id;
+  const etapas = prjEtapas();
+  const iAtual = etapas.findIndex(e => e.id === p.etapa_id);
+  const et = etapas[iAtual] || null;
+  const hist = prjDb.hist.filter(h => h.projeto_id === id).sort((a,b) => String(a.dt_entrada).localeCompare(String(b.dt_entrada)));
+  const s = prjSemaforo(p);
+  const ent = prjEntrega(p);
+
+  document.getElementById('prj-fc-titulo').textContent = (p.codigo ? p.codigo + ' — ' : '') + p.nome;
+  document.getElementById('prj-fc-sub').innerHTML = `${prjEsc(prjClienteNome(p))} · <span class="badge ${PRJ_STATUS_COR[p.status]||'badge-gray'}">${PRJ_STATUS[p.status]||p.status}</span>${PRJ_PRI[p.prioridade] ? ' · ' + PRJ_PRI[p.prioridade] : ''}`;
+
+  // Linha de etapas
+  const steps = etapas.map((e, i) => {
+    const ult = [...hist].reverse().find(h => h.etapa_id === e.id);
+    const cls = i < iAtual ? 'feito' : (i === iAtual ? 'atual' : '');
+    return `<div class="prj-step ${cls}" style="--c:${prjEsc(e.cor||'#2563eb')}" title="${prjEsc(e.nome)}"><div class="b"></div>${prjEsc(e.nome)}<div class="d">${ult ? fmtDate(prjDataLocal(ult.dt_entrada)) : ''}</div></div>`;
+  }).join('');
+
+  const opcoesMover = etapas.map(e => `<option value="${e.id}" ${e.id === p.etapa_id ? 'selected' : ''}>${prjEsc(e.nome)}</option>`).join('');
+  const bloqueado = p.status === 'cancelado';
+  const acoesEtapa = `<div class="prj-acoes-etapa">
+      <button class="btn btn-secondary btn-sm" ${iAtual <= 0 || bloqueado ? 'disabled' : ''} onclick="prjPasso('${id}',-1)">◀ Voltar etapa</button>
+      <button class="btn btn-primary btn-sm" ${iAtual >= etapas.length - 1 || bloqueado ? 'disabled' : ''} onclick="prjPasso('${id}',1)">Avançar etapa ▶</button>
+      <span style="font-size:12px;color:#a8a29e;margin-left:6px">ou mover para</span>
+      <select id="prj-fc-mover" style="width:auto;min-width:200px" ${bloqueado ? 'disabled' : ''} onchange="prjMover('${id}', this.value)">${opcoesMover}</select>
+    </div>`;
+
+  // Checklist da etapa atual
+  const itens = (et && Array.isArray(et.checklist)) ? et.checklist : [];
+  const marc = ((p.checklist || {})[p.etapa_id]) || {};
+  const checkHtml = itens.length ? itens.map((it, i) => `<label class="prj-chk-item ${marc[it] ? 'ok' : ''}">
+      <input type="checkbox" ${marc[it] ? 'checked' : ''} onchange="prjMarcarItem('${id}','${p.etapa_id}',${i},this.checked)"><span>${prjEsc(it)}</span></label>`).join('')
+    : '<div style="font-size:12.5px;color:#a8a29e">Esta etapa não tem checklist. Os itens podem ser definidos em Projetos → Etapas.</div>';
+
+  // Histórico
+  const histHtml = hist.length ? `<div class="table-scroll" style="overflow:auto"><table><thead><tr><th>Etapa</th><th>Entrada</th><th>Saída</th><th style="text-align:center">Dias</th><th>Prazo</th><th>Usuário</th></tr></thead><tbody>
+    ${[...hist].reverse().map(h => {
+      const e = prjEtapa(h.etapa_id);
+      const d = prjDias(h.dt_entrada, h.dt_saida);
+      const pz = e ? prjNum(e.prazo_dias) : 0;
+      const estourou = pz && d > pz;
+      return `<tr><td><span class="prj-dot" style="background:${prjEsc((e&&e.cor)||'#94a3b8')};margin-right:6px"></span>${prjEsc(h.etapa_nome || (e && e.nome) || '—')}</td>
+        <td>${fmtDate(prjDataLocal(h.dt_entrada))}</td><td>${h.dt_saida ? fmtDate(prjDataLocal(h.dt_saida)) : '<span class="badge badge-blue">atual</span>'}</td>
+        <td style="text-align:center;${estourou ? 'color:#dc2626;font-weight:700' : ''}">${d}</td><td>${pz ? pz + 'd' : '—'}</td><td>${prjEsc(h.usuario || '—')}</td></tr>`;
+    }).join('')}</tbody></table></div>` : '<div style="font-size:12.5px;color:#a8a29e">Sem movimentações.</div>';
+
+  const finHtml = prjFinanceiroHtml(p);
+  const cancHtml = p.status === 'cancelado' ? `<div class="lanc-note" style="background:#fef2f2;border-color:#fecaca;color:#991b1b;margin-bottom:14px"><b>Cancelado em ${p.dt_cancelamento ? fmtDate(p.dt_cancelamento) : '—'}</b> na etapa <b>${prjEsc((prjEtapa(p.cancel_etapa_id)||{}).nome || '—')}</b> · Motivo: <b>${prjEsc(prjMotivoNome(p))}</b>${p.cancel_obs ? '<br>' + prjEsc(p.cancel_obs) : ''}</div>` : '';
+
+  document.getElementById('prj-fc-body').innerHTML = cancHtml + `
+    <div class="lanc-sec">
+      <div class="lanc-sec-title"><span class="n">1</span>Etapa atual<span class="hint">${et ? prjEsc(et.nome) : '—'} · ${s.dias} dia(s)${s.prazo ? ' de ' + s.prazo + ' previstos' : ''}</span></div>
+      <div class="prj-steps">${steps}</div>
+      ${acoesEtapa}
+    </div>
+    <div class="lanc-sec">
+      <div class="lanc-sec-title"><span class="n">2</span>Checklist — ${et ? prjEsc(et.nome) : ''}${et && prjUsaEquipe(et) && (p.equipes || {})[et.id] ? `<span class="hint">👥 ${prjEsc(p.equipes[et.id])}</span>` : ''}</div>
+      ${checkHtml}
+      ${prjEquipesFichaHtml(p)}
+    </div>
+    <div class="lanc-sec">
+      <div class="lanc-sec-title"><span class="n">3</span>Dados do projeto</div>
+      <div class="prj-ficha-info">
+        <div><div class="k">Cliente</div><div class="x">${prjEsc(prjClienteNome(p))}</div></div>
+        <div><div class="k">Responsável</div><div class="x">${prjEsc(p.responsavel || '—')}</div></div>
+        <div><div class="k">Valor</div><div class="x">${p.valor ? fmtBRL(prjNum(p.valor)) : '—'}</div></div>
+        <div><div class="k">Data da venda</div><div class="x">${p.dt_venda ? fmtDate(p.dt_venda) : '—'}</div></div>
+        <div><div class="k">Entrega prometida</div><div class="x">${p.dt_entrega_prev ? fmtDate(p.dt_entrega_prev) : '—'}${ent && ent.atrasado ? ' <span class="badge badge-red">' + ent.txt + '</span>' : ''}</div></div>
+        <div><div class="k">Concluído em</div><div class="x">${p.dt_conclusao ? fmtDate(p.dt_conclusao) : '—'}</div></div>
+        <div style="grid-column:1/-1"><div class="k">Endereço da obra</div><div class="x">${prjEsc(p.endereco || '—')}</div></div>
+        ${p.obs ? `<div style="grid-column:1/-1"><div class="k">Observações</div><div class="x" style="font-weight:400;white-space:pre-line">${prjEsc(p.obs)}</div></div>` : ''}
+      </div>
+    </div>
+    <div class="lanc-sec">
+      <div class="lanc-sec-title"><span class="n">4</span>Pagamento do projeto<span class="hint">${p.status !== 'cancelado' ? `<button class="btn btn-primary btn-sm" onclick="prjPagAbrir('${id}')">+ Forma de pagamento</button>` : ''}</span></div>
+      ${finHtml}
+    </div>
+    <div class="lanc-sec">
+      <div class="lanc-sec-title"><span class="n">5</span>Histórico de etapas</div>
+      ${histHtml}
+    </div>
+    ${typeof acaoHtmlProjeto === 'function' ? acaoHtmlProjeto(p) : ''}`;
+
+  const btStatus = p.status === 'cancelado'
+    ? `<button class="btn btn-secondary" onclick="prjMudarStatus('${id}','ativo')">Reativar</button>`
+    : (p.status === 'pausado'
+        ? `<button class="btn btn-secondary" onclick="prjMudarStatus('${id}','ativo')">▶ Retomar</button>`
+        : (p.status === 'ativo' ? `<button class="btn btn-secondary" onclick="prjMudarStatus('${id}','pausado')">⏸ Pausar</button>` : ''))
+      + (p.status !== 'concluido' ? ` <button class="btn btn-secondary" onclick="prjMudarStatus('${id}','cancelado')">Cancelar projeto</button>` : '');
+  document.getElementById('prj-fc-foot').innerHTML = `
+    <button class="btn btn-danger" onclick="prjExcluirProjeto('${id}')">Excluir</button>
+    <span class="lanc-foot-info"></span>
+    ${btStatus}
+    <button class="btn btn-secondary" onclick="prjAbrirProjeto('${id}')">Editar dados</button>
+    <button class="btn btn-primary" onclick="closeModal('modal-prj-ficha')">Fechar</button>`;
+  openModal('modal-prj-ficha');
+}
+
+// ══ LISTA ══
+function prjRenderLista() {
+  const tb = document.getElementById('prj-tb-lista'); if (!tb) return;
+  prjPopularResp('prj-l-resp');
+  const selEt = document.getElementById('prj-l-etapa');
+  if (selEt) { const v = selEt.value; selEt.innerHTML = '<option value="">Todas</option>' + prjEtapas().map(e => `<option value="${e.id}">${prjEsc(e.nome)}</option>`).join(''); selEt.value = v; }
+  const termo = normText((document.getElementById('prj-l-busca') || {}).value || '');
+  const st = (document.getElementById('prj-l-status') || {}).value || '';
+  const etf = selEt ? selEt.value : '';
+  const resp = (document.getElementById('prj-l-resp') || {}).value || '';
+  const lista = prjDb.projetos.filter(p => (!st || p.status === st) && (!etf || p.etapa_id === etf)
+      && (!resp || (p.responsavel || '') === resp) && prjFiltroTexto(p, termo))
+    .sort((a,b) => String(b.codigo||'').localeCompare(String(a.codigo||''), 'pt-BR', { numeric:true }));
+  const tf = document.getElementById('prj-tf-lista');
+  if (!lista.length) {
+    tb.innerHTML = `<tr><td colspan="10" class="empty-state">${prjDb.projetos.length ? 'Nenhum projeto encontrado com esses filtros.' : 'Nenhum projeto cadastrado.'}</td></tr>`;
+    if (tf) tf.innerHTML = ''; return;
+  }
+  tb.innerHTML = lista.map(p => {
+    const et = prjEtapa(p.etapa_id); const s = prjSemaforo(p); const ent = prjEntrega(p);
+    return `<tr style="cursor:pointer" onclick="prjAbrirFicha('${p.id}')">
+      <td style="font-family:DM Mono,monospace;font-size:12px"><b>${prjEsc(p.codigo || '—')}</b></td>
+      <td><b>${prjEsc(p.nome)}</b>${PRJ_PRI[p.prioridade] ? '<div style="font-size:11px">' + PRJ_PRI[p.prioridade] + '</div>' : ''}</td>
+      <td>${prjEsc(prjClienteNome(p))}</td>
+      <td>${prjEsc(p.responsavel || '—')}</td>
+      <td>${et ? `<span class="badge" style="background:${prjEsc(et.cor)}1a;color:${prjEsc(et.cor)};border:1px solid ${prjEsc(et.cor)}55">${prjEsc(et.nome)}</span>` : '—'}</td>
+      <td style="text-align:center"><span class="prj-tag ${s.cls}">${s.dias}d${s.prazo ? '/' + s.prazo + 'd' : ''}</span></td>
+      <td>${p.dt_entrega_prev ? fmtDate(p.dt_entrega_prev) : '—'}${ent && ent.atrasado ? ' <span class="badge badge-red">' + ent.txt + '</span>' : ''}</td>
+      <td class="num">${p.valor ? fmtBRL(prjNum(p.valor)) : '—'}</td>
+      <td><span class="badge ${PRJ_STATUS_COR[p.status]||'badge-gray'}">${PRJ_STATUS[p.status]||p.status}</span></td>
+      <td class="actions" onclick="event.stopPropagation()">
+        <button class="btn btn-secondary btn-sm" onclick="prjAbrirFicha('${p.id}')">Abrir</button>
+        <button class="btn btn-secondary btn-sm" onclick="prjAbrirProjeto('${p.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="prjExcluirProjeto('${p.id}')">Excluir</button>
+      </td></tr>`;
+  }).join('');
+  const total = lista.reduce((s,p) => s + prjNum(p.valor), 0);
+  if (tf) tf.innerHTML = `<tr><td colspan="7" style="font-weight:700">${lista.length} projeto(s)</td><td class="num" style="font-weight:700">${fmtBRL(total)}</td><td colspan="2"></td></tr>`;
+}
+
+// ══ PAINEL ══
+function prjRenderPainel() {
+  const box = document.getElementById('prj-kpis'); if (!box) return;
+  const hoje = prjHoje();
+  const anoAtual = hoje.slice(0,4), mesAtual = hoje.slice(0,7);
+  const ativos = prjDb.projetos.filter(p => p.status === 'ativo' || p.status === 'pausado');
+  const atrasados = ativos.filter(p => p.dt_entrega_prev && p.dt_entrega_prev < hoje);
+  const estourados = ativos.filter(p => prjSemaforo(p).cls === 'vermelho');
+  const doMes = ativos.filter(p => (p.dt_entrega_prev || '').slice(0,7) === mesAtual);
+  const conclAno = prjDb.projetos.filter(p => p.status === 'concluido' && (p.dt_conclusao || '').slice(0,4) === anoAtual);
+  const ciclos = conclAno.map(p => prjDias(p.dt_venda || prjDataLocal(p.created_at), p.dt_conclusao)).filter(d => d >= 0);
+  const cicloMedio = ciclos.length ? Math.round(ciclos.reduce((a,b) => a + b, 0) / ciclos.length) : null;
+  const soma = arr => arr.reduce((s,p) => s + prjNum(p.valor), 0);
+  const kpi = (v, l, s, cor) => `<div class="prj-kpi" style="--k:${cor}"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
+  box.innerHTML =
+    kpi(ativos.length, 'Em andamento', fmtBRL(soma(ativos)) + ' em carteira', '#2563eb') +
+    kpi(atrasados.length, 'Entregas atrasadas', atrasados.length ? fmtBRL(soma(atrasados)) : 'Nenhum atraso', '#dc2626') +
+    kpi(estourados.length, 'Acima do prazo da etapa', 'Parados além do prazo padrão', '#f59e0b') +
+    kpi(doMes.length, 'Entregas previstas no mês', fmtBRL(soma(doMes)), '#0d9488') +
+    kpi(conclAno.length, 'Concluídos em ' + anoAtual, fmtBRL(soma(conclAno)), '#16a34a') +
+    kpi(cicloMedio == null ? '—' : cicloMedio + 'd', 'Ciclo médio', 'Da venda à conclusão (' + anoAtual + ')', '#8b5cf6');
+
+  prjRenderFunil();
+  const etapas = prjEtapas().filter(e => !e.final);
+  const porEt = etapas.map(e => { const l = ativos.filter(p => p.etapa_id === e.id); return { e, n: l.length, v: soma(l) }; });
+  const maxN = Math.max(1, ...porEt.map(x => x.n));
+  document.getElementById('prj-p-etapas').innerHTML = porEt.map(x => `<div class="prj-bar-row">
+      <div class="nm" title="${prjEsc(x.e.nome)}"><span class="prj-dot" style="background:${prjEsc(x.e.cor)}"></span>${prjEsc(x.e.nome)}</div>
+      <div class="prj-bar"><span style="width:${(x.n / maxN) * 100}%;background:${prjEsc(x.e.cor)}"></span></div>
+      <div class="vl">${x.n} · ${fmtBRLCompacto(x.v)}</div></div>`).join('') || '<div class="prj-vazio">Sem etapas.</div>';
+
+  // Tempo médio por etapa (passagens já encerradas)
+  const tempos = etapas.map(e => {
+    const hs = prjDb.hist.filter(h => h.etapa_id === e.id && h.dt_saida);
+    const media = hs.length ? hs.reduce((s,h) => s + prjDias(h.dt_entrada, h.dt_saida), 0) / hs.length : null;
+    return { e, media, n: hs.length, prazo: prjNum(e.prazo_dias) };
+  });
+  const maxT = Math.max(1, ...tempos.map(t => Math.max(t.media || 0, t.prazo)));
+  document.getElementById('prj-p-tempo').innerHTML = tempos.map(t => {
+    const cor = t.media == null ? '#d6d3d1' : (t.prazo && t.media > t.prazo ? '#dc2626' : '#16a34a');
+    return `<div class="prj-bar-row">
+      <div class="nm" title="${prjEsc(t.e.nome)}"><span class="prj-dot" style="background:${prjEsc(t.e.cor)}"></span>${prjEsc(t.e.nome)}</div>
+      <div class="prj-bar" title="${t.n} passagem(ns)"><span style="width:${((t.media || 0) / maxT) * 100}%;background:${cor}"></span>
+        ${t.prazo ? `<i style="position:absolute;top:0;bottom:0;left:${(t.prazo / maxT) * 100}%;border-left:2px dashed #57534e"></i>` : ''}</div>
+      <div class="vl">${t.media == null ? '—' : t.media.toFixed(1).replace('.', ',') + 'd'}${t.prazo ? ' / ' + t.prazo + 'd' : ''}</div></div>`;
+  }).join('') + '<div class="lanc-note" style="margin-top:10px">Barra verde = dentro do prazo padrão, vermelha = acima. A linha tracejada marca o prazo.</div>';
+
+  // Entregas: atrasadas + próximos 30 dias
+  const lim = prjDataLocal(new Date(Date.now() + 30 * 86400000).toISOString());
+  const ent = ativos.filter(p => p.dt_entrega_prev && p.dt_entrega_prev <= lim)
+    .sort((a,b) => a.dt_entrega_prev.localeCompare(b.dt_entrega_prev));
+  document.getElementById('prj-tb-entregas').innerHTML = ent.length ? ent.map(p => {
+    const et = prjEtapa(p.etapa_id); const at = p.dt_entrega_prev < hoje;
+    return `<tr style="cursor:pointer" onclick="prjAbrirFicha('${p.id}')"><td><b>${fmtDate(p.dt_entrega_prev)}</b></td>
+      <td style="font-family:DM Mono,monospace;font-size:12px">${prjEsc(p.codigo||'')}</td><td>${prjEsc(p.nome)}</td><td>${prjEsc(prjClienteNome(p))}</td>
+      <td>${et ? prjEsc(et.nome) : '—'}</td><td class="num">${p.valor ? fmtBRL(prjNum(p.valor)) : '—'}</td>
+      <td>${at ? `<span class="badge badge-red">Atrasado ${prjDias(p.dt_entrega_prev, hoje)}d</span>` : `<span class="badge badge-yellow">Faltam ${prjDias(hoje, p.dt_entrega_prev)}d</span>`}</td></tr>`;
+  }).join('') : '<tr><td colspan="7" class="empty-state">Nenhuma entrega atrasada ou prevista para os próximos 30 dias.</td></tr>';
+}
+
+// ══ ETAPAS ══
+function prjRenderEtapas() {
+  const tb = document.getElementById('prj-tb-etapas'); if (!tb) return;
+  const etapas = prjEtapas();
+  if (!etapas.length) { tb.innerHTML = '<tr><td colspan="8" class="empty-state">Nenhuma etapa cadastrada.</td></tr>'; prjRenderEquipesCad(); return; }
+  prjRenderEquipesCad();
+  tb.innerHTML = etapas.map((e, i) => {
+    const n = prjDb.projetos.filter(p => p.etapa_id === e.id && p.status !== 'cancelado').length;
+    return `<tr>
+      <td><button class="btn btn-secondary btn-sm" ${i === 0 ? 'disabled' : ''} onclick="prjOrdemEtapa('${e.id}',-1)">▲</button>
+          <button class="btn btn-secondary btn-sm" ${i === etapas.length - 1 ? 'disabled' : ''} onclick="prjOrdemEtapa('${e.id}',1)">▼</button></td>
+      <td><span class="prj-dot" style="background:${prjEsc(e.cor)};margin-right:8px"></span><b>${i + 1}. ${prjEsc(e.nome)}</b></td>
+      <td style="text-align:center">${e.prazo_dias ? e.prazo_dias + ' dias' : '—'}</td>
+      <td style="text-align:center">${(e.checklist || []).length || '—'}</td>
+      <td style="text-align:center">${n}</td>
+      <td style="text-align:center">${prjUsaEquipe(e) ? '<span class="badge badge-blue">👥 Sim</span>' : '—'}</td>
+      <td style="text-align:center">${e.final ? '<span class="badge badge-green">Sim</span>' : '—'}</td>
+      <td class="actions">
+        <button class="btn btn-secondary btn-sm" onclick="prjAbrirEtapa('${e.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="prjExcluirEtapa('${e.id}')">Excluir</button>
+      </td></tr>`;
+  }).join('');
+}
+
+function prjAbrirEtapa(id) {
+  const e = id ? prjEtapa(id) : null;
+  document.getElementById('prj-e-titulo').textContent = e ? 'Editar Etapa' : 'Nova Etapa';
+  document.getElementById('prj-e-id').value = e ? e.id : '';
+  document.getElementById('prj-e-nome').value = e ? e.nome : '';
+  document.getElementById('prj-e-prazo').value = e ? (e.prazo_dias || '') : '';
+  document.getElementById('prj-e-cor').value = e ? (e.cor || '#2563eb') : '#2563eb';
+  document.getElementById('prj-e-final').checked = e ? !!e.final : false;
+  document.getElementById('prj-e-equipe').checked = e ? prjUsaEquipe(e) : false;
+  document.getElementById('prj-e-check').value = e ? (e.checklist || []).join('\n') : '';
+  openModal('modal-prj-etapa');
+  setTimeout(() => document.getElementById('prj-e-nome').focus(), 50);
+}
+
+async function prjSalvarEtapa() {
+  if (prjErro) { alert(prjErro); return; }
+  const id = document.getElementById('prj-e-id').value;
+  const nome = document.getElementById('prj-e-nome').value.trim();
+  if (!nome) { alert('Informe o nome da etapa.'); return; }
+  const checklist = [...new Set(document.getElementById('prj-e-check').value.split('\n').map(s => s.trim()).filter(Boolean))];
+  const rec = { nome, prazo_dias: Math.max(0, parseInt(document.getElementById('prj-e-prazo').value, 10) || 0),
+    cor: document.getElementById('prj-e-cor').value, final: document.getElementById('prj-e-final').checked, usa_equipe: document.getElementById('prj-e-equipe').checked, checklist };
+  if (id) {
+    const ok = await sbFetch('proj_etapas', 'PATCH', rec, `?id=eq.${id}`);
+    if (!ok) { alert('❌ Erro ao salvar a etapa.' + sbErroDetalhe()); return; }
+    Object.assign(prjEtapa(id), rec);
+  } else {
+    const ordem = Math.max(0, ...prjDb.etapas.map(e => e.ordem || 0)) + 1;
+    const novo = { id: uid(), ordem, ...rec };
+    const ok = await sbFetch('proj_etapas', 'POST', novo);
+    if (!ok) { alert('❌ Erro ao salvar a etapa.' + sbErroDetalhe()); return; }
+    prjDb.etapas.push(novo);
+  }
+  closeModal('modal-prj-etapa');
+  prjRedesenhar();
+}
+
+async function prjOrdemEtapa(id, dir) {
+  const etapas = prjEtapas();
+  const i = etapas.findIndex(e => e.id === id);
+  const a = etapas[i], b = etapas[i + dir];
+  if (!a || !b) return;
+  // Renumera tudo em sequência para evitar ordens repetidas
+  etapas.splice(i, 1); etapas.splice(i + dir, 0, a);
+  const mud = etapas.map((e, k) => ({ e, ordem: k + 1 })).filter(x => x.e.ordem !== x.ordem);
+  for (const x of mud) {
+    const ok = await sbFetch('proj_etapas', 'PATCH', { ordem: x.ordem }, `?id=eq.${x.e.id}`);
+    if (!ok) { alert('❌ Erro ao reordenar.' + sbErroDetalhe()); return; }
+    x.e.ordem = x.ordem;
+  }
+  prjRenderEtapas();
+}
+
+async function prjExcluirEtapa(id) {
+  const e = prjEtapa(id); if (!e) return;
+  const n = prjDb.projetos.filter(p => p.etapa_id === id).length;
+  if (n) { alert(`Não é possível excluir: há ${n} projeto(s) nesta etapa. Mova-os para outra etapa antes.`); return; }
+  if (!confirm(`Excluir a etapa "${e.nome}"?\n\nO histórico antigo continua mostrando o nome dela.`)) return;
+  const ok = await sbFetch('proj_etapas', 'DELETE', null, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao excluir a etapa.' + sbErroDetalhe()); return; }
+  prjDb.etapas = prjDb.etapas.filter(x => x.id !== id);
+  prjRenderEtapas();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// FUNIL DE CONVERSÃO — quantos projetos chegaram a cada etapa
+// "Chegou" = a etapa mais avançada que o projeto já atingiu (histórico).
+// ══════════════════════════════════════════════════════════════════
+function prjAlcance() {
+  const idx = {}; prjEtapas().forEach((e, i) => idx[e.id] = i);
+  const m = {};
+  prjDb.projetos.forEach(p => m[p.id] = idx[p.etapa_id] != null ? idx[p.etapa_id] : -1);
+  prjDb.hist.forEach(h => { if (m[h.projeto_id] != null && idx[h.etapa_id] != null) m[h.projeto_id] = Math.max(m[h.projeto_id], idx[h.etapa_id]); });
+  return m;
+}
+function prjRenderFunil() {
+  const box = document.getElementById('prj-funil'); if (!box) return;
+  const sel = document.getElementById('prj-funil-ano');
+  const anoDe = p => String(p.dt_venda || prjDataLocal(p.created_at) || '').slice(0,4);
+  const anos = [...new Set(prjDb.projetos.map(anoDe).filter(Boolean))].sort().reverse();
+  const v = sel.value;
+  sel.innerHTML = '<option value="">Todos os anos</option>' + anos.map(a => `<option value="${a}">${a}</option>`).join('');
+  sel.value = anos.includes(v) ? v : '';
+  const lista = prjDb.projetos.filter(p => !sel.value || anoDe(p) === sel.value);
+  const etapas = prjEtapas();
+  if (!lista.length || !etapas.length) { box.innerHTML = '<div class="prj-vazio">Sem projetos no período.</div>'; return; }
+  const alc = prjAlcance();
+  const total = lista.length;
+  const linhas = etapas.map((e, k) => {
+    const n = lista.filter(p => alc[p.id] >= k).length;
+    const canc = lista.filter(p => p.status === 'cancelado' && alc[p.id] === k).length;
+    return { e, n, canc };
+  });
+  let maiorQueda = null;
+  box.innerHTML = '<div class="prj-funil">' + linhas.map((x, k) => {
+    const pTot = x.n / total * 100;
+    const ant = k ? linhas[k - 1].n : x.n;
+    const pAnt = ant ? x.n / ant * 100 : 0;
+    if (k && ant && (!maiorQueda || (100 - pAnt) > maiorQueda.q)) maiorQueda = { q: 100 - pAnt, nome: x.e.nome };
+    return `<div class="prj-funil-row">
+      <div class="nm" title="${prjEsc(x.e.nome)}"><span class="prj-dot" style="background:${prjEsc(x.e.cor)}"></span>${prjEsc(x.e.nome)}</div>
+      <div class="prj-funil-track"><div class="prj-funil-bar" style="width:${Math.max(pTot, 4)}%;background:${prjEsc(x.e.cor)}" title="${x.n} projeto(s)">${x.n}</div></div>
+      <div class="pc"><b>${pTot.toFixed(0)}%</b> do total${k ? `<br><span class="${pAnt < 100 ? 'queda' : ''}">${pAnt.toFixed(0)}% da etapa anterior</span>` : ''}${x.canc ? `<br><span class="queda">✖ ${x.canc} cancelado(s) aqui</span>` : ''}</div>
+    </div>`;
+  }).join('') + '</div>';
+  const etCanc = [...linhas].filter(x => x.canc).sort((x,y) => y.canc - x.canc)[0];
+  const concl = lista.filter(p => p.status === 'concluido').length;
+  const canc = lista.filter(p => p.status === 'cancelado').length;
+  const andam = lista.filter(p => p.status === 'ativo' || p.status === 'pausado').length;
+  const valorConcl = lista.filter(p => p.status === 'concluido').reduce((s,p) => s + prjNum(p.valor), 0);
+  box.innerHTML += `<div class="prj-funil-resumo">
+    <div><b>${total}</b>projetos entraram</div>
+    <div><b>${(concl / total * 100).toFixed(1).replace('.', ',')}%</b>conversão total (${concl} concluídos · ${fmtBRL(valorConcl)})</div>
+    <div><b>${andam}</b>ainda em andamento</div>
+    <div><b style="color:#dc2626">${canc}</b>cancelados (${(canc / total * 100).toFixed(1).replace('.', ',')}%)</div>
+    ${etCanc ? `<div><b style="color:#dc2626">${etCanc.canc}</b>etapa com mais cancelamentos: ${prjEsc(etCanc.e.nome)}</div>` : ''}
+  </div>
+  <div class="lanc-note" style="margin-top:10px">Cada barra conta os projetos que chegaram pelo menos até aquela etapa. Projetos em andamento ainda podem avançar, então as etapas finais tendem a crescer com o tempo.</div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// CANCELAMENTO COM MOTIVO
+// ══════════════════════════════════════════════════════════════════
+function prjMotivoNome(p) {
+  const m = prjDb.motivos.find(x => x.id === p.motivo_id);
+  return m ? m.nome : (p.motivo_nome || '—');
+}
+function prjPopularMotivos() {
+  const lista = [...prjDb.motivos].sort((a,b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  const opts = lista.map(m => `<option value="${m.id}">${prjEsc(m.nome)}</option>`).join('');
+  [['prj-c-motivo','<option value="">Selecione...</option>'], ['pc-motivo','<option value="">Todos</option>']].forEach(([id, ini]) => {
+    const el = document.getElementById(id); if (!el) return;
+    const v = el.value; el.innerHTML = ini + opts; el.value = v;
+  });
+}
+function prjAbrirCancelar(id) {
+  const p = prjProjeto(id); if (!p) return;
+  if (prjErro) { alert(prjErro); return; }
+  document.getElementById('prj-c-id').value = id;
+  document.getElementById('prj-c-sub').textContent = `${p.codigo} — ${p.nome} · etapa ${(prjEtapa(p.etapa_id)||{}).nome || '—'}`;
+  prjPopularMotivos();
+  document.getElementById('prj-c-motivo').value = '';
+  document.getElementById('prj-c-obs').value = '';
+  document.getElementById('prj-c-novo-wrap').style.display = 'none';
+  const abertas = prjParcelasDoProjeto(id).filter(x => !x.isRecebido);
+  const av = document.getElementById('prj-c-aviso');
+  if (abertas.length) {
+    av.style.display = 'block';
+    av.innerHTML = `⚠️ Este projeto tem <b>${abertas.length} parcela(s) em aberto</b> (${fmtBRL(abertas.reduce((s,x) => s + prjNum(x.valParc), 0))}) no Contas a Receber. Elas <b>não</b> são apagadas: ajuste ou exclua a cobrança na ficha se não forem mais recebidas.`;
+  } else av.style.display = 'none';
+  openModal('modal-prj-cancelar');
+}
+async function prjConfirmarCancelamento() {
+  const id = document.getElementById('prj-c-id').value;
+  const p = prjProjeto(id); if (!p) return;
+  const motivo_id = document.getElementById('prj-c-motivo').value;
+  if (!motivo_id) { alert('Informe o motivo do cancelamento. Se não estiver na lista, cadastre pelo botão +.'); return; }
+  const m = prjDb.motivos.find(x => x.id === motivo_id);
+  const agora = new Date().toISOString();
+  const rec = { status: 'cancelado', motivo_id, motivo_nome: m ? m.nome : '', cancel_obs: document.getElementById('prj-c-obs').value.trim(),
+    dt_cancelamento: prjHoje(), cancel_etapa_id: p.etapa_id, dt_conclusao: null };
+  const ok = await sbFetch('proj_projetos', 'PATCH', rec, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao cancelar o projeto.' + sbErroDetalhe()); return; }
+  Object.assign(p, rec);
+  // Fecha a passagem na etapa atual (o tempo parado não conta como tempo da etapa)
+  const abertos = prjDb.hist.filter(h => h.projeto_id === id && !h.dt_saida);
+  if (abertos.length) {
+    await sbFetch('proj_historico', 'PATCH', { dt_saida: agora }, `?projeto_id=eq.${id}&dt_saida=is.null`);
+    abertos.forEach(h => h.dt_saida = agora);
+  }
+  closeModal('modal-prj-cancelar');
+  prjRedesenhar();
+  prjAbrirFicha(id);
+}
+async function prjAddMotivo(inputId, selectId) {
+  const inp = document.getElementById(inputId);
+  const nome = (inp.value || '').trim();
+  if (!nome) { alert('Digite o motivo.'); inp.focus(); return; }
+  const existe = prjDb.motivos.find(m => normText(m.nome) === normText(nome));
+  let rec = existe;
+  if (!existe) {
+    rec = { id: uid(), nome };
+    const ok = await sbFetch('proj_motivos', 'POST', rec);
+    if (!ok) { alert('❌ Erro ao salvar o motivo.' + sbErroDetalhe()); return; }
+    prjDb.motivos.push(rec);
+  }
+  inp.value = '';
+  prjPopularMotivos();
+  if (selectId) { document.getElementById(selectId).value = rec.id; document.getElementById('prj-c-novo-wrap').style.display = 'none'; }
+  if (_paginaAtual === 'proj-cancelados') prjRenderCancelados();
+}
+async function prjEditarMotivo(id) {
+  const m = prjDb.motivos.find(x => x.id === id); if (!m) return;
+  const nome = (prompt('Novo nome do motivo:', m.nome) || '').trim();
+  if (!nome || nome === m.nome) return;
+  const ok = await sbFetch('proj_motivos', 'PATCH', { nome }, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao salvar.' + sbErroDetalhe()); return; }
+  m.nome = nome;
+  const usados = prjDb.projetos.filter(p => p.motivo_id === id);
+  if (usados.length) { await sbFetch('proj_projetos', 'PATCH', { motivo_nome: nome }, `?motivo_id=eq.${id}`); usados.forEach(p => p.motivo_nome = nome); }
+  prjPopularMotivos(); prjRenderCancelados();
+}
+async function prjExcluirMotivo(id) {
+  const m = prjDb.motivos.find(x => x.id === id); if (!m) return;
+  const n = prjDb.projetos.filter(p => p.motivo_id === id).length;
+  if (!confirm(`Excluir o motivo "${m.nome}"?${n ? `\n\n${n} projeto(s) cancelado(s) por ele continuam mostrando o nome.` : ''}`)) return;
+  const ok = await sbFetch('proj_motivos', 'DELETE', null, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao excluir.' + sbErroDetalhe()); return; }
+  prjDb.motivos = prjDb.motivos.filter(x => x.id !== id);
+  prjPopularMotivos(); prjRenderCancelados();
+}
+
+function prjBarras(itens, cor) { // itens: [{nome, n, v, cor?}]
+  const max = Math.max(1, ...itens.map(i => i.n));
+  return itens.length ? itens.map(i => `<div class="prj-bar-row">
+      <div class="nm" title="${prjEsc(i.nome)}">${i.cor ? `<span class="prj-dot" style="background:${prjEsc(i.cor)}"></span>` : ''}${prjEsc(i.nome)}</div>
+      <div class="prj-bar"><span style="width:${i.n / max * 100}%;background:${prjEsc(i.cor || cor)}"></span></div>
+      <div class="vl">${i.n} · ${fmtBRLCompacto(i.v)}</div></div>`).join('') : '<div class="prj-vazio">Nenhum cancelamento no período.</div>';
+}
+function prjRenderCancelados() {
+  const tb = document.getElementById('pc-tb'); if (!tb) return;
+  prjPopularMotivos(); prjPopularResp('pc-resp');
+  const de = document.getElementById('pc-de').value, ate = document.getElementById('pc-ate').value;
+  const mot = document.getElementById('pc-motivo').value, resp = document.getElementById('pc-resp').value;
+  const lista = prjDb.projetos.filter(p => p.status === 'cancelado'
+      && (!de || (p.dt_cancelamento || '') >= de) && (!ate || (p.dt_cancelamento || '') <= ate)
+      && (!mot || p.motivo_id === mot) && (!resp || (p.responsavel || '') === resp))
+    .sort((a,b) => String(b.dt_cancelamento||'').localeCompare(String(a.dt_cancelamento||'')));
+  const soma = arr => arr.reduce((s,p) => s + prjNum(p.valor), 0);
+  // Base da taxa: projetos que entraram no mesmo período (data da venda/criação)
+  const dataEnt = p => p.dt_venda || prjDataLocal(p.created_at);
+  const base = prjDb.projetos.filter(p => (!de || dataEnt(p) >= de) && (!ate || dataEnt(p) <= ate) && (!resp || (p.responsavel || '') === resp));
+  const cancBase = base.filter(p => p.status === 'cancelado').length;
+  // Agrupamentos
+  const porMot = {}; lista.forEach(p => { const k = prjMotivoNome(p); (porMot[k] = porMot[k] || { nome:k, n:0, v:0 }); porMot[k].n++; porMot[k].v += prjNum(p.valor); });
+  const motArr = Object.values(porMot).sort((a,b) => b.n - a.n || b.v - a.v);
+  const etArr = prjEtapas().map(e => { const l = lista.filter(p => (p.cancel_etapa_id || p.etapa_id) === e.id); return { nome:e.nome, cor:e.cor, n:l.length, v:soma(l) }; }).filter(x => x.n);
+  const etTop = [...etArr].sort((a,b) => b.n - a.n)[0];
+  const kpi = (v, l, s, cor) => `<div class="prj-kpi" style="--k:${cor}"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
+  document.getElementById('pc-kpis').innerHTML =
+    kpi(lista.length, 'Projetos cancelados', '', '#dc2626') +
+    kpi(fmtBRLCompacto(soma(lista)), 'Valor perdido', fmtBRL(soma(lista)), '#f59e0b') +
+    kpi(base.length ? (cancBase / base.length * 100).toFixed(1).replace('.', ',') + '%' : '—', 'Taxa de cancelamento', `${cancBase} de ${base.length} projetos que entraram`, '#8b5cf6') +
+    kpi(motArr[0] ? motArr[0].n : '—', 'Principal motivo', motArr[0] ? prjEsc(motArr[0].nome) : '—', '#0d9488') +
+    kpi(etTop ? etTop.n : '—', 'Etapa com mais perdas', etTop ? prjEsc(etTop.nome) : '—', '#2563eb');
+  document.getElementById('pc-g-motivo').innerHTML = prjBarras(motArr, '#dc2626');
+  document.getElementById('pc-g-etapa').innerHTML = prjBarras(etArr, '#64748b');
+  tb.innerHTML = lista.length ? lista.map(p => {
+    const et = prjEtapa(p.cancel_etapa_id || p.etapa_id);
+    return `<tr style="cursor:pointer" onclick="prjAbrirFicha('${p.id}')">
+      <td>${p.dt_cancelamento ? fmtDate(p.dt_cancelamento) : '—'}</td>
+      <td style="font-family:DM Mono,monospace;font-size:12px"><b>${prjEsc(p.codigo||'')}</b></td>
+      <td><b>${prjEsc(p.nome)}</b></td><td>${prjEsc(prjClienteNome(p))}</td>
+      <td>${et ? `<span class="badge" style="white-space:nowrap;background:${prjEsc(et.cor)}1a;color:${prjEsc(et.cor)};border:1px solid ${prjEsc(et.cor)}55">${prjEsc(et.nome)}</span>` : '—'}</td>
+      <td><span class="badge badge-red" style="white-space:nowrap">${prjEsc(prjMotivoNome(p))}</span></td>
+      <td style="font-size:12px;color:#57534e;max-width:260px">${prjEsc(p.cancel_obs || '')}</td>
+      <td class="num">${p.valor ? fmtBRL(prjNum(p.valor)) : '—'}</td>
+      <td class="actions" onclick="event.stopPropagation()">
+        <button class="btn btn-secondary btn-sm" onclick="prjAbrirFicha('${p.id}')">Abrir</button>
+        <button class="btn btn-secondary btn-sm" onclick="prjMudarStatus('${p.id}','ativo')">Reativar</button>
+      </td></tr>`;
+  }).join('') + `<tr><td colspan="7" style="font-weight:700">${lista.length} cancelado(s)</td><td class="num" style="font-weight:700">${fmtBRL(soma(lista))}</td><td></td></tr>`
+    : '<tr><td colspan="9" class="empty-state">Nenhum projeto cancelado com esses filtros.</td></tr>';
+  const tm = document.getElementById('pc-tb-motivos');
+  tm.innerHTML = [...prjDb.motivos].sort((a,b) => a.nome.localeCompare(b.nome, 'pt-BR')).map(m => `<tr>
+      <td><b>${prjEsc(m.nome)}</b></td>
+      <td style="text-align:center">${prjDb.projetos.filter(p => p.motivo_id === m.id && p.status === 'cancelado').length}</td>
+      <td class="actions"><button class="btn btn-secondary btn-sm" onclick="prjEditarMotivo('${m.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="prjExcluirMotivo('${m.id}')">Excluir</button></td></tr>`).join('')
+    || '<tr><td colspan="3" class="empty-state">Nenhum motivo cadastrado.</td></tr>';
+}
+
+// ══════════════════════════════════════════════════════════════════
+// GANTT — cronograma dos projetos
+//   Sólido   = etapas já realizadas (histórico real)
+//   Hachurado = previsão das próximas etapas (prazo padrão de cada uma)
+//   ◆        = entrega prometida ao cliente
+//   Vermelho hachurado = quanto a previsão passa da entrega prometida
+// ══════════════════════════════════════════════════════════════════
+let _gtZoom = 'semana', _gtX0 = null, _gtPx = 9;
+const GT_PX = { dia: 32, semana: 10, mes: 3.4 };
+const GT_DIA = 86400000;
+function gtD(s) { if (!s) return null; const t = String(s); const d = new Date(t.length <= 10 ? t + 'T00:00:00' : t); d.setHours(0,0,0,0); return d; }
+function gtAdd(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+function gtFmt(d) { return d ? d.toLocaleDateString('pt-BR') : '—'; }
+function gtX(d) { return Math.round((d - _gtX0) / GT_DIA * _gtPx); }
+
+function prjGanttPlano(p) {
+  const etapas = prjEtapas();
+  const hoje = gtD(prjHoje());
+  const hs = prjDb.hist.filter(h => h.projeto_id === p.id).sort((a,b) => String(a.dt_entrada).localeCompare(String(b.dt_entrada)));
+  const segs = [];
+  hs.forEach((h, i) => {
+    const et = prjEtapa(h.etapa_id);
+    const ini = gtD(h.dt_entrada);
+    let fim = h.dt_saida ? gtD(h.dt_saida) : (p.status === 'concluido' ? ini : hoje);
+    if (fim < ini) fim = ini;
+    segs.push({ et, nome: h.etapa_nome || (et && et.nome) || '—', cor: (et && et.cor) || '#94a3b8', ini, fim, prev: false, atual: !h.dt_saida && p.status !== 'concluido' });
+  });
+  if (!segs.length) {
+    const ini = gtD(p.dt_venda) || gtD(p.created_at) || hoje;
+    const et = prjEtapa(p.etapa_id);
+    segs.push({ et, nome: et ? et.nome : '—', cor: (et && et.cor) || '#94a3b8', ini, fim: hoje, prev: false, atual: true });
+  }
+  // Previsão das próximas etapas
+  let fimPrev = segs[segs.length - 1].fim;
+  if (p.status === 'ativo' || p.status === 'pausado') {
+    const i = etapas.findIndex(e => e.id === p.etapa_id);
+    const atual = segs.filter(s => s.atual).pop();
+    if (atual && atual.et && prjNum(atual.et.prazo_dias)) {
+      const alvo = gtAdd(atual.ini, prjNum(atual.et.prazo_dias));
+      if (alvo > hoje) { segs.push({ et: atual.et, nome: atual.nome + ' (restante)', cor: atual.cor, ini: hoje, fim: alvo, prev: true }); fimPrev = alvo; }
+      else fimPrev = hoje;
+    } else fimPrev = hoje;
+    etapas.slice(i + 1).forEach(e => {
+      if (e.final || !prjNum(e.prazo_dias)) return;
+      const f = gtAdd(fimPrev, prjNum(e.prazo_dias));
+      segs.push({ et: e, nome: e.nome, cor: e.cor, ini: fimPrev, fim: f, prev: true });
+      fimPrev = f;
+    });
+  }
+  const entrega = gtD(p.dt_entrega_prev);
+  const fimReal = p.status === 'concluido' ? gtD(p.dt_conclusao) || segs[segs.length - 1].fim : null;
+  const fimFinal = fimReal || fimPrev;
+  const estouro = entrega && fimFinal > entrega ? Math.round((fimFinal - entrega) / GT_DIA) : 0;
+  const naoFinais = etapas.filter(e => !e.final);
+  const iAt = naoFinais.findIndex(e => e.id === p.etapa_id);
+  const prog = p.status === 'concluido' ? 100 : (naoFinais.length ? Math.round(Math.max(0, iAt) / naoFinais.length * 100) : 0);
+  return { segs, ini: segs[0].ini, fim: fimFinal, entrega, estouro, prog, atrasado: entrega && entrega < hoje && p.status !== 'concluido' };
+}
+
+function prjGanttZoom(z) {
+  _gtZoom = z;
+  document.querySelectorAll('#gt-zoom button').forEach(b => b.classList.toggle('on', b.dataset.z === z));
+  prjRenderGantt(); prjGanttHoje();
+}
+function prjGanttHoje() {
+  const sc = document.getElementById('gt-scroll'); if (!sc || !_gtX0) return;
+  sc.scrollLeft = Math.max(0, gtX(gtD(prjHoje())) - (sc.clientWidth - 320) * 0.3);
+}
+
+// Etapas exibidas no Gantt (salvas no navegador). Padrão: etapas com equipe (Produção).
+let _gtEtVis = null;
+function prjGanttEtapasVis() {
+  const ets = prjEtapas().filter(e => !e.final);
+  if (!_gtEtVis) {
+    try { const v = JSON.parse(localStorage.getItem('gt_etapas_vis')); if (Array.isArray(v)) _gtEtVis = new Set(v); } catch(e) {}
+  }
+  if (!_gtEtVis || ![..._gtEtVis].some(id => ets.some(e => e.id === id))) {
+    const pad = ets.filter(prjUsaEquipe);
+    _gtEtVis = new Set((pad.length ? pad : ets).map(e => e.id));
+  }
+  return _gtEtVis;
+}
+function prjGanttSalvarVis() { try { localStorage.setItem('gt_etapas_vis', JSON.stringify([..._gtEtVis])); } catch(e) {} }
+function prjGanttToggleEtapa(id) {
+  const v = prjGanttEtapasVis();
+  if (v.has(id)) { if (v.size === 1) { alert('Deixe pelo menos uma etapa visível.'); return; } v.delete(id); } else v.add(id);
+  prjGanttSalvarVis(); prjRenderGantt();
+}
+function prjGanttEtapasPreset(tipo) {
+  const ets = prjEtapas().filter(e => !e.final);
+  const sel = tipo === 'todas' ? ets : ets.filter(prjUsaEquipe);
+  _gtEtVis = new Set((sel.length ? sel : ets).map(e => e.id));
+  prjGanttSalvarVis(); prjRenderGantt();
+}
+
+function prjRenderGantt() {
+  const grid = document.getElementById('gt-grid'); if (!grid) return;
+  { const t = document.getElementById('gt-tip'); if (t) { t.dataset.id = ''; t.style.display = 'none'; } }
+  prjPopularResp('gt-resp');
+  const etapasTodas = prjEtapas().filter(e => !e.final);
+  const vis = prjGanttEtapasVis();
+  // Chips de etapas
+  document.getElementById('gt-chips').innerHTML = etapasTodas.map(e =>
+    `<span class="gt2-chip ${vis.has(e.id) ? 'on' : ''}" style="--c:${prjEsc(e.cor)}" onclick="prjGanttToggleEtapa('${e.id}')" title="Clique para ${vis.has(e.id) ? 'ocultar' : 'mostrar'}"><span class="d"></span>${prjEsc(e.nome)}${prjUsaEquipe(e) ? ' 👥' : ''}</span>`).join('');
+  const selEq = document.getElementById('gt-equipe');
+  { const v = selEq.value; selEq.innerHTML = '<option value="">Todas</option><option value="__sem__">Sem equipe</option>' + prjEquipesLista().map(q => `<option value="${prjEsc(q)}">${prjEsc(q)}</option>`).join(''); selEq.value = v; }
+  const termo = normText(document.getElementById('gt-busca').value || '');
+  const resp = document.getElementById('gt-resp').value;
+  const eqF = selEq.value;
+  const escopo = document.getElementById('gt-escopo').value;
+  const agrupar = document.getElementById('gt-agrupar').value;
+  const ordem = document.getElementById('gt-ordem').value;
+  const hoje = gtD(prjHoje());
+  const visEq = etapasTodas.filter(e => vis.has(e.id) && prjUsaEquipe(e)).map(e => e.id);
+  const eqDe = p => { const eqs = p.equipes || {}; for (const id of visEq) if (eqs[id]) return eqs[id]; return ''; };
+
+  // Monta cada projeto com os blocos das etapas visíveis
+  const lista = [];
+  prjDb.projetos.forEach(p => {
+    if (p.status === 'cancelado') return;
+    if (escopo !== 'todos' && p.status === 'concluido') return;
+    if (resp && (p.responsavel || '') !== resp) return;
+    if (!prjFiltroTexto(p, termo)) return;
+    const g = prjGanttPlano(p);
+    const blocos = [];
+    g.segs.forEach(sg => {
+      if (!sg.et || !vis.has(sg.et.id)) return;
+      let b = blocos.find(x => x.et.id === sg.et.id && Math.abs(x.fim - sg.ini) < GT_DIA);
+      if (!b) { b = { et: sg.et, ini: sg.ini, fim: sg.fim, partes: [], atual: false, prev: false }; blocos.push(b); }
+      b.fim = new Date(Math.max(b.fim, sg.fim));
+      b.partes.push(sg);
+      if (sg.atual) b.atual = true;
+      if (sg.prev) b.prev = true;
+    });
+    const aFazer = blocos.some(b => b.atual || b.prev);
+    if (escopo === 'afazer' && !aFazer) return;
+    if (eqF) { const e = eqDe(p); if (eqF === '__sem__' ? e : e !== eqF) return; }
+    const etIni = blocos.length ? new Date(Math.min(...blocos.map(b => b.ini))) : null;
+    const etFim = blocos.length ? new Date(Math.max(...blocos.map(b => b.fim))) : null;
+    lista.push({ p, g, blocos, etIni, etFim, eq: eqDe(p) });
+  });
+  const ord = {
+    entrega: (a,b) => String(a.p.dt_entrega_prev || '9999').localeCompare(String(b.p.dt_entrega_prev || '9999')),
+    etapa:   (a,b) => ((a.etIni || 8.64e15) - (b.etIni || 8.64e15)) || ord.entrega(a,b),
+    codigo:  (a,b) => String(a.p.codigo||'').localeCompare(String(b.p.codigo||''), 'pt-BR', { numeric:true }),
+    risco:   (a,b) => (b.g.estouro - a.g.estouro) || ord.entrega(a,b)
+  };
+  lista.sort(ord[ordem] || ord.etapa);
+
+  // KPIs
+  const nomeVis = etapasTodas.filter(e => vis.has(e.id)).map(e => e.nome);
+  const rotVis = nomeVis.length === 1 ? nomeVis[0] : nomeVis.length + ' etapas';
+  const agora = lista.filter(x => x.blocos.some(b => b.atual));
+  const lim14 = gtAdd(hoje, 14);
+  const prox = lista.filter(x => !x.blocos.some(b => b.atual) && x.etIni && x.etIni > hoje && x.etIni <= lim14);
+  const risco = lista.filter(x => x.p.status !== 'concluido' && x.g.estouro > 0 && !x.g.atrasado);
+  const atras = lista.filter(x => x.g.atrasado);
+  const semEq = visEq.length ? lista.filter(x => x.p.status !== 'concluido' && !x.eq).length : null;
+  const kpi = (v, l, s, cor) => `<div class="prj-kpi" style="--k:${cor}"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
+  document.getElementById('gt-kpis').innerHTML =
+    kpi(lista.length, 'Projetos no cronograma', prjEsc(rotVis), '#2563eb') +
+    kpi(agora.length, 'Em ' + prjEsc(nomeVis.length === 1 ? nomeVis[0].toLowerCase() : 'execução') + ' agora', fmtBRL(agora.reduce((s,x) => s + prjNum(x.p.valor), 0)), '#ea580c') +
+    kpi(prox.length, 'Entram nos próximos 14 dias', prox.length ? prox.slice(0,3).map(x => prjEsc(x.p.codigo)).join(', ') + (prox.length > 3 ? '…' : '') : '—', '#0d9488') +
+    kpi(risco.length, 'Risco de atraso', 'Previsão passa da entrega', '#f59e0b') +
+    kpi(atras.length, 'Entrega vencida', 'Data prometida passou', '#dc2626') +
+    (semEq != null ? kpi(semEq, 'Sem equipe definida', 'Defina na ficha do projeto', '#94a3b8') : '');
+  if (!lista.length) {
+    grid.innerHTML = `<div class="prj-vazio" style="padding:48px">Nenhum projeto com ${prjEsc(rotVis)} ${escopo === 'afazer' ? 'a fazer' : ''} nesses filtros.</div>`;
+    document.getElementById('gt-legenda').innerHTML = ''; return;
+  }
+
+  // Escala
+  _gtPx = GT_PX[_gtZoom] || 10;
+  const pad = { dia: 4, semana: 10, mes: 25 }[_gtZoom];
+  let min = hoje, max = hoje;
+  lista.forEach(x => {
+    if (x.g.ini < min) min = x.g.ini;
+    [x.g.fim, x.g.entrega].forEach(d => { if (d && d > max) max = d; });
+  });
+  min = gtAdd(min, -pad); max = gtAdd(max, pad + 5);
+  if (_gtZoom === 'mes') { min = new Date(min.getFullYear(), min.getMonth(), 1); max = new Date(max.getFullYear(), max.getMonth() + 1, 1); }
+  if (_gtZoom === 'semana') { const dw = (min.getDay() + 6) % 7; min = gtAdd(min, -dw); }
+  _gtX0 = min;
+  const W = Math.max(gtX(max), 600);
+  const r1 = [], r2 = [];
+  const mesNome = d => d.toLocaleDateString('pt-BR', { month: 'long' }) + ' ' + d.getFullYear();
+  const mesAbr = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  if (_gtZoom === 'mes') {
+    for (let y = min.getFullYear(); y <= max.getFullYear(); y++) {
+      const a = new Date(Math.max(min, new Date(y,0,1))), b = new Date(Math.min(max, new Date(y+1,0,1)));
+      r1.push(`<div style="left:${gtX(a)}px;width:${gtX(b) - gtX(a)}px">${y}</div>`);
+    }
+    for (let d = new Date(min); d < max; d = new Date(d.getFullYear(), d.getMonth() + 1, 1)) {
+      const n = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+      r2.push(`<div class="${hoje >= d && hoje < n ? 'hj' : ''}" style="left:${gtX(d)}px;width:${gtX(n) - gtX(d)}px">${mesAbr[d.getMonth()]}</div>`);
+    }
+  } else {
+    for (let d = new Date(min.getFullYear(), min.getMonth(), 1); d < max; d = new Date(d.getFullYear(), d.getMonth() + 1, 1)) {
+      const a = d < min ? min : d; const n = new Date(d.getFullYear(), d.getMonth() + 1, 1); const b = n > max ? max : n;
+      r1.push(`<div style="left:${gtX(a)}px;width:${gtX(b) - gtX(a)}px">${mesNome(d)}</div>`);
+    }
+    const passo = _gtZoom === 'dia' ? 1 : 7;
+    for (let d = new Date(min); d < max; d = gtAdd(d, passo)) {
+      const n = gtAdd(d, passo);
+      const txt = _gtZoom === 'dia' ? d.getDate() : String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0');
+      r2.push(`<div class="${hoje >= d && hoje < n ? 'hj' : ''}" style="left:${gtX(d)}px;width:${gtX(n) - gtX(d)}px">${txt}</div>`);
+    }
+  }
+  const xHoje = gtX(hoje) + Math.round(_gtPx / 2);
+  const bg = [];
+  if (_gtZoom === 'dia') for (let d = new Date(min); d < max; d = gtAdd(d, 1)) { if (d.getDay() === 0 || d.getDay() === 6) bg.push(`<div class="gt-bg fds" style="left:${gtX(d)}px;width:${_gtPx}px"></div>`); }
+  if (_gtZoom === 'semana') for (let d = new Date(min); d < max; d = gtAdd(d, 7)) bg.push(`<div class="gt-bg mes" style="left:${gtX(d)}px;border-left-color:#f7f6f4"></div>`);
+  for (let d = new Date(min.getFullYear(), min.getMonth() + 1, 1); d < max; d = new Date(d.getFullYear(), d.getMonth() + 1, 1)) bg.push(`<div class="gt-bg mes" style="left:${gtX(d)}px"></div>`);
+  bg.push(`<div class="gt-hoje" style="left:${xHoje}px"></div><div class="gt2-hoje-tag" style="left:${xHoje + 1}px">HOJE</div>`);
+
+  // Grupos
+  const grupos = [];
+  if (agrupar === 'equipe') {
+    const nomes = [...prjEquipesLista(), ...new Set(lista.map(x => x.eq).filter(e => e && !prjEquipesLista().includes(e)))];
+    nomes.forEach(n => { const l = lista.filter(x => x.eq === n); if (l.length) grupos.push({ nome: n, cor: prjCorEquipe(n), itens: l }); });
+    const sem = lista.filter(x => !x.eq); if (sem.length) grupos.push({ nome: visEq.length ? 'Sem equipe definida' : 'Projetos', cor: '#a8a29e', itens: sem });
+  } else if (agrupar === 'etapa') {
+    prjEtapas().forEach(e => { const l = lista.filter(x => x.p.etapa_id === e.id); if (l.length) grupos.push({ nome: e.nome, cor: e.cor, itens: l }); });
+  } else grupos.push({ nome: null, itens: lista });
+
+  // Linhas
+  let linha = 2, corpo = '', z = 0;
+  const celEsq = (x) => {
+    const p = x.p, g = x.g, et = prjEtapa(p.etapa_id);
+    const tag = p.status === 'concluido' ? '<span class="gt2-pill" style="background:#dcfce7;color:#166534">✔ Concluído</span>'
+      : g.atrasado ? `<span class="gt2-pill" style="background:#fee2e2;color:#991b1b">Vencida ${Math.round((hoje - g.entrega) / GT_DIA)}d</span>`
+      : g.estouro > 0 ? `<span class="gt2-pill" style="background:#fef3c7;color:#92400e">+${g.estouro}d</span>` : '';
+    return `<div class="t1"><span class="cd">${prjEsc(p.codigo || '')}</span>${prjEsc(p.nome)}</div>
+      <div class="t2"><span class="gt2-pill" style="background:${prjEsc((et && et.cor) || '#94a3b8')}1c;color:${prjEsc((et && et.cor) || '#57534e')}">● ${prjEsc(et ? et.nome : '—')}</span>
+        <span style="overflow:hidden;text-overflow:ellipsis">${prjEsc(prjClienteNome(p))}</span>
+        ${agrupar !== 'equipe' && x.eq ? `<span class="gt2-pill" style="background:${prjCorEquipe(x.eq)}1c;color:${prjCorEquipe(x.eq)}">👥 ${prjEsc(x.eq)}</span>` : ''}
+        ${p.status === 'pausado' ? '<span class="gt2-pill" style="background:#fef3c7;color:#92400e">⏸</span>' : ''}${tag}</div>`;
+  };
+  grupos.forEach(gr => {
+    if (gr.nome != null) {
+      const val = gr.itens.reduce((s,x) => s + prjNum(x.p.valor), 0);
+      corpo += `<div class="gt2-grp-l" style="grid-column:1;grid-row:${linha}"><span class="prj-dot" style="background:${prjEsc(gr.cor)}"></span>${prjEsc(gr.nome)}<span class="q">${gr.itens.length} projeto(s) · ${fmtBRLCompacto(val)}</span></div>
+        <div class="gt2-grp-r" style="grid-column:2;grid-row:${linha};width:${W}px"></div>`;
+      linha++;
+    }
+    gr.itens.forEach(x => {
+      const p = x.p, g = x.g;
+      const zc = (z++ % 2) ? ' z' : '';
+      const x0 = gtX(g.ini), x1 = Math.max(gtX(g.fim) + _gtPx, x0 + 4);
+      let html = `<div class="gt2-track" style="left:${x0}px;width:${x1 - x0}px"></div>`;
+      if (g.estouro > 0 && g.entrega && p.status !== 'concluido') {
+        const xe = gtX(g.entrega) + Math.round(_gtPx / 2);
+        html += `<div class="gt2-track atr" style="left:${xe}px;width:${Math.max(x1 - xe, 4)}px" title="Previsão passa ${g.estouro} dia(s) da entrega"></div>`;
+      }
+      x.blocos.forEach(b => {
+        const bx0 = gtX(b.ini), bx1 = Math.max(gtX(b.fim), bx0 + Math.max(_gtPx, 8));
+        const w = bx1 - bx0;
+        const eq = (p.equipes || {})[b.et.id] || '';
+        const partes = b.partes.map(sg => { const pw = Math.max(gtX(sg.fim) - gtX(sg.ini), 0); return `<div class="${sg.prev ? 'pv' : 're'}" style="width:${pw}px;flex:${pw ? '0 0 auto' : '1 1 auto'};background-color:${prjEsc(b.et.cor)}"></div>`; }).join('');
+        const txt = w > 60 ? `${eq ? '👥 ' + prjEsc(eq) : prjEsc(b.et.nome)}${w > 150 ? ` · ${gtFmt(b.ini).slice(0,5)}–${gtFmt(b.fim).slice(0,5)}` : ''}` : '';
+        html += `<div class="gt2-blk ${b.atual ? 'atual' : ''}" style="left:${bx0}px;width:${w}px;background:${prjEsc(b.et.cor)}33" title="${prjEsc(b.et.nome)}${eq ? ' · ' + prjEsc(eq) : ''} · ${gtFmt(b.ini)} → ${gtFmt(b.fim)}${b.atual ? ' (em andamento)' : b.prev ? ' (previsto)' : ' (realizado)'}">${partes}<div class="tx">${txt}</div></div>`;
+      });
+      if (g.entrega) html += `<div class="gt-entrega ${p.status === 'concluido' ? (g.estouro ? 'atr' : 'ok') : (g.atrasado ? 'atr' : '')}" style="left:${gtX(g.entrega) + Math.round(_gtPx / 2)}px" title="Entrega prometida ${gtFmt(g.entrega)}"></div>`;
+      const xl = Math.max(x1, g.entrega ? gtX(g.entrega) + _gtPx : 0) + 14;
+      html += `<div class="gt-lbl" style="left:${xl}px">${x.etIni && nomeVis.length === 1 ? `<b>${gtFmt(x.etIni).slice(0,5)} → ${gtFmt(x.etFim).slice(0,5)}</b> · ` : ''}${g.entrega ? 'entrega ' + gtFmt(g.entrega).slice(0,5) : 'sem data de entrega'}${p.status !== 'concluido' ? ' · prev. ' + gtFmt(g.fim).slice(0,5) : ''}</div>`;
+      corpo += `<div class="gt-left${zc}" style="grid-column:1;grid-row:${linha}" onclick="prjAbrirFicha('${p.id}')" onmousemove="prjGanttTip(event,'${p.id}')" onmouseleave="prjGanttTip(null)">${celEsq(x)}</div>
+        <div class="gt-row${zc}" style="grid-column:2;grid-row:${linha};width:${W}px" onclick="prjAbrirFicha('${p.id}')" onmousemove="prjGanttTip(event,'${p.id}')" onmouseleave="prjGanttTip(null)">${html}</div>`;
+      linha++;
+    });
+  });
+  const nLin = linha - 2;
+  grid.innerHTML = `<div class="gt-grid" style="grid-template-columns:320px ${W}px">
+    <div class="gt-left-h">Projeto · etapa atual · cliente</div>
+    <div class="gt-head" style="width:${W}px"><div class="gt-head-r1">${r1.join('')}</div><div class="gt-head-r2">${r2.join('')}</div></div>
+    <div style="grid-column:2;grid-row:2 / span ${nLin};position:relative;pointer-events:none;z-index:2">${bg.join('')}</div>
+    ${corpo}</div>`;
+  document.getElementById('gt-legenda').innerHTML =
+    `<span><span class="sw" style="background:#78716c"></span>Realizado</span>
+     <span><span class="sw" style="background:#78716c;opacity:.45;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.6) 0 3px,transparent 3px 6px)"></span>Previsto</span>
+     <span><span class="sw" style="background:#fff;outline:2px solid #1f2937;width:14px"></span>Etapa em andamento</span>
+     <span><span class="sw" style="height:2px;background:#e7e5e4"></span>Etapas ocultas</span>
+     <span><span class="sw" style="width:10px;height:10px;transform:rotate(45deg);background:#1f2937"></span>Entrega prometida</span>
+     <span><span class="sw" style="height:2px;background:repeating-linear-gradient(90deg,#dc2626 0 4px,transparent 4px 7px)"></span>Atraso previsto</span>
+     <span><span class="sw" style="width:2px;background:#2563eb"></span>Hoje</span>
+     <span style="margin-left:auto;color:#a8a29e">Clique nas etapas acima para mostrar/ocultar · clique no projeto para abrir a ficha</span>`;
+}
+
+function prjGanttTip(ev, id) {
+  const tip = document.getElementById('gt-tip'); if (!tip) return;
+  if (!ev) { tip.style.display = 'none'; return; }
+  const p = prjProjeto(id); if (!p) return;
+  if (tip.dataset.id !== id) {
+    const g = prjGanttPlano(p);
+    const et = prjEtapa(p.etapa_id);
+    const realiz = g.segs.filter(s => !s.prev).map(s => `${prjEsc(s.nome)}: ${Math.round((s.fim - s.ini) / GT_DIA)}d`).join('<br>');
+    tip.innerHTML = `<b>${prjEsc(p.codigo || '')} — ${prjEsc(p.nome)}</b><br><span class="mu">${prjEsc(prjClienteNome(p))}${p.valor ? ' · ' + fmtBRL(prjNum(p.valor)) : ''}</span><br><br>
+      Etapa atual: <b>${prjEsc(et ? et.nome : '—')}</b> (${prjDias(p.dt_etapa)}d)<br>
+      Início: ${gtFmt(g.ini)}<br>Entrega prometida: <b>${gtFmt(g.entrega)}</b><br>
+      ${p.status === 'concluido' ? 'Concluído em: <b>' + gtFmt(g.fim) + '</b>' : 'Previsão de término: <b>' + gtFmt(g.fim) + '</b>'}
+      ${g.estouro ? `<br><span style="color:#fca5a5">⚠ ${g.estouro} dia(s) além da entrega</span>` : ''}
+      <br><br><span class="mu">Tempo em cada etapa:</span><br>${realiz}`;
+    tip.dataset.id = id;
+  }
+  tip.style.display = 'block';
+  const x = Math.min(ev.clientX + 16, window.innerWidth - tip.offsetWidth - 10);
+  const y = Math.min(ev.clientY + 16, window.innerHeight - tip.offsetHeight - 10);
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PAGAMENTO DO PROJETO → CONTAS A RECEBER
+// A forma de pagamento gera um lançamento normal em "lancreceber"
+// (mesmo formato do Lançamento a Receber, com projeto_id). Cada parcela
+// pode ser recebida aqui na ficha ou em Contas a Receber — ambos usam a
+// mesma tela/rotina de recebimento do financeiro.
+// ══════════════════════════════════════════════════════════════════
+let _prjFichaId = null;
+function prjLancsDoProjeto(id) { return (typeof db !== 'undefined' && db.lancreceber ? db.lancreceber : []).filter(l => l.projeto_id === id); }
+function prjParcelasDoProjeto(id) {
+  const ids = new Set(prjLancsDoProjeto(id).map(l => l.id));
+  if (!ids.size || typeof getParcelasReceber !== 'function') return [];
+  return [...getParcelasReceber(false), ...getParcelasReceber(true)].filter(x => ids.has(x.lancId));
+}
+function prjFinanceiroHtml(p) {
+  const lancs = prjLancsDoProjeto(p.id);
+  const parc = prjParcelasDoProjeto(p.id);
+  const hoje = prjHoje();
+  const contrato = prjNum(p.valor);
+  const lancado = lancs.reduce((s,l) => s + prjNum(l.valor), 0);
+  const rec = parc.filter(x => x.isRecebido).reduce((s,x) => s + prjNum(x.valParc), 0);
+  const abe = parc.filter(x => !x.isRecebido).reduce((s,x) => s + prjNum(x.valParc), 0);
+  const venc = parc.filter(x => !x.isRecebido && x.venc && x.venc < hoje).reduce((s,x) => s + prjNum(x.valParc), 0);
+  const falta = Math.round((contrato - lancado) * 100) / 100;
+  let html = `<div class="prj-ficha-info" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <div><div class="k">Valor do contrato</div><div class="x">${contrato ? fmtBRL(contrato) : '—'}</div></div>
+      <div><div class="k">Lançado no financeiro</div><div class="x">${fmtBRL(lancado)}${contrato && falta > 0.009 ? `<div style="font-size:11px;color:#b45309;font-weight:600">falta lançar ${fmtBRL(falta)}</div>` : ''}</div></div>
+      <div><div class="k">Recebido</div><div class="x" style="color:#166534">${fmtBRL(rec)}</div></div>
+      <div><div class="k">A receber</div><div class="x">${fmtBRL(abe)}${venc ? `<div><span class="badge badge-red">${fmtBRL(venc)} vencido</span></div>` : ''}</div></div>
+    </div>`;
+  if (!lancs.length) return html + '<div class="lanc-note" style="margin-top:12px">Nenhuma forma de pagamento lançada. Use "+ Forma de pagamento" para gerar as parcelas no Contas a Receber.</div>';
+  lancs.forEach((l, k) => {
+    const ps = parc.filter(x => x.lancId === l.id).sort((a,b) => a.parcIdx - b.parcIdx);
+    const algumaRec = ps.some(x => x.isRecebido);
+    html += `<div style="margin-top:14px;display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:#44403c">
+        Cobrança ${k + 1} · ${prjEsc(l.tipo_pag || 'forma não informada')} · ${fmtBRL(prjNum(l.valor))} em ${l.parcelas || 1}x${l.nf ? ' · NF ' + prjEsc(l.nf) : ''}
+        <span style="margin-left:auto"></span>
+        ${algumaRec ? '' : `<button class="btn btn-danger btn-sm" onclick="prjPagExcluir('${l.id}')">Excluir cobrança</button>`}
+      </div>
+      <div class="table-scroll" style="overflow:auto;margin-top:6px"><table><thead><tr><th>Parcela</th><th>Vencimento</th><th class="num">Valor</th><th>Situação</th><th>Ação</th></tr></thead><tbody>
+      ${ps.map(x => {
+        const sit = x.isRecebido ? `<span class="badge badge-green">Recebido ${x.dtrecebido ? fmtDate(x.dtrecebido) : ''}</span>`
+          : (x.venc && x.venc < hoje ? '<span class="badge badge-red">Vencida</span>' : '<span class="badge badge-yellow">A vencer</span>');
+        const acao = x.isRecebido ? `<button class="btn btn-secondary btn-sm" onclick="estornarRecebido('${x.lancId}', ${x.parcIdx})">Estornar</button>`
+          : `<button class="btn btn-primary btn-sm" onclick="marcarRecebido('${x.lancId}', ${x.parcIdx})">Receber</button>`;
+        return `<tr><td>${x.parcIdx}/${x.totalParc}</td><td>${x.venc ? fmtDate(x.venc) : '—'}</td><td class="num">${fmtBRL(prjNum(x.valParc))}</td><td>${sit}</td><td class="actions">${acao}</td></tr>`;
+      }).join('')}</tbody></table></div>`;
+  });
+  return html + '<div class="lanc-note" style="margin-top:10px">As parcelas também aparecem em Contas a Receber / Contas Recebidas (observação "Projeto ' + prjEsc(p.codigo || '') + '"). Receber por lá ou por aqui dá o mesmo resultado.</div>';
+}
+// Chamado pelo financeiro depois de receber/estornar — atualiza a ficha aberta.
+function prjAposFinanceiro() {
+  const m = document.getElementById('modal-prj-ficha');
+  if (_prjFichaId && m && m.classList.contains('open')) prjAbrirFicha(_prjFichaId);
+}
+
+function prjPagAbrir(id) {
+  const p = prjProjeto(id); if (!p) return;
+  if (!p.cliente_id) { alert('Vincule um cliente ao projeto antes de lançar o pagamento.'); return; }
+  document.getElementById('prj-pg-id').value = id;
+  document.getElementById('prj-pg-sub').textContent = `${p.codigo} — ${p.nome} · ${prjClienteNome(p)}`;
+  const lancado = prjLancsDoProjeto(id).reduce((s,l) => s + prjNum(l.valor), 0);
+  const resta = Math.round((prjNum(p.valor) - lancado) * 100) / 100;
+  document.getElementById('prj-pg-total').value = resta > 0 ? resta : (prjNum(p.valor) || '');
+  document.getElementById('prj-pg-entrada').value = '';
+  document.getElementById('prj-pg-dtentrada').value = prjHoje();
+  document.getElementById('prj-pg-n').value = 1;
+  document.getElementById('prj-pg-dt1').value = prjDataLocal(gtAdd(gtD(prjHoje()), 30).toISOString());
+  document.getElementById('prj-pg-int').value = 'm';
+  document.getElementById('prj-pg-nf').value = '';
+  // Sistema com várias empresas: escolhe a empresa do lançamento (padrão = empresa ativa)
+  const emps = (db.empresas || []);
+  const wEmp = document.getElementById('prj-pg-empresa-wrap');
+  if (wEmp) {
+    wEmp.style.display = emps.length > 1 ? '' : 'none';
+    const sEmp = document.getElementById('prj-pg-empresa');
+    sEmp.innerHTML = '<option value="">Selecione...</option>' + emps.map(e => `<option value="${e.id}">${prjEsc(e.apelido || e.nome)}</option>`).join('');
+    sEmp.value = (typeof empresaAtual === 'function' && empresaAtual()) || (emps.length === 1 ? emps[0].id : '');
+  }
+  const formas = typeof getFormasRecebimento === 'function' ? getFormasRecebimento() : [];
+  document.getElementById('prj-pg-forma').innerHTML = '<option value="">Não informado</option>' + formas.map(f => `<option value="${prjEsc(f)}">${prjEsc(f)}</option>`).join('');
+  const cats = (db.dfc_cats || []).filter(c => c.tipo === 'entrada' || (typeof getDfcGrupoTipo === 'function' && getDfcGrupoTipo(c.grupo) === 'entrada'));
+  document.getElementById('prj-pg-cat').innerHTML = '<option value="">Nenhuma</option>' + cats.map(c => `<option value="${c.id}">${prjEsc(c.nome)}${typeof getDreGrupoNome === 'function' ? ' (' + prjEsc(getDreGrupoNome(c.grupo)) + ')' : ''}</option>`).join('');
+  prjPagGerar();
+  openModal('modal-prj-pag');
+}
+function prjPagDatas(n) {
+  const dt1 = document.getElementById('prj-pg-dt1').value;
+  const intv = document.getElementById('prj-pg-int').value;
+  const out = [];
+  for (let i = 1; i <= n; i++) {
+    if (!dt1) { out.push(''); continue; }
+    if (intv === 'm') out.push(typeof parcelaVencimentoReceber === 'function' ? parcelaVencimentoReceber(dt1, i) : dt1);
+    else out.push(prjDataLocal(gtAdd(gtD(dt1), (i - 1) * parseInt(intv, 10)).toISOString()));
+  }
+  return out;
+}
+function prjPagGerar() {
+  const total = prjNum(document.getElementById('prj-pg-total').value);
+  const entrada = prjNum(document.getElementById('prj-pg-entrada').value);
+  const n = Math.max(0, Math.min(60, parseInt(document.getElementById('prj-pg-n').value, 10) || 0));
+  const rows = [];
+  if (entrada > 0) rows.push({ rot: 'Entrada', d: document.getElementById('prj-pg-dtentrada').value, v: entrada });
+  const resto = Math.round((total - entrada) * 100) / 100;
+  if (n > 0) {
+    const base = Math.floor(resto / n * 100) / 100;
+    const datas = prjPagDatas(n);
+    for (let i = 0; i < n; i++) {
+      const v = i === n - 1 ? Math.round((resto - base * (n - 1)) * 100) / 100 : base;
+      rows.push({ rot: `${i + 1}/${n}`, d: datas[i], v });
+    }
+  }
+  document.getElementById('prj-pg-grid').innerHTML = rows.length
+    ? '<div style="font-size:11px;color:#a8a29e;font-weight:700">#</div><div style="font-size:11px;color:#a8a29e;font-weight:700">VENCIMENTO</div><div style="font-size:11px;color:#a8a29e;font-weight:700">VALOR (R$)</div>' +
+      rows.map((r, i) => `<div><b>${r.rot}</b></div><input type="date" id="prj-pg-d${i}" value="${r.d || ''}" /><input type="number" step="any" id="prj-pg-v${i}" value="${r.v > 0 ? r.v : ''}" oninput="prjPagDif()" />`).join('')
+    : '<div style="grid-column:1/-1;font-size:12.5px;color:#a8a29e">Informe a entrada e/ou o número de parcelas.</div>';
+  document.getElementById('prj-pg-grid').dataset.n = rows.length;
+  document.getElementById('prj-pg-grid').dataset.rot = JSON.stringify(rows.map(r => r.rot));
+  prjPagDif();
+}
+function prjPagLinhas() {
+  const n = parseInt(document.getElementById('prj-pg-grid').dataset.n || '0', 10);
+  const out = [];
+  for (let i = 0; i < n; i++) out.push({ d: document.getElementById('prj-pg-d' + i).value, v: Math.round(prjNum(document.getElementById('prj-pg-v' + i).value) * 100) / 100 });
+  return out;
+}
+function prjPagDif() {
+  const total = prjNum(document.getElementById('prj-pg-total').value);
+  const soma = prjPagLinhas().reduce((s,r) => s + r.v, 0);
+  const dif = Math.round((total - soma) * 100) / 100;
+  const el = document.getElementById('prj-pg-dif');
+  el.style.color = Math.abs(dif) < 0.01 ? '#166534' : '#b45309';
+  el.textContent = Math.abs(dif) < 0.01 ? `✔ Soma das parcelas: ${fmtBRL(soma)}` : `Soma das parcelas: ${fmtBRL(soma)} · diferença de ${fmtBRL(dif)} para o total`;
+}
+async function prjPagSalvar() {
+  const id = document.getElementById('prj-pg-id').value;
+  const p = prjProjeto(id); if (!p) return;
+  const linhas = prjPagLinhas();
+  if (!linhas.length) { alert('Informe a entrada e/ou o número de parcelas.'); return; }
+  if (linhas.some(r => !r.d || !(r.v > 0))) { alert('Todas as parcelas precisam de vencimento e valor maior que zero.'); return; }
+  const total = prjNum(document.getElementById('prj-pg-total').value);
+  const soma = Math.round(linhas.reduce((s,r) => s + r.v, 0) * 100) / 100;
+  if (Math.abs(total - soma) >= 0.01 && !confirm(`A soma das parcelas (${fmtBRL(soma)}) é diferente do valor total (${fmtBRL(total)}).\n\nGerar mesmo assim com ${fmtBRL(soma)}?`)) return;
+  const N = linhas.length;
+  let empresa_id = (document.getElementById('prj-pg-empresa') || {}).value || (typeof empresaAtual === 'function' && empresaAtual()) || '';
+  if (!empresa_id) {
+    if ((db.empresas || []).length > 1) { alert('Selecione a empresa deste lançamento (você está no modo consolidado).'); return; }
+    empresa_id = ((db.empresas || [])[0] || {}).id || null;
+  }
+  const lanc = {
+    id: uid(), empresa_id,
+    dtvenda: p.dt_venda || prjHoje(),
+    dtprev: linhas[0].d,
+    nf: document.getElementById('prj-pg-nf').value.trim(),
+    cliente: p.cliente_id, prod: '',
+    valor: soma, parcelas: N,
+    financeiro: 'nao', recebido: 'nao', dtrecebido: '',
+    tipo_pag: document.getElementById('prj-pg-forma').value,
+    banco: '',
+    cat_dre: document.getElementById('prj-pg-cat').value,
+    juros: null,
+    obs: `Projeto ${p.codigo || ''} — ${p.nome}`,
+    parcela_datas: N > 1 ? JSON.stringify({ datas: linhas.map(r => r.d), valores: linhas.map(r => r.v) }) : null,
+    projeto_id: p.id
+  };
+  const ok = await sbFetch('lancreceber', 'POST', lanc);
+  if (!ok) { alert('❌ Erro ao gerar o lançamento no Contas a Receber.' + sbErroDetalhe() + '\n\nConfira se o SQL "projetos_v2" foi rodado (coluna projeto_id em lancreceber).'); return; }
+  db.lancreceber.push(lanc);
+  prjAtualizarTelasFinanceiro();
+  closeModal('modal-prj-pag');
+  prjAbrirFicha(id);
+}
+async function prjPagExcluir(lancId) {
+  const l = (db.lancreceber || []).find(x => x.id === lancId); if (!l) return;
+  if (prjParcelasDoProjeto(l.projeto_id).some(x => x.lancId === lancId && x.isRecebido)) { alert('Há parcelas recebidas nesta cobrança. Estorne-as antes de excluir.'); return; }
+  if (!confirm(`Excluir esta cobrança de ${fmtBRL(prjNum(l.valor))} (${l.parcelas || 1} parcela(s)) do Contas a Receber?`)) return;
+  const ok = await sbFetch('lancreceber', 'DELETE', null, `?id=eq.${lancId}`);
+  if (!ok) { alert('❌ Erro ao excluir.' + sbErroDetalhe()); return; }
+  db.lancreceber = db.lancreceber.filter(x => x.id !== lancId);
+  prjAtualizarTelasFinanceiro();
+  prjAbrirFicha(l.projeto_id);
+}
+function prjAtualizarTelasFinanceiro() {
+  ['renderLancReceber','renderAReceber','renderRecebido','populateYearSelectsReceber','renderDashboard'].forEach(fn => {
+    try { if (typeof window[fn] === 'function') window[fn](); } catch(e) { console.warn('[projetos] ' + fn, e); }
+  });
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+// EQUIPES (ex.: Equipe 01 / 02 / 03) — por etapa do projeto
+// • A etapa marcada "tem equipe" (padrão: Produção) pede a equipe.
+// • A equipe pode ser definida antes do projeto chegar na etapa
+//   (planejamento) e aparece no Gantt, com filtro por equipe.
+// Lista de equipes: tabela config (key "proj_equipes").
+// ══════════════════════════════════════════════════════════════════
+let prjEquipes = null;
+const PRJ_EQ_CORES = ['#2563eb','#ea580c','#16a34a','#9333ea','#0891b2','#db2777','#ca8a04','#475569'];
+function prjEquipesLista() { return prjEquipes || ['Equipe 01','Equipe 02','Equipe 03']; }
+function prjCorEquipe(nome) { const i = prjEquipesLista().indexOf(nome); return PRJ_EQ_CORES[(i < 0 ? 7 : i) % PRJ_EQ_CORES.length]; }
+function prjUsaEquipe(e) { return e.usa_equipe === true || (e.usa_equipe == null && /produ/i.test(e.nome || '')); }
+async function prjCarregarEquipes() {
+  const r = await sbFetch('config', 'GET', null, '?key=eq.proj_equipes&limit=1');
+  try { prjEquipes = (r && r[0] && r[0].value) ? JSON.parse(r[0].value) : ['Equipe 01','Equipe 02','Equipe 03']; }
+  catch(e) { prjEquipes = ['Equipe 01','Equipe 02','Equipe 03']; }
+}
+async function prjSalvarEquipesCad(lista) {
+  const value = JSON.stringify(lista);
+  const filtro = '?key=eq.proj_equipes';
+  const ex = await sbFetch('config', 'GET', null, filtro + '&select=id');
+  if (ex === null) { alert('❌ Erro ao acessar a configuração.' + sbErroDetalhe()); return false; }
+  const ok = ex.length ? await sbFetch('config', 'PATCH', { value }, filtro) : await sbFetch('config', 'POST', { id: uid(), key: 'proj_equipes', value });
+  if (!ok) { alert('❌ Erro ao salvar as equipes.' + sbErroDetalhe()); return false; }
+  prjEquipes = lista; return true;
+}
+async function prjAddEquipe(inputId, depois) {
+  const inp = document.getElementById(inputId);
+  const nome = (inp && inp.value || '').trim();
+  if (!nome) { alert('Digite o nome da equipe.'); return; }
+  if (prjEquipesLista().some(q => normText(q) === normText(nome))) { alert('Essa equipe já existe.'); return; }
+  if (!await prjSalvarEquipesCad([...prjEquipesLista(), nome])) return;
+  inp.value = '';
+  if (depois) depois(nome);
+  prjRenderEquipesCad();
+}
+async function prjRenomearEquipe(nome) {
+  const novo = (prompt('Novo nome da equipe:', nome) || '').trim();
+  if (!novo || novo === nome) return;
+  if (prjEquipesLista().some(q => q !== nome && normText(q) === normText(novo))) { alert('Já existe uma equipe com esse nome.'); return; }
+  if (!await prjSalvarEquipesCad(prjEquipesLista().map(q => q === nome ? novo : q))) return;
+  // Atualiza os projetos que usam a equipe
+  for (const p of prjDb.projetos) {
+    const eqs = p.equipes || {};
+    if (Object.values(eqs).includes(nome)) {
+      const n = {}; Object.keys(eqs).forEach(k => n[k] = eqs[k] === nome ? novo : eqs[k]);
+      if (await sbFetch('proj_projetos', 'PATCH', { equipes: n }, `?id=eq.${p.id}`)) p.equipes = n;
+    }
+  }
+  prjRenderEquipesCad(); prjRedesenhar();
+}
+async function prjExcluirEquipe(nome) {
+  const n = prjDb.projetos.filter(p => Object.values(p.equipes || {}).includes(nome)).length;
+  if (!confirm(`Excluir a equipe "${nome}"?${n ? `\n\n${n} projeto(s) continuam mostrando o nome dela até você trocar.` : ''}`)) return;
+  if (!await prjSalvarEquipesCad(prjEquipesLista().filter(q => q !== nome))) return;
+  prjRenderEquipesCad();
+}
+function prjRenderEquipesCad() {
+  const box = document.getElementById('prj-eq-cad'); if (!box) return;
+  box.innerHTML = prjEquipesLista().map(q => {
+    const n = prjDb.projetos.filter(p => p.status !== 'cancelado' && p.status !== 'concluido' && Object.values(p.equipes || {}).includes(q)).length;
+    return `<tr><td><span class="prj-dot" style="background:${prjCorEquipe(q)};margin-right:8px"></span><b>${prjEsc(q)}</b></td><td style="text-align:center">${n}</td>
+      <td class="actions"><button class="btn btn-secondary btn-sm" onclick="prjRenomearEquipe('${prjEsc(q).replace(/'/g, "&#39;")}')">Renomear</button>
+      <button class="btn btn-danger btn-sm" onclick="prjExcluirEquipe('${prjEsc(q).replace(/'/g, "&#39;")}')">Excluir</button></td></tr>`;
+  }).join('') || '<tr><td colspan="3" class="empty-state">Nenhuma equipe.</td></tr>';
+}
+function prjEquipesFichaHtml(p) {
+  const ets = prjEtapas().filter(prjUsaEquipe);
+  if (!ets.length) return '';
+  const eqs = p.equipes || {};
+  const bloq = p.status === 'cancelado';
+  const opts = v => '<option value="">— sem equipe —</option>' + [...new Set([...prjEquipesLista(), ...(v && !prjEquipesLista().includes(v) ? [v] : [])])]
+    .map(q => `<option value="${prjEsc(q)}" ${q === v ? 'selected' : ''}>${prjEsc(q)}</option>`).join('') + '<option value="__nova__">+ Nova equipe...</option>';
+  return `<div class="prj-eq-box">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#57534e;margin-bottom:8px">👥 Equipe responsável</div>
+    ${ets.map(e => `<div class="prj-eq-row"><span class="prj-dot" style="background:${prjEsc(e.cor)}"></span><span class="nm">${prjEsc(e.nome)}${e.id === p.etapa_id ? ' <span class="badge badge-blue" style="padding:1px 7px;font-size:10px">atual</span>' : ''}</span>
+      <select ${bloq ? 'disabled' : ''} onchange="prjDefinirEquipe('${p.id}','${e.id}',this)">${opts(eqs[e.id] || '')}</select></div>`).join('')}
+    <div style="font-size:11.5px;color:#a8a29e;margin-top:6px">Pode ser definida antes do projeto chegar na etapa — aparece no Cronograma (Gantt).</div>
+  </div>`;
+}
+async function prjDefinirEquipe(id, etapaId, sel) {
+  const p = prjProjeto(id); if (!p) return;
+  let v = sel.value;
+  if (v === '__nova__') {
+    const nome = (prompt('Nome da nova equipe:', 'Equipe ' + String(prjEquipesLista().length + 1).padStart(2, '0')) || '').trim();
+    if (!nome) { prjAbrirFicha(id); return; }
+    if (!prjEquipesLista().some(q => normText(q) === normText(nome))) { if (!await prjSalvarEquipesCad([...prjEquipesLista(), nome])) { prjAbrirFicha(id); return; } }
+    v = prjEquipesLista().find(q => normText(q) === normText(nome)) || nome;
+  }
+  const eqs = { ...(p.equipes || {}) };
+  if (v) eqs[etapaId] = v; else delete eqs[etapaId];
+  const ok = await sbFetch('proj_projetos', 'PATCH', { equipes: eqs }, `?id=eq.${id}`);
+  if (!ok) { alert('❌ Erro ao salvar a equipe.' + sbErroDetalhe() + '\n\nSe citar "equipes", rode o SQL projetos_v5.'); prjAbrirFicha(id); return; }
+  p.equipes = eqs;
+  prjRedesenhar();
+  prjAbrirFicha(id);
+}
+
+
+// ── Gantt: etapas que aparecem no gráfico (padrão: só Produção) ──
+function prjGtEtapasPadrao() { return prjEtapas().filter(e => !e.final && prjUsaEquipe(e)).map(e => e.id); }
+function prjGtEtapasVis() {
+  let v = null;
+  try { v = JSON.parse(localStorage.getItem('gt_etapas_vis')); } catch(e) {}
+  if (v === 'todas') return null;
+  const ids = new Set(prjEtapas().map(e => e.id));
+  let lista = Array.isArray(v) ? v.filter(i => ids.has(i)) : prjGtEtapasPadrao();
+  if (!lista.length) lista = prjGtEtapasPadrao();
+  return lista.length ? new Set(lista) : null;
+}
+function prjGtSalvarVis(v) { try { localStorage.setItem('gt_etapas_vis', JSON.stringify(v)); } catch(e) {} prjRenderGantt(); prjGtMenu(null, true); }
+function prjGtMenu(ev, manter) {
+  if (ev) ev.stopPropagation();
+  const m = document.getElementById('gt-etvis-menu'); if (!m) return;
+  if (!manter && m.style.display === 'block') { m.style.display = 'none'; return; }
+  if (manter && m.style.display !== 'block') return;
+  const vis = prjGtEtapasVis();
+  m.innerHTML = '<div style="font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#a8a29e;margin-bottom:6px">Mostrar no gráfico</div>' +
+    prjEtapas().filter(e => !e.final).map(e => `<label><input type="checkbox" ${!vis || vis.has(e.id) ? 'checked' : ''} onchange="prjGtToggle('${e.id}',this.checked)"><span class="prj-dot" style="background:${prjEsc(e.cor)}"></span> ${prjEsc(e.nome)}</label>`).join('') +
+    `<div style="border-top:1px solid #f1efed;margin-top:6px;padding-top:6px;display:flex;gap:12px;font-size:12px">
+      <a href="#" onclick="event.preventDefault();prjGtSalvarVis('todas')">Todas</a>
+      <a href="#" onclick="event.preventDefault();prjGtSalvarVis(prjGtEtapasPadrao())">Só produção (padrão)</a></div>`;
+  m.style.display = 'block';
+}
+function prjGtToggle(id, on) {
+  const vis = prjGtEtapasVis();
+  let atual = vis ? [...vis] : prjEtapas().filter(e => !e.final).map(e => e.id);
+  atual = on ? [...new Set([...atual, id])] : atual.filter(x => x !== id);
+  if (!atual.length) { alert('Deixe pelo menos uma etapa visível.'); prjGtMenu(null, true); return; }
+  const todas = prjEtapas().filter(e => !e.final).every(e => atual.includes(e.id));
+  prjGtSalvarVis(todas ? 'todas' : atual);
+}
+document.addEventListener('click', e => { const m = document.getElementById('gt-etvis-menu'); if (m && m.style.display === 'block' && !m.contains(e.target)) m.style.display = 'none'; });
 </script>
 </body>
 </html>
